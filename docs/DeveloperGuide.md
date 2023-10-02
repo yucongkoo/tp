@@ -297,30 +297,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+<pre>
+<b>Use case: UC01 - Add a person</b>
 
-**MSS**
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+<b>Main Success Scenario:</b>
+1.  User adds a person using name, phone number, email address and optionaly address.
+2.  AddressBook adds the person.
+3.  AddressBook displays the details of person added to user.
 
     Use case ends.
 
-**Extensions**
+<b>Extensions</b>
 
-* 2a. The list is empty.
+1a. Any of the compulsory flags(name/phone number/email address) is missing.
 
-  Use case ends.
+    1a1. AddressBook shows an error message to alert User about missing field.
 
-* 3a. The given index is invalid.
+        Use case ends.
 
-    * 3a1. AddressBook shows an error message.
+1b. Any invalid arguments(invalid email address, too long names etc) provided.
+    
+    1b1. AddressBook shows an error message to alert User about the invalid argument.
 
-      Use case resumes at step 2.
+        Use case ends.
+      
+</pre>
 
-*{More to be added}*
 
 ### Non-Functional Requirements
 
