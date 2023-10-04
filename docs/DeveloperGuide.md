@@ -297,19 +297,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-<pre>
-<b>Use case: UC01 - Add a person</b>
+```
+Use case: UC01 - Add a person
 
-<b>Main Success Scenario:</b>
-1.  User adds a person using name, phone number, email address and optionaly address.
-2.  AddressBook adds the person.
-3.  AddressBook displays the details of person added to user.
+Main Success Scenario:
+1. User adds a person using name, phone number, email address and optionaly address.
+2. AddressBook adds the person.
+3. AddressBook displays the details of person added to user.
 
     Use case ends.
 
-<b>Extensions</b>
-
-1a. Any of the compulsory flags(name/phone number/email address) is missing.
+Extensions:
+1a.  Any of the compulsory flags(name/phone number/email address) is missing.<br>   
 
     1a1. AddressBook shows an error message to alert User about missing field.
 
@@ -320,9 +319,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     1b1. AddressBook shows an error message to alert User about the invalid argument.
 
         Use case ends.
-      
-</pre>
 
+```
 
 ### Non-Functional Requirements
 
