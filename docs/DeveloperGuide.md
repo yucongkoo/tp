@@ -346,10 +346,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 #### Editing a person
 
-**Use Case: UC04 - Edit a person's information**
+**Use Case: UC04 - edit a person's information**
 
 **MSS:**
-
 1.  User lists out the contact.
 2.  AddressBook shows the list of contacts.
 3.  User edits the person with the index number shown in the displayed person list and provide information to edit.
