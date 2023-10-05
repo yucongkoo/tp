@@ -327,6 +327,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+
+
+
+
+
+
+
+
+
 #### Filter contacts
 
 **Use case: UC06 - filter contacts**
