@@ -333,9 +333,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC03 - delete a person**
 
 **MSS:**
-1. User list out the person.
-2. AddressBook show the list of person to user.
-3. User delete the person with the index number shown in the displayed person list.
+1. User lists out the persons.
+2. AddressBook shows the list of persons to user.
+3. User deletes the person with the index number shown in the displayed list.
 4. AddressBook displays the details of the deleted person.</br>
    Use case ends.
 
