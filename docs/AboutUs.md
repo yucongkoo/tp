@@ -41,6 +41,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Code quality
 * Responsibilities: Looks after code quality, ensures adherence to coding standards.
 
+### Lian Zhi Xuan
+
+<img src="images/lianzhixuan.png" width="200px">
+
+[[github](https://github.com/TehOPanas)] [[portfolio](team/lianzhixuan.md)]
+
+* Role: Developer, Documentation
+* Responsibilities: Responsible for the quality of various project documents
+
 ### Jean Doe
 
 <img src="images/johndoe.png" width="200px">
