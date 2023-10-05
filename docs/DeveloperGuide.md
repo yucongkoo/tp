@@ -290,7 +290,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
 | `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
+|          |                                            |                              |                                                                        |
+|          |                                            |                              |                                                                        |
+|          |                                            |                              |                                                                        |
 *{More to be added}*
 
 ### Use cases
@@ -321,6 +323,32 @@ Extensions:
         Use case ends.
 
 ```
+
+```
+Use case: UC03 - Delete a person
+
+Main Sucess Scenario:
+1. User list out the person list(UC2).
+2. User delete the person with the index number shown in the displayed person list.
+3. Address displays the details of the deleted person.
+
+    Use case ends.
+ 
+Extensions:
+1a. User use another way to display the people list.
+
+    1a1. User find for a specified contact(UC4).
+ 
+    Use case resumes from step 2.
+
+2a. Invalid delete command or invalid index.
+
+    2a1.  AddressBook shows an error message to alert User about the invalid command.
+        
+        Use case ends.
+    
+```
+
 
 ### Non-Functional Requirements
 
