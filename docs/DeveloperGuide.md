@@ -300,31 +300,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-```
-Use case: UC01 - Add a person
+#### Adding a person
 
+**Use Case: UC01 - add a person**
 
-Main Success Scenario:
-1. User adds a person using name, phone number, email address and optionaly address.
+**MSS:**
+1. User enters the details of person to be added.
 2. AddressBook adds the person.
-3. AddressBook displays the details of person added to user.
+3. AddressBook displays the details of person added to user.</br>
+   Use case ends.
 
-    Use case ends.
+**Extensions:**</br>
+2a.  Details provided by user is incomplete or invalid.</br>
+&emsp;2a1. AddressBook shows an error message to alert User.</br>
+&emsp;&emsp;&emsp;Use case ends.
 
-Extensions:
-1a.  Any of the compulsory flags(name/phone number/email address) is missing.<br>   
-
-    1a1. AddressBook shows an error message to alert User about missing field.
-
-        Use case ends.
-
-1b. Any invalid arguments(invalid email address, too long names etc) provided.
-    
-    1b1. AddressBook shows an error message to alert User about the invalid argument.
-
-        Use case ends.
-
-```
 ### **Use case: Search for a person**
 
 **MSS**
