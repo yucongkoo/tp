@@ -31,6 +31,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Integration
 * Responsibilities: In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
 
+### Song Fang Yi
+
+<img src="images/songfangyl.png" width="200px">
+
+[[github](http://github.com/songfangyl)] 
+[[portfolio](team/songfangyl.md)]
+
+* Role: Code quality
+* Responsibilities: Looks after code quality, ensures adherence to coding standards.
+
 ### Lian Zhi Xuan
 
 <img src="images/lianzhixuan.png" width="200px">
