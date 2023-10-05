@@ -327,7 +327,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-
 **Extensions:**</br>
 1a. User searches with an invalid prompt format</br>
 &emsp;1a1. AddressBook shows an error message to User.</br>
