@@ -328,13 +328,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 
+**Extensions:**</br>
+1a. User searches with an invalid prompt format</br>
+&emsp;1a1. AddressBook shows an error message to User.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-
-
-
-
-
-
+2a. There is no person that match the prompt.</br>
+&emsp;2a1. AddressBook shows an empty list.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Filter contacts
 
