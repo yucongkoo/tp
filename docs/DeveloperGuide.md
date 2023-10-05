@@ -282,16 +282,16 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 | Priority | As a …​           | I want to …​                                                                      | So that I can…​                                                   |
 |----------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `* * *`  | salesperson       | to be able to add new contacts to my address book                                 | keep track of potential leads and customers.                      |
+| `* * *`  | salesperson       | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
 | `* * *`  | salesperson       | update my contacts/information easily                                             |                                                                   |
 | `* * *`  | salesperson       | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
 | `* * *`  | salesperson       | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
-| `* * *`  | user              | be able to delete contacts                                                        | minimize chance of someone else seeing them by accident           |
-| `* * *`  | user              | to list out all my contacts                                                       | locate a person easily                                            |
+| `* * *`  | user              | be able to delete contacts                                                        |                                                                   |
+| `* * *`  | user              | to list out all my contacts                                                       | to see all the person in my list                                  |
 | `* * *`  | user              | be able to see my total numbers of entries in my addressbook                      | know how many contacts are in my addressbook now                  |
 | `* *`    | first time user   | be able to know what are the features to use the address book                     | play around with the features and get used to the application     |
 | `* *`    | advanced user     | create my own shortcut key                                                        | execute command easily                                            |
@@ -305,7 +305,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | advanced user     | have multiple address books                                                       | differentiate between different contacts                          |
 | `*`      | advanced user     | be able to export my data                                                         | have a backup when data loss happens                              |
 | `*`      | careless person   | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
-| `*`      | salesperson       | know the local time at different countries                                        | work with international clients                                   |
+| `*`      | salesperson       | know the local time at different countries                                        | <br/>                                                             |
 
 
 
@@ -340,10 +340,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    Use case ends.
 
 **Extensions:**</br>
-1a. User use another way to display the people list.</br>
-&emsp;1a1. User <ins>search for specific contact(UC5)</ins>.</br>
-&emsp;&emsp;&emsp;Use case resumes from step 3.
-
 2a. Invalid delete command or invalid index.</br>
 &emsp;2a1. AddressBook shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
