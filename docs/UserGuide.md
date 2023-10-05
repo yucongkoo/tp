@@ -112,6 +112,7 @@ Deletes the specified contact from the address book.
 Format: `delete INDEX`
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
+* The `INDEX` is 1-indexed
 
 <box type="warning" seamless>
 
