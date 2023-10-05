@@ -358,15 +358,16 @@ Use case ends.
 **Use Case: UC03 - delete a person**
 
 **MSS:**
-1. User <ins>list out the person list(UC2)</ins>.
+1. User list out the contact.
+2. AddressBook show the list of contacts to user.
 2. User delete the person with the index number shown in the displayed person list.
-3. Address displays the details of the deleted person.</br>
+3. AddressBook displays the details of the deleted person.</br>
     Use case ends.
 
 **Extensions:**</br>
 1a. User use another way to display the people list.</br>
-&emsp;1a1. User <ins>find for a specified contact(UC5)</ins>.</br>
-&emsp;&emsp;&emsp;Use case resumes from step 2.
+&emsp;1a1. User <ins>search for specific contact(UC5)</ins>.</br>
+&emsp;&emsp;&emsp;Use case resumes from step 3.
 
 2a. Invalid delete command or invalid index.</br>
 &emsp;2a1. AddressBook shows an error message to alert User about the invalid command.</br>
