@@ -1,7 +1,9 @@
 ---
-layout: page
-title: About Us
+  layout: default.md
+  title: "About Us"
 ---
+
+# About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
@@ -9,34 +11,44 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Koo Yu Cong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/yucongkoo.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/yucongkoo)]
+[[portfolio](team/yucongkoo.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Ensuring deliverables and deadlines are met
+
+### Joshua Wee
+
+<img src="images/joshuawee.png" width="200px">
+
+[[github](http://github.com/jweewee)]
+[[portfolio](team/jweewee.md)]
+
+* Role: Integration
+* Responsibilities: In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
+
+### Song Fang Yi
+
+<img src="images/songfangyl.png" width="200px">
+
+[[github](http://github.com/songfangyl)] 
+[[portfolio](team/songfangyl.md)]
+
+* Role: Code quality
+* Responsibilities: Looks after code quality, ensures adherence to coding standards.
+
+### Lian Zhi Xuan
+
+<img src="images/lianzhixuan.png" width="200px">
+
+[[github](https://github.com/TehOPanas)] [[portfolio](team/lianzhixuan.md)]
+
+* Role: Developer, Documentation
+* Responsibilities: Responsible for the quality of various project documents
 
 ### Jean Doe
 
