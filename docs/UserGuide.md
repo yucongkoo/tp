@@ -92,9 +92,18 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all existing contacts in the contact book.
 
 Format: `list`
+
+<box type="warning" seamless>
+
+**Caution:** A list command is invalid when the command “list” is not singular e.g. unnecessary additional parameter is added: list 1, list first, list all.
+
+Examples:
+* `list`
+
+</box>
 
 ### Editing a person : `edit`
 
