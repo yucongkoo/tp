@@ -328,9 +328,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;2a1. AddressBook shows an error message to alert User.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
-### **Use case: Search for a person**
+### Searching for a person
 
-**MSS**
+**Use Case: UC05 - search for a person**
+
+**MSS:**
 
 1.  User searches with a prompt.
 2.  AddressBook shows a list of person matching the prompt.
@@ -338,20 +340,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Extensions:**
+**Extensions:**</br>
+1a. User searches with an invalid prompt format</br>
+&emsp;1a1. AddressBook shows an error message to User.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-* 1a. User searches with an invalid prompt format
-  * 1a1. AddressBook shows an error message
-    
-    Use case continues at Step 1. 
-  
-
-* 2a. There is no person that match the prompt.
-  * 2a1. AddressBook shows an empty list.
-  
-    Use case ends.
-
-Use case ends.
+2a. There is no person that match the prompt.</br>
+&emsp;2a1. AddressBook shows an empty list.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Delete a person
 

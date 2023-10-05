@@ -1,13 +1,13 @@
 ---
-  layout: default.md
-  title: "About Us"
+layout: default.md
+title: "About Us"
 ---
 
 # About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the email `e0960521@u.nus.edu`
 
 ## Project team
 
@@ -50,22 +50,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer, Documentation
 * Responsibilities: Responsible for the quality of various project documents
 
-### Jean Doe
+### Lam Jiu Fong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lamjiufong.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/LamJiuFong)]
+[[portfolio](team/lamjiufong.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Developer, Code Testing
+* Responsibilities: Ensures the testing of the project is done properly and on time
 
-### James Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: UI
