@@ -11,21 +11,23 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Acknowledgements**
+# **Acknowledgements**
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
+# **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Design**
+# **Design**
+
 
 ### Architecture
+
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
@@ -65,7 +67,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
-### UI component
+## UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
@@ -82,7 +84,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-### Logic component
+## Logic component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
@@ -114,7 +116,7 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
-### Model component
+## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
@@ -136,7 +138,7 @@ The `Model` component,
 </box>
 
 
-### Storage component
+## Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
@@ -147,19 +149,19 @@ The `Storage` component,
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
-### Common classes
+## Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+# **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+## \[Proposed\] Undo/redo feature
 
-#### Proposed Implementation
+### Proposed Implementation
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
@@ -231,7 +233,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
-#### Design considerations:
+### Design considerations:
 
 **Aspect: How undo & redo executes:**
 
@@ -246,14 +248,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+## \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+# **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -263,9 +265,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+# **Appendix: Requirements**
 
-### Product scope
+## Product scope
 
 **Target user profile**:
 
@@ -278,7 +280,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Value proposition**: manage contacts faster than a typical mouse/GUI driven app
 
 
-### User stories
+## User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
@@ -293,12 +295,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 *{More to be added}*
 
-### Use cases
+
+## Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
 ```
 Use case: UC01 - Add a person
+
 
 Main Success Scenario:
 1. User adds a person using name, phone number, email address and optionaly address.
@@ -321,8 +325,37 @@ Extensions:
         Use case ends.
 
 ```
+### **Use case: Search for a person**
 
-### Non-Functional Requirements
+**MSS**
+
+1.  User searches with a prompt.
+2.  AddressBook shows a list of person matching the prompt.
+3.  User views the person's information.
+
+    Use case ends.
+
+**Extensions:**
+
+* 1a. User searches with an invalid prompt format
+  * 1a1. AddressBook shows an error message
+    
+    Use case continues at Step 1. 
+  
+
+* 2a. There is no person that match the prompt.
+  * 2a1. AddressBook shows an empty list.
+  
+    Use case ends.
+
+Use case ends.
+
+
+
+*{More to be added}*
+
+
+## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
@@ -330,14 +363,14 @@ Extensions:
 
 *{More to be added}*
 
-### Glossary
+## Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+# **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -348,7 +381,7 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+## Launch and shutdown
 
 1. Initial launch
 
@@ -365,7 +398,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+## Deleting a person
 
 1. Deleting a person while all persons are being shown
 
@@ -382,7 +415,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Saving data
+## Saving data
 
 1. Dealing with missing/corrupted data files
 
