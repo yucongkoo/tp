@@ -333,15 +333,15 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC03 - delete a person**
 
 **MSS:**
-1. User list out the contact.
-2. AddressBook show the list of contacts to user.
-2. User delete the person with the index number shown in the displayed person list.
-3. AddressBook displays the details of the deleted person.</br>
+1. User list out the person.
+2. AddressBook show the list of person to user.
+3. User delete the person with the index number shown in the displayed person list.
+4. AddressBook displays the details of the deleted person.</br>
    Use case ends.
 
 **Extensions:**</br>
-2a. Invalid delete command or invalid index.</br>
-&emsp;2a1. AddressBook shows an error message to alert User about the invalid command.</br>
+4a. Invalid delete command or invalid index.</br>
+&emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
 
