@@ -344,6 +344,22 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
+#### Editing a person
+
+**Use Case: UC04 - edit a person's information**
+
+**MSS:**
+1.  User lists out the contact.
+2.  AddressBook shows the list of contacts.
+3.  User edits the person with the index number shown in the displayed person list and provide information to edit.
+4. AddressBook displays the details of the deleted person.</br>
+
+   Use case ends.
+
+**Extensions:**</br>
+4a. Index provided by user is valid or information provided by user is invalid.</br>
+&emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
 
 #### Searching for a person
 
