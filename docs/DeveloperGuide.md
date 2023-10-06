@@ -338,7 +338,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 #### Filter contacts
 
-**Use case: UC06 - filter contacts**
+**Use case: UC02 - filter contacts**
 
 **MSS:**
 1. User chooses to filter contacts.
