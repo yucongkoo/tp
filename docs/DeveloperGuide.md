@@ -328,6 +328,26 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2a1. AddressBook shows an error message to alert User.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
+#### Filter contacts
+
+**Use case: UC02 - filter contacts**
+
+**MSS:**
+1. User chooses to filter contacts.
+2. User enters filter command and selectively adds one/multiple category parameters to filter the contacts for.
+3. AddressBook filters the contacts list.
+4. AddressBook displays the list of contacts that meet the criteria.
+   Use case ends.
+
+**Extensions:**</br>       
+2b.  User doesn't select any categories to filter for.<br>
+&emsp;2b1. AddressBook shows an error message to alert User about the invalid command.
+&emsp;&emsp;&emsp;Use case ends.
+
+3a.  None of the contacts meet the filter criteria.
+&emsp;3a1. AddressBook shows an empty list with a warning message.
+&emsp;&emsp;&emsp;Use case ends.### Searching for a person
+
 #### Delete a person
 
 **Use Case: UC03 - delete a person**
@@ -361,6 +381,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
+
 #### Searching for a person
 
 **Use Case: UC05 - search for a person**
@@ -381,12 +402,16 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2a1. AddressBook shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
+       
+
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
+5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 
 *{More to be added}*
 
