@@ -282,18 +282,31 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​           | I want to …​                                                                      | So that I can…​                                                   |
+|----------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| `* * *`  | salesperson       | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
+| `* * *`  | salesperson       | update my contacts/information easily                                             |                                                                   |
+| `* * *`  | salesperson       | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
+| `* * *`  | salesperson       | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
+| `* * *`  | user              | be able to delete contacts                                                        |                                                                   |
+| `* * *`  | user              | to list out all my contacts                                                       | to see all the person in my list                                  |
+| `* * *`  | user              | be able to see my total numbers of entries in my addressbook                      | know how many contacts are in my addressbook now                  |
+| `* *`    | first time user   | be able to know what are the features to use the address book                     | play around with the features and get used to the application     |
+| `* *`    | advanced user     | create my own shortcut key                                                        | execute command easily                                            |
+| `* *`    | salesperson       | tag characteristics to contacts                                                   | visualise what the customer looks like                            |
+| `* *`    | careless person   | be able to undo previous command                                                  | recover from unintentional commands                               |
+| `* *`    | careless person   | be able to detect duplicates entries                                              | avoid adding multiple entries                                     |
+| `* *`    | careless person   | want the adressbook to suggest similar names when im searching for a person       | avoid the effect of typo                                          |
+| `* *`    | forgetful person  | have the application remind me of important task associated with certain contacts |                                                                   |
+| `* *`    | advanced user     | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
+| `*`      | first time user   | import my data from external sources into the address book                        | avoid manually add in all the data                                |
+| `*`      | advanced user     | have multiple address books                                                       | differentiate between different contacts                          |
+| `*`      | advanced user     | be able to export my data                                                         | have a backup when data loss happens                              |
+| `*`      | careless person   | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
+| `*`      | salesperson       | know the local time at different countries                                        | <br/>                                                             |
 
-*{More to be added}*
 
 
 ## Use cases
@@ -335,7 +348,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;3a1. AddressBook shows an empty list with a warning message.
 &emsp;&emsp;&emsp;Use case ends.### Searching for a person
 
-#### Search for a person
+#### Delete a person
+
+**Use Case: UC03 - delete a person**
+
+**MSS:**
+1. User lists out the persons.
+2. AddressBook shows the list of persons to user.
+3. User deletes the person with the index number shown in the displayed list.
+4. AddressBook displays the details of the deleted person.</br>
+   Use case ends.
+
+**Extensions:**</br>
+4a. Invalid delete command or invalid index.</br>
+&emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
+
+#### Editing a person
+
+**Use Case: UC04 - edit a person's information**
+
+**MSS:**
+1.  User lists out the contact.
+2.  AddressBook shows the list of contacts.
+3.  User edits the person with the index number shown in the displayed person list and provide information to edit.
+4. AddressBook displays the details of the deleted person.</br>
+
+   Use case ends.
+
+**Extensions:**</br>
+4a. Index provided by user is valid or information provided by user is invalid.</br>
+&emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
+
+
+#### Searching for a person
 
 **Use Case: UC05 - search for a person**
 
@@ -343,8 +390,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User searches with a prompt.
 2.  AddressBook shows a list of person matching the prompt.
-3.  User views the person's information.
-
+3.  User views the person's information.</br>
     Use case ends.
 
 **Extensions:**</br>
@@ -359,11 +405,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
        
 
 
-
-*{More to be added}*
-
-
-## Non-Functional Requirements
+### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
