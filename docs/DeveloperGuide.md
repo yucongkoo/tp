@@ -315,7 +315,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;2a1. AddressBook shows an error message to alert User.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
-### Searching for a person
+#### Filter contacts
+
+**Use case: UC02 - filter contacts**
+
+**MSS:**
+1. User chooses to filter contacts.
+2. User enters filter command and selectively adds one/multiple category parameters to filter the contacts for.
+3. AddressBook filters the contacts list.
+4. AddressBook displays the list of contacts that meet the criteria.
+   Use case ends.
+
+**Extensions:**</br>       
+2b.  User doesn't select any categories to filter for.<br>
+&emsp;2b1. AddressBook shows an error message to alert User about the invalid command.
+&emsp;&emsp;&emsp;Use case ends.
+
+3a.  None of the contacts meet the filter criteria.
+&emsp;3a1. AddressBook shows an empty list with a warning message.
+&emsp;&emsp;&emsp;Use case ends.### Searching for a person
+
+#### Search for a person
 
 **Use Case: UC05 - search for a person**
 
@@ -336,25 +356,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;2a1. AddressBook shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-#### Filter contacts
-
-**Use case: UC02 - filter contacts**
-
-**MSS:**
-1. User chooses to filter contacts.
-2. User enters filter command and selectively adds one/multiple category parameters to filter the contacts for.
-3. AddressBook filters the contacts list.
-4. AddressBook displays the list of contacts that meet the criteria.
-   Use case ends.
-   
-**Extensions:**</br>       
-2b.  User doesn't select any categories to filter for.<br>
-&emsp;2b1. AddressBook shows an error message to alert User about the invalid command.
-&emsp;&emsp;&emsp;Use case ends.
- 
-3a.  None of the contacts meet the filter criteria.
-&emsp;3a1. AddressBook shows an empty list with a warning message.
-&emsp;&emsp;&emsp;Use case ends.       
+       
 
 
 
