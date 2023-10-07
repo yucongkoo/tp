@@ -43,9 +43,9 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 ### Lian Zhi Xuan
 
-<img src="images/lianzhixuan.png" width="200px">
+<img src="images/tehopanas.png" width="200px">
 
-[[github](https://github.com/TehOPanas)] [[portfolio](team/lianzhixuan.md)]
+[[github](https://github.com/TehOPanas)] [[portfolio](team/tehopanas.md)]
 
 * Role: Developer, Documentation
 * Responsibilities: Responsible for the quality of various project documents
