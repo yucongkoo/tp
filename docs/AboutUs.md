@@ -23,7 +23,7 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 ### Joshua Wee
 
-<img src="images/joshuawee.png" width="200px">
+<img src="images/jweewee.png" width="200px">
 
 [[github](http://github.com/jweewee)]
 [[portfolio](team/jweewee.md)]
