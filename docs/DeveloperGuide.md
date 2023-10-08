@@ -284,28 +284,29 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​           | I want to …​                                                                      | So that I can…​                                                   |
-|----------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `* * *`  | salesperson       | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
-| `* * *`  | salesperson       | update my contacts/information easily                                             |                                                                   |
-| `* * *`  | salesperson       | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
-| `* * *`  | salesperson       | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
-| `* * *`  | user              | be able to delete contacts                                                        |                                                                   |
-| `* * *`  | user              | to list out all my contacts                                                       | to see all the person in my list                                  |
-| `* * *`  | user              | be able to see my total numbers of entries in my addressbook                      | know how many contacts are in my addressbook now                  |
-| `* *`    | first time user   | be able to know what are the features to use the address book                     | play around with the features and get used to the application     |
-| `* *`    | advanced user     | create my own shortcut key                                                        | execute command easily                                            |
-| `* *`    | salesperson       | tag characteristics to contacts                                                   | visualise what the customer looks like                            |
-| `* *`    | careless person   | be able to undo previous command                                                  | recover from unintentional commands                               |
-| `* *`    | careless person   | be able to detect duplicates entries                                              | avoid adding multiple entries                                     |
-| `* *`    | careless person   | want the adressbook to suggest similar names when im searching for a person       | avoid the effect of typo                                          |
-| `* *`    | forgetful person  | have the application remind me of important task associated with certain contacts |                                                                   |
-| `* *`    | advanced user     | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
-| `*`      | first time user   | import my data from external sources into the address book                        | avoid manually add in all the data                                |
-| `*`      | advanced user     | have multiple address books                                                       | differentiate between different contacts                          |
-| `*`      | advanced user     | be able to export my data                                                         | have a backup when data loss happens                              |
-| `*`      | careless person   | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
-| `*`      | salesperson       | know the local time at different countries                                        | <br/>                                                             |
+| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                   |
+|----------|------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| `* * *`  | salesperson      | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
+| `* * *`  | user             | update my contacts/information easily                                             |                                                                   |
+| `* * *`  | salesperson      | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
+| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
+| `* * *`  | user             | be able to delete contacts                                                        |                                                                   |
+| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                  |
+| `* * *`  | user             | be able to see my total numbers of entries in my addressbook                      | know how many contacts are in my addressbook now                  |
+| `* *`    | first time user  | be able to know what are the features to use the address book                     | play around with the features and get used to the application     |
+| `* *`    | fast typist      | have short commands                                                               | execute command faster                                            |
+| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                       |
+| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name              |
+| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                               |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                       |
+| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                        |
+| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                   |
+| `* *`    | user             | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
+| `*`      | user             | import my data from external sources into the address book                        | avoid copying my data manually                                    |
+| `*`      | advanced user    | have multiple address books                                                       | neatly organize my contacts based on contexts                     |
+| `*`      | advanced user    | be able to export my data                                                         | have a backup when data loss happens                              |
+| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
+| `*`      | salesperson      | know the local time at different countries                                        | know the right time to contact my customers <br/>                 |
 
 
 
