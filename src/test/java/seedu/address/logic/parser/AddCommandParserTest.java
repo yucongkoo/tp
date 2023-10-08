@@ -142,8 +142,8 @@ public class AddCommandParserTest {
 
         // missing address
         Person expectedPersonWithoutAddress = new PersonBuilder(CALMEN).build();
-        assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
-                , new AddCommand(expectedPersonWithoutAddress));
+        assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN,
+                new AddCommand(expectedPersonWithoutAddress));
     }
 
     @Test
