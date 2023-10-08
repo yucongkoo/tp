@@ -73,6 +73,11 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withoutAddress() {
+        this.address = Address.EMPTY_ADDRESS;
+        return this;
+    }
+
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
