@@ -287,6 +287,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                   |
 |----------|------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | `* * *`  | salesperson      | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
+| `* * *`  | user             | to add new contacts to my address book                                            | avoid losing my contacts' particulars                             |
 | `* * *`  | user             | update my contacts/information easily                                             |                                                                   |
 | `* * *`  | salesperson      | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
 | `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
@@ -304,7 +305,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | `* *`    | user             | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
 | `*`      | user             | import my data from external sources into the address book                        | avoid copying my data manually                                    |
 | `*`      | advanced user    | have multiple address books                                                       | neatly organize my contacts based on contexts                     |
-| `*`      | advanced user    | be able to export my data                                                         | have a backup when data loss happens                              |
+| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                              |
 | `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
 | `*`      | salesperson      | know the local time at different countries                                        | know the right time to contact my customers <br/>                 |
 
