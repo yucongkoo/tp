@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
 
 /**
@@ -24,7 +25,13 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Person person;
+    private final Person person;
+    private final int displayedIndex;
+
+    // Independent UI Parts residing in this PersonCard
+    private PersonAttributeCard phoneCard;
+    private PersonAttributeCard emailCard;
+    private PersonAttributeCard addressCard;
 
     @FXML
     private HBox cardPane;
@@ -33,11 +40,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private VBox phoneCardPlaceholder;
     @FXML
-    private Label address;
+    private VBox emailCardPlaceholder;
     @FXML
-    private Label email;
+    private VBox addressCardPlaceholder;
     @FXML
     private FlowPane tags;
 
@@ -47,13 +54,42 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.displayedIndex = displayedIndex;
+
+        fillPersonDetails();
+    }
+
+    private void fillPersonDetails() {
+        loadName();
+        loadPhoneCard();
+        loadEmailCard();
+        loadAddressCard();
+        loadTags();
+    }
+
+    private void loadName() {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+    }
+
+    private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void loadPhoneCard() {
+        phoneCard = new PersonAttributeCard("Phone:", person.getPhone().value);
+        phoneCardPlaceholder.getChildren().add(phoneCard.getRoot());
+    }
+
+    private void loadEmailCard() {
+        emailCard = new PersonAttributeCard("Email:", person.getEmail().value);
+        emailCardPlaceholder.getChildren().add(emailCard.getRoot());
+    }
+
+    private void loadAddressCard() {
+        addressCard = new PersonAttributeCard("Address:", person.getAddress().value);
+        addressCardPlaceholder.getChildren().add(addressCard.getRoot());
     }
 }
