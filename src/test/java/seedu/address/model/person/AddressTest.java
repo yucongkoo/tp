@@ -35,6 +35,18 @@ public class AddressTest {
     }
 
     @Test
+    public void isEmptyAddress() {
+        // empty address
+        assertTrue(Address.EMPTY_ADDRESS.isEmptyAddress());
+
+        // non-empty address
+        assertFalse(new Address("Some address").isEmptyAddress());
+
+        // address with "-" value
+        assertFalse(new Address("-").isEmptyAddress());
+    }
+
+    @Test
     public void equals() {
         Address address = new Address("Valid Address");
 
@@ -52,5 +64,8 @@ public class AddressTest {
 
         // different values -> returns false
         assertFalse(address.equals(new Address("Other Valid Address")));
+
+        // empty address -> returns false
+        assertFalse(address.equals(Address.EMPTY_ADDRESS));
     }
 }
