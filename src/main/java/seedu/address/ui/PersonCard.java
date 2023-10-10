@@ -89,6 +89,11 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadAddressCard() {
+
+        if (person.getAddress().isEmptyAddress()) {
+            return;
+        }
+
         addressCard = new PersonAttributeCard("Address:", person.getAddress().value);
         addressCardPlaceholder.getChildren().add(addressCard.getRoot());
     }
