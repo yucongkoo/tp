@@ -14,12 +14,12 @@ public class ListCommandParser implements Parser<ListCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ListCommand parse(String args) throws ParseException {
-            if (args.isEmpty()) {
-                return new ListCommand();
-            } else {
-                throw new ParseException(
-                        String.format(ListCommand.MESSAGE_USAGE));
-            }
+        if (args.isEmpty()) {
+            return new ListCommand();
+        } else {
+            throw new ParseException(
+                String.format(ListCommand.MESSAGE_USAGE));
+        }
     }
 }
 
