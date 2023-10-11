@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.JOJO;
+import static seedu.address.testutil.TypicalPersons.KAKA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -72,7 +75,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_OnePersonFound() {
+    public void execute_multipleKeywords_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate predicate = preparePredicate("Jojo Best");
         FindCommand command = new FindCommand(predicate);
@@ -82,7 +85,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_OnePersonWithAWordBetweenFound() {
+    public void execute_multipleKeywords_onePersonWithAWordBetweenFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate predicate = preparePredicate("kaka lany");
         FindCommand command = new FindCommand(predicate);
