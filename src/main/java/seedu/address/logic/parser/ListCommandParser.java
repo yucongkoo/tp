@@ -15,11 +15,9 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         if (args.isEmpty()) {
-            return new ListCommand();
-        } else {
-            throw new ParseException(
-                String.format(ListCommand.MESSAGE_USAGE));
+            throw new ParseException(ListCommand.MESSAGE_USAGE);
         }
+        return new ListCommand();
     }
 }
 
