@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 
@@ -19,7 +20,8 @@ public class JsonAdaptedAddress {
      * @param isEmptyAddress
      */
     @JsonCreator
-    public JsonAdaptedAddress(@JsonProperty("value") String value, @JsonProperty("isEmptyAddress") boolean isEmptyAddress) {
+    public JsonAdaptedAddress(@JsonProperty("value") String value,
+            @JsonProperty("isEmptyAddress") boolean isEmptyAddress) {
         this.value = value;
         this.isEmptyAddress = isEmptyAddress;
     }
