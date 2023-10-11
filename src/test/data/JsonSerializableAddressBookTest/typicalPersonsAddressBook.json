@@ -63,5 +63,14 @@
       "isEmptyAddress" : false
     },
     "tags" : [ ]
+  }, {
+    "name" : "Calmen",
+    "phone" : "33333333",
+    "email" : "calmen@example.com",
+    "address" : {
+      "value" : "-",
+      "isEmptyAddress" : false
+    },
+    "tags" : [ ]
   } ]
 }
