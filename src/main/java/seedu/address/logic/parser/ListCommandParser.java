@@ -14,7 +14,7 @@ public class ListCommandParser implements Parser<ListCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ListCommand parse(String args) throws ParseException {
-        if (args.isEmpty()) {
+        if (!args.isEmpty()) {
             throw new ParseException(ListCommand.MESSAGE_USAGE);
         }
         return new ListCommand();
