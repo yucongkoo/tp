@@ -35,7 +35,7 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 <img src="images/songfangyl.png" width="200px">
 
-[[github](http://github.com/songfangyl)] 
+[[github](http://github.com/songfangyl)]
 [[portfolio](team/songfangyl.md)]
 
 * Role: Code quality
