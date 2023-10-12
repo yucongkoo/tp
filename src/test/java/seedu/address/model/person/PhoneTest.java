@@ -48,22 +48,22 @@ public class PhoneTest {
     public void equals() {
         Phone phone = new Phone("12345678");
 
-        // same values 
-        assertEquals(phone, new Phone("12345678"));
+        // same values
+        assertTrue(phone.equals(new Phone("12345678")));
 
         // same object
-        assertEquals(phone, phone);
+        assertTrue(phone.equals(phone));
 
         // null
-        assertNotEquals(null, phone);
+        assertFalse(phone.equals(null));
 
         // primitive and Phone type
-        assertNotEquals(5.0f, phone);
+        assertFalse(phone.equals(50.f));
 
         // different type
-        assertNotEquals(new Name("apple"), phone);
+        assertFalse(phone.equals(new Name("apple")));
 
         // different values
-        assertNotEquals(phone, new Phone("87654321"));
+        assertFalse(phone.equals(new Phone("87654321")));
     }
 }
