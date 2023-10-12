@@ -17,6 +17,8 @@ public class Address {
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
 
+    public static final Address EMPTY_ADDRESS = new EmptyAddress();
+
     public final String value;
 
     /**
@@ -35,6 +37,13 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if this instance is an empty address
+     */
+    public boolean isEmptyAddress() {
+        return false;
     }
 
     @Override

@@ -8,7 +8,7 @@ pageNav: 3
 
 EzContact is a
 
-* desktop app for managing contacts, optimized for use via a  Line Interface (CLI) 
+* desktop app for managing contacts, optimized for use via a  Line Interface (CLI)
 * while still having the benefits of a Graphical User Interface (GUI).
 * If you can type fast, EzContact can get your contact management tasks done faster than traditional GUI apps.
 
@@ -56,7 +56,7 @@ EzContact is a
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-  
+
 ### Adding a person: `add`
 
 Adds a person to the contact book.

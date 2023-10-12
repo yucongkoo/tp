@@ -341,7 +341,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 4. AddressBook displays the list of contacts that meet the criteria.
    Use case ends.
 
-**Extensions:**</br>       
+**Extensions:**</br>
 2b.  User doesn't select any categories to filter for.<br>
 &emsp;2b1. AddressBook shows an error message to alert User about the invalid command.
 &emsp;&emsp;&emsp;Use case ends.
@@ -402,7 +402,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2a1. AddressBook shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-       
+
 
 
 ### Non-Functional Requirements

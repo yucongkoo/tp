@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox fx:id="attributeCard" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" VBox.vgrow="always" spacing="5" styleClass="attribute-card" >
+    <padding>
+        <Insets top="5" right="10" bottom="5" left="10" />
+    </padding>
+    <HBox alignment="CENTER" styleClass="attribute-card-label-container">
+        <Label fx:id="header" style="-fx-text-fill: #F5EDC2;"/>
+    </HBox>
+    <Label fx:id="body" wrapText="true" style="-fx-text-fill: #000000;"/>
+</VBox>
