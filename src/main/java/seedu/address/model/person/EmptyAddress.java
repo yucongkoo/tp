@@ -5,7 +5,7 @@ package seedu.address.model.person;
  */
 public class EmptyAddress extends Address {
 
-    public static String DUMMY_VALUE_FOR_EMPTY_ADDRESS = "-";
+    public static final String DUMMY_VALUE_FOR_EMPTY_ADDRESS = "-";
 
     /**
      * Constructs an empty address object.
