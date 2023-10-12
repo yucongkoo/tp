@@ -35,6 +35,9 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
         assertFalse(Phone.isValidPhone("911")); // short phone numbers
         assertFalse(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertFalse(Phone.isValidPhone("/*-/-++")); // special characters
+        assertFalse(Phone.isValidPhone("+6589562314")); // with country code
+        assertFalse(Phone.isValidPhone("+60123931189")); // non-Singapore phone number
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("93121534")); // exactly 8 numbers

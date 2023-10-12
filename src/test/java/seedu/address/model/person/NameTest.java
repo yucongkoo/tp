@@ -27,18 +27,22 @@ public class NameTest {
         // invalid name
         assertFalse(Name.isValidName("")); // empty string
         assertFalse(Name.isValidName(" ")); // spaces only
-        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
+        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters and shorter than 64 characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
         assertFalse(Name.isValidName("Haliphibourous Maximilian Hippopotolosoto; "
                 + "Eater of The Five Golden Suns, "
-                + "Son of the Great Sultan Kolosomonomia")); //name longer than 64 characters
+                + "Son of the Great Sultan Kolosomonomia")); //name longer than 64 characters and special characters
+        assertFalse(Name.isValidName("Haliphibourous Maximilian Hippopotolosoto "
+                + "Eater of The Five Golden Suns "
+                + "Son of the Great Sultan Kolosomonomia")); //name longer than 64 characters and no special characters
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
         assertTrue(Name.isValidName("12345")); // numbers only
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName("SPONGEBOB")); // only capital letters
+        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names shorter than 64 characters
     }
 
     @Test
