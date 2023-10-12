@@ -76,13 +76,19 @@
     "name" : "Jojo Best",
     "phone" : "14445656",
     "email" : "jojo@example.com",
-    "address" : "100th street",
+    "address" : {
+      "value" : "100th street",
+      "isEmptyAddress" : false
+    },
     "tags" : [ ]
   }, {
     "name" : "Kaka Der Lany",
     "phone" : "78756232",
     "email" : "kaka@example.com",
-    "address" : "kaka street",
+    "address" : {
+      "value" : "kaka street",
+      "isEmptyAddress" : false
+    },
     "tags" : [ ]
   }]
 }
