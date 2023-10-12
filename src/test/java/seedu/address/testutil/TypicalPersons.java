@@ -51,6 +51,12 @@ public class TypicalPersons {
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
+    public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
+            .withEmail("jojo@example.com").withAddress("100th street").build();
+
+    public static final Person KAKA = new PersonBuilder().withName("Kaka Der Lany").withPhone("78756232")
+            .withEmail("kaka@example.com").withAddress("kaka street").build();
+
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
@@ -78,6 +84,6 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, CALMEN));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, CALMEN, JOJO, KAKA));
     }
 }
