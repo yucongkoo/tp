@@ -12,8 +12,11 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="200" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
+
+    <!-- Left VBox for name and tags -->
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
@@ -25,12 +28,21 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
     </VBox>
+
+    <!-- Right VBox for phone, email and address -->
+    <HBox GridPane.columnIndex="1" spacing="10">
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+
+      <VBox fx:id="phoneCardPlaceholder"/>
+      <VBox fx:id="emailCardPlaceholder" />
+      <VBox fx:id="addressCardPlaceholder" />
+    </HBox>
+
   </GridPane>
 </HBox>
