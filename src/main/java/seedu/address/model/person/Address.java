@@ -62,6 +62,11 @@ public class Address {
             return false;
         }
 
+        // if one of the address is empty, other == this should be true
+        if (other instanceof EmptyAddress) {
+            return false;
+        }
+
         Address otherAddress = (Address) other;
         return value.equals(otherAddress.value);
     }
