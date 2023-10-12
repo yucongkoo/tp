@@ -287,7 +287,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                   |
 |----------|------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | `* * *`  | salesperson      | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
-| `* * *`  | user             | to add new contacts to my address book                                            | avoid losing my contacts' particulars                             |
+| `* * *`  | user             | to add new contacts to my address book                                            |                                                                   |
 | `* * *`  | user             | update my contacts/information easily                                             |                                                                   |
 | `* * *`  | salesperson      | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
 | `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |

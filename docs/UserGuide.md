@@ -68,6 +68,10 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS]`
 **Caution:** A person must have a name, phone number and email address to be a valid entry.
 </box>
 
+Note:
+* Name can not be longer than 64 characters
+* Only allows Singapore phone number `e.g. 8 digits`
+
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe e/betsycrowe@example.com p/12345678`
