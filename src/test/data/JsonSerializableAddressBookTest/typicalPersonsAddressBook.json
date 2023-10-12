@@ -69,7 +69,7 @@
     "email" : "calmen@example.com",
     "address" : {
       "value" : "-",
-      "isEmptyAddress" : false
+      "isEmptyAddress" : true
     },
     "tags" : [ ]
   }, {
