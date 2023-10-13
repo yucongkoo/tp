@@ -17,7 +17,8 @@ public class Email {
             + "consisting of letters (both uppercase and lowercase), digits, "
             + "underscores, and certain special characters including +, &, *, and -.\n"
             + "2. The \"@\" symbol is required to separate the local part from the domain part.\n"
-            + "3. The domain part of the email address should consist of at least one domain label, "
+            + "3. The domain part of the email address should consist of at "
+            + "least one domain label (excluding top-level domain), consisting of alphanumeric characters and -. \n"
             + "4. The top-level domain (TLD) of the email address should consist of letters (uppercase or lowercase) "
             + "and have a length of between 2 and 7 characters.\n";
     private static final String OWASP_EMAIL_VALIDATION = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
