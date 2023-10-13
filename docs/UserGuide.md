@@ -80,10 +80,10 @@ Format: `list`
 
 <box type="warning" seamless>
 
-**Caution:** A list command is invalid when the command “list” is not singular e.g. unnecessary additional parameter is added: list 1, list first, list all.
+**Caution:** A list command does not take in parameters e.g. `list 1`, `list first`, `list all` will be invalid.
 
 Examples:
-* `list`
+* `list` shows a list of all existing contacts
 
 </box>
 
