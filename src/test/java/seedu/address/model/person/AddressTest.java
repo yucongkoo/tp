@@ -49,6 +49,7 @@ public class AddressTest {
     @Test
     public void equals() {
         Address address = new Address("Valid Address");
+        Address address_with_value_of_empty_address = new Address(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS);
 
         // same values -> returns true
         assertTrue(address.equals(new Address("Valid Address")));
@@ -67,5 +68,8 @@ public class AddressTest {
 
         // empty address -> returns false
         assertFalse(address.equals(Address.EMPTY_ADDRESS));
+
+        // valid address with same value as empty address should not be equal to empty address
+        assertFalse(address_with_value_of_empty_address.equals(Address.EMPTY_ADDRESS));
     }
 }

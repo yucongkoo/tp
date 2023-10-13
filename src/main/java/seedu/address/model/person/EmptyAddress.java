@@ -4,11 +4,14 @@ package seedu.address.model.person;
  * Represents an empty address.
  */
 public class EmptyAddress extends Address {
+
+    public static final String DUMMY_VALUE_FOR_EMPTY_ADDRESS = "-";
+
     /**
      * Constructs an empty address object.
      */
     public EmptyAddress() {
-        super("-");
+        super(DUMMY_VALUE_FOR_EMPTY_ADDRESS);
     }
 
     @Override
