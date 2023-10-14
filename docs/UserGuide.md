@@ -125,18 +125,18 @@ Examples:
 
 ### Finding persons : `find`
 
-Finds persons whose names contain all the given keywords.
+Finds customers whose names contain all the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORD]`
 
-* The search is case-insensitive. e.g. `find Adam` can returns `adam`
-* The order of the keywords does not matter. e.g.`find Adam Leong` can returns `Leong Adam` or `Adam Chen Leong`
-* Only the name is searched.
-* Only the persons match all the keywords will be returned e.g. `find Adam Leong` can return `Adam Leong Keng Fat` but not `Adam Huat`
+* The search is case-insensitive. e.g. `find Adam` returns `adam`
+* The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
+* Only the name information is searched.
+* Only the customers matching all the keywords will be returned e.g. `find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`
 
 Examples:
-* `find Adam Huat` Finds all the persons whose name contains `Adam` and  `Huat`
-* `find Song` Finds all the persons whose name contains `Song`
+* `find Adam Huat` Finds all the customers whose name contains `Adam` and  `Huat`
+* `find Song` Finds all the customers whose name contains `Song`
 
 
 
