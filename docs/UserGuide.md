@@ -130,6 +130,22 @@ Examples:
 *  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `jiufong@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
+### Finding persons : `find`
+
+Finds customers whose names contain all the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORD]`
+
+* The search is case-insensitive. e.g. `find Adam` returns `adam`
+* The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
+* Only the name information is searched.
+* Only the customers matching all the keywords will be returned e.g. `find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`
+
+Examples:
+* `find Adam Huat` Finds all the customers whose name contains `Adam` and  `Huat`
+* `find Song` Finds all the customers whose name contains `Song`
+
+
 
 ### Exiting the program : `exit`
 
@@ -151,3 +167,4 @@ _More coming soon ..._
 | **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                       |
 | **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`               |
 | **List**   | `list`                                                                                                                                    |
+| **Find**   | `find NAME`                                                                                                                               |
