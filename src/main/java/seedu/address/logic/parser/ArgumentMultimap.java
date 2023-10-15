@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +61,7 @@ public class ArgumentMultimap {
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
     public String getPreamble() {
-        return getValue(new Prefix("")).orElse("");
+        return getValue(PREFIX_EMPTY).orElse("");
     }
 
     /**
