@@ -1,94 +1,154 @@
 {
   "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
-    "name" : "Alice Pauline",
-    "phone" : "94351253",
-    "email" : "alice@example.com",
+    "name" : {
+      "value" : "Alice Pauline"
+    },
+    "phone" : {
+      "value" : "94351253"
+    },
+    "email" : {
+      "value" : "alice@example.com"
+    },
     "address" : {
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
-    "tags" : [ "friends" ]
+    "tags": [ "friends" ]
   }, {
-    "name" : "Benson Meier",
-    "phone" : "98765432",
-    "email" : "johnd@example.com",
+    "name" : {
+      "value" : "Benson Meier"
+    },
+    "phone" : {
+      "value" : "98765432"
+    },
+    "email" : {
+      "value" : "johnd@example.com"
+    },
     "address" : {
       "value" : "311, Clementi Ave 2, #02-25",
       "isEmptyAddress" : false
     },
-    "tags" : [ "owesMoney", "friends" ]
+    "tags": [ "owesMoney", "friends" ]
   }, {
-    "name" : "Carl Kurz",
-    "phone" : "95352563",
-    "email" : "heinz@example.com",
+    "name" : {
+      "value" : "Carl Kurz"
+    },
+    "phone" : {
+      "value" : "95352563"
+    },
+    "email" : {
+      "value" : "heinz@example.com"
+    },
     "address" : {
       "value" : "wall street",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "Daniel Meier",
-    "phone" : "87652533",
-    "email" : "cornelia@example.com",
+    "name" : {
+      "value" : "Daniel Meier"
+    },
+    "phone" : {
+      "value" : "87652533"
+    },
+    "email" : {
+      "value" : "cornelia@example.com"
+    },
     "address" : {
       "value" : "10th street",
       "isEmptyAddress" : false
     },
-    "tags" : [ "friends" ]
+    "tags": [ "friends" ]
   }, {
-    "name" : "Elle Meyer",
-    "phone" : "94822224",
-    "email" : "werner@example.com",
+    "name" : {
+      "value" : "Elle Meyer"
+    },
+    "phone" : {
+      "value" : "94822224"
+    },
+    "email" : {
+      "value" : "werner@example.com"
+    },
     "address" : {
       "value" : "michegan ave",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "Fiona Kunz",
-    "phone" : "94821427",
-    "email" : "lydia@example.com",
+    "name" : {
+      "value" : "Fiona Kunz"
+    },
+    "phone" : {
+      "value" : "94821427"
+    },
+    "email" : {
+      "value" : "lydia@example.com"
+    },
     "address" : {
       "value" : "little tokyo",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "George Best",
-    "phone" : "94828442",
-    "email" : "anna@example.com",
+    "name" : {
+      "value" : "George Best"
+    },
+    "phone" : {
+      "value" : "94828442"
+    },
+    "email" : {
+      "value" : "anna@example.com"
+    },
     "address" : {
       "value" : "4th street",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "Calmen",
-    "phone" : "33333333",
-    "email" : "calmen@example.com",
+    "name" : {
+      "value" : "Calmen"
+    },
+    "phone" : {
+      "value" : "33333333"
+    },
+    "email" : {
+      "value" : "calmen@example.com"
+    },
     "address" : {
       "value" : "-",
       "isEmptyAddress" : true
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "Jojo Best",
-    "phone" : "14445656",
-    "email" : "jojo@example.com",
+    "name" : {
+      "value" : "Jojo Best"
+    },
+    "phone" : {
+      "value" : "14445656"
+    },
+    "email" : {
+      "value" : "jojo@example.com"
+    },
     "address" : {
       "value" : "100th street",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags": [ ]
   }, {
-    "name" : "Kaka Der Lany",
-    "phone" : "78756232",
-    "email" : "kaka@example.com",
+    "name" : {
+      "value" : "Kaka Der Lany"
+    },
+    "phone" : {
+      "value" : "78756232"
+    },
+    "email" : {
+      "value" : "kaka@example.com"
+    },
     "address" : {
       "value" : "kaka street",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
-  }]
+    "tags": [ ]
+  } ]
 }

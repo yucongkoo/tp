@@ -1,20 +1,33 @@
 {
   "persons": [ {
-    "name": "Alice Pauline",
-    "phone": "94351253",
-    "email": "alice@example.com",
+    "name" : {
+      "value" : "Alice Pauline"
+    },
+    "phone" : {
+      "value" : "94351253"
+    },
+    "email" : {
+      "value" : "alice@example.com"
+    },
     "address" : {
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
     "tags": [ "friends" ]
   }, {
-    "name": "Alice Pauline",
-    "phone": "94351253",
-    "email": "pauline@example.com",
+    "name" : {
+      "value" : "Alice Pauline"
+    },
+    "phone" : {
+      "value" : "94351253"
+    },
+    "email" : {
+      "value" : "pauline@example.com"
+    },
     "address" : {
       "value" : "4th street",
       "isEmptyAddress" : false
-    }
+    },
+    "tags": [ ]
   } ]
 }
