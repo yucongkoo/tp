@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.jsonadaptedperson;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,15 +11,13 @@ import seedu.address.model.person.NonEmptyAddress;
 /**
  * Jackson-friendly version of {@link Address}.
  */
-public class JsonAdaptedAddress {
+class JsonAdaptedAddress {
 
     private final String value;
     private final boolean isEmptyAddress;
 
     /**
      * Constructs a {@code JsonAdaptedAddress} with the given {@code value} and {@code isEmptyAddress}.
-     * @param value
-     * @param isEmptyAddress
      */
     @JsonCreator
     public JsonAdaptedAddress(@JsonProperty("value") String value,
@@ -34,14 +32,6 @@ public class JsonAdaptedAddress {
     public JsonAdaptedAddress(Address address) {
         value = address.getValue();
         isEmptyAddress = address.isEmptyAddress();
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public boolean isEmptyAddress() {
-        return isEmptyAddress;
     }
 
     /**

@@ -1,11 +1,18 @@
 {
   "persons": [ {
-    "name": "Person with invalid name field: Ha!ns Mu@ster",
-    "phone": "94824245",
-    "email": "hans@example.com",
+    "name" : {
+      "value" : "Person with invalid name field: Ha!ns Mu@ster"
+    },
+    "phone" : {
+      "value" : "94824245"
+    },
+    "email" : {
+      "value" : "hans@example.com"
+    },
     "address" : {
       "value" : "4th street",
       "isEmptyAddress" : false
-    }
+    },
+    "tags" : [ ]
   } ]
 }
