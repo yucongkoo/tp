@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.EmptyAddress;
+import seedu.address.model.person.NonEmptyAddress;
 
 /**
  * Jackson-friendly version of {@link Address}.
@@ -30,7 +32,7 @@ public class JsonAdaptedAddress {
      * Converts a given {@code Address} into this class for Jackson use.
      */
     public JsonAdaptedAddress(Address address) {
-        value = address.value;
+        value = address.getValue();
         isEmptyAddress = address.isEmptyAddress();
     }
 
@@ -49,14 +51,14 @@ public class JsonAdaptedAddress {
      */
     public Address toModelType() throws IllegalValueException {
         if (isEmptyAddress) {
-            return Address.EMPTY_ADDRESS;
+            return EmptyAddress.EMPTY_ADDRESS;
         }
 
-        if (!Address.isValidAddress(value)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+        if (!NonEmptyAddress.isValidAddress(value)) {
+            throw new IllegalValueException(NonEmptyAddress.MESSAGE_CONSTRAINTS);
         }
 
-        return new Address(value);
+        return new NonEmptyAddress(value);
     }
 
 }

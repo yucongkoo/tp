@@ -11,7 +11,9 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -73,15 +75,15 @@ public class ParserUtil {
      */
     public static Address parseAddress(String address) throws ParseException {
         if (address == null) {
-            return Address.EMPTY_ADDRESS;
+            return EmptyAddress.EMPTY_ADDRESS;
         }
 
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+        if (!NonEmptyAddress.isValidAddress(trimmedAddress)) {
+            throw new ParseException(NonEmptyAddress.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new NonEmptyAddress(trimmedAddress);
     }
 
     /**

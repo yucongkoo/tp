@@ -94,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
             return;
         }
 
-        addressCard = new PersonAttributeCard("Address:", person.getAddress().value);
+        addressCard = new PersonAttributeCard("Address:", person.getAddress().getValue());
         addressCardPlaceholder.getChildren().add(addressCard.getRoot());
     }
 }
