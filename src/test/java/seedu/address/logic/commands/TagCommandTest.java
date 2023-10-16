@@ -1,6 +1,18 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MALE;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
@@ -10,17 +22,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MALE;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class TagCommandTest {
 
@@ -40,10 +41,10 @@ public class TagCommandTest {
     @Test
     public void constructor_nullArguments_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new TagCommand(null, new HashSet<>(), new HashSet<>()));
-        assertThrows(NullPointerException.class,
-                () -> new TagCommand(INDEX_FIRST_PERSON, null, new HashSet<>()));
-        assertThrows(NullPointerException.class,
-                () -> new TagCommand(INDEX_FIRST_PERSON, new HashSet<>(), null));
+        assertThrows(NullPointerException.class, () ->
+                new TagCommand(INDEX_FIRST_PERSON, null, new HashSet<>()));
+        assertThrows(NullPointerException.class, () ->
+                new TagCommand(INDEX_FIRST_PERSON, new HashSet<>(), null));
     }
 
     @Test
@@ -138,7 +139,7 @@ public class TagCommandTest {
 
         Person updatedBenson = new PersonBuilder(benson)
                 .withTags(bensonFirstTag, VALID_TAG_HUSBAND, VALID_TAG_MALE).build();
-        String expectedMessage =  String.format(TagCommand.MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedBenson));
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedBenson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(benson, updatedBenson);
