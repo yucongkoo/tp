@@ -8,7 +8,7 @@ pageNav: 3
 
 EzContact is a
 
-* desktop app for managing contacts, optimized for use via a  Line Interface (CLI)
+* desktop app for managing customer details, optimized for use via Command Line Interface (CLI)
 * while still having the benefits of a Graphical User Interface (GUI).
 * If you can type fast, EzContact can get your contact management tasks done faster than traditional GUI apps.
 
@@ -57,15 +57,15 @@ EzContact is a
 </box>
 
 
-### Adding a person: `add`
+### Adding a customer: `add`
 
-Adds a person to the contact book.
+Adds a customer to the contact book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS]`
 
 <box type="warning" seamless>
 
-**Caution:** A person must have a name, phone number and email address to be a valid entry.
+**Caution:** A customer must have a name, phone number and email address to be a valid entry.
 </box>
 
 <box type="info" seamless>
@@ -81,9 +81,9 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe e/betsycrowe@example.com p/12345678`
 
-### Listing all persons : `list`
+### Listing all customers : `list`
 
-Shows a list of all existing contacts in the contact book.
+Shows a list of all existing customers in the contact book.
 
 Format: `list`
 
@@ -96,13 +96,13 @@ Examples:
 
 </box>
 
-### Deleting a person : `delete`
+### Deleting a customer : `delete`
 
-Deletes the specified contact from the address book.
+Deletes the specified customer from the address book.
 
 Format: `delete INDEX`
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the customer at the specified `INDEX`.
+* The index refers to the index number shown in the displayed customers list.
 * The `INDEX` is 1-indexed
 
 <box type="warning" seamless>
@@ -112,23 +112,23 @@ Format: `delete INDEX`
 
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd customer in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
 
 
-### Editing a person : `edit`
+### Editing a customer : `edit`
 
-Edits an existing person in the address book.
+Edits an existing customer in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
 Examples:
-*  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `jiufong@example.com` respectively.
-*  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
+*  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
+*  `edit 2 n/Betsy Crower` Edits the name of the 2nd customer to be `Betsy Crower`.
 
 ### Finding persons : `find`
 
