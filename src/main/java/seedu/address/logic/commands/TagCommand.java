@@ -24,11 +24,12 @@ public class TagCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add/Delete tags of the person identified "
             + "by the index number used in the displayed person list.\n"
             + "Usage: "
-            + COMMAND_WORD + "<INDEX> (INDEX must be a positive integer) "
+            + COMMAND_WORD + " <INDEX> "
             + "[" + PREFIX_ADD_TAG + "<TAG_TO_ADD>]... "
             + "[" + PREFIX_DELETE_TAG + "<TAG_TO_DELETE>]...\n";
 
     public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of person: %s";
+    public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
 
 
     private Index index;

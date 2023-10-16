@@ -41,6 +41,10 @@ public class TagCommandParser implements Parser<TagCommand> {
         Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
         Set<Tag> tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
 
+        if (tagsToAdd.isEmpty() && tagsToDelete.isEmpty()) {
+            throw new ParseException(TagCommand.MESSAGE_NOT_UPDATED);
+        }
+
         return new TagCommand(index, tagsToAdd, tagsToDelete);
     }
 
