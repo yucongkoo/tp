@@ -75,6 +75,20 @@ public class Person {
     }
 
     /**
+     * Creates and returns a {@code Person} with updated tags.
+     *
+     * @param tagsToAdd contains the tags to be added.
+     * @param tagsToDelete contains the tags to be deleted.
+     */
+    public Person createPersonWithUpdatedTags(Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+        Set<Tag> updatedTags = new HashSet<>(tags);
+        updatedTags.removeAll(tagsToDelete);
+        updatedTags.addAll(tagsToAdd);
+
+        return new Person(name, phone, email, address, updatedTags);
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
@@ -113,5 +127,4 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
 }
