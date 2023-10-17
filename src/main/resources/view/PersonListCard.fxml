@@ -33,15 +33,19 @@
       <FlowPane fx:id="tags" />
     </VBox>
 
-    <!-- Right VBox for phone, email and address -->
-    <HBox GridPane.columnIndex="1" spacing="10">
+    <!-- Right HBox for customers information -->
+    <HBox GridPane.columnIndex="1" spacing="10" HBox.hgrow="ALWAYS">
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
 
-      <VBox fx:id="phoneCardPlaceholder"/>
-      <VBox fx:id="emailCardPlaceholder" />
-      <VBox fx:id="addressCardPlaceholder" />
+      <HBox styleClass="attribute-card-container">
+        <VBox>
+          <VBox fx:id="phoneCardPlaceholder"/>
+          <VBox fx:id="emailCardPlaceholder" />
+          <VBox fx:id="addressCardPlaceholder" />
+        </VBox>
+      </HBox>
     </HBox>
 
   </GridPane>

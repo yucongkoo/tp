@@ -2,9 +2,10 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * An UI Component that displays the attribute of a person.
@@ -14,19 +15,32 @@ public class PersonAttributeCard extends UiPart<Region> {
     private static final String FXML = "PersonAttributeCard.fxml";
 
     @FXML
-    private VBox attributeCard;
-    @FXML
-    private Label header;
+    private HBox attributeCard;
     @FXML
     private Label body;
+    @FXML
+    private ImageView imageView;
+    private Image image;
 
     /**
      * Creates an attribute card with the given headerText and bodyText.
      */
-    public PersonAttributeCard(String headerText, String bodyText) {
+    public PersonAttributeCard(Attribute attribute, String bodyText) {
         super(FXML);
-        header.setText(headerText);
+        switch (attribute) {
+        case PHONE:
+            image = new Image("images/phone.png");
+            imageView.setImage(image);
+            break;
+        case ADDRESS:
+            image = new Image("images/address.png");
+            imageView.setImage(image);
+            break;
+        case EMAIL:
+            image = new Image("images/email.png");
+            imageView.setImage(image);
+            break;
+        }
         body.setText(bodyText);
     }
-
 }
