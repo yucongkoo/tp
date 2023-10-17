@@ -2,13 +2,13 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 /**
- * An UI Component that displays the attribute of a person.
+ * A UI Component that displays the attribute of a person.
  */
 public class PersonAttributeCard extends UiPart<Region> {
 
@@ -40,6 +40,8 @@ public class PersonAttributeCard extends UiPart<Region> {
             image = new Image("images/email.png");
             imageView.setImage(image);
             break;
+        default:
+            //do nothing
         }
         body.setText(bodyText);
     }
