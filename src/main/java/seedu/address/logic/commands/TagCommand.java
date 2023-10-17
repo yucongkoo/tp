@@ -69,4 +69,21 @@ public class TagCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedPerson)));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TagCommand)) {
+            return false;
+        }
+
+        TagCommand otherTagCommand = (TagCommand) other;
+        return index.equals(otherTagCommand.index)
+                && tagsToAdd.equals(otherTagCommand.tagsToAdd)
+                && tagsToDelete.equals(otherTagCommand.tagsToDelete);
+    }
 }
