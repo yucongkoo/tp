@@ -79,12 +79,12 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPhoneCard() {
-        phoneCard = new PersonAttributeCard("Phone:", person.getPhone().value);
+        phoneCard = new PersonAttributeCard(Attribute.PHONE, person.getPhone().value);
         phoneCardPlaceholder.getChildren().add(phoneCard.getRoot());
     }
 
     private void loadEmailCard() {
-        emailCard = new PersonAttributeCard("Email:", person.getEmail().value);
+        emailCard = new PersonAttributeCard(Attribute.EMAIL, person.getEmail().value);
         emailCardPlaceholder.getChildren().add(emailCard.getRoot());
     }
 
@@ -94,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
             return;
         }
 
-        addressCard = new PersonAttributeCard("Address:", person.getAddress().getValue());
+        addressCard = new PersonAttributeCard(Attribute.ADDRESS, person.getAddress().getValue());
         addressCardPlaceholder.getChildren().add(addressCard.getRoot());
     }
 }
