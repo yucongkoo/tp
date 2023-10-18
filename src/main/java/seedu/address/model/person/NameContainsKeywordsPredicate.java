@@ -21,10 +21,17 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> fullNameContainsPrefix(person.getName().fullName, keyword));
+                .allMatch(keyword -> isFullNameContainsPrefix(person.getName().fullName, keyword));
     }
 
-    public boolean fullNameContainsPrefix(String fullName, String prefix) {
+    /**
+     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param fullName The full name to check.
+     * @param prefix The prefix to search for.
+     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     */
+    public boolean isFullNameContainsPrefix(String fullName, String prefix) {
         String lowerFullName = fullName.toLowerCase();
         String lowerPrefix = prefix.toLowerCase();
         for (String name: lowerFullName.split("\\s+")) {
