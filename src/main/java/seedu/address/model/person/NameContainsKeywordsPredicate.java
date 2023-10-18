@@ -21,7 +21,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> person.getName().isFullNameContainsPrefix(keyword));
+                .allMatch(keyword -> Name.isFullNameContainsPrefix(person.getName(), keyword));
     }
 
     @Override
