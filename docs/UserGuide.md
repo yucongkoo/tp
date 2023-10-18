@@ -133,18 +133,21 @@ Examples:
 
 ### Finding persons : `find`
 
-Finds customers whose names contain all the given keywords.
+Finds customers whose names contain all the given keywords as prefix.
 
 Format: `find KEYWORD [MORE_KEYWORD]`
 
 * The search is case-insensitive. e.g. `find Adam` returns `adam`
 * The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
 * Only the name information is searched.
-* Only the customers matching all the keywords will be returned e.g. `find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`
+* The search support partial search, only required keywords match name as a prefix. e.g. `find A` returns `Adam Leong` or `Andy Chong`
+* Only the customers matching all the keywords will be returned e.g. </br>
+`find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`</br>
+`find A L` return `Adam Leong` but not `Adam Tan`
 
 Examples:
-* `find Adam Huat` Finds all the customers whose name contains `Adam` and  `Huat`
-* `find Song` Finds all the customers whose name contains `Song`
+* `find Adam H` Finds all the customers whose name contains `Adam` and  `H` as prefix
+* `find Song` Finds all the customers whose name contains `Song` as prefix
 
 
 
