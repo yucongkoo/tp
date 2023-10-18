@@ -8,7 +8,7 @@ pageNav: 3
 
 EzContact is a
 
-* desktop app for managing customer details, optimized for use via Command Line Interface (CLI)
+* desktop app made for insurance agents to manage customer details, optimized for usage via Command Line Interface (CLI)
 * while still having the benefits of a Graphical User Interface (GUI).
 * If you can type fast, EzContact can get your contact management tasks done faster than traditional GUI apps.
 
@@ -59,7 +59,7 @@ EzContact is a
 
 ### Adding a customer: `add`
 
-Adds a customer to the contact book.
+Adds a customer to EZContact.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS]`
 
@@ -83,7 +83,7 @@ Examples:
 
 ### Listing all customers : `list`
 
-Shows a list of all existing customers in the contact book.
+Shows a list of all existing customers in EZContact.
 
 Format: `list`
 
@@ -98,7 +98,7 @@ Examples:
 
 ### Deleting a customer : `delete`
 
-Deletes the specified customer from the address book.
+Deletes the specified customer from EZContact.
 
 Format: `delete INDEX`
 * Deletes the customer at the specified `INDEX`.
@@ -118,7 +118,7 @@ Examples:
 
 ### Editing a customer : `edit`
 
-Edits an existing customer in the address book.
+Edits an existing customer in EZContact.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 

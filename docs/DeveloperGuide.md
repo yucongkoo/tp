@@ -270,48 +270,48 @@ _{Explain here how the data archiving feature will be implemented}_
 ## Product scope
 
 **Target user profile**:
-
+    
 Target user : Insurance agent
 
 * needs to provide services / insurance plans to customer
 * has a need to manage a significant number of customers
-* needs to maintain connection with his/her customers over a long time span
+* needs to maintain interactions with his/her customers over a long time span
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**:  manage customers' contact for existing/potential insurance contracts that favours CLI over GUI controls
+**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
 
 
 ## User stories
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                   |
-|----------|------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `* * *`  | insurance agent  | to be able to add customers' contacts to my contact book                          | keep track of existing and potential customers                    |
-| `* * *`  | user             | to add new contacts to my contact book                                            |                                                                   |
-| `* * *`  | user             | update my contacts/information easily                                             |                                                                   |
-| `* * *`  | insurance agent  | be able to provide priorities to each customer                                    | prioritise customers that have a higher chance on sealing a deal  |
-| `* * *`  | insurance agent  | know the type of insurance my customer currently holds                            | what service/new insurance to provide my customer                 |
-| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
-| `* * *`  | user             | be able to delete contacts                                                        |                                                                   |
-| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                  |
-| `* * *`  | user             | be able to see my total numbers of entries in my contact book                     | know how many contacts are in my address book now                 |
-| `* *`    | first time user  | be able to know what are the features to use the contact book                     | play around with the features and get used to the application     |
-| `* *`    | fast typist      | have short commands                                                               | execute command faster                                            |
-| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                       |
-| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name              |
-| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                               |
-| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                       |
-| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                        |
-| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                   |
-| `* *`    | user             | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
-| `*`      | user             | import my data from external sources into the contact book                        | avoid copying my data manually                                    |
-| `*`      | advanced user    | have multiple address books                                                       | neatly organize my contacts based on contexts                     |
-| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                              |
-| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
+| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
+|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
+| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
+| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
+| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
+| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
+| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
+| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
+| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
+| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
+| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
+| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
+| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
+| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
+| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
+| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
+| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
+| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
+| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
+| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
+| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
 
 
 
@@ -320,91 +320,91 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 (For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Adding a person
+#### Adding a customer
 
 **Use Case: UC01 - add a customer**
 
 **MSS:**
 1. User enters the details of customer to be added.
-2. Contact book adds the customer.
-3. Contact book displays the details of customer added by user.</br>
+2. System adds the customer.
+3. System displays the details of customer added by user.</br>
    Use case ends.
 
 **Extensions:**</br>
 2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;2a1. Contact book shows an error message to alert User.</br>
+&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
-#### Filter contacts
+#### Filtering customers
 
 **Use case: UC02 - filter customers**
 
 **MSS:**
 1. User chooses to filter customers.
 2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.
-3. Contact book filters the customers list.
-4. Contact book displays the list of customers that meet the criteria.
+3. System filters the customers list.
+4. System displays the list of customers that meet the criteria.
    Use case ends.
 
 **Extensions:**</br>
 2b.  User doesn't select any categories to filter for.<br>
-&emsp;2b1. Contact book shows an error message to alert User about the invalid command.
+&emsp;2b1. System shows an error message to alert User about the invalid command.
 &emsp;&emsp;&emsp;Use case ends.
 
 3a.  None of the contacts meet the filter criteria.
-&emsp;3a1. Contact book shows an empty list with a warning message.
+&emsp;3a1. System shows an empty list with a warning message.
 &emsp;&emsp;&emsp;Use case ends.### Searching for a person
 
-#### Delete a person
+#### Deleting a customer
 
 **Use Case: UC03 - delete a customer**
 
 **MSS:**
 1. User lists out the customers.
-2. Contact book shows the list of customers to user.
+2. System shows the list of customers to user.
 3. User deletes the customer with the index number shown in the displayed list.
-4. AddressBook displays the details of the removed customer.</br>
+4. System displays the details of the removed customer.</br>
    Use case ends.
 
 **Extensions:**</br>
 4a. Invalid delete command or invalid index.</br>
-&emsp;4a1. Contact book shows an error message to alert User about the invalid command.</br>
+&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
-#### Editing a person
+#### Editing a customer
 
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**
 1.  User lists out the customers.
-2.  Contact book shows the list of customers.
+2.  System shows the list of customers.
 3.  User edits the customer with the index number shown in the displayed customer list and provides the field prefix along with the new details.
-4. AddressBook displays the details of the deleted person.</br>
+4.  System displays the details of the deleted person.</br>
    Use case ends.
 
 **Extensions:**</br>
 4a. Index provided by user or information provided by user is invalid.</br>
-&emsp;4a1. Contact book shows an error message to alert User about the invalid command.</br>
+&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
-#### Searching for a person
+#### Searching for a customer
 
-**Use Case: UC05 - search for a person**
+**Use Case: UC05 - search for a customer**
 
 **MSS:**
 
 1.  User searches with a prompt.
-2.  Contact book shows a list of customers matching the prompt.
+2.  System shows a list of customers matching the prompt.
 3.  User views the customers' information.</br>
     Use case ends.
 
 **Extensions:**</br>
 1a. User searches with an invalid prompt format</br>
-&emsp;1a1. Contact book shows an error message to User.</br>
+&emsp;1a1. System shows an error message to User.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 2a. There is no customer that match the prompt.</br>
-&emsp;2a1. Contact book shows an empty list.</br>
+&emsp;2a1. System shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 
