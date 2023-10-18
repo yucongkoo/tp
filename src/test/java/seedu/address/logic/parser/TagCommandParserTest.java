@@ -28,7 +28,8 @@ public class TagCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE);
 
     private TagCommandParser parser = new TagCommandParser();
-    
+
+
     private Index targetIndex = INDEX_FIRST_PERSON;
     private Tag friendTag = new Tag(VALID_TAG_FRIEND);
     private Tag husbandTag = new Tag(VALID_TAG_HUSBAND);
