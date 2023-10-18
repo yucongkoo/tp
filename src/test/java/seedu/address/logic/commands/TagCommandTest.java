@@ -1,11 +1,14 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MALE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
@@ -153,5 +156,35 @@ public class TagCommandTest {
         Command command = new TagCommand(outOfBoundIndex, new HashSet<>(), new HashSet<>());
 
         assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        Index testIndex = INDEX_FIRST_PERSON;
+        Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));
+        Set<Tag> testSetToDelete = Set.of(new Tag("tagToDelete"));
+
+        TagCommand tagCommand = new TagCommand(testIndex, testSetToAdd, testSetToDelete);
+
+        // same object -> true
+        assertTrue(tagCommand.equals(tagCommand));
+
+        // different class -> false
+        assertFalse(tagCommand.equals(new Object()));
+
+        // null -> false
+        assertFalse(tagCommand.equals(null));
+
+        // same value -> true
+        assertTrue(tagCommand.equals(new TagCommand(testIndex, testSetToAdd, testSetToDelete)));
+
+        // different index -> false
+        assertFalse(tagCommand.equals(new TagCommand(INDEX_SECOND_PERSON, testSetToAdd, testSetToDelete)));
+
+        // different setToAdd -> false
+        assertFalse(tagCommand.equals(new TagCommand(testIndex, new HashSet<>(), testSetToDelete)));
+
+        // different setToDelete -> false
+        assertFalse(tagCommand.equals(new TagCommand(testIndex, testSetToAdd, new HashSet<>())));
     }
 }
