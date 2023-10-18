@@ -21,16 +21,16 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
 
-        String[] fullName = person.getName().fullName.split("\\s+");
+        String[] names = person.getName().fullName.split("\\s+");
         for (String keyword: keywords) {
-            boolean isContainPrefix = false;
-            for (String name: fullName) {
+            boolean containsPrefix = false;
+            for (String name: names) {
                 if (name.toLowerCase().startsWith(keyword.toLowerCase())) {
-                    isContainPrefix = true;
+                    containsPrefix = true;
                     break;
                 }
             }
-            if (isContainPrefix) {
+            if (containsPrefix) {
                 continue;
             }
             return false;
