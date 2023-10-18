@@ -63,6 +63,23 @@ public class Name {
         return fullName.equals(otherName.fullName);
     }
 
+    /**
+     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     */
+    public boolean isFullNameContainsPrefix(String prefix) {
+        String lowerFullName = fullName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String name: lowerFullName.split("\\s+")) {
+            if (name.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int hashCode() {
         return fullName.hashCode();
