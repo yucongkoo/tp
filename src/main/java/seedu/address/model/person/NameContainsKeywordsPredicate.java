@@ -20,22 +20,19 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         if (keywords.isEmpty()) {
             return false;
         }
+        return keywords.stream()
+                .allMatch(keyword -> fullNameContainsPrefix(person.getName().fullName, keyword));
+    }
 
-        String[] names = person.getName().fullName.split("\\s+");
-        for (String keyword: keywords) {
-            boolean containsPrefix = false;
-            for (String name: names) {
-                if (name.toLowerCase().startsWith(keyword.toLowerCase())) {
-                    containsPrefix = true;
-                    break;
-                }
+    public boolean fullNameContainsPrefix(String fullName, String prefix) {
+        String lowerFullName = fullName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String name: lowerFullName.split("\\s+")) {
+            if (name.startsWith(lowerPrefix)) {
+                return true;
             }
-            if (containsPrefix) {
-                continue;
-            }
-            return false;
         }
-        return true;
+        return false;
     }
 
     @Override
