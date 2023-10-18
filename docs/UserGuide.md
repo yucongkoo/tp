@@ -83,7 +83,7 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all existing contacts in the contact book.
+Shows a list of all existing customers in the contact book and the size of the list.
 
 Format: `list`
 
@@ -92,7 +92,7 @@ Format: `list`
 **Caution:** A list command does not take in parameters e.g. `list 1`, `list first`, `list all` will be invalid.
 
 Examples:
-* `list` shows a list of all existing contacts
+* `list` shows a list of all existing customers and the size of the list.
 
 </box>
 
