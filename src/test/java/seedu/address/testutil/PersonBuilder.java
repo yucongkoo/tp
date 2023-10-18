@@ -68,6 +68,16 @@ public class PersonBuilder {
     }
 
     /**
+     * Set the tags from {@code tags} to the [@code Person} that we are building.
+     *
+     * @param tags Set of tags.
+     */
+    public PersonBuilder withTags(Set<Tag> tags) {
+        this.tags = tags;
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
