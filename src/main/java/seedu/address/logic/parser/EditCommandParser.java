@@ -27,7 +27,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        if (args.contains(PREFIX_TAG.toString())) {
+        if (args.contains(" " + PREFIX_TAG)) {
             throw new ParseException(MESSAGE_EDIT_TAG);
         }
 
