@@ -83,7 +83,7 @@ Examples:
 
 ### Listing all customers : `list`
 
-Shows a list of all existing customers in EZContact.
+Shows a list of all existing customers in EZContact and the size of the list.
 
 Format: `list`
 
@@ -92,7 +92,7 @@ Format: `list`
 **Caution:** A list command does not take in parameters e.g. `list 1`, `list first`, `list all` will be invalid.
 
 Examples:
-* `list` shows a list of all existing contacts
+* `list` shows a list of all existing customers and the size of the list.
 
 </box>
 
@@ -120,11 +120,12 @@ Examples:
 
 Edits an existing customer in EZContact.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Tags are not editable.
 
 Examples:
 *  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
@@ -132,18 +133,21 @@ Examples:
 
 ### Finding persons : `find`
 
-Finds customers whose names contain all the given keywords.
+Finds customers whose names contain all the given keywords as prefix.
 
 Format: `find KEYWORD [MORE_KEYWORD]`
 
 * The search is case-insensitive. e.g. `find Adam` returns `adam`
 * The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
 * Only the name information is searched.
-* Only the customers matching all the keywords will be returned e.g. `find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`
+* The search support partial search, only required keywords match name as a prefix. e.g. `find A` returns `Adam Leong` or `Andy Chong`
+* Only the customers matching all the keywords will be returned e.g. </br>
+`find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`</br>
+`find A L` return `Adam Leong` but not `Adam Tan`
 
 Examples:
-* `find Adam Huat` Finds all the customers whose name contains `Adam` and  `Huat`
-* `find Song` Finds all the customers whose name contains `Song`
+* `find Adam H` Finds all the customers whose name contains `Adam` and  `H` as prefix
+* `find Song` Finds all the customers whose name contains `Song` as prefix
 
 
 
