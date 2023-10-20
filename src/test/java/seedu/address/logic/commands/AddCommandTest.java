@@ -54,6 +54,24 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_tagExceedLimit_throwsCommandException() {
+        Person person = new PersonBuilder().withTags("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11").build();
+        Command command = new AddCommand(person);
+        assertThrows(CommandException.class, Messages.MESSAGE_TAG_COUNT_EXCEED, () -> command.execute(new ModelStub()));
+    }
+
+    @Test
+    public void execute_tagAtLimit_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().withTags("1", "2", "3", "4", "5", "6", "7", "8", "9", "10").build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();

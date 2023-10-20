@@ -11,6 +11,7 @@ public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric without spacing in between";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final int MAXIMUM_TAGS_PER_PERSON = 10;
     // public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
     private final String tagName;
 

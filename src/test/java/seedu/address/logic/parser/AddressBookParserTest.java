@@ -105,7 +105,7 @@ public class AddressBookParserTest {
                 new UpdatePersonTagsDescriptor(testSetToAdd, testSetToDelete);
 
         TagCommand expectedCommand = new TagCommand(testIndex, updatePersonTagsDescriptor);
-        Command actualCommand = parser.parseCommand(PersonUtil.getTagCommand(testIndex, testSetToAdd, testSetToDelete));
+        Command actualCommand = parser.parseCommand(PersonUtil.getTagCommand(testIndex, updatePersonTagsDescriptor));
 
         assertEquals(expectedCommand, actualCommand);
     }

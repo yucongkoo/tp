@@ -2,20 +2,18 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.Messages.MESSAGE_TAG_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
+import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -76,6 +74,10 @@ public class TagCommand extends Command {
                 updatePersonTagsDescriptor.getTagsToAdd(),
                 updatePersonTagsDescriptor.getTagsToDelete());
 
+        if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
+            throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
+        }
+
         model.setPerson(personToUpdate, updatedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedPerson)));
@@ -104,6 +106,9 @@ public class TagCommand extends Command {
         private Set<Tag> tagsToAdd;
         private Set<Tag> tagsToDelete;
 
+        /**
+         * Constructs a {@code UpdatePersonTagsDescriptor} with {@code tagsToAdd} and {@code tagsToDelete}.
+         */
         public UpdatePersonTagsDescriptor(Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
             requireAllNonNull(tagsToAdd, tagsToDelete);
 
@@ -150,7 +155,7 @@ public class TagCommand extends Command {
                 return true;
             }
 
-            if (!(other instanceof  UpdatePersonTagsDescriptor)) {
+            if (!(other instanceof UpdatePersonTagsDescriptor)) {
                 return false;
             }
 

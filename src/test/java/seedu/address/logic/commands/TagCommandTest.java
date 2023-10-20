@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MALE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.model.util.SampleDataUtil.getTagSet;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -62,7 +63,7 @@ public class TagCommandTest {
 
     @Test
     public void execute_onlyAddSingleTag_success() {
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag(VALID_TAG_HUSBAND)));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet(VALID_TAG_HUSBAND));
         updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
 
@@ -78,7 +79,7 @@ public class TagCommandTest {
 
     @Test
     public void execute_onlyAddMultipleTags_success() {
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag(VALID_TAG_HUSBAND), new Tag(VALID_TAG_MALE)));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet(VALID_TAG_HUSBAND, VALID_TAG_MALE));
         updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
 
@@ -94,7 +95,7 @@ public class TagCommandTest {
 
     @Test
     public void execute_addDuplicateTag_success() {
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag(aliceTag)));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet(aliceTag));
         updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
 
@@ -109,7 +110,7 @@ public class TagCommandTest {
     @Test
     public void execute_onlyDeleteSingleTag_success() {
         updatePersonTagsDescriptor.setTagsToAdd(new HashSet<>());
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag(aliceTag)));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet(aliceTag));
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
 
         Person updatedAlice = new PersonBuilder(alice).withTags().build();
@@ -124,7 +125,7 @@ public class TagCommandTest {
     @Test
     public void execute_onlyDeleteMultipleTag_success() {
         updatePersonTagsDescriptor.setTagsToAdd(new HashSet<>());
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag(bensonFirstTag), new Tag(bensonSecondTag)));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet(bensonFirstTag, bensonSecondTag));
         Command command = new TagCommand(bensonIndex, updatePersonTagsDescriptor);
 
         Person updatedBenson = new PersonBuilder(benson).withTags().build();
@@ -139,7 +140,7 @@ public class TagCommandTest {
     @Test
     public void execute_deleteNonExistingTag_success() {
         updatePersonTagsDescriptor.setTagsToAdd(new HashSet<>());
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag("nonExistingTag")));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet("nonExistingTag"));
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
 
         String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSON_SUCCESS, Messages.format(alice));
@@ -151,9 +152,8 @@ public class TagCommandTest {
 
     @Test
     public void execute_addAndDeleteTags_success() {
-        Set<Tag> tagsToBeAdded = Set.of(
-                new Tag(VALID_TAG_HUSBAND), new Tag(VALID_TAG_MALE), new Tag(bensonFirstTag));
-        Set<Tag> tagsToBeDeleted = Set.of(new Tag(bensonSecondTag), new Tag("nonExistingTag"));
+        Set<Tag> tagsToBeAdded = getTagSet(VALID_TAG_HUSBAND, VALID_TAG_MALE, bensonFirstTag);
+        Set<Tag> tagsToBeDeleted = getTagSet(bensonSecondTag, "nonExistingTag");
 
         updatePersonTagsDescriptor.setTagsToAdd(tagsToBeAdded);
         updatePersonTagsDescriptor.setTagsToDelete(tagsToBeDeleted);
@@ -172,7 +172,7 @@ public class TagCommandTest {
     @Test
     public void execute_indexOutOfBound_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonListSize() + 1);
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag("tagToAdd")));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet("tagToAdd"));
         Command command = new TagCommand(outOfBoundIndex, updatePersonTagsDescriptor);
 
         assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -180,27 +180,58 @@ public class TagCommandTest {
 
     @Test
     public void execute_addAndDeleteCommonTag_failure() {
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag("commonTag")));
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag("commonTag")));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet("commonTag"));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet("commonTag"));
         Command command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
         assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
 
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag("commonTag"), new Tag("validTag")));
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag("commonTag")));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet("commonTag", "validTag"));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet("commonTag"));
         command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
         assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
 
-        updatePersonTagsDescriptor.setTagsToAdd(Set.of(new Tag("commonTag")));
-        updatePersonTagsDescriptor.setTagsToDelete(Set.of(new Tag("commonTag"), new Tag("validTag")));
+        updatePersonTagsDescriptor.setTagsToAdd(getTagSet("commonTag"));
+        updatePersonTagsDescriptor.setTagsToDelete(getTagSet("commonTag", "validTag"));
         command = new TagCommand(aliceIndex, updatePersonTagsDescriptor);
         assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
     }
 
     @Test
+    public void execute_tagCountExceedLimit_failure() {
+        Set<Tag> nineTags = getTagSet("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        Set<Tag> tenTags = getTagSet("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+
+        updatePersonTagsDescriptor.setTagsToAdd(nineTags);
+        Command command = new TagCommand(bensonIndex, updatePersonTagsDescriptor);
+        assertCommandFailure(command, model, Messages.MESSAGE_TAG_COUNT_EXCEED);
+
+        updatePersonTagsDescriptor.setTagsToAdd(tenTags);
+        command = new TagCommand(bensonIndex, updatePersonTagsDescriptor);
+        assertCommandFailure(command, model, Messages.MESSAGE_TAG_COUNT_EXCEED);
+    }
+
+    @Test
+    public void execute_tagCountAtLimit_success() {
+        Set<Tag> eightTags = getTagSet("1", "2", "3", "4", "5", "6", "7", "8");
+
+        updatePersonTagsDescriptor.setTagsToAdd(eightTags);
+        Command command = new TagCommand(bensonIndex, updatePersonTagsDescriptor);
+
+        Person updatedBenson = new PersonBuilder(benson)
+                .withTags(bensonFirstTag, bensonSecondTag, "1", "2", "3", "4", "5", "6", "7", "8").build();
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedBenson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(benson, updatedBenson);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void equals() {
         Index testIndex = INDEX_FIRST_PERSON;
-        Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));
-        Set<Tag> testSetToDelete = Set.of(new Tag("tagToDelete"));
+        Set<Tag> testSetToAdd = getTagSet("tagToAdd");
+        Set<Tag> testSetToDelete = getTagSet("tagToDelete");
         updatePersonTagsDescriptor.setTagsToAdd(testSetToAdd);
         updatePersonTagsDescriptor.setTagsToDelete(testSetToDelete);
 
