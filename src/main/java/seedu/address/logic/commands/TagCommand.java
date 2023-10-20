@@ -108,13 +108,15 @@ public class TagCommand extends Command {
 
         /**
          * Constructs a {@code UpdatePersonTagsDescriptor} with {@code tagsToAdd} and {@code tagsToDelete}.
+         * A defensive copy of {@code tagsToAdd} and {@code tagsToDelete} is used internally.
          */
         public UpdatePersonTagsDescriptor(Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
             requireAllNonNull(tagsToAdd, tagsToDelete);
 
-            this.tagsToAdd = tagsToAdd;
-            this.tagsToDelete = tagsToDelete;
-        };
+            this.tagsToAdd = new HashSet<>(tagsToAdd);
+            this.tagsToDelete = new HashSet<>(tagsToDelete);
+        }
+
 
         public void setTagsToAdd(Set<Tag> tagsToAdd) {
             requireNonNull(tagsToAdd);
