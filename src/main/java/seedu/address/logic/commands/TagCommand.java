@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 
 import java.util.List;
 import java.util.Set;
@@ -63,7 +64,7 @@ public class TagCommand extends Command {
         }
 
         Person personToUpdate = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = personToUpdate.createPersonWithUpdatedTags(tagsToAdd, tagsToDelete);
+        Person updatedPerson = createPersonWithUpdatedTags(personToUpdate, tagsToAdd, tagsToDelete);
 
         model.setPerson(personToUpdate, updatedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

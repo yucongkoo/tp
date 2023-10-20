@@ -75,17 +75,17 @@ public class Person {
     }
 
     /**
-     * Creates and returns a {@code Person} with updated tags.
-     *
-     * @param tagsToAdd contains the tags to be added.
-     * @param tagsToDelete contains the tags to be deleted.
+     * Creates and returns a {@code Person} with details of {@code source}, adding tags in {@code tagsToAdd} and
+     * removing tags in {@code tagsToDelete}.
      */
-    public Person createPersonWithUpdatedTags(Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
-        Set<Tag> updatedTags = new HashSet<>(tags);
+    public static Person createPersonWithUpdatedTags(Person source,
+            Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+
+        Set<Tag> updatedTags = new HashSet<>(source.tags);
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(name, phone, email, address, updatedTags);
+        return new Person(source.name, source.phone, source.email, source.address, updatedTags);
     }
 
     /**
