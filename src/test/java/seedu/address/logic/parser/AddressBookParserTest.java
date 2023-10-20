@@ -26,6 +26,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -97,10 +98,13 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_tag() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
+
         Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));
         Set<Tag> testSetToDelete = Set.of(new Tag("tagToDelete"));
+        UpdatePersonTagsDescriptor updatePersonTagsDescriptor =
+                new UpdatePersonTagsDescriptor(testSetToAdd, testSetToDelete);
 
-        TagCommand expectedCommand = new TagCommand(testIndex, testSetToAdd, testSetToDelete);
+        TagCommand expectedCommand = new TagCommand(testIndex, updatePersonTagsDescriptor);
         Command actualCommand = parser.parseCommand(PersonUtil.getTagCommand(testIndex, testSetToAdd, testSetToDelete));
 
         assertEquals(expectedCommand, actualCommand);

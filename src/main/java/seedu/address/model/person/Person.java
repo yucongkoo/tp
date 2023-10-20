@@ -2,9 +2,11 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -79,7 +81,9 @@ public class Person {
      * removing tags in {@code tagsToDelete}.
      */
     public static Person createPersonWithUpdatedTags(Person source,
-            Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+            Collection<Tag> tagsToAdd,
+            Collection<Tag> tagsToDelete) {
+        requireAllNonNull(source, tagsToAdd, tagsToDelete);
 
         Set<Tag> updatedTags = new HashSet<>(source.tags);
         updatedTags.removeAll(tagsToDelete);

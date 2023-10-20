@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.model.tag.Tag;
 
 public class TagCommandParserTest {
@@ -34,17 +35,24 @@ public class TagCommandParserTest {
     private Tag friendTag = new Tag(VALID_TAG_FRIEND);
     private Tag husbandTag = new Tag(VALID_TAG_HUSBAND);
 
+    private UpdatePersonTagsDescriptor updatePersonTagsDescriptor =
+            new UpdatePersonTagsDescriptor(new HashSet<>(), new HashSet<>());
+
     @Test
     public void parse_onlyAddTag_success() {
         // only add one tag
-        Command expectedCommand = new TagCommand(targetIndex, Set.of(friendTag), new HashSet<>());
+        updatePersonTagsDescriptor.setTagsToAdd(Set.of(friendTag));
+        updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());
+        Command expectedCommand = new TagCommand(targetIndex, updatePersonTagsDescriptor);
         String userInput = String.format("%d %s",
                 targetIndex.getOneBased(),
                 PREFIX_ADD_TAG + VALID_TAG_FRIEND);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // add multiple tags
-        expectedCommand = new TagCommand(targetIndex, Set.of(friendTag, husbandTag), new HashSet<>());
+        updatePersonTagsDescriptor.setTagsToAdd(Set.of(friendTag, husbandTag));
+        updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());
+        expectedCommand = new TagCommand(targetIndex, updatePersonTagsDescriptor);
         userInput = String.format("%d %s %s",
                 targetIndex.getOneBased(),
                 PREFIX_ADD_TAG + VALID_TAG_FRIEND,
@@ -55,14 +63,18 @@ public class TagCommandParserTest {
     @Test
     public void parse_onlyDeleteTag_success() {
         // only add one tag
-        Command expectedCommand = new TagCommand(targetIndex, new HashSet<>(), Set.of(friendTag));
+        updatePersonTagsDescriptor.setTagsToAdd(new HashSet<>());
+        updatePersonTagsDescriptor.setTagsToDelete(Set.of(friendTag));
+        Command expectedCommand = new TagCommand(targetIndex, updatePersonTagsDescriptor);
         String userInput = String.format("%d %s",
                 targetIndex.getOneBased(),
                 PREFIX_DELETE_TAG + VALID_TAG_FRIEND);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // add multiple tags
-        expectedCommand = new TagCommand(targetIndex, new HashSet<>(), Set.of(friendTag, husbandTag));
+        updatePersonTagsDescriptor.setTagsToAdd(new HashSet<>());
+        updatePersonTagsDescriptor.setTagsToDelete(Set.of(friendTag, husbandTag));
+        expectedCommand = new TagCommand(targetIndex, updatePersonTagsDescriptor);
         userInput = String.format("%d %s %s",
                 targetIndex.getOneBased(),
                 PREFIX_DELETE_TAG + VALID_TAG_FRIEND,
@@ -72,7 +84,9 @@ public class TagCommandParserTest {
 
     @Test
     public void parse_bothAddAndDeleteTags_success() {
-        Command expectedCommand = new TagCommand(targetIndex, Set.of(friendTag), Set.of(husbandTag));
+        updatePersonTagsDescriptor.setTagsToAdd(Set.of(friendTag));
+        updatePersonTagsDescriptor.setTagsToDelete(Set.of(husbandTag));
+        Command expectedCommand = new TagCommand(targetIndex, updatePersonTagsDescriptor);
 
         // add tag first before delete tag
         String userInput = String.format("%d %s %s",
