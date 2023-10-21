@@ -124,7 +124,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseAddress_nullValue_returnsEmptyAddress() throws Exception {
-        Address expectedAddress = EmptyAddress.EMPTY_ADDRESS;
+        Address expectedAddress = EmptyAddress.getEmptyAddress();
         assertEquals(expectedAddress, ParserUtil.parseAddress(null));
     }
 

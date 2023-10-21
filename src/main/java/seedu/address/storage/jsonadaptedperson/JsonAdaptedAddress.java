@@ -41,7 +41,7 @@ class JsonAdaptedAddress {
      */
     public Address toModelType() throws IllegalValueException {
         if (isEmptyAddress) {
-            return EmptyAddress.EMPTY_ADDRESS;
+            return EmptyAddress.getEmptyAddress();
         }
 
         if (!NonEmptyAddress.isValidAddress(value)) {

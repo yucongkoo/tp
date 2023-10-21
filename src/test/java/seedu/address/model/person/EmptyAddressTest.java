@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 public class EmptyAddressTest {
     @Test
     public void equals() {
-        Address emptyAddress = EmptyAddress.EMPTY_ADDRESS;
+        Address emptyAddress = EmptyAddress.getEmptyAddress();
 
         // empty address -> returns true
-        assertTrue(emptyAddress.equals(EmptyAddress.EMPTY_ADDRESS));
+        assertTrue(emptyAddress.equals(EmptyAddress.getEmptyAddress()));
 
         // same object -> returns true
         assertTrue(emptyAddress.equals(emptyAddress));
