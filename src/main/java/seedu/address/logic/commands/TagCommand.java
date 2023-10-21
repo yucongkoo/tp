@@ -48,16 +48,16 @@ public class TagCommand extends Command {
      */
     public TagCommand(Index index, UpdatePersonTagsDescriptor updatePersonTagsDescriptor) {
         requireAllNonNull(index, updatePersonTagsDescriptor);
+        assert updatePersonTagsDescriptor.hasTagToUpdate()
+                : "TagCommand expects an updatePersonTagsDescriptor that has tags to be updated";
 
         this.index = index;
-        this.updatePersonTagsDescriptor = updatePersonTagsDescriptor;
+        this.updatePersonTagsDescriptor = new UpdatePersonTagsDescriptor(updatePersonTagsDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert updatePersonTagsDescriptor.hasTagToUpdate()
-                : "Tags to add and tags to delete should not both be empty";
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -73,6 +73,8 @@ public class TagCommand extends Command {
         Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
                 updatePersonTagsDescriptor.getTagsToAdd(),
                 updatePersonTagsDescriptor.getTagsToDelete());
+
+        requireAllNonNull(personToUpdate, updatedPerson);
 
         if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
             throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
@@ -117,25 +119,35 @@ public class TagCommand extends Command {
             this.tagsToDelete = new HashSet<>(tagsToDelete);
         }
 
+        /**
+         * Constructs a defensive copy of {@code toCopy}.
+         */
+        public UpdatePersonTagsDescriptor(UpdatePersonTagsDescriptor toCopy) {
+            requireNonNull(toCopy);
+
+            this.tagsToAdd = new HashSet<>(toCopy.tagsToAdd);
+            this.tagsToDelete = new HashSet<>(toCopy.tagsToDelete);
+        }
+
 
         public void setTagsToAdd(Set<Tag> tagsToAdd) {
             requireNonNull(tagsToAdd);
 
-            this.tagsToAdd = tagsToAdd;
+            this.tagsToAdd = new HashSet<>(tagsToAdd);
         }
 
         public void setTagsToDelete(Set<Tag> tagsToDelete) {
             requireNonNull(tagsToDelete);
 
-            this.tagsToDelete = tagsToDelete;
+            this.tagsToDelete = new HashSet<>(tagsToDelete);
         }
 
         public Set<Tag> getTagsToAdd() {
-            return tagsToAdd;
+            return new HashSet<>(tagsToAdd);
         }
 
         public Set<Tag> getTagsToDelete() {
-            return tagsToDelete;
+            return new HashSet<>(tagsToDelete);
         }
 
         /**
