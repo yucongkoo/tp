@@ -7,13 +7,19 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -49,6 +55,93 @@ public class PersonTest {
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
+    }
+
+    @Test
+    public void createPersonWithUpdatedTagsTest() {
+        Person bobWithoutTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).build();
+        Person bobWithHusbandTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_HUSBAND).build();
+        Person bobWithFriendTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_FRIEND).build();
+        Person bobWithHusbandAndFriendTag = new PersonBuilder(bobWithoutTags)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        Tag friendTag = new Tag(VALID_TAG_FRIEND);
+        Tag husbandTag = new Tag(VALID_TAG_HUSBAND);
+        Set<Tag> emptyTagsSet = new HashSet<>();
+        Set<Tag> friendTagSet = new HashSet<>();
+        Set<Tag> husbandTagSet = new HashSet<>();
+        Set<Tag> husbandAndFriendTagSet = new HashSet<>();
+
+        friendTagSet.add(friendTag);
+        husbandTagSet.add(husbandTag);
+        husbandAndFriendTagSet.add(friendTag);
+        husbandAndFriendTagSet.add(husbandTag);
+
+        // do not update tag of person
+        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, emptyTagsSet));
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, emptyTagsSet));
+        assertEquals(bobWithHusbandAndFriendTag,
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, emptyTagsSet));
+
+        // adding one tag to person that does not have that tag
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithoutTags, friendTagSet, emptyTagsSet));
+        assertEquals(bobWithHusbandAndFriendTag,
+                createPersonWithUpdatedTags(bobWithFriendTag, husbandTagSet, emptyTagsSet));
+
+        // adding one tag to person that has that tag
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, friendTagSet, emptyTagsSet));
+
+
+        // adding mutiple tags to person that does not have all tag
+        assertEquals(bobWithHusbandAndFriendTag,
+                createPersonWithUpdatedTags(bobWithoutTags, husbandAndFriendTagSet, emptyTagsSet));
+
+        // adding multiple tags to person that have some of the tags
+        assertEquals(bobWithHusbandAndFriendTag,
+                createPersonWithUpdatedTags(bobWithFriendTag, husbandAndFriendTagSet, emptyTagsSet));
+
+        // adding multiple tags to person that have all of the tags
+        assertEquals(bobWithHusbandAndFriendTag,
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, husbandAndFriendTagSet, emptyTagsSet));
+
+
+
+
+        // deleting one tag from person that does not have that tag
+        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, friendTagSet));
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, husbandTagSet));
+
+        // deleting one tag from person that has that tag
+        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, friendTagSet));
+        assertEquals(bobWithHusbandTag,
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, friendTagSet));
+
+        // deleting multiple tags from person that does not have that tag
+        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, husbandAndFriendTagSet));
+
+        // deleting mutiple tags from person that has partial or all of the tags
+        assertEquals(bobWithoutTags,
+                createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, husbandAndFriendTagSet));
+        assertEquals(bobWithoutTags,
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, husbandAndFriendTagSet));
+
+
+
+
+        // adding new tag and deleting existing tag of a person
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithHusbandTag, friendTagSet, husbandTagSet));
+
+        // adding existing tag and deleting existing tag of a person
+        assertEquals(bobWithFriendTag,
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, friendTagSet, husbandTagSet));
+
+        // adding new tag and deleting non-existing tag of a person
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithoutTags, friendTagSet, husbandTagSet));
+
+        // adding existing tag and deleting non-existing tag of a person
+        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, friendTagSet, husbandTagSet));
+
     }
 
     @Test

@@ -75,6 +75,20 @@ public class Person {
     }
 
     /**
+     * Creates and returns a {@code Person} with details of {@code source}, adding tags in {@code tagsToAdd} and
+     * removing tags in {@code tagsToDelete}.
+     */
+    public static Person createPersonWithUpdatedTags(Person source,
+            Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+
+        Set<Tag> updatedTags = new HashSet<>(source.tags);
+        updatedTags.removeAll(tagsToDelete);
+        updatedTags.addAll(tagsToAdd);
+
+        return new Person(source.name, source.phone, source.email, source.address, updatedTags);
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
@@ -113,5 +127,4 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
 }
