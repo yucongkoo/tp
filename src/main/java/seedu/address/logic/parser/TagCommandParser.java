@@ -9,7 +9,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
@@ -21,6 +23,8 @@ import seedu.address.model.tag.Tag;
  */
 public class TagCommandParser implements Parser<TagCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(TagCommandParser.class);
+
     /**
      * Parses the given {@code String} of arguments in the context of the TagCommand
      * and returns a TagCommand object for execution.
@@ -28,6 +32,8 @@ public class TagCommandParser implements Parser<TagCommand> {
      */
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        logger.fine("TagCommandParser parsing: " + args);
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ADD_TAG, PREFIX_DELETE_TAG);
 
@@ -36,6 +42,7 @@ public class TagCommandParser implements Parser<TagCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
+            logger.finer("TagCommandParser parse failed due to invalid index: " + argMultimap.getPreamble());
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), pe);
         }
 
@@ -44,6 +51,7 @@ public class TagCommandParser implements Parser<TagCommand> {
         UpdatePersonTagsDescriptor updatePersonTagsDescriptor = new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
 
         if (!updatePersonTagsDescriptor.hasTagToUpdate()) {
+            logger.finer("TagCommandParser parse failed due to missing tags to update");
             throw new ParseException(TagCommand.MESSAGE_NOT_UPDATED);
         }
 

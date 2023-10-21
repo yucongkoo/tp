@@ -12,7 +12,9 @@ import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -37,6 +39,8 @@ public class TagCommand extends Command {
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
 
+    private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
+
     private final Index index;
     private final UpdatePersonTagsDescriptor updatePersonTagsDescriptor;
 
@@ -59,13 +63,18 @@ public class TagCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        logger.fine("TagCommand executing...");
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.finer(String.format("TagCommand execution failed due to index %d out of bound",
+                    index.getOneBased()));
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         if (updatePersonTagsDescriptor.containsCommonTagToAddAndDelete()) {
+            logger.finer("TagCommand execution failed due to common tag in add and delete");
             throw new CommandException(MESSAGE_COMMON_TAG_FAILURE);
         }
 
@@ -77,6 +86,7 @@ public class TagCommand extends Command {
         requireAllNonNull(personToUpdate, updatedPerson);
 
         if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
+            logger.finer("TagCommand execution failed due to exceeding maximum tag counts allowed");
             throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
         }
 
