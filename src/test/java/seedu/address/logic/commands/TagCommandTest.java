@@ -262,4 +262,13 @@ public class TagCommandTest {
         assertFalse(tagCommand.equals(new TagCommand(testIndex,
                 new UpdatePersonTagsDescriptor(testSetToAdd, new HashSet<>()))));
     }
+
+    @Test
+    public void updatePersonDescriptorEquals() {
+        assertTrue(updatePersonTagsDescriptor.equals(updatePersonTagsDescriptor)); // same object -> true
+
+        assertFalse(updatePersonTagsDescriptor.equals(new Object())); // different object type -> false
+
+        assertFalse(updatePersonTagsDescriptor.equals(null)); // null -> false
+    }
 }

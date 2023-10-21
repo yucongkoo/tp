@@ -39,4 +39,22 @@ public class TagTest {
         assertFalse(Tag.isValidTagName(" "));
         assertFalse(Tag.isValidTagName("123456789012345678901")); // too long
     }
+
+    @Test
+    public void equals() {
+        Tag tag = new Tag("valid tag");
+
+        // same object -> return true
+        assertTrue(tag.equals(tag));
+
+        // different type -> false
+        assertFalse(tag.equals(new Object()));
+        assertFalse(tag.equals(null));
+
+        // different value -> false
+        assertFalse(tag.equals(new Tag("other valid tag")));
+
+        // same value -> true
+        assertTrue(tag.equals(new Tag("valid tag")));
+    }
 }
