@@ -12,6 +12,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
@@ -40,12 +41,13 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
         Set<Tag> tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
+        UpdatePersonTagsDescriptor updatePersonTagsDescriptor = new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
 
-        if (tagsToAdd.isEmpty() && tagsToDelete.isEmpty()) {
+        if (!updatePersonTagsDescriptor.hasTagToUpdate()) {
             throw new ParseException(TagCommand.MESSAGE_NOT_UPDATED);
         }
 
-        return new TagCommand(index, tagsToAdd, tagsToDelete);
+        return new TagCommand(index, updatePersonTagsDescriptor);
     }
 
     /**

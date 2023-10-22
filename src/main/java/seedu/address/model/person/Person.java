@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -62,6 +63,13 @@ public class Person {
     }
 
     /**
+     * Returns the number of tags assigned to this person.
+     */
+    public int getTagsCount() {
+        return tags.size();
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
@@ -79,7 +87,9 @@ public class Person {
      * removing tags in {@code tagsToDelete}.
      */
     public static Person createPersonWithUpdatedTags(Person source,
-            Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+            Collection<Tag> tagsToAdd,
+            Collection<Tag> tagsToDelete) {
+        requireAllNonNull(source, tagsToAdd, tagsToDelete);
 
         Set<Tag> updatedTags = new HashSet<>(source.tags);
         updatedTags.removeAll(tagsToDelete);

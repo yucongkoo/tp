@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
@@ -16,7 +15,6 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
 
 /**
  * A utility class for Person.
@@ -57,11 +55,11 @@ public class PersonUtil {
         return sb.toString();
     }
 
-    public static String getTagCommand(Index index, Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
-        String tagsToAddString = tagsToAdd.stream()
+    public static String getTagCommand(Index index, TagCommand.UpdatePersonTagsDescriptor updatePersonTagsDescriptor) {
+        String tagsToAddString = updatePersonTagsDescriptor.getTagsToAdd().stream()
                 .map(t -> " " + PREFIX_ADD_TAG + t.getTagName())
                 .collect(Collectors.joining());
-        String tagsToDeleteString = tagsToDelete.stream()
+        String tagsToDeleteString = updatePersonTagsDescriptor.getTagsToDelete().stream()
                 .map(t -> " " + PREFIX_DELETE_TAG + t.getTagName())
                 .collect(Collectors.joining());
 
