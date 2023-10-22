@@ -16,7 +16,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
-    <!-- Left VBox for name and tags -->
+    <!-- Left VBox for name, priority and tags -->
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
@@ -29,6 +29,12 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
+        <Label fx:id="priority" styleClass="priority">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
       </HBox>
       <FlowPane fx:id="tags" />
     </VBox>

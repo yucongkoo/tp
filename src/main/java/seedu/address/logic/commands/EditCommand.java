@@ -23,6 +23,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,6 +45,10 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_EDIT_TAG = "Cannot edit tags. Please use tag command to add/delete tags.";
+    public static final String MESSAGE_EDIT_PRIORITY = "Cannot edit priorities. Please use pr command to assign " +
+            "new priority.";
+    public static final String MESSAGE_EDIT_TAG_AND_PRIORITY = "Cannot edit tags and priorities. Please use " +
+            "tag and pr command respectively.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -93,8 +98,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> tags = personToEdit.getTags();
+        Priority priority = personToEdit.getPriority();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags, priority);
     }
 
     @Override
