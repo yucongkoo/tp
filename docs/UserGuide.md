@@ -67,7 +67,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]...`
 
 <box type="warning" seamless>
 
-**Caution:** 
+**Caution:**
 * `NAME` should **not be longer than 64 characters**.
 * `PHONE_NUMBER` should be an **8-digit number**(i.e. a Singapore number).
 * `EMAIL` should be a **valid email address**(i.e. `local-part@domain`).
