@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,6 +21,8 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NO_PERSON_FOUND = "No person found!";
+    public static final String MESSAGE_TAG_COUNT_EXCEED =
+            String.format("Command will cause number of tags to exceed the limit of %d.", MAXIMUM_TAGS_PER_PERSON);
 
     /**
      * Returns an error message indicating the duplicate prefixes.

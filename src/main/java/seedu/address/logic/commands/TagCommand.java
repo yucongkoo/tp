@@ -1,11 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.Messages.MESSAGE_TAG_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
+import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,40 +35,48 @@ public class TagCommand extends Command {
 
     public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of person: %s";
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
+    public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
 
-
-    private Index index;
-    private Set<Tag> tagsToAdd;
-    private Set<Tag> tagsToDelete;
+    private final Index index;
+    private final UpdatePersonTagsDescriptor updatePersonTagsDescriptor;
 
     /**
      * Constructs a Tag Command.
      *
      * @param index of the person in the filtered person list to tag.
-     * @param tagsToAdd to the person specified by index.
-     * @param tagsToDelete from the person specified by index.
+     * @param updatePersonTagsDescriptor containing details of tags to update.
      */
-    public TagCommand(Index index, Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
-        requireNonNull(index);
-        requireNonNull(tagsToAdd);
-        requireNonNull(tagsToDelete);
+    public TagCommand(Index index, UpdatePersonTagsDescriptor updatePersonTagsDescriptor) {
+        requireAllNonNull(index, updatePersonTagsDescriptor);
 
         this.index = index;
-        this.tagsToAdd = tagsToAdd;
-        this.tagsToDelete = tagsToDelete;
+        this.updatePersonTagsDescriptor = updatePersonTagsDescriptor;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        assert updatePersonTagsDescriptor.hasTagToUpdate()
+                : "Tags to add and tags to delete should not both be empty";
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (updatePersonTagsDescriptor.containsCommonTagToAddAndDelete()) {
+            throw new CommandException(MESSAGE_COMMON_TAG_FAILURE);
+        }
+
         Person personToUpdate = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = createPersonWithUpdatedTags(personToUpdate, tagsToAdd, tagsToDelete);
+        Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
+                updatePersonTagsDescriptor.getTagsToAdd(),
+                updatePersonTagsDescriptor.getTagsToDelete());
+
+        if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
+            throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
+        }
 
         model.setPerson(personToUpdate, updatedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -84,7 +96,74 @@ public class TagCommand extends Command {
 
         TagCommand otherTagCommand = (TagCommand) other;
         return index.equals(otherTagCommand.index)
-                && tagsToAdd.equals(otherTagCommand.tagsToAdd)
-                && tagsToDelete.equals(otherTagCommand.tagsToDelete);
+                && updatePersonTagsDescriptor.equals(otherTagCommand.updatePersonTagsDescriptor);
+    }
+
+    /**
+     * Stores the information of tags to add to and tags to delete from a person.
+     */
+    public static class UpdatePersonTagsDescriptor {
+        private Set<Tag> tagsToAdd;
+        private Set<Tag> tagsToDelete;
+
+        /**
+         * Constructs a {@code UpdatePersonTagsDescriptor} with {@code tagsToAdd} and {@code tagsToDelete}.
+         * A defensive copy of {@code tagsToAdd} and {@code tagsToDelete} is used internally.
+         */
+        public UpdatePersonTagsDescriptor(Set<Tag> tagsToAdd, Set<Tag> tagsToDelete) {
+            requireAllNonNull(tagsToAdd, tagsToDelete);
+
+            this.tagsToAdd = new HashSet<>(tagsToAdd);
+            this.tagsToDelete = new HashSet<>(tagsToDelete);
+        }
+
+
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            requireNonNull(tagsToAdd);
+
+            this.tagsToAdd = tagsToAdd;
+        }
+
+        public void setTagsToDelete(Set<Tag> tagsToDelete) {
+            requireNonNull(tagsToDelete);
+
+            this.tagsToDelete = tagsToDelete;
+        }
+
+        public Set<Tag> getTagsToAdd() {
+            return tagsToAdd;
+        }
+
+        public Set<Tag> getTagsToDelete() {
+            return tagsToDelete;
+        }
+
+        /**
+         * Returns true if there is at least one tag to update.
+         */
+        public boolean hasTagToUpdate() {
+            return !(tagsToAdd.isEmpty() && tagsToDelete.isEmpty());
+        }
+
+        private boolean containsCommonTagToAddAndDelete() {
+            Set<Tag> intersectionSet = new HashSet<>(tagsToAdd);
+            intersectionSet.retainAll(tagsToDelete);
+            return !intersectionSet.isEmpty();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            }
+
+            if (!(other instanceof UpdatePersonTagsDescriptor)) {
+                return false;
+            }
+
+            UpdatePersonTagsDescriptor otherUpdatePersonTagsDescriptor = (UpdatePersonTagsDescriptor) other;
+            return tagsToAdd.equals(otherUpdatePersonTagsDescriptor.tagsToAdd)
+                    && tagsToDelete.equals(otherUpdatePersonTagsDescriptor.tagsToDelete);
+        }
     }
 }
