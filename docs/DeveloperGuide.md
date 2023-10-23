@@ -178,14 +178,14 @@ Note that **duplicate tags will be ignored**.
 
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. 
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
 
 **Implementing `TagCommand`**
 
-`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to 
+`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
 reflect the changes after the tag command completes its execution.
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
@@ -197,7 +197,7 @@ taking `execute(m)` call to the `TagCommand` as an example.
 
 Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
 is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
-The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser` 
+The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser`
 to parse the arguments.
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
@@ -216,7 +216,7 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
 
-Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of 
+Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
 **Aspect: Duplicate tags handling:**
@@ -241,8 +241,8 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
-Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that 
-they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer 
+Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
+they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
 ## \[Proposed\] Undo/redo feature
@@ -356,7 +356,7 @@ _{Explain here how the data archiving feature will be implemented}_
 ## Product scope
 
 **Target user profile**:
-    
+
 Target user : Insurance agent
 
 * needs to provide services / insurance plans to customer
