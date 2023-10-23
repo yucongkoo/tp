@@ -11,7 +11,6 @@ import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.priority.PriorityTest;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 

@@ -44,34 +44,34 @@ public class PersonTest {
         Email validEmail = new Email(VALID_EMAIL_BOB);
         Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
         Set<Tag> validTags = new HashSet<>() {{
-            add(new Tag(VALID_TAG_FRIEND));
-        }};
+                add(new Tag(VALID_TAG_FRIEND));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
 
         // with priority field
-        assertThrows(NullPointerException.class,() -> new Person(null, validPhone, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
                 validTags, validPriority));
-        assertThrows(NullPointerException.class,() -> new Person(validName, null, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
                 validTags, validPriority));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, null, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
                 validTags, validPriority));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, validEmail, null,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
                 validTags, validPriority));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 null, validPriority));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 validTags, null));
 
         // without priority field
-        assertThrows(NullPointerException.class,() -> new Person(null, validPhone, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
                 validTags));
-        assertThrows(NullPointerException.class,() -> new Person(validName, null, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
                 validTags));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, null, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
                 validTags));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, validEmail, null,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
                 validTags));
-        assertThrows(NullPointerException.class,() -> new Person(validName, validPhone, validEmail, validAddress,
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 null));
     }
 
@@ -83,9 +83,9 @@ public class PersonTest {
         Email validEmail = new Email(VALID_EMAIL_BOB);
         Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
         Set<Tag> validTags = new HashSet<>() {{
-            add(new Tag(VALID_TAG_FRIEND));
-            add(new Tag(VALID_TAG_HUSBAND));
-        }};
+                add(new Tag(VALID_TAG_FRIEND));
+                add(new Tag(VALID_TAG_HUSBAND));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
 
         // with priority field
@@ -282,7 +282,7 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different priority -> returns false
-        editedAlice = new PersonBuilder(ALICE).withPriority(VALID_PRIORITY_LOW).build(); // default priority of ALICE is high
+        editedAlice = new PersonBuilder(ALICE).withPriority(VALID_PRIORITY_LOW).build(); // default priority is high
         assertFalse(ALICE.equals(editedAlice));
     }
 

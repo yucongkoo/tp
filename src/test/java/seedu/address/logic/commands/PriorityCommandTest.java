@@ -56,7 +56,7 @@ public class PriorityCommandTest {
     @Test
     public void execute_samePriority_throwsCommandException() {
         Index indexOfTargetPerson = INDEX_FIRST_PERSON;
-        PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, highPriority); // default priority of Person is high
+        PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, highPriority); // default priority is high
 
         assertCommandFailure(pc, model, PriorityCommand.MESSAGE_NOT_ASSIGNED);
     }
@@ -68,7 +68,8 @@ public class PriorityCommandTest {
         Person expectedPerson = new PersonBuilder(personInFilteredList).withPriority(VALID_PRIORITY_LOW).build();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), expectedPerson);
-        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, Messages.format(expectedPerson));
+        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS,
+                Messages.format(expectedPerson));
 
         Index indexOfTargetPerson = INDEX_FIRST_PERSON;
         PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, lowPriority);

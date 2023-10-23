@@ -83,7 +83,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC2 = " " + PREFIX_TAG; // empty string not allowed for tags
     public static final String INVALID_ADD_TAG_DESC = " " + PREFIX_ADD_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_DELETE_TAG_DESC = " " + PREFIX_DELETE_TAG + "hubby*";
-    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "high low"; // multiple arguments not allowed
+    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "high low"; // multiple arguments
     public static final String INVALID_PRIORITY_DESC2 = " " + PREFIX_PRIORITY + "1";
     public static final String INVALID_PRIORITY_DESC3 = " " + PREFIX_PRIORITY;
 

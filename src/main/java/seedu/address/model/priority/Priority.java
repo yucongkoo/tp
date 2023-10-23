@@ -3,7 +3,6 @@ package seedu.address.model.priority;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
