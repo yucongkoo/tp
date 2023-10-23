@@ -38,7 +38,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.priority = new Priority("none");
+        this.priority = new Priority("-");
     }
 
     /**
@@ -122,7 +122,8 @@ public class Person {
      * Creates and returns a {@code Person} with details of {@code source}, assigning priority of
      * {@code newPriority}.
      */
-    public static Person createPersonWithUpdatePriority(Person source, Priority newPriority) {
+    public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
+        requireAllNonNull(source, newPriority);
         return new Person(source.name, source.phone, source.email, source.address, source.tags, newPriority);
     }
 

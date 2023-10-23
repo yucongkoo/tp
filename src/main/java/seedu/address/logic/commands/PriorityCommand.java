@@ -2,24 +2,26 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.person.Person.createPersonWithUpdatePriority;
+import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.priority.Priority;
 
+/** Assigns priority to a person. **/
 public class PriorityCommand extends Command {
     public static final String COMMAND_WORD = "pr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assign priority to a person "
             + "by the index number used in the displayed person list.\n"
             + "Usage: "
-            + COMMAND_WORD + " <INDEX> "
+            + COMMAND_WORD + " <INDEX> (must be a positive integer) "
             + "<PRIORITY_LEVEL>\n"
             + Priority.MESSAGE_CONSTRAINTS;
 
@@ -53,7 +55,7 @@ public class PriorityCommand extends Command {
         }
 
         Person personToUpdate = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = createPersonWithUpdatePriority(personToUpdate, priority);
+        Person updatedPerson = createPersonWithUpdatedPriority(personToUpdate, priority);
 
         if (personToUpdate.getPriority().equals(priority)) {
             throw new CommandException(MESSAGE_NOT_ASSIGNED);
@@ -63,5 +65,27 @@ public class PriorityCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_ASSIGN_PERSON_SUCCESS, Messages.format(updatedPerson)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PriorityCommand)) {
+            return false;
+        }
+
+        PriorityCommand otherPriorityCommand = (PriorityCommand) other;
+        return priority.equals(otherPriorityCommand.priority) && index.equals(otherPriorityCommand.index);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("priority", priority)
+                .toString();
     }
 }

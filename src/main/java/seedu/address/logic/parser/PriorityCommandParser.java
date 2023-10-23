@@ -4,9 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.PriorityCommand;
-import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.priority.Priority;
 
@@ -25,7 +23,7 @@ public class PriorityCommandParser implements Parser<PriorityCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        String[] separatedArgs = trimmedArgs.split(" ", 2);
+        String[] separatedArgs = trimmedArgs.split(" ");
 
         Index index;
 
@@ -36,7 +34,7 @@ public class PriorityCommandParser implements Parser<PriorityCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PriorityCommand.MESSAGE_USAGE), pe);
         }
 
-        if (separatedArgs.length == 1) {
+        if (separatedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PriorityCommand.MESSAGE_USAGE));
         }

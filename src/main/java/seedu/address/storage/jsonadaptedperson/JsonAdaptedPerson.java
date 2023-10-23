@@ -72,7 +72,8 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelTags(), getModelPriority());
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelTags(),
+                getModelPriority());
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -114,7 +115,8 @@ public class JsonAdaptedPerson {
 
     private Priority getModelPriority() throws IllegalValueException {
         if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
         }
         return priority.toModelType();
     }

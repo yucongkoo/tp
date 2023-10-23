@@ -3,18 +3,41 @@ package seedu.address.model.priority;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 /** Represents a Person's priority level. **/
 public class Priority {
-    public enum LEVEL {HIGH, MEDIUM, LOW, NONE};
+    /** Possible priorities level. **/
+    public enum Level { HIGH, MEDIUM, LOW, NONE };
 
     public static final String HIGH_PRIORITY_KEYWORD = "high";
     public static final String MEDIUM_PRIORITY_KEYWORD = "medium";
     public static final String LOW_PRIORITY_KEYWORD = "low";
+    public static final String NONE_PRIORITY_KEYWORD = "-";
+    public static final HashSet<String> VALID_PRIORITY_KEYWORDS = new HashSet<>() {
+        {
+            add(HIGH_PRIORITY_KEYWORD);
+            add(MEDIUM_PRIORITY_KEYWORD);
+            add(LOW_PRIORITY_KEYWORD);
+            add(NONE_PRIORITY_KEYWORD);
+        }
+    };
 
-    public static final String MESSAGE_CONSTRAINTS = "Priority levels should only be one of: {" +
-        HIGH_PRIORITY_KEYWORD + " " + MEDIUM_PRIORITY_KEYWORD + " " + LOW_PRIORITY_KEYWORD + " }";
+    public static final HashMap<Level, String> LEVEL_STRING_MAP = new HashMap<>() {
+        {
+            put(Level.HIGH, HIGH_PRIORITY_KEYWORD);
+            put(Level.MEDIUM, MEDIUM_PRIORITY_KEYWORD);
+            put(Level.LOW, LOW_PRIORITY_KEYWORD);
+            put(Level.NONE, NONE_PRIORITY_KEYWORD);
+        }
+    };
 
-    private LEVEL level;
+    public static final String MESSAGE_CONSTRAINTS = "Priority levels should only be one of: { "
+        + HIGH_PRIORITY_KEYWORD + " " + MEDIUM_PRIORITY_KEYWORD + " " + LOW_PRIORITY_KEYWORD + " }";
+
+    private Level level;
 
     /**
      * Constructs a {@code Priority}.
@@ -30,16 +53,16 @@ public class Priority {
     private void assignPriorityLevel(String priority) {
         switch (priority) {
         case HIGH_PRIORITY_KEYWORD:
-            this.level = LEVEL.HIGH;
+            this.level = Level.HIGH;
             break;
         case MEDIUM_PRIORITY_KEYWORD:
-            this.level = LEVEL.MEDIUM;
+            this.level = Level.MEDIUM;
             break;
         case LOW_PRIORITY_KEYWORD:
-            this.level = LEVEL.LOW;
+            this.level = Level.LOW;
             break;
         default:
-            this.level = LEVEL.NONE;
+            this.level = Level.NONE;
         }
     }
 
@@ -49,23 +72,19 @@ public class Priority {
      * @param priority to check.
      */
     public static boolean isValidPriority(String priority) {
-        return priority.equals(HIGH_PRIORITY_KEYWORD) || priority.equals(MEDIUM_PRIORITY_KEYWORD) ||
-                priority.equals(LOW_PRIORITY_KEYWORD) || priority.equals("-");
+        return VALID_PRIORITY_KEYWORDS.contains(priority);
     }
 
     /**
      * Returns priority level.
      */
-    public LEVEL getPriorityLevel() {
+    public Level getPriorityLevel() {
         return this.level;
     }
 
     @Override
     public String toString() {
-        if (this.level == LEVEL.NONE) {
-            return "-";
-        }
-        return this.level.toString().toLowerCase();
+        return LEVEL_STRING_MAP.get(this.level);
     }
 
     @Override

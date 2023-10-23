@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.model.priority.Priority.LEVEL.*;
-
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -74,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriority().getPriorityLevel() != NONE) {
+        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
             priority.setText(person.getPriority().toString());
         }
     }
