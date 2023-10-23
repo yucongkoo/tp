@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,16 +27,19 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    private final Set<Insurance> insurances = new HashSet<>();
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Insurance> insurances) {
+        requireAllNonNull(name, phone, email, address, tags, insurances);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.insurances.addAll(insurances);
     }
 
     public Name getName() {
@@ -62,6 +66,10 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public Set<Insurance> getInsurances() {
+        return Collections.unmodifiableSet(insurances);
+    }
+
     /**
      * Returns the number of tags assigned to this person.
      */
@@ -69,6 +77,9 @@ public class Person {
         return tags.size();
     }
 
+    public int getInsurancesCount() {
+        return insurances.size();
+    }
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -95,7 +106,19 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address, updatedTags);
+        return new Person(source.name, source.phone, source.email, source.address, updatedTags, source.insurances);
+    }
+
+    public static Person createPersonWithUpdatedInsurances(Person source, Collection<Insurance> insurancesToAdd,
+                                                           Collection<Insurance> insurancesToDelete) {
+
+        requireAllNonNull(source, insurancesToAdd, insurancesToDelete);
+
+        Set<Insurance> updatedInsurances = new HashSet<>(source.insurances);
+        updatedInsurances.removeAll(insurancesToDelete);
+        updatedInsurances.addAll(insurancesToAdd);
+
+        return new Person(source.name, source.phone, source.email, source.address,source.tags, updatedInsurances);
     }
 
     /**
@@ -118,13 +141,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && insurances.equals(otherPerson.insurances);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, insurances);
     }
 
     @Override
@@ -135,6 +159,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("insurances", insurances)
                 .toString();
     }
 }
