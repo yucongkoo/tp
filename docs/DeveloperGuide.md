@@ -84,7 +84,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-## Logic component
+## Logic component <a id="logic-component"/>
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
@@ -158,6 +158,92 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 # **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+## Tag feature
+
+### Implementation
+
+Before implementing the actual command execution of tag,
+tags first needs to be stored in a `Person` object accordingly.
+A `Person` is associated to any number of `Tag`s.
+
+<puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
+
+
+**Implementing `TagCommandParser`**
+
+`TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
+`tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
+Note that **duplicate tags will be ignored**.
+
+
+The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. 
+
+<puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
+
+
+**Implementing `TagCommand`**
+
+`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to 
+reflect the changes after the tag command completes its execution.
+
+The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
+taking `execute(m)` call to the `TagCommand` as an example.
+
+<puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
+
+**Integrating `TagCommandParser` and `TagCommand` into execution logic**
+
+Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
+is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
+The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser` 
+to parse the arguments.
+
+The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
+taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
+
+<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+
+### Design considerations:
+
+**Aspect: Data structure to store tags in a Person object:**
+
+* **Alternative 1(current choice):** Using `Set<Tag>`.
+  * Pros: Easy to implement, enforces implicit uniqueness of each `Tag` in the `Set<Tag>`.
+  * Cons: Tags are not ordered according to the time it is added.
+* **Alternative 2:** Using `List<Tag>`.
+  * Pros: Tags are ordered according to the time it is added.
+  * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
+
+Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of 
+storing tags.
+
+**Aspect: Duplicate tags handling:**
+
+* **Alternative 1(current choice):** Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
+  * Pros: Users will not be blocked from their action if they accidentally entered a duplicate tag.
+  * Cons: Users might not be warned that they have entered a duplicate tag.
+* **Alternative 2:** Block users from adding/deleting duplicate tags
+  * Pros: Easy to implement
+  * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
+
+Alternative 1 was chosen over alternative 2 based on the following reasons:
+* Repeated action signals the user's strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
+* The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
+
+
+**Aspect: Deletion of non-existing tags:**
+* **Alternative 1(current choice):** Simply ignore such deletions.
+  * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
+  * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
+* **Alternative 2:** Block users from such deletions.
+  * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
+  * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
+
+Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that 
+they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer 
+initially possesses the tag is of lesser importance in this context.
 
 ## \[Proposed\] Undo/redo feature
 
