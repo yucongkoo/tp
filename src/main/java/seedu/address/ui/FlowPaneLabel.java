@@ -14,12 +14,12 @@ import javafx.scene.paint.Color;
  * A UI component that displays the label within the FlowPane.
  */
 public class FlowPaneLabel extends UiPart<Region> {
-    private static final String FXML = "TagLabel.fxml";
+    private static final String FXML = "FlowPaneLabel.fxml";
     private static final CornerRadii radius = new CornerRadii(3);
     private static final Insets padding = new Insets(1);
 
     @javafx.fxml.FXML
-    private HBox tagLabel;
+    private HBox flowPaneLabel;
     @FXML
     private Label value;
 
@@ -46,7 +46,7 @@ public class FlowPaneLabel extends UiPart<Region> {
     }
 
     private void styleTagLabel() {
-        this.tagLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, radius, padding)));
+        this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, radius, padding)));
     }
 
     private void styleTagValue() {
@@ -55,7 +55,7 @@ public class FlowPaneLabel extends UiPart<Region> {
 
     // TODO: provide styling of label, specifically saying the value of Color
     private void stylePriorityLabel(int i) {
-        this.tagLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
+        this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
     }
 
     // TODO: provide styling of text, specifically saying the value to -fx-text-fill
