@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
+import seedu.address.model.priority.Priority;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -40,6 +41,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label priority;
+    @FXML
     private VBox phoneCardPlaceholder;
     @FXML
     private VBox emailCardPlaceholder;
@@ -61,10 +64,17 @@ public class PersonCard extends UiPart<Region> {
 
     private void fillPersonDetails() {
         loadName();
+        loadPriority();
         loadPhoneCard();
         loadEmailCard();
         loadAddressCard();
         loadTags();
+    }
+
+    private void loadPriority() {
+        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
+            priority.setText(person.getPriority().toString());
+        }
     }
 
     private void loadName() {
