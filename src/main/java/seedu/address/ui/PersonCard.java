@@ -73,7 +73,8 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadPriority() {
         if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
-            priority.setText(person.getPriority().toString());
+            // priority.setText(person.getPriority().toString());
+            tags.getChildren().add(0, new TagLabel(person.getPriority().toString(), 1).getRoot());
         }
     }
 
@@ -85,7 +86,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.getTagName()))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.getTagName())));
+                .forEach(tag -> tags.getChildren().add(new TagLabel(tag.getTagName()).getRoot()));
     }
 
     private void loadPhoneCard() {
