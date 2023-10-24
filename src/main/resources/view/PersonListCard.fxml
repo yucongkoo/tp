@@ -21,6 +21,7 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
+
       <HBox spacing="5" alignment="CENTER_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
@@ -29,13 +30,16 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
-        <Label fx:id="priority" styleClass="priority">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
+<!--        <Label fx:id="priority" styleClass="priority">-->
+<!--          <minWidth>-->
+<!--            &lt;!&ndash; Ensures that the label text is never truncated &ndash;&gt;-->
+<!--            <Region fx:constant="USE_PREF_SIZE" />-->
+<!--          </minWidth>-->
+<!--        </Label>-->
       </HBox>
+
+      <VBox prefHeight="5" minHeight="5" maxHeight="5"/>
+
       <FlowPane fx:id="tags" />
     </VBox>
 
