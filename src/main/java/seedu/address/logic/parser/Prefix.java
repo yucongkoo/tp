@@ -15,6 +15,13 @@ public class Prefix {
         return prefix;
     }
 
+    /**
+     * Returns the length of the prefix.
+     */
+    public int getPrefixLength() {
+        return prefix.length();
+    }
+
     @Override
     public String toString() {
         return getPrefix();

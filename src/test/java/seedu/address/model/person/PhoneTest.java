@@ -31,30 +31,37 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("phone")); // non-numeric
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+        assertFalse(Phone.isValidPhone("911")); // short phone numbers
+        assertFalse(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertFalse(Phone.isValidPhone("/*-/-++")); // special characters
+        assertFalse(Phone.isValidPhone("+6589562314")); // with country code
+        assertFalse(Phone.isValidPhone("+60123931189")); // non-Singapore phone number
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
-        assertTrue(Phone.isValidPhone("93121534"));
-        assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertTrue(Phone.isValidPhone("93121534")); // exactly 8 numbers
+
     }
 
     @Test
     public void equals() {
-        Phone phone = new Phone("999");
+        Phone phone = new Phone("12345678");
 
-        // same values -> returns true
-        assertTrue(phone.equals(new Phone("999")));
+        // same values
+        assertTrue(phone.equals(new Phone("12345678")));
 
-        // same object -> returns true
+        // same object
         assertTrue(phone.equals(phone));
 
-        // null -> returns false
+        // null
         assertFalse(phone.equals(null));
 
-        // different types -> returns false
-        assertFalse(phone.equals(5.0f));
+        // primitive and Phone type
+        assertFalse(phone.equals(50.f));
 
-        // different values -> returns false
-        assertFalse(phone.equals(new Phone("995")));
+        // different type
+        assertFalse(phone.equals(new Name("apple")));
+
+        // different values
+        assertFalse(phone.equals(new Phone("87654321")));
     }
 }

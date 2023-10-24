@@ -2,15 +2,20 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_DERRICK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -38,18 +43,24 @@ public class TypicalPersons {
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822224")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94821427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("94828442")
             .withEmail("anna@example.com").withAddress("4th street").build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84829424")
             .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84824131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
+
+    public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
+            .withEmail("jojo@example.com").withAddress("100th street").build();
+
+    public static final Person KAKA = new PersonBuilder().withName("Kaka Der Many").withPhone("78756232")
+            .withEmail("kaka@example.com").withAddress("kaka street").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -57,8 +68,15 @@ public class TypicalPersons {
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
+
+    // Person without address
     public static final Person CALMEN = new PersonBuilder().withName(VALID_NAME_CALMEN).withPhone(VALID_PHONE_CALMEN)
             .withEmail(VALID_EMAIL_CALMEN).withoutAddress().build();
+
+    // Person with priority
+    public static final Person DERRICK = new PersonBuilder().withName(VALID_NAME_DERRICK).withPhone(VALID_PHONE_DERRICK)
+            .withEmail(VALID_EMAIL_DERRICK).withAddress(VALID_ADDRESS_DERRICK).withPriority(VALID_PRIORITY_HIGH)
+            .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -76,6 +94,6 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, CALMEN, JOJO, KAKA));
     }
 }
