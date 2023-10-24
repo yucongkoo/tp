@@ -23,7 +23,7 @@ public class PersonAttributeCard extends UiPart<Region> {
     private Image image;
 
     /**
-     * Creates an attribute card with the given headerText and bodyText.
+     * Creates an attribute card for {@code attribute} with the given {@code bodyText}.
      */
     public PersonAttributeCard(Attribute attribute, String bodyText) {
         super(FXML);

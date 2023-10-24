@@ -74,7 +74,9 @@ public class PersonCard extends UiPart<Region> {
     private void loadPriority() {
         if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
             // priority.setText(person.getPriority().toString());
-            tags.getChildren().add(0, new TagLabel(person.getPriority().toString(), 1).getRoot());
+
+            // TODO: Use priority enum to construct the label, so that each priority will have differen display
+            tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(), 1).getRoot());
         }
     }
 
@@ -86,7 +88,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.getTagName()))
-                .forEach(tag -> tags.getChildren().add(new TagLabel(tag.getTagName()).getRoot()));
+                .forEach(tag -> tags.getChildren().add(new FlowPaneLabel(tag.getTagName()).getRoot()));
     }
 
     private void loadPhoneCard() {
