@@ -2,15 +2,20 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_CALMEN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_DERRICK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -67,6 +72,11 @@ public class TypicalPersons {
     // Person without address
     public static final Person CALMEN = new PersonBuilder().withName(VALID_NAME_CALMEN).withPhone(VALID_PHONE_CALMEN)
             .withEmail(VALID_EMAIL_CALMEN).withoutAddress().build();
+
+    // Person with priority
+    public static final Person DERRICK = new PersonBuilder().withName(VALID_NAME_DERRICK).withPhone(VALID_PHONE_DERRICK)
+            .withEmail(VALID_EMAIL_DERRICK).withAddress(VALID_ADDRESS_DERRICK).withPriority(VALID_PRIORITY_HIGH)
+            .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
