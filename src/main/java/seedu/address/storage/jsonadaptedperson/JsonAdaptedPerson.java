@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +29,7 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedPhone phone;
     private final JsonAdaptedEmail email;
     private final JsonAdaptedAddress address;
+    private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -35,10 +37,11 @@ public class JsonAdaptedPerson {
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") JsonAdaptedName name,
-            @JsonProperty("phone") JsonAdaptedPhone phone,
-            @JsonProperty("email") JsonAdaptedEmail email,
-            @JsonProperty("address") JsonAdaptedAddress address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("phone") JsonAdaptedPhone phone,
+                             @JsonProperty("email") JsonAdaptedEmail email,
+                             @JsonProperty("address") JsonAdaptedAddress address,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("priority") JsonAdaptedPriority priority) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -46,6 +49,7 @@ public class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.priority = priority;
     }
 
     /**
@@ -59,6 +63,7 @@ public class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        priority = new JsonAdaptedPriority(source.getPriority());
     }
 
     /**
@@ -67,7 +72,8 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelTags());
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelTags(),
+                getModelPriority());
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -105,5 +111,13 @@ public class JsonAdaptedPerson {
         }
 
         return new HashSet<>(personTags);
+    }
+
+    private Priority getModelPriority() throws IllegalValueException {
+        if (priority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
+        }
+        return priority.toModelType();
     }
 }
