@@ -14,7 +14,10 @@
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
-    "tags": [ "friends" ]
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Benson Meier"
@@ -29,7 +32,10 @@
       "value" : "311, Clementi Ave 2, #02-25",
       "isEmptyAddress" : false
     },
-    "tags": [ "owesMoney", "friends" ]
+    "tags": [ "owesMoney", "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Carl Kurz"
@@ -44,7 +50,10 @@
       "value" : "wall street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Daniel Meier"
@@ -59,7 +68,10 @@
       "value" : "10th street",
       "isEmptyAddress" : false
     },
-    "tags": [ "friends" ]
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Elle Meyer"
@@ -74,7 +86,10 @@
       "value" : "michegan ave",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Fiona Kunz"
@@ -89,7 +104,10 @@
       "value" : "little tokyo",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "George Best"
@@ -104,7 +122,10 @@
       "value" : "4th street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Calmen"
@@ -119,7 +140,10 @@
       "value" : "-",
       "isEmptyAddress" : true
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Jojo Best"
@@ -134,7 +158,10 @@
       "value" : "100th street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Kaka Der Many"
@@ -149,6 +176,9 @@
       "value" : "kaka street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   } ]
 }

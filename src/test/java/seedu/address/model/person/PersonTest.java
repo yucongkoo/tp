@@ -6,19 +6,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_NONE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.DERRICK;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -31,6 +38,67 @@ public class PersonTest {
     }
 
     @Test
+    public void constructor_oneNullField_throwsNullPointerException() {
+        Name validName = new Name(VALID_NAME_BOB);
+        Phone validPhone = new Phone(VALID_PHONE_BOB);
+        Email validEmail = new Email(VALID_EMAIL_BOB);
+        Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Set<Tag> validTags = new HashSet<>() {{
+                add(new Tag(VALID_TAG_FRIEND));
+            }};
+        Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
+
+        // with priority field
+        assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
+                validTags, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
+                validTags, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
+                validTags, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
+                validTags, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                null, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validTags, null));
+
+        // without priority field
+        assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
+                validTags));
+        assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
+                validTags));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
+                validTags));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
+                validTags));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                null));
+    }
+
+    @Test
+    public void constructor_allFieldsValid_success() {
+        Person expectedPerson = new PersonBuilder(BOB).withPriority("-").build();
+        Name validName = new Name(VALID_NAME_BOB);
+        Phone validPhone = new Phone(VALID_PHONE_BOB);
+        Email validEmail = new Email(VALID_EMAIL_BOB);
+        Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Set<Tag> validTags = new HashSet<>() {{
+                add(new Tag(VALID_TAG_FRIEND));
+                add(new Tag(VALID_TAG_HUSBAND));
+            }};
+        Priority validPriority = new Priority(VALID_PRIORITY_NONE);
+
+        // with priority field
+        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags, validPriority);
+        assertEquals(expectedPerson, testPerson);
+
+        // without priority field
+        testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags);
+        assertEquals(expectedPerson, testPerson);
+
+    }
+
+    @Test
     public void isSamePerson() {
         // same object -> returns true
         assertTrue(ALICE.isSamePerson(ALICE));
@@ -40,7 +108,8 @@ public class PersonTest {
 
         // same name, all other attributes different -> returns true
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).withPriority(VALID_PRIORITY_HIGH)
+                .build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -51,10 +120,17 @@ public class PersonTest {
         Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
         assertFalse(BOB.isSamePerson(editedBob));
 
+        Person editedDerrick = new PersonBuilder(DERRICK).withName(VALID_NAME_DERRICK.toLowerCase()).build();
+        assertFalse(DERRICK.isSamePerson(editedDerrick));
+
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
+
+        nameWithTrailingSpaces = VALID_NAME_DERRICK + " ";
+        editedDerrick = new PersonBuilder(DERRICK).withName(nameWithTrailingSpaces).build();
+        assertFalse(DERRICK.isSamePerson(editedDerrick));
     }
 
     @Test
@@ -145,7 +221,30 @@ public class PersonTest {
     }
 
     @Test
-    public void equals() {
+    public void createPersonWithUpdatedPriorityMethod() {
+        Person derrickWithHighPriority = new PersonBuilder(DERRICK).withPriority(VALID_PRIORITY_HIGH).build();
+        Person derrickWithNoPriority = new PersonBuilder(DERRICK).withPriority(VALID_PRIORITY_NONE).build();
+        Person derrickWithLowPriority = new PersonBuilder(DERRICK).withPriority(VALID_PRIORITY_LOW).build();
+
+        Priority highPriority = new Priority(VALID_PRIORITY_HIGH);
+        Priority noPriority = new Priority(VALID_PRIORITY_NONE);
+        Priority lowPriority = new Priority(VALID_PRIORITY_LOW);
+
+        // assigning priority from none to high
+        assertEquals(derrickWithHighPriority, createPersonWithUpdatedPriority(derrickWithNoPriority, highPriority));
+
+        // assigning priority from low to none
+        assertEquals(derrickWithNoPriority, createPersonWithUpdatedPriority(derrickWithLowPriority, noPriority));
+
+        // assigning priority from high to low
+        assertEquals(derrickWithLowPriority, createPersonWithUpdatedPriority(derrickWithHighPriority, lowPriority));
+
+        // assigning same level of priority
+        assertEquals(derrickWithHighPriority, createPersonWithUpdatedPriority(derrickWithHighPriority, highPriority));
+    }
+
+    @Test
+    public void equalsMethod() {
         // same values -> returns true
         Person aliceCopy = new PersonBuilder(ALICE).build();
         assertTrue(ALICE.equals(aliceCopy));
@@ -181,12 +280,17 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different priority -> returns false
+        editedAlice = new PersonBuilder(ALICE).withPriority(VALID_PRIORITY_LOW).build(); // default priority is high
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+                + ", priority=" + ALICE.getPriority() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

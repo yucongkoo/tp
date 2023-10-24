@@ -5,8 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,12 +20,14 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,6 +49,14 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_EDIT_TAG = "Cannot edit tags. Please use tag command to add/delete tags.";
+    public static final String MESSAGE_EDIT_PRIORITY = "Cannot edit priorities. Please use pr command to assign "
+            + "new priority.";
+    public static final HashMap<Prefix, String> MESSAGE_INVALID_PREFIX_MAP = new HashMap<>() {
+        {
+            put(PREFIX_TAG, MESSAGE_EDIT_TAG);
+            put(PREFIX_PRIORITY, MESSAGE_EDIT_PRIORITY);
+        }
+    };
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -93,8 +106,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> tags = personToEdit.getTags();
+        Priority priority = personToEdit.getPriority();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags, priority);
     }
 
     @Override

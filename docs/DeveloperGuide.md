@@ -270,7 +270,7 @@ _{Explain here how the data archiving feature will be implemented}_
 ## Product scope
 
 **Target user profile**:
-    
+
 Target user : Insurance agent
 
 * needs to provide services / insurance plans to customer
