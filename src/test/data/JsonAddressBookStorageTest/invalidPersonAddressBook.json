@@ -13,6 +13,9 @@
       "value" : "4th street",
       "isEmptyAddress" : false
     },
-    "tags" : [ ]
+    "tags" : [ ],
+    "priority" : {
+      "value" : "medium"
+    }
   } ]
 }
