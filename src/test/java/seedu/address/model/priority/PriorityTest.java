@@ -3,6 +3,8 @@ package seedu.address.model.priority;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.priority.Priority.HIGH_PRIORITY_KEYWORD;
+import static seedu.address.model.priority.Priority.LOW_PRIORITY_KEYWORD;
 import static seedu.address.model.priority.Priority.isValidPriority;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -49,7 +51,7 @@ public class PriorityTest {
 
     @Test
     public void equalsMethod() {
-        Priority priority = new Priority("low");
+        Priority priority = new Priority(LOW_PRIORITY_KEYWORD);
 
         // same object -> return true
         assertTrue(priority.equals(priority));
@@ -57,12 +59,18 @@ public class PriorityTest {
         // different type -> false
         assertFalse(priority.equals(new Object()));
         assertFalse(priority.equals(null));
-        assertFalse(priority.equals(new Tag("high")));
+        assertFalse(priority.equals(new Tag(HIGH_PRIORITY_KEYWORD)));
 
         // different value -> false
-        assertFalse(priority.equals(new Priority("high")));
+        assertFalse(priority.equals(new Priority(HIGH_PRIORITY_KEYWORD)));
 
         // same value -> true
-        assertTrue(priority.equals(new Priority("low")));
+        assertTrue(priority.equals(new Priority(LOW_PRIORITY_KEYWORD)));
+    }
+
+    @Test
+    public void hashCodeMethod() {
+        Priority priority = new Priority(LOW_PRIORITY_KEYWORD);
+        assertEquals(priority.hashCode(), Priority.Level.LOW.hashCode());
     }
 }

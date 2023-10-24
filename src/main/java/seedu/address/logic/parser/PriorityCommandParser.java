@@ -23,7 +23,7 @@ public class PriorityCommandParser implements Parser<PriorityCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        String[] separatedArgs = trimmedArgs.split(" ");
+        String[] separatedArgs = trimmedArgs.split("\\s+");
 
         Index index;
 

@@ -32,7 +32,7 @@ public class PriorityCommand extends Command {
     private final Priority priority;
 
     /**
-     * Constructs a PriorityCommand
+     * Constructs a PriorityCommand.
      *
      * @param index of the person in the filtered list to assign priority to.
      * @param priority assigned to the person.
@@ -57,7 +57,7 @@ public class PriorityCommand extends Command {
         Person personToUpdate = lastShownList.get(index.getZeroBased());
         Person updatedPerson = createPersonWithUpdatedPriority(personToUpdate, priority);
 
-        if (personToUpdate.getPriority().equals(priority)) {
+        if (personToUpdate.hasSamePriority(priority)) {
             throw new CommandException(MESSAGE_NOT_ASSIGNED);
         }
 

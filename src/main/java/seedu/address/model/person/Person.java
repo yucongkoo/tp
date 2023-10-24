@@ -29,7 +29,7 @@ public class Person {
     private final Priority priority;
 
     /**
-     * Every field must be present and not null;
+     * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -38,7 +38,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.priority = new Priority("-");
+        this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
     }
 
     /**
@@ -125,6 +125,13 @@ public class Person {
     public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
         requireAllNonNull(source, newPriority);
         return new Person(source.name, source.phone, source.email, source.address, source.tags, newPriority);
+    }
+
+    /**
+     * Returns true is the Person has the same priority as {@code priority}.
+     */
+    public boolean hasSamePriority(Priority priority) {
+        return this.priority.equals(priority);
     }
 
     /**

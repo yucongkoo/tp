@@ -5,8 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +20,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -47,8 +51,12 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_TAG = "Cannot edit tags. Please use tag command to add/delete tags.";
     public static final String MESSAGE_EDIT_PRIORITY = "Cannot edit priorities. Please use pr command to assign "
             + "new priority.";
-    public static final String MESSAGE_EDIT_TAG_AND_PRIORITY = "Cannot edit tags and priorities. Please use "
-            + "tag and pr command respectively.";
+    public static final HashMap<Prefix, String> MESSAGE_INVALID_PREFIX_MAP = new HashMap<>() {
+        {
+            put(PREFIX_TAG, MESSAGE_EDIT_TAG);
+            put(PREFIX_PRIORITY, MESSAGE_EDIT_PRIORITY);
+        }
+    };
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
