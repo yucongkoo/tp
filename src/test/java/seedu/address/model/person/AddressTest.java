@@ -10,7 +10,7 @@ public class AddressTest {
     @Test
     public void isEmptyAddress() {
         // empty address
-        assertTrue(EmptyAddress.EMPTY_ADDRESS.isEmptyAddress());
+        assertTrue(EmptyAddress.getEmptyAddress().isEmptyAddress());
 
         // non-empty address
         assertFalse(new NonEmptyAddress("Some address").isEmptyAddress());
@@ -22,7 +22,7 @@ public class AddressTest {
     @Test
     public void getValue() {
         // empty address
-        Address emptyAddress = EmptyAddress.EMPTY_ADDRESS;
+        Address emptyAddress = EmptyAddress.getEmptyAddress();
         assertEquals(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS, emptyAddress.getValue());
 
         // non-empty address

@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.HashSet;
@@ -37,6 +38,11 @@ public class TagCommandParserTest {
 
     private UpdatePersonTagsDescriptor updatePersonTagsDescriptor =
             new UpdatePersonTagsDescriptor(new HashSet<>(), new HashSet<>());
+
+    @Test
+    public void parse_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> parser.parse(null));
+    }
 
     @Test
     public void parse_onlyAddTag_success() {
