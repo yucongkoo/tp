@@ -9,6 +9,8 @@ import static java.util.Objects.requireNonNull;
 public class Remark {
     public final String value;
 
+    public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 100 characters.";
+
     /**
      * Constructs a Remark object.
      *
@@ -19,6 +21,10 @@ public class Remark {
         value = remark;
     }
 
+
+    public static boolean isValidRemark(String remark) {
+        return remark.length() <= 100;
+    }
     @Override
     public String toString() {
         return value;

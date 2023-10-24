@@ -2,12 +2,14 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,6 +27,7 @@ public class Person {
     private final Address address;
     private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
+    private final Priority priority;
 
     /**
      * Every field must be present and not null.
@@ -37,6 +40,21 @@ public class Person {
         this.address = address;
         this.remark = remark;
         this.tags.addAll(tags);
+        this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Priority priority) {
+        requireAllNonNull(name, phone, email, address, tags, priority);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.remark = remark;
+        this.tags.addAll(tags);
+        this.priority = priority;
     }
 
     public Name getName() {
@@ -59,12 +77,24 @@ public class Person {
         return remark;
     }
 
+    public Priority getPriority() {
+        return priority;
+
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns the number of tags assigned to this person.
+     */
+    public int getTagsCount() {
+        return tags.size();
     }
 
     /**
@@ -78,6 +108,38 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code source}, adding tags in {@code tagsToAdd} and
+     * removing tags in {@code tagsToDelete}.
+     */
+    public static Person createPersonWithUpdatedTags(Person source,
+            Collection<Tag> tagsToAdd,
+            Collection<Tag> tagsToDelete) {
+        requireAllNonNull(source, tagsToAdd, tagsToDelete);
+
+        Set<Tag> updatedTags = new HashSet<>(source.tags);
+        updatedTags.removeAll(tagsToDelete);
+        updatedTags.addAll(tagsToAdd);
+
+        return new Person(source.name, source.phone, source.email, source.address, source.remark, updatedTags, source.priority);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code source}, assigning priority of
+     * {@code newPriority}.
+     */
+    public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
+        requireAllNonNull(source, newPriority);
+        return new Person(source.name, source.phone, source.email, source.address, source.remark, source.tags, newPriority);
+    }
+
+    /**
+     * Returns true is the Person has the same priority as {@code priority}.
+     */
+    public boolean hasSamePriority(Priority priority) {
+        return this.priority.equals(priority);
     }
 
     /**
@@ -101,13 +163,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && remark.equals(otherPerson.remark)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && priority.equals(otherPerson.priority);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, remark, tags);
+        return Objects.hash(name, phone, email, address, remark, tags, priority);
     }
 
     @Override
@@ -119,7 +182,7 @@ public class Person {
                 .add("address", address)
                 .add("remark", remark)
                 .add("tags", tags)
+                .add("priority", priority)
                 .toString();
     }
-
 }

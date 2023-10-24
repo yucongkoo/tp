@@ -11,21 +11,23 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Acknowledgements**
+# **Acknowledgements**
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
+# **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Design**
+# **Design**
+
 
 ### Architecture
+
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
@@ -65,7 +67,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
-### UI component
+## UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
@@ -82,7 +84,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-### Logic component
+## Logic component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
@@ -114,7 +116,7 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
-### Model component
+## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
@@ -136,7 +138,7 @@ The `Model` component,
 </box>
 
 
-### Storage component
+## Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
@@ -147,19 +149,19 @@ The `Storage` component,
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
-### Common classes
+## Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+# **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+## \[Proposed\] Undo/redo feature
 
-#### Proposed Implementation
+### Proposed Implementation
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
@@ -231,7 +233,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
-#### Design considerations:
+### Design considerations:
 
 **Aspect: How undo & redo executes:**
 
@@ -246,14 +248,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+## \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+# **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -263,81 +265,169 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+# **Appendix: Requirements**
 
-### Product scope
+## Product scope
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+Target user : Insurance agent
+
+* needs to provide services / insurance plans to customer
+* has a need to manage a significant number of customers
+* needs to maintain interactions with his/her customers over a long time span
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
 
 
-### User stories
+## User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
+|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
+| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
+| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
+| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
+| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
+| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
+| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
+| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
+| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
+| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
+| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
+| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
+| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
+| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
+| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
+| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
+| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
+| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
+| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
+| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
 
-*{More to be added}*
 
-### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+## Use cases
 
-**MSS**
+(For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+#### Adding a customer
 
+**Use Case: UC01 - add a customer**
+
+**MSS:**
+1. User enters the details of customer to be added.
+2. System adds the customer.
+3. System displays the details of customer added by user.</br>
+   Use case ends.
+
+**Extensions:**</br>
+2a.  Details provided by user is incomplete or invalid.</br>
+&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;&emsp;&emsp;Use case ends.
+
+#### Filtering customers
+
+**Use case: UC02 - filter customers**
+
+**MSS:**
+1. User chooses to filter customers.
+2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.
+3. System filters the customers list.
+4. System displays the list of customers that meet the criteria.
+   Use case ends.
+
+**Extensions:**</br>
+2b.  User doesn't select any categories to filter for.<br>
+&emsp;2b1. System shows an error message to alert User about the invalid command.
+&emsp;&emsp;&emsp;Use case ends.
+
+3a.  None of the contacts meet the filter criteria.
+&emsp;3a1. System shows an empty list with a warning message.
+&emsp;&emsp;&emsp;Use case ends.### Searching for a person
+
+#### Deleting a customer
+
+**Use Case: UC03 - delete a customer**
+
+**MSS:**
+1. User lists out the customers.
+2. System shows the list of customers to user.
+3. User deletes the customer with the index number shown in the displayed list.
+4. System displays the details of the removed customer.</br>
+   Use case ends.
+
+**Extensions:**</br>
+4a. Invalid delete command or invalid index.</br>
+&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
+
+#### Editing a customer
+
+**Use Case: UC04 - edit a customer's details**
+
+**MSS:**
+1.  User lists out the customers.
+2.  System shows the list of customers.
+3.  User edits the customer with the index number shown in the displayed customer list and provides the field prefix along with the new details.
+4.  System displays the details of the deleted person.</br>
+   Use case ends.
+
+**Extensions:**</br>
+4a. Index provided by user or information provided by user is invalid.</br>
+&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
+
+#### Searching for a customer
+
+**Use Case: UC05 - search for a customer**
+
+**MSS:**
+
+1.  User searches with a prompt.
+2.  System shows a list of customers matching the prompt.
+3.  User views the customers' information.</br>
     Use case ends.
 
-**Extensions**
+**Extensions:**</br>
+1a. User searches with an invalid prompt format</br>
+&emsp;1a1. System shows an error message to User.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-* 2a. The list is empty.
+2a. There is no customer that match the prompt.</br>
+&emsp;2a1. System shows an empty list.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-  Use case ends.
 
-* 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 customer without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
+5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 
 *{More to be added}*
 
-### Glossary
+## Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+# **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -348,7 +438,7 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+## Launch and shutdown
 
 1. Initial launch
 
@@ -365,7 +455,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+## Deleting a person
 
 1. Deleting a person while all persons are being shown
 
@@ -382,7 +472,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Saving data
+## Saving data
 
 1. Dealing with missing/corrupted data files
 

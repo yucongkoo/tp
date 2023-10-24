@@ -1,46 +1,184 @@
 {
   "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
-    "name" : "Alice Pauline",
-    "phone" : "94351253",
-    "email" : "alice@example.com",
-    "address" : "123, Jurong West Ave 6, #08-111",
-    "tags" : [ "friends" ]
+    "name" : {
+      "value" : "Alice Pauline"
+    },
+    "phone" : {
+      "value" : "94351253"
+    },
+    "email" : {
+      "value" : "alice@example.com"
+    },
+    "address" : {
+      "value" : "123, Jurong West Ave 6, #08-111",
+      "isEmptyAddress" : false
+    },
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "Benson Meier",
-    "phone" : "98765432",
-    "email" : "johnd@example.com",
-    "address" : "311, Clementi Ave 2, #02-25",
-    "tags" : [ "owesMoney", "friends" ]
+    "name" : {
+      "value" : "Benson Meier"
+    },
+    "phone" : {
+      "value" : "98765432"
+    },
+    "email" : {
+      "value" : "johnd@example.com"
+    },
+    "address" : {
+      "value" : "311, Clementi Ave 2, #02-25",
+      "isEmptyAddress" : false
+    },
+    "tags": [ "owesMoney", "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "Carl Kurz",
-    "phone" : "95352563",
-    "email" : "heinz@example.com",
-    "address" : "wall street",
-    "tags" : [ ]
+    "name" : {
+      "value" : "Carl Kurz"
+    },
+    "phone" : {
+      "value" : "95352563"
+    },
+    "email" : {
+      "value" : "heinz@example.com"
+    },
+    "address" : {
+      "value" : "wall street",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "Daniel Meier",
-    "phone" : "87652533",
-    "email" : "cornelia@example.com",
-    "address" : "10th street",
-    "tags" : [ "friends" ]
+    "name" : {
+      "value" : "Daniel Meier"
+    },
+    "phone" : {
+      "value" : "87652533"
+    },
+    "email" : {
+      "value" : "cornelia@example.com"
+    },
+    "address" : {
+      "value" : "10th street",
+      "isEmptyAddress" : false
+    },
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "Elle Meyer",
-    "phone" : "9482224",
-    "email" : "werner@example.com",
-    "address" : "michegan ave",
-    "tags" : [ ]
+    "name" : {
+      "value" : "Elle Meyer"
+    },
+    "phone" : {
+      "value" : "94822224"
+    },
+    "email" : {
+      "value" : "werner@example.com"
+    },
+    "address" : {
+      "value" : "michegan ave",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "Fiona Kunz",
-    "phone" : "9482427",
-    "email" : "lydia@example.com",
-    "address" : "little tokyo",
-    "tags" : [ ]
+    "name" : {
+      "value" : "Fiona Kunz"
+    },
+    "phone" : {
+      "value" : "94821427"
+    },
+    "email" : {
+      "value" : "lydia@example.com"
+    },
+    "address" : {
+      "value" : "little tokyo",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
-    "name" : "George Best",
-    "phone" : "9482442",
-    "email" : "anna@example.com",
-    "address" : "4th street",
-    "tags" : [ ]
+    "name" : {
+      "value" : "George Best"
+    },
+    "phone" : {
+      "value" : "94828442"
+    },
+    "email" : {
+      "value" : "anna@example.com"
+    },
+    "address" : {
+      "value" : "4th street",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
+  }, {
+    "name" : {
+      "value" : "Calmen"
+    },
+    "phone" : {
+      "value" : "33333333"
+    },
+    "email" : {
+      "value" : "calmen@example.com"
+    },
+    "address" : {
+      "value" : "-",
+      "isEmptyAddress" : true
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
+  }, {
+    "name" : {
+      "value" : "Jojo Best"
+    },
+    "phone" : {
+      "value" : "14445656"
+    },
+    "email" : {
+      "value" : "jojo@example.com"
+    },
+    "address" : {
+      "value" : "100th street",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
+  }, {
+    "name" : {
+      "value" : "Kaka Der Many"
+    },
+    "phone" : {
+      "value" : "78756232"
+    },
+    "email" : {
+      "value" : "kaka@example.com"
+    },
+    "address" : {
+      "value" : "kaka street",
+      "isEmptyAddress" : false
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   } ]
 }

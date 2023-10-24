@@ -350,3 +350,30 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+.attribute-card {
+    -fx-background-radius: 10;
+    -fx-background-color: #FFFFFF;
+    -fx-min-width: 200px;
+}
+
+.attribute-card-container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-max-width: 200px;
+}
+
+.attribute-card-label-container {
+    -fx-background-radius: 5;
+    -fx-background-color: #FFFFFF;
+}
+
+.icons-container {
+    -fx-max-height: 5;
+    -fx-max-width: 5;
+}
+
+.priority {
+    -fx-font-family: "Baloo Bhaijaan";
+    -fx-background-color: #2ebb1d;
+}

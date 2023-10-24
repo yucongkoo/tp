@@ -10,7 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters,"
+                    + " and it should not be blank nor longer than 64 characters";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -33,9 +34,12 @@ public class Name {
 
     /**
      * Returns true if a given string is a valid name.
+     *
+     * The name is only valid if the first character is not empty space and
+     * the total length is not larger than 64 characters.
      */
     public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.matches(VALIDATION_REGEX) && test.length() <= 64;
     }
 
 
@@ -57,6 +61,23 @@ public class Name {
 
         Name otherName = (Name) other;
         return fullName.equals(otherName.fullName);
+    }
+
+    /**
+     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isFullNameContainsPrefix(Name name, String prefix) {
+        String lowerFullName = name.fullName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerName: lowerFullName.split("\\s+")) {
+            if (lowerName.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

@@ -1,61 +1,62 @@
 ---
-  layout: default.md
-  title: "About Us"
+layout: default.md
+title: "About Us"
 ---
 
 # About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the email `e0960521@u.nus.edu`
 
 ## Project team
 
-### John Doe
+### Koo Yu Cong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/yucongkoo.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/yucongkoo)]
+[[portfolio](team/yucongkoo.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Ensuring deliverables and deadlines are met
 
-### Jean Doe
+### Joshua Wee
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jweewee.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/jweewee)]
+[[portfolio](team/jweewee.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Integration
+* Responsibilities: In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
 
-### James Doe
+### Song Fang Yi
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/songfangyl.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/songfangyl)]
+[[portfolio](team/songfangyl.md)]
 
-* Role: Developer
-* Responsibilities: UI
+* Role: Code quality
+* Responsibilities: Looks after code quality, ensures adherence to coding standards.
+
+### Lian Zhi Xuan
+
+<img src="images/tehopanas.png" width="200px">
+
+[[github](https://github.com/TehOPanas)] [[portfolio](team/tehopanas.md)]
+
+* Role: Developer, Documentation
+* Responsibilities: Responsible for the quality of various project documents
+
+### Lam Jiu Fong
+
+<img src="images/lamjiufong.png" width="200px">
+
+[[github](http://github.com/LamJiuFong)]
+[[portfolio](team/lamjiufong.md)]
+
+* Role: Developer, Code Testing
+* Responsibilities: Ensures the testing of the project is done properly and on time
+

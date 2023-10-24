@@ -4,17 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -22,9 +26,14 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PriorityCommand;
+import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.priority.Priority;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -55,7 +64,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withTags("dad").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
@@ -85,8 +94,36 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertThrows(ParseException.class, ListCommand.MESSAGE_USAGE, ()
+            -> parser.parseCommand(ListCommand.COMMAND_WORD + " 3"));
     }
+
+    @Test
+    public void parseCommand_tag() throws Exception {
+        Index testIndex = INDEX_FIRST_PERSON;
+
+        Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));
+        Set<Tag> testSetToDelete = Set.of(new Tag("tagToDelete"));
+        UpdatePersonTagsDescriptor updatePersonTagsDescriptor =
+                new UpdatePersonTagsDescriptor(testSetToAdd, testSetToDelete);
+
+        TagCommand expectedCommand = new TagCommand(testIndex, updatePersonTagsDescriptor);
+        Command actualCommand = parser.parseCommand(PersonUtil.getTagCommand(testIndex, updatePersonTagsDescriptor));
+
+        assertEquals(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void parseCommand_priority() throws Exception {
+        Index testIndex = INDEX_FIRST_PERSON;
+        Priority priority = new Priority(VALID_PRIORITY_LOW);
+
+        PriorityCommand expectedCommand = new PriorityCommand(testIndex, priority);
+        Command actualCommand = parser.parseCommand(PersonUtil.getPriorityCommand(testIndex, priority));
+
+        assertEquals(expectedCommand, actualCommand);
+    }
+
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
