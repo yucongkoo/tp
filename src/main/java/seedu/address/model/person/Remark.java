@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's remark in the address book.
@@ -9,7 +10,11 @@ import static java.util.Objects.requireNonNull;
 public class Remark {
     private final String value;
 
-    public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 100 characters.";
+    public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 150 characters.";
+
+    public static final String REMARK_TITLE = "Remark: ";
+
+    public static final String REMARK_TITLE_NO_REMARK = "No remark";
 
     /**
      * Constructs a Remark object.
@@ -18,12 +23,13 @@ public class Remark {
      */
     public Remark(String remark) {
         requireNonNull(remark);
+        checkArgument(isValidRemark(remark), MESSAGE_CONSTRAINTS);
         value = remark;
     }
 
 
     public static boolean isValidRemark(String remark) {
-        return remark.length() <= 100;
+        return remark.length() <= 150;
     }
     @Override
     public String toString() {

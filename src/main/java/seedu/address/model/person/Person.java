@@ -123,7 +123,8 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address, source.remark, updatedTags, source.priority);
+        return new Person(source.name, source.phone, source.email, source.address,
+                source.remark, updatedTags, source.priority);
     }
 
     /**
@@ -132,7 +133,8 @@ public class Person {
      */
     public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
         requireAllNonNull(source, newPriority);
-        return new Person(source.name, source.phone, source.email, source.address, source.remark, source.tags, newPriority);
+        return new Person(source.name, source.phone, source.email, source.address,
+                source.remark, source.tags, newPriority);
     }
 
     /**
