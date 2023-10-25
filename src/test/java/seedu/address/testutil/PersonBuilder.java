@@ -100,7 +100,7 @@ public class PersonBuilder {
      * be an empty address.
      */
     public PersonBuilder withoutAddress() {
-        this.address = EmptyAddress.EMPTY_ADDRESS;
+        this.address = EmptyAddress.getEmptyAddress();
         return this;
     }
 

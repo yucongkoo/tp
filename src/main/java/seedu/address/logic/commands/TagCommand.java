@@ -12,7 +12,9 @@ import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -37,6 +39,8 @@ public class TagCommand extends Command {
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
 
+    private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
+
     private final Index index;
     private final UpdatePersonTagsDescriptor updatePersonTagsDescriptor;
 
@@ -48,24 +52,29 @@ public class TagCommand extends Command {
      */
     public TagCommand(Index index, UpdatePersonTagsDescriptor updatePersonTagsDescriptor) {
         requireAllNonNull(index, updatePersonTagsDescriptor);
+        assert updatePersonTagsDescriptor.hasTagToUpdate()
+                : "TagCommand expects an updatePersonTagsDescriptor that has tags to be updated";
 
         this.index = index;
-        this.updatePersonTagsDescriptor = updatePersonTagsDescriptor;
+        this.updatePersonTagsDescriptor = new UpdatePersonTagsDescriptor(updatePersonTagsDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert updatePersonTagsDescriptor.hasTagToUpdate()
-                : "Tags to add and tags to delete should not both be empty";
+
+        logger.fine("TagCommand executing...");
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.finer(String.format("TagCommand execution failed due to index %d out of bound",
+                    index.getOneBased()));
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         if (updatePersonTagsDescriptor.containsCommonTagToAddAndDelete()) {
+            logger.finer("TagCommand execution failed due to common tag in add and delete");
             throw new CommandException(MESSAGE_COMMON_TAG_FAILURE);
         }
 
@@ -74,7 +83,10 @@ public class TagCommand extends Command {
                 updatePersonTagsDescriptor.getTagsToAdd(),
                 updatePersonTagsDescriptor.getTagsToDelete());
 
+        requireAllNonNull(personToUpdate, updatedPerson);
+
         if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
+            logger.finer("TagCommand execution failed due to exceeding maximum tag counts allowed");
             throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
         }
 
@@ -117,25 +129,35 @@ public class TagCommand extends Command {
             this.tagsToDelete = new HashSet<>(tagsToDelete);
         }
 
+        /**
+         * Constructs a defensive copy of {@code toCopy}.
+         */
+        public UpdatePersonTagsDescriptor(UpdatePersonTagsDescriptor toCopy) {
+            requireNonNull(toCopy);
+
+            this.tagsToAdd = new HashSet<>(toCopy.tagsToAdd);
+            this.tagsToDelete = new HashSet<>(toCopy.tagsToDelete);
+        }
+
 
         public void setTagsToAdd(Set<Tag> tagsToAdd) {
             requireNonNull(tagsToAdd);
 
-            this.tagsToAdd = tagsToAdd;
+            this.tagsToAdd = new HashSet<>(tagsToAdd);
         }
 
         public void setTagsToDelete(Set<Tag> tagsToDelete) {
             requireNonNull(tagsToDelete);
 
-            this.tagsToDelete = tagsToDelete;
+            this.tagsToDelete = new HashSet<>(tagsToDelete);
         }
 
         public Set<Tag> getTagsToAdd() {
-            return tagsToAdd;
+            return new HashSet<>(tagsToAdd);
         }
 
         public Set<Tag> getTagsToDelete() {
-            return tagsToDelete;
+            return new HashSet<>(tagsToDelete);
         }
 
         /**

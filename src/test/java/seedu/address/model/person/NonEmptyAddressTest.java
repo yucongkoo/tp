@@ -56,9 +56,9 @@ public class NonEmptyAddressTest {
         assertFalse(address.equals(new NonEmptyAddress("Other Valid Address")));
 
         // empty address -> returns false
-        assertFalse(address.equals(EmptyAddress.EMPTY_ADDRESS));
+        assertFalse(address.equals(EmptyAddress.getEmptyAddress()));
 
         // valid address with same value as empty address should not be equal to empty address
-        assertFalse(addressWithValueOfEmptyAddress.equals(EmptyAddress.EMPTY_ADDRESS));
+        assertFalse(addressWithValueOfEmptyAddress.equals(EmptyAddress.getEmptyAddress()));
     }
 }
