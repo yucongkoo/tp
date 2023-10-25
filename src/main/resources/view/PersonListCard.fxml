@@ -41,13 +41,6 @@
       <VBox prefHeight="5" minHeight="5" maxHeight="5"/>
 
       <FlowPane fx:id="tags" />
-<<<<<<< HEAD
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-=======
->>>>>>> master
     </VBox>
 
     <!-- Right HBox for customers information -->
