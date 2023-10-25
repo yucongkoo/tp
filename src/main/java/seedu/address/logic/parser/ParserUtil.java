@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.priority.Priority.isValidPriority;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -75,7 +77,7 @@ public class ParserUtil {
      */
     public static Address parseAddress(String address) throws ParseException {
         if (address == null) {
-            return EmptyAddress.EMPTY_ADDRESS;
+            return EmptyAddress.getEmptyAddress();
         }
 
         requireNonNull(address);
@@ -126,5 +128,20 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priority) throws ParseException {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        if (!isValidPriority(trimmedPriority)) {
+            throw new ParseException((Priority.MESSAGE_CONSTRAINTS));
+        }
+        return new Priority(trimmedPriority);
     }
 }

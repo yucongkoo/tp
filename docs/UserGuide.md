@@ -59,27 +59,29 @@ EzContact is a
 
 ### Adding a customer: `add`
 
-Adds a customer to EZContact.
+**Adds a new customer to EZContact**.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [pr/PRIORITY] [t/TAG]...`
+
+* Adds a new customer with the respective details to EzContact.
 
 <box type="warning" seamless>
 
-**Caution:** A customer must have a name, phone number and email address to be a valid entry.
-</box>
-
-<box type="info" seamless>
-
-**Note:**
-
-* Name can not be longer than 64 characters
-
-* Only allows Singapore phone number `e.g. 8 digits`
+**Caution:**
+* `NAME` should **not be longer than 64 characters**.
+* `PHONE_NUMBER` should be an **8-digit number**(i.e. a Singapore number).
+* `EMAIL` should be a **valid email address**(i.e. `local-part@domain`).
+* `ADDRESS` should be **non-empty**.
+* `PRIORITY` should be one of: `high`, `medium`, `low`, `-`
+* `TAG` should be **alphanumeric** and **not longer than 20 characters**.
+* A customer **must not have more than 10 tags** assigned to it.
+* Adding a customer with a `NAME` that **already exists** in EzContact is **not allowed**.
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe e/betsycrowe@example.com p/12345678`
+* `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium`
 
 ### Listing all customers : `list`
 
@@ -125,7 +127,19 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+
+<box type="warning" seamless>
+
+**Caution:**
+* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `NAME` should **not be longer than 64 characters**.
+* `PHONE_NUMBER` should be an **8-digit number**(i.e. a Singapore number).
+* `EMAIL` should be a **valid email address**(i.e. `local-part@domain`).
+* `ADDRESS` should be **non-empty**.
 * Tags are not editable.
+* Priorities are not editable.
+
+</box>
 
 Examples:
 *  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
@@ -149,7 +163,59 @@ Examples:
 * `find Adam H` Finds all the customers whose name contains `Adam` and  `H` as prefix
 * `find Song` Finds all the customers whose name contains `Song` as prefix
 
+### Tagging a customer: `tag`
 
+**Updates the tags assigned to an existing customer**.
+
+Format: `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`
+
+* Updates the tags assigned to the customer at `INDEX` in the displayed customer list.
+* Duplicate tags to add/delete will be ignored by EzContact.
+* Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
+
+<box type="warning" seamless>
+
+**Caution:**
+* **At least one** `TAG_TO_ADD` or `TAG_TO_DELETE` should be provided.
+* Adding and deleting the same tag is **not allowed**.
+* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `TAG_TO_ADD` and `TAG_TO_DELETE` should be **alphanumeric** and **not longer than 20 characters**.
+* The number of tags assigned to the customer after an update should **not exceed 10 tags**.
+
+</box>
+
+Examples:
+
+`tag 1 at/tall dt/short`
+* Adds `tall` tag to the first person.
+* Deletes `short` tag from the first person(ignored if the first person does not have `short` tag originally).
+
+`tag 2 at/tall at/wears spectacles dt/short at/tall`
+* Adds `tall` and `wears spectacles` tag to the second person (duplicate `tall` is ignored).
+* Deletes `short` tag from the second person.
+
+### Updating priority of a customer: `pr`
+
+**Updates the priority assigned to an existing customer**.
+
+Format: `pr INDEX NEW_PRIORITY`
+
+* Updates the priority of the customer at `INDEX` in the displayed customer list to `NEW_PRIORITY`.
+* If the customer is not previously assigned any priority, `NEW_PRIORITY` is assigned to the customer.
+* Letting `NEW_PRIORITY` to be  `-`  means removing the priority previously assigned the customer.
+<box type="warning" seamless>
+
+**Caution:**
+* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `NEW_PRIORITY` should be **ONE** of `high`, `medium`, `low`, `-`.
+
+</box>
+
+Examples:
+
+`pr 1 high` Updates the priority of the first customer to be `high`.
+
+`pr 2 -` Removes the priority assigned to the second customer.
 
 ### Exiting the program : `exit`
 
@@ -165,10 +231,13 @@ _More coming soon ..._
 
 ## Command summary
 
-| Action     | Format, Examples                                                                                                                          |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS]` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 ` |
-| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                       |
-| **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`               |
-| **List**   | `list`                                                                                                                                    |
-| **Find**   | `find NAME`                                                                                                                               |
+| Action       | Format and Examples                                                                                                                                                    |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]...`         <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall` |
+| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                        |
+| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                         |
+| **List**     | `list`                                                                      <hr>                                                                                       |
+| **Find**     | `find NAME`                                        <hr>                                                                                                                |
+| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                 |
+| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                            |
+

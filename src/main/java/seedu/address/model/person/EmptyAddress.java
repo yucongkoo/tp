@@ -7,11 +7,22 @@ public class EmptyAddress extends Address {
 
     public static final String DUMMY_VALUE_FOR_EMPTY_ADDRESS = "-";
 
-    public static final EmptyAddress EMPTY_ADDRESS = new EmptyAddress();
+    private static EmptyAddress emptyAddress;
 
     // make constructor private
     private EmptyAddress() {
 
+    }
+
+    /**
+     * Returns the singleton instance of {@code EmptyAddress}.
+     */
+    public static EmptyAddress getEmptyAddress() {
+        if (emptyAddress == null) {
+            emptyAddress = new EmptyAddress();
+        }
+
+        return emptyAddress;
     }
 
     @Override
@@ -26,7 +37,7 @@ public class EmptyAddress extends Address {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof EmptyAddress;
+        return other == this;
     }
 
     @Override
