@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
 /**

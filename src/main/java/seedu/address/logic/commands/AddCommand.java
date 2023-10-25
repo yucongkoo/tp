@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
+import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;

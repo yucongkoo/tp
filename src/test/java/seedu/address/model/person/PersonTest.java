@@ -26,7 +26,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
