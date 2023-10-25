@@ -77,7 +77,7 @@ public class ParserUtil {
      */
     public static Address parseAddress(String address) throws ParseException {
         if (address == null) {
-            return EmptyAddress.EMPTY_ADDRESS;
+            return EmptyAddress.getEmptyAddress();
         }
 
         requireNonNull(address);

@@ -1,5 +1,7 @@
 package seedu.address.storage.jsonadaptedperson;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -56,6 +58,8 @@ public class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
+        requireNonNull(source);
+
         name = new JsonAdaptedName(source.getName());
         phone = new JsonAdaptedPhone(source.getPhone());
         email = new JsonAdaptedEmail(source.getEmail());

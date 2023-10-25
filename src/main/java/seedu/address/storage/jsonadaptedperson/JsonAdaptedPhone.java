@@ -1,5 +1,7 @@
 package seedu.address.storage.jsonadaptedperson;
 
+import static java.util.Objects.requireNonNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,6 +27,7 @@ class JsonAdaptedPhone {
      * Converts a given {@code Phone} into this class for Jackson use.
      */
     public JsonAdaptedPhone(Phone phone) {
+        requireNonNull(phone);
         value = phone.value;
     }
 
