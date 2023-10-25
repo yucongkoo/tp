@@ -7,7 +7,7 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; is always valid
  */
 public class Remark {
-    public final String value;
+    private final String value;
 
     public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 100 characters.";
 

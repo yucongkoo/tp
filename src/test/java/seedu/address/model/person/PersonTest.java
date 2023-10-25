@@ -3,16 +3,7 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_NONE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -43,6 +34,7 @@ public class PersonTest {
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
         Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Remark validRemark = new Remark(VALID_REMARK_AMY);
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
             }};
@@ -50,29 +42,33 @@ public class PersonTest {
 
         // with priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validTags, validPriority));
+                validRemark, validTags, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validTags, validPriority));
+                validRemark, validTags, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validTags, validPriority));
+                validRemark, validTags, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validTags, validPriority));
+                validRemark, validTags, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validPriority));
+                null, validTags, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validTags, null));
+                validRemark, null, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, null));
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validTags));
+                validRemark, validTags));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validTags));
+                validRemark, validTags));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validTags));
+                validRemark, validTags));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validTags));
+                validRemark, validTags));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null));
+                null, validTags));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, null));
     }
 
     @Test
@@ -82,6 +78,7 @@ public class PersonTest {
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
         Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Remark validRemark = new Remark(VALID_REMARK_BOB);
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
@@ -89,11 +86,12 @@ public class PersonTest {
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
 
         // with priority field
-        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags, validPriority);
+        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark,
+                validTags, validPriority);
         assertEquals(expectedPerson, testPerson);
 
         // without priority field
-        testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags);
+        testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark, validTags);
         assertEquals(expectedPerson, testPerson);
 
     }
@@ -289,13 +287,9 @@ public class PersonTest {
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-<<<<<<< HEAD
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", remark=" + ALICE.getRemark()
-                + ", tags=" + ALICE.getTags() + "}";
-=======
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+                + ", tags=" + ALICE.getTags()
                 + ", priority=" + ALICE.getPriority() + "}";
->>>>>>> master
         assertEquals(expected, ALICE.toString());
     }
 }

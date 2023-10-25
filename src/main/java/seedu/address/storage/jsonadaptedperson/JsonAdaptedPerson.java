@@ -32,6 +32,7 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedPhone phone;
     private final JsonAdaptedEmail email;
     private final JsonAdaptedAddress address;
+    private final JsonAdaptedRemark remark;
     private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -43,12 +44,14 @@ public class JsonAdaptedPerson {
                              @JsonProperty("phone") JsonAdaptedPhone phone,
                              @JsonProperty("email") JsonAdaptedEmail email,
                              @JsonProperty("address") JsonAdaptedAddress address,
+                             @JsonProperty("remark") JsonAdaptedRemark remark,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("priority") JsonAdaptedPriority priority) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -63,6 +66,7 @@ public class JsonAdaptedPerson {
         phone = new JsonAdaptedPhone(source.getPhone());
         email = new JsonAdaptedEmail(source.getEmail());
         address = new JsonAdaptedAddress(source.getAddress());
+        remark = new JsonAdaptedRemark(source.getRemark());
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -75,7 +79,7 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), new Remark(""), getModelTags(),
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelRemark(), getModelTags(),
                 getModelPriority());
     }
 
@@ -105,6 +109,13 @@ public class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
         return address.toModelType();
+    }
+
+    private Remark getModelRemark() throws IllegalValueException {
+        if (remark == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
+        }
+        return remark.toModelType();
     }
 
     private Set<Tag> getModelTags() throws IllegalValueException {
