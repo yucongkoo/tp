@@ -26,10 +26,6 @@ public class JsonAdaptedPersonTest {
     private static final JsonAdaptedPhone INVALID_PHONE = new JsonAdaptedPhone("+651234");
     private static final JsonAdaptedAddress INVALID_ADDRESS = new JsonAdaptedAddress(" ", false);
     private static final JsonAdaptedEmail INVALID_EMAIL = new JsonAdaptedEmail("example.com");
-
-    private static final JsonAdaptedRemark INVALID_REMARK = new JsonAdaptedRemark(
-            "this is a invalid remark because this remark is very very very long " +
-                    "until it is more than 100 characters, so it is invalid remark");
     private static final String INVALID_TAG = "#friend";
     private static final JsonAdaptedPriority INVALID_PRIORITY = new JsonAdaptedPriority("top");
 
