@@ -79,8 +79,8 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelRemark(), getModelTags(),
-                getModelPriority());
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(),
+                getModelRemark(), getModelTags(), getModelPriority());
     }
 
     private Name getModelName() throws IllegalValueException {
