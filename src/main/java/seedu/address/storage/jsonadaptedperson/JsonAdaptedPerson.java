@@ -1,5 +1,6 @@
 package seedu.address.storage.jsonadaptedperson;
 
+import static java.util.Objects.checkFromIndexSize;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -34,6 +36,8 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
+    private final List<JsonAdapatedInsurance> insurances = new ArrayList<>();
+
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
@@ -43,6 +47,7 @@ public class JsonAdaptedPerson {
                              @JsonProperty("email") JsonAdaptedEmail email,
                              @JsonProperty("address") JsonAdaptedAddress address,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("insurance") List<JsonAdapatedInsurance> insurances,
                              @JsonProperty("priority") JsonAdaptedPriority priority) {
         this.name = name;
         this.phone = phone;
@@ -77,7 +82,7 @@ public class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelTags(),
-                getModelPriority());
+                getModelInsurances(), getModelPriority());
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -115,6 +120,16 @@ public class JsonAdaptedPerson {
         }
 
         return new HashSet<>(personTags);
+    }
+
+    private Set<Insurance> getModelInsurances() throws IllegalValueException {
+        List<Insurance> personInsurances = new ArrayList<>();
+
+        for (JsonAdapatedInsurance i : insurances) {
+            personInsurances.add(i.toModelType());
+        }
+
+        return new HashSet<>(personInsurances);
     }
 
     private Priority getModelPriority() throws IllegalValueException {
