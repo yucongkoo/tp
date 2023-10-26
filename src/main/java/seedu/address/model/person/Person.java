@@ -27,18 +27,20 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
     private final Priority priority;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
         this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
     }
@@ -46,12 +48,14 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Priority priority) {
-        requireAllNonNull(name, phone, email, address, tags, priority);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Remark remark, Set<Tag> tags, Priority priority) {
+        requireAllNonNull(name, phone, email, address, remark, tags, priority);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
         this.priority = priority;
     }
@@ -72,8 +76,13 @@ public class Person {
         return address;
     }
 
+    public Remark getRemark() {
+        return remark;
+    }
+
     public Priority getPriority() {
         return priority;
+
     }
 
     public Level getPriorityLevel() {
@@ -121,7 +130,8 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address, updatedTags, source.priority);
+        return new Person(source.name, source.phone, source.email, source.address,
+                source.remark, updatedTags, source.priority);
     }
 
     /**
@@ -131,7 +141,7 @@ public class Person {
     public static Person createPersonWithUpdatedPriority(Person personToUpdate, Priority newPriority) {
         requireAllNonNull(personToUpdate, newPriority);
         return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
-                personToUpdate.tags, newPriority);
+                personToUpdate.remark, personToUpdate.tags, newPriority);
     }
 
     /**
@@ -146,10 +156,11 @@ public class Person {
         Phone newPhone = editPersonDescriptor.getPhone().orElse(personToEdit.phone);
         Email newEmail = editPersonDescriptor.getEmail().orElse(personToEdit.email);
         Address newAddress = editPersonDescriptor.getAddress().orElse(personToEdit.address);
+        Remark remark = personToEdit.remark;
         Set<Tag> tags = personToEdit.tags;
         Priority priority = personToEdit.priority;
 
-        return new Person(newName, newPhone, newEmail, newAddress, tags, priority);
+        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, priority);
     }
 
     /**
@@ -179,6 +190,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && remark.equals(otherPerson.remark)
                 && tags.equals(otherPerson.tags)
                 && priority.equals(otherPerson.priority);
     }
@@ -186,7 +198,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, priority);
+        return Objects.hash(name, phone, email, address, remark, tags, priority);
     }
 
     @Override
@@ -196,6 +208,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("remark", remark)
                 .add("tags", tags)
                 .add("priority", priority)
                 .toString();
