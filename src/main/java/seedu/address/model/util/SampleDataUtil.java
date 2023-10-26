@@ -26,8 +26,8 @@ public class SampleDataUtil {
                 getTagSet("friends"), getInsuranceSet("car insurance")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new NonEmptyAddress("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Remark(""),
-                getTagSet("colleagues", "friends")
-                    ,getInsuranceSet("car insurance", "AIA insurance")),
+                getTagSet("colleagues", "friends"),
+                    getInsuranceSet("car insurance", "AIA insurance")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new NonEmptyAddress("Blk 11 Ang Mo Kio Street 74, #11-04"), new Remark(""),
                 getTagSet("neighbours"), getInsuranceSet("life insurance")),

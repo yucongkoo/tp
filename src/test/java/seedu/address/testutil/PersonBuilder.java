@@ -91,11 +91,17 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Assigns the customer with {@code Insurance}
+     */
     public PersonBuilder withInsurances(String... insurances) {
         this.insurances = SampleDataUtil.getInsuranceSet(insurances);
         return this;
     }
 
+    /**
+     * Assigns the customer with {@code Insurance}
+     */
     public PersonBuilder withInsurances(Set<Insurance> insurances) {
         this.insurances = insurances;
         return this;
@@ -150,6 +156,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Create the {@code Person} with all information
+     */
     public Person build() {
         return new Person(name, phone, email, address, remark, tags, insurances, priority);
 

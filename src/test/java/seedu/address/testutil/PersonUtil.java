@@ -1,5 +1,15 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
@@ -11,8 +21,6 @@ import seedu.address.logic.commands.PriorityCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.priority.Priority;
-
-import static seedu.address.logic.parser.CliSyntax.*;
 
 /**
  * A utility class for Person.

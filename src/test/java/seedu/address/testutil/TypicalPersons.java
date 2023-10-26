@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CALMEN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_DERRICK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CALMEN;
@@ -30,7 +31,6 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

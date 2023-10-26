@@ -3,7 +3,19 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_NONE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -38,9 +50,9 @@ public class PersonTest {
         Remark validRemark = new Remark(VALID_REMARK_AMY);
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
-            }};
+        }};
         Set<Insurance> validInsurances = new HashSet<>() {{
-            add(new Insurance(VALID_INSURANCE_CAR));
+                add(new Insurance(VALID_INSURANCE_CAR));
         }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
 
@@ -48,15 +60,15 @@ public class PersonTest {
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
                 validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags, validInsurances,validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags, validInsurances,validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validInsurances,validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags, validInsurances,validPriority));
+                null, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark,null, validInsurances,validPriority));
+                validRemark, null, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 validRemark, validTags, null, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
@@ -74,7 +86,7 @@ public class PersonTest {
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 null, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark,null, validInsurances));
+                validRemark, null, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 validRemark, validTags, null));
 
@@ -91,7 +103,7 @@ public class PersonTest {
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
-            }};
+        }};
         Set<Insurance> validInsurances = new HashSet<>() {{
             add(new Insurance(VALID_INSURANCE_CAR));
         }};

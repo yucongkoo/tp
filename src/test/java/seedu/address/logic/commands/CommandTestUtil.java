@@ -2,7 +2,18 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -104,14 +115,14 @@ public class CommandTestUtil {
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "high low"; // multiple arguments
     public static final String INVALID_PRIORITY_DESC2 = " " + PREFIX_PRIORITY + "1";
     public static final String INVALID_PRIORITY_DESC3 = " " + PREFIX_PRIORITY;
-    public static final String INVALID_INSURANCE_DESC1 = " " + PREFIX_INSURANCE + "/*-+";// non-alphanumeric characters
+    public static final String INVALID_INSURANCE_DESC1 = " " + PREFIX_INSURANCE + "/*-+"; // non-alphanumeric characters
     public static final String INVALID_INSURANCE_DESC2 = " " + PREFIX_INSURANCE
-            + "12345678901234567890123456789012345";// longer than 32 characters
+            + "12345678901234567890123456789012345"; // longer than 32 characters
 
     public static final String INVALID_ADD_INSURANCE_DESC1 =
-            " " + PREFIX_ADD_INSURANCE + "/*-+";// non-alphanumeric characters
+            " " + PREFIX_ADD_INSURANCE + "/*-+"; // non-alphanumeric characters
     public static final String INVALID_ADD_INSURANCE_DESC2 = " " + PREFIX_ADD_INSURANCE
-            + "12345678901234567890123456789012345";// longer than 32 characters
+            + "12345678901234567890123456789012345"; // longer than 32 characters
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

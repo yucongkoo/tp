@@ -85,7 +85,7 @@ public class AddCommandTest {
     @Test
     public void execute_insuranceAtLimit_success() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person person = new PersonBuilder().withInsurances("1","2","3","4","5").build();
+        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5").build();
 
         CommandResult commandResult = new AddCommand(person).execute(modelStub);
 
@@ -95,12 +95,12 @@ public class AddCommandTest {
 
     @Test
     public void execute_insuranceExceedLimit_success() throws Exception {
-        Person person = new PersonBuilder().withInsurances("1","2","3","4","5","6","7","8").build();
+        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5", "6", "7", "8").build();
 
         AddCommand command = new AddCommand(person);
 
-        assertThrows(CommandException.class, Messages.MESSAGE_INSURANCE_COUNT_EXCEED,
-                () -> command.execute(new ModelStub()));
+        assertThrows(CommandException.class, Messages.MESSAGE_INSURANCE_COUNT_EXCEED, () ->
+                command.execute(new ModelStub()));
     }
 
     @Test

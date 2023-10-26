@@ -37,7 +37,7 @@ public class Person {
      */
 
     public Person(Name name, Phone phone, Email email,
-                  Address address,Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
+                  Address address, Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
 
         requireAllNonNull(name, phone, email, address, tags, insurances, remark);
 
@@ -147,6 +147,9 @@ public class Person {
                 updatedTags, source.insurances, source.priority);
     }
 
+    /**
+     * Create a new copy of {@code Person} with update information of {@code Insurance}
+     */
     public static Person createPersonWithUpdatedInsurances(Person source, Collection<Insurance> insurancesToAdd,
                                                            Collection<Insurance> insurancesToDelete) {
 

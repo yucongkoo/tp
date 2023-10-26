@@ -15,7 +15,10 @@ import javafx.scene.paint.Color;
  */
 public class FlowPaneLabel extends UiPart<Region> {
 
-    public enum Type { TAG, INSURANCE, PRIORITY}
+    /**
+     * To differentiate the label for {@code Tag}, {@code Insurance}, {@code Priority}
+     */
+    public enum Type { TAG, INSURANCE, PRIORITY }
     private static final String FXML = "FlowPaneLabel.fxml";
     private static final CornerRadii radius = new CornerRadii(3);
     private static final Insets padding = new Insets(1);

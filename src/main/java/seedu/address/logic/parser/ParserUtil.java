@@ -132,18 +132,26 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parse a {@code String insurance} into a {@code Insurance}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     */
     private static Insurance parseInsurance(String insurance) throws ParseException {
         requireNonNull(insurance);
 
         String trimmed = insurance.trim();
 
-        if(!Insurance.isValidInsuranceName(trimmed)) {
+        if (!Insurance.isValidInsuranceName(trimmed)) {
             throw new ParseException(Insurance.MESSAGE_CONSTRAINT);
         }
 
         return new Insurance(trimmed);
     }
 
+    /**
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>}.
+     */
     public static Set<Insurance> parseInsurances(Collection<String> insurances) throws ParseException {
         requireNonNull(insurances);
         Set<Insurance> insuranceSet = new HashSet<>();

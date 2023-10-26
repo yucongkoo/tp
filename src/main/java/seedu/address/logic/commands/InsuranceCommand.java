@@ -1,18 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.insurance.Insurance;
-import seedu.address.model.person.Person;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
@@ -21,21 +8,39 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Person.createPersonWithUpdatedInsurances;
 
-public class InsuranceCommand extends Command{
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Person;
+
+/**
+ * Parse input argument and create InsuranceCommand Object
+ *
+ */
+public class InsuranceCommand extends Command {
 
     public static final String COMMAND_WORD = "ins";
 
-    public static String MESSAGE_USAGE = COMMAND_WORD + ": Assign/Remove insurance policy to/from customer identified "
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + ": Assign/Remove insurance policy to/from customer identified "
             + "by index shown in the displayed customer list.\n"
             + "Usage: " + COMMAND_WORD + " <INDEX> "
             + "[" + PREFIX_ADD_INSURANCE + "<INSURANCE_TO_ADD>]... "
             + "[" + PREFIX_DELETE_INSURANCE + "<INSURANCE_TO_DELETE>]...\n";
 
-    public static String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of person: %s";
+    public static final String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of person: %s";
 
-    public static String MESSAGE_INSURANCE_NO_UPDATE = "There has to be at least one insurance updated/deleted.";
+    public static final String MESSAGE_INSURANCE_NO_UPDATE = "There has to be at least one insurance updated/deleted.";
 
-    public static String MESSAGE_INSURANCE_CONFLICT = "Should not assign and remove the same insurance.";
+    public static final String MESSAGE_INSURANCE_CONFLICT = "Should not assign and remove the same insurance.";
 
     private static final Logger logger = LogsCenter.getLogger(InsuranceCommand.class);
 
@@ -43,12 +48,22 @@ public class InsuranceCommand extends Command{
 
     private UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor;
 
+    /**
+     * Instantiate {@code InsuranceCommmand}
+     */
     public InsuranceCommand(Index i, UpdatePersonInsuranceDescriptor u) {
-        requireAllNonNull(i,u);
+        requireAllNonNull(i, u);
         this.index = i;
         this.updatePersonInsuranceDescriptor = u;
     }
 
+    /**
+     * Assigns an insurance to a customer identified by index
+     *
+     * @param m {@code Model} which the command should operate on.
+     * @return {@code CommandResult} for Ui component to display
+     * @throws CommandException when index is out of bound or maximum amount of insurance is exceeded
+     */
     @Override
     public CommandResult execute(Model m) throws CommandException {
         requireAllNonNull(m);
@@ -98,11 +113,17 @@ public class InsuranceCommand extends Command{
                 && this.updatePersonInsuranceDescriptor.equals(temp.updatePersonInsuranceDescriptor);
     }
 
+    /**
+     * Wrapper class to hold the changes to insurance of a customer
+     */
     public static class UpdatePersonInsuranceDescriptor {
 
         private Set<Insurance> insurancesToAdd;
         private Set<Insurance> insurancesToDelete;
 
+        /**
+         * Instantiate {@code UpdatePersonInsuranceDescriptor}
+         */
         public UpdatePersonInsuranceDescriptor(Set<Insurance> toAdd, Set<Insurance> toDelete) {
             this.insurancesToAdd = toAdd;
             this.insurancesToDelete = toDelete;
@@ -124,6 +145,11 @@ public class InsuranceCommand extends Command{
             this.insurancesToDelete = insurancesToDelete;
         }
 
+        /**
+         * Checks for common insurance between add and delete sets
+         *
+         * @return false if there is no common insurance
+         */
         public boolean hasCommonInsurance() {
             Set<Insurance> intersection = new HashSet<>(insurancesToAdd);
             intersection.retainAll(insurancesToDelete);
@@ -131,6 +157,11 @@ public class InsuranceCommand extends Command{
             return !intersection.isEmpty();
         }
 
+        /**
+         * Checks for available insurance to modify
+         *
+         * @return true if there exist insurance to add or delete
+         */
         public boolean hasInsuranceToUpdate() {
             return !(insurancesToAdd.isEmpty() && insurancesToDelete.isEmpty());
         }
