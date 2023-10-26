@@ -16,6 +16,7 @@ import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
@@ -143,5 +144,20 @@ public class ParserUtil {
             throw new ParseException((Priority.MESSAGE_CONSTRAINTS));
         }
         return new Priority(trimmedPriority);
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code priority} is invalid.
+     */
+    public static Remark parseRemark(String remark) throws ParseException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new ParseException((Remark.MESSAGE_CONSTRAINTS));
+        }
+        return new Remark(trimmedRemark);
     }
 }

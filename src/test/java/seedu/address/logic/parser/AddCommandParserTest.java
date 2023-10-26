@@ -26,6 +26,9 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_HIGH;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_CALMEN;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -168,18 +171,18 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + PRIORITY_DESC_HIGH, new AddCommand(expectedPerson));
+                + REMARK_DESC_AMY + PRIORITY_DESC_HIGH, new AddCommand(expectedPerson));
 
         // missing address
         Person expectedPersonWithoutAddress = new PersonBuilder(CALMEN).build();
         assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
-                + PRIORITY_DESC_HIGH, new AddCommand(expectedPersonWithoutAddress));
+                + REMARK_DESC_CALMEN + PRIORITY_DESC_HIGH, new AddCommand(expectedPersonWithoutAddress));
 
         // missing priority
         Person expectedPersonWithoutPriority = new PersonBuilder(BOB).withPriority(Priority.NONE_PRIORITY_KEYWORD)
                 .build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, new AddCommand(expectedPersonWithoutPriority));
+                + REMARK_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, new AddCommand(expectedPersonWithoutPriority));
     }
 
     @Test
