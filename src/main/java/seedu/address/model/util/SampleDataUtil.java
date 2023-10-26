@@ -61,7 +61,7 @@ public class SampleDataUtil {
 
     public static Set<Insurance> getInsuranceSet(String... strings) {
         return Arrays.stream(strings)
-                .map(Insurance::new)
+                .map(s -> new Insurance(s))
                 .collect(Collectors.toSet());
     }
 

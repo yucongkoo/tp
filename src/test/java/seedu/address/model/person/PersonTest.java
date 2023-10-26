@@ -3,16 +3,7 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_NONE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -25,6 +16,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -46,38 +38,45 @@ public class PersonTest {
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+            add(new Insurance(VALID_INSURANCE_CAR));
+        }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
 
         // with priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validTags, validPriority));
+                validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validTags, validPriority));
+                validTags, validInsurances,validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validTags, validPriority));
+                validTags, validInsurances,validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validTags, validPriority));
+                validTags, validInsurances,validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validPriority));
+                null, validInsurances,validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validTags, null));
+                validTags, null, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validTags, validInsurances, null));
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validTags));
+                validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validTags));
+                validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validTags));
+                validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validTags));
+                validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null));
+                null, validInsurances));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validTags, null));
     }
 
     @Test
     public void constructor_allFieldsValid_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withPriority("-").build();
+        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR).withPriority("-").build();
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -86,14 +85,18 @@ public class PersonTest {
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+            add(new Insurance(VALID_INSURANCE_CAR));
+        }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
 
         // with priority field
-        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags, validPriority);
+        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags, validInsurances,
+                validPriority);
         assertEquals(expectedPerson, testPerson);
 
         // without priority field
-        testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags);
+        testPerson = new Person(validName, validPhone, validEmail, validAddress, validTags, validInsurances);
         assertEquals(expectedPerson, testPerson);
 
     }
@@ -290,7 +293,7 @@ public class PersonTest {
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
-                + ", priority=" + ALICE.getPriority() + "}";
+                + ", insurances=" + ALICE.getInsurances() + ", priority=" + ALICE.getPriority() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

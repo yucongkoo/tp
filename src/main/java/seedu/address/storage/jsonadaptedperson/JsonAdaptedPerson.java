@@ -1,6 +1,5 @@
 package seedu.address.storage.jsonadaptedperson;
 
-import static java.util.Objects.checkFromIndexSize;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
-    private final List<JsonAdapatedInsurance> insurances = new ArrayList<>();
+    private final List<JsonAdaptedInsurance> insurances = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -47,7 +46,7 @@ public class JsonAdaptedPerson {
                              @JsonProperty("email") JsonAdaptedEmail email,
                              @JsonProperty("address") JsonAdaptedAddress address,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("insurance") List<JsonAdapatedInsurance> insurances,
+                             @JsonProperty("insurance") List<JsonAdaptedInsurance> insurances,
                              @JsonProperty("priority") JsonAdaptedPriority priority) {
         this.name = name;
         this.phone = phone;
@@ -55,6 +54,9 @@ public class JsonAdaptedPerson {
         this.address = address;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (insurances != null) {
+            this.insurances.addAll(insurances);
         }
         this.priority = priority;
     }
@@ -71,6 +73,10 @@ public class JsonAdaptedPerson {
         address = new JsonAdaptedAddress(source.getAddress());
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
+        insurances.addAll(source.getInsurances()
+                .stream()
+                .map(JsonAdaptedInsurance::new)
                 .collect(Collectors.toList()));
         priority = new JsonAdaptedPriority(source.getPriority());
     }
@@ -125,7 +131,7 @@ public class JsonAdaptedPerson {
     private Set<Insurance> getModelInsurances() throws IllegalValueException {
         List<Insurance> personInsurances = new ArrayList<>();
 
-        for (JsonAdapatedInsurance i : insurances) {
+        for (JsonAdaptedInsurance i : insurances) {
             personInsurances.add(i.toModelType());
         }
 

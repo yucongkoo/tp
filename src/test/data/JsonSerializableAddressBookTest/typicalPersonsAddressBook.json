@@ -15,6 +15,7 @@
       "isEmptyAddress" : false
     },
     "tags": [ "friends" ],
+    "insurances": [ "car insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -33,6 +34,7 @@
       "isEmptyAddress" : false
     },
     "tags": [ "owesMoney", "friends" ],
+    "insurances": [ "AIA insurance", "ABC insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -51,6 +53,7 @@
       "isEmptyAddress" : false
     },
     "tags": [ ],
+    "insurances": [ "Great Eastern" ],
     "priority" : {
       "value" : "high"
     }
@@ -87,6 +90,7 @@
       "isEmptyAddress" : false
     },
     "tags": [ ],
+    "insurances": [ "InsureIQ" ],
     "priority" : {
       "value" : "high"
     }
@@ -123,6 +127,7 @@
       "isEmptyAddress" : false
     },
     "tags": [ ],
+    "insurances": [ "GGO Insurance" ],
     "priority" : {
       "value" : "high"
     }

@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.Insurance;
 
-public class JsonAdapatedInsurance {
+public class JsonAdaptedInsurance {
 
     private final String insuranceName;
 
     @JsonCreator
-    public JsonAdapatedInsurance(String insuranceName) {
+    public JsonAdaptedInsurance(String insuranceName) {
         this.insuranceName = insuranceName;
     }
 
-    public JsonAdapatedInsurance(Insurance source) {
+    public JsonAdaptedInsurance(Insurance source) {
         this.insuranceName = source.getInsuranceName();
     }
 

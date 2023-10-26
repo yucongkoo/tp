@@ -2,14 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -48,6 +41,10 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_MALE = "male";
+
+    public static final String VALID_INSURANCE_CAR = "car insurance";
+    public static final String VALID_INSURANCE_LIFE = "life insurance";
+    public static final String VALID_INSURANCE_HEALTH = "health insurance";
     public static final String VALID_PRIORITY_HIGH = "high";
     public static final String VALID_PRIORITY_LOW = "low";
     public static final String VALID_PRIORITY_NONE = "-";
@@ -72,6 +69,16 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String ADD_TAG_DESC_FRIEND = " " + PREFIX_ADD_TAG + VALID_TAG_FRIEND;
     public static final String DELETE_TAG_DESC_FRIEND = " " + PREFIX_DELETE_TAG + VALID_TAG_FRIEND;
+    public static final String INSURANCE_DESC_CAR = " " + PREFIX_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String INSURANCE_DESC_LIFE = " " + PREFIX_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String INSURANCE_DESC_HEALTH = " " + PREFIX_INSURANCE + VALID_INSURANCE_HEALTH;
+    public static final String ADD_INSURANCE_DESC_CAR = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String ADD_INSURANCE_DESC_LIFE = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String ADD_INSURANCE_DESC_HEALTH = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_HEALTH;
+    public static final String DELETE_INSURANCE_DESC_CAR = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String DELETE_INSURANCE_DESC_LIFE = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String DELETE_INSURANCE_DESC_HEALTH = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_HEALTH;
+
     public static final String PRIORITY_DESC_HIGH = " " + PREFIX_PRIORITY + VALID_PRIORITY_HIGH;
     public static final String PRIORITY_DESC_NONE = " " + PREFIX_PRIORITY + VALID_PRIORITY_NONE;
 
@@ -86,6 +93,14 @@ public class CommandTestUtil {
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "high low"; // multiple arguments
     public static final String INVALID_PRIORITY_DESC2 = " " + PREFIX_PRIORITY + "1";
     public static final String INVALID_PRIORITY_DESC3 = " " + PREFIX_PRIORITY;
+    public static final String INVALID_INSURANCE_DESC1 = " " + PREFIX_INSURANCE + "/*-+";// non-alphanumeric characters
+    public static final String INVALID_INSURANCE_DESC2 = " " + PREFIX_INSURANCE
+            + "12345678901234567890123456789012345";// longer than 32 characters
+
+    public static final String INVALID_ADD_INSURANCE_DESC1 =
+            " " + PREFIX_ADD_INSURANCE + "/*-+";// non-alphanumeric characters
+    public static final String INVALID_ADD_INSURANCE_DESC2 = " " + PREFIX_ADD_INSURANCE
+            + "12345678901234567890123456789012345";// longer than 32 characters
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

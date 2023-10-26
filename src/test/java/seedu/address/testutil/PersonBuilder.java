@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
@@ -30,6 +31,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private Set<Insurance> insurances;
     private Priority priority;
 
     /**
@@ -41,6 +43,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new NonEmptyAddress(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        insurances = new HashSet<>();
         priority = new Priority(DEFAULT_PRIORITY);
     }
 
@@ -53,6 +56,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        insurances = new HashSet<>(personToCopy.getInsurances());
         priority = personToCopy.getPriority();
     }
 
@@ -79,6 +83,16 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(Set<Tag> tags) {
         this.tags = tags;
+        return this;
+    }
+
+    public PersonBuilder withInsurances(String... insurances) {
+        this.insurances = SampleDataUtil.getInsuranceSet(insurances);
+        return this;
+    }
+
+    public PersonBuilder withInsurances(Set<Insurance> insurances) {
+        this.insurances = insurances;
         return this;
     }
 
@@ -124,7 +138,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, priority);
+        return new Person(name, phone, email, address, tags, insurances, priority);
     }
 
 }

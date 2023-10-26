@@ -72,6 +72,38 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_insuranceNone_throwsCommandException() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_insuranceAtLimit_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().withInsurances("1","2","3","4","5").build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_insuranceExceedLimit_success() throws Exception {
+        Person person = new PersonBuilder().withInsurances("1","2","3","4","5","6","7","8").build();
+
+        AddCommand command = new AddCommand(person);
+
+        assertThrows(CommandException.class, Messages.MESSAGE_INSURANCE_COUNT_EXCEED,
+                () -> command.execute(new ModelStub()));
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
