@@ -26,6 +26,7 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
     private final Priority priority;
 
@@ -34,12 +35,17 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Insurance> insurances) {
-        requireAllNonNull(name, phone, email, address, tags, insurances);
+
+    public Person(Name name, Phone phone, Email email,
+                  Address address,Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
+
+        requireAllNonNull(name, phone, email, address, tags, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
         this.insurances.addAll(insurances);
         this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
@@ -48,13 +54,17 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Insurance> insurances,
-                  Priority priority) {
-        requireAllNonNull(name, phone, email, address, tags, priority);
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark,
+                  Set<Tag> tags, Set<Insurance> insurances, Priority priority) {
+
+        requireAllNonNull(name, phone, email, address, tags, priority, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
         this.insurances.addAll(insurances);
         this.priority = priority;
@@ -76,8 +86,13 @@ public class Person {
         return address;
     }
 
+    public Remark getRemark() {
+        return remark;
+    }
+
     public Priority getPriority() {
         return priority;
+
     }
 
     /**
@@ -128,7 +143,7 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address,
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
                 updatedTags, source.insurances, source.priority);
     }
 
@@ -141,9 +156,8 @@ public class Person {
         updatedInsurances.removeAll(insurancesToDelete);
         updatedInsurances.addAll(insurancesToAdd);
 
-        return new Person(source.name, source.phone, source.email,
-                source.address,source.tags, updatedInsurances, source.priority);
-
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                source.tags, updatedInsurances, source.priority);
     }
 
     /**
@@ -152,7 +166,7 @@ public class Person {
      */
     public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
         requireAllNonNull(source, newPriority);
-        return new Person(source.name, source.phone, source.email, source.address,
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
                 source.tags, source.insurances, newPriority);
     }
 
@@ -183,6 +197,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && remark.equals(otherPerson.remark)
                 && tags.equals(otherPerson.tags)
                 && insurances.equals(otherPerson.insurances)
                 && priority.equals(otherPerson.priority);
@@ -191,7 +206,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, insurances, priority);
+        return Objects.hash(name, phone, email, address, tags, insurances, priority, remark);
     }
 
     @Override
@@ -201,6 +216,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("remark", remark)
                 .add("tags", tags)
                 .add("insurances", insurances)
                 .add("priority", priority)

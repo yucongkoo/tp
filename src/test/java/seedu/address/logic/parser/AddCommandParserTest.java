@@ -136,25 +136,28 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + PRIORITY_DESC_HIGH , new AddCommand(expectedPerson));
+                + REMARK_DESC_AMY + PRIORITY_DESC_HIGH, new AddCommand(expectedPerson));
+
 
         // missing address
         Person expectedPersonWithoutAddress = new PersonBuilder(CALMEN).withInsurances(VALID_INSURANCE_CAR).build();
         assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
-                + INSURANCE_DESC_CAR + PRIORITY_DESC_HIGH,  new AddCommand(expectedPersonWithoutAddress));
+                + INSURANCE_DESC_CAR + REMARK_DESC_CALMEN +  PRIORITY_DESC_HIGH,
+                new AddCommand(expectedPersonWithoutAddress));
 
         // missing priority
         Person expectedPersonWithoutPriority = new PersonBuilder(BOB)
                 .withInsurances(VALID_INSURANCE_CAR).withPriority(Priority.NONE_PRIORITY_KEYWORD)
                 .build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + INSURANCE_DESC_CAR,
+                + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + INSURANCE_DESC_CAR + REMARK_DESC_BOB,
                 new AddCommand(expectedPersonWithoutPriority));
 
         // missing insurance
         Person expectedPersonWithoutInsurance = new PersonBuilder(CALMEN).build();
         assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
-                + PRIORITY_DESC_HIGH, new AddCommand(expectedPersonWithoutInsurance));
+                + REMARK_DESC_CALMEN + PRIORITY_DESC_HIGH, new AddCommand(expectedPersonWithoutInsurance));
+
     }
 
     @Test

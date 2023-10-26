@@ -11,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -24,12 +25,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_PRIORITY = "high";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Remark remark;
     private Set<Tag> tags;
     private Set<Insurance> insurances;
     private Priority priority;
@@ -41,6 +44,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+        remark = new Remark(DEFAULT_REMARK);
         address = new NonEmptyAddress(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         insurances = new HashSet<>();
@@ -55,6 +59,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        remark = personToCopy.getRemark();
         tags = new HashSet<>(personToCopy.getTags());
         insurances = new HashSet<>(personToCopy.getInsurances());
         priority = personToCopy.getPriority();
@@ -130,6 +135,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
+    /**
      * Sets the {@code Priority} of the {@code Person} that we are building.
      */
     public PersonBuilder withPriority(String priority) {
@@ -138,7 +151,8 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, insurances, priority);
+        return new Person(name, phone, email, address, remark, tags, insurances, priority);
+
     }
 
 }
