@@ -49,13 +49,22 @@
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
 
-      <HBox styleClass="attribute-card-container">
-        <VBox>
-          <VBox fx:id="phoneCardPlaceholder"/>
-          <VBox fx:id="emailCardPlaceholder" />
-          <VBox fx:id="addressCardPlaceholder" />
-        </VBox>
-      </HBox>
+      <VBox styleClass="attribute-card-container" minHeight="105" >
+        <padding>
+          <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <VBox fx:id="phoneCardPlaceholder"/>
+        <VBox fx:id="emailCardPlaceholder" />
+        <VBox fx:id="addressCardPlaceholder" />
+      </VBox>
+
+      <VBox styleClass="remark-card-container" minWidth="200" maxWidth="200">
+        <padding>
+          <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <Label fx:id="remarkTitle" styleClass="cell_big_label" wrapText="true"/>
+        <Label fx:id="remark" styleClass="cell_big_label" wrapText="true"/>
+      </VBox>
     </HBox>
 
   </GridPane>

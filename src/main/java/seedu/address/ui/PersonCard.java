@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.priority.Priority;
 
 /**
@@ -50,6 +51,10 @@ public class PersonCard extends UiPart<Region> {
     private VBox addressCardPlaceholder;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label remark;
+    @FXML
+    private Label remarkTitle;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -69,6 +74,7 @@ public class PersonCard extends UiPart<Region> {
         loadEmailCard();
         loadAddressCard();
         loadTags();
+        loadRemarkCard();
     }
 
     private void loadPriority() {
@@ -109,5 +115,15 @@ public class PersonCard extends UiPart<Region> {
 
         addressCard = new PersonAttributeCard(Attribute.ADDRESS, person.getAddress().getValue());
         addressCardPlaceholder.getChildren().add(addressCard.getRoot());
+    }
+
+    private void loadRemarkCard() {
+        String remarkString = person.getRemark().toString();
+        if (remarkString.isEmpty()) {
+            remarkTitle.setText(Remark.REMARK_TITLE_NO_REMARK);
+            return;
+        }
+        remarkTitle.setText(Remark.REMARK_TITLE);
+        remark.setText(remarkString);
     }
 }
