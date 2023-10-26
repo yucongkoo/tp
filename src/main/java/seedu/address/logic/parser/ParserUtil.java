@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
@@ -128,6 +129,28 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    private static Insurance parseInsurance(String insurance) throws ParseException {
+        requireNonNull(insurance);
+
+        String trimmed = insurance.trim();
+
+        if(!Insurance.isValidInsuranceName(trimmed)) {
+            throw new ParseException(Insurance.MESSAGE_CONSTRAINT);
+        }
+
+        return new Insurance(trimmed);
+    }
+
+    public static Set<Insurance> parseInsurances(Collection<String> insurances) throws ParseException {
+        requireNonNull(insurances);
+        Set<Insurance> insuranceSet = new HashSet<>();
+        for (String i : insurances) {
+            insuranceSet.add(parseInsurance(i));
+        }
+
+        return insuranceSet;
     }
 
     /**

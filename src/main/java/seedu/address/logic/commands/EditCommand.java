@@ -22,6 +22,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -106,9 +107,10 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> tags = personToEdit.getTags();
+        Set<Insurance> insurances = personToEdit.getInsurances();
         Priority priority = personToEdit.getPriority();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags, priority);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, tags, insurances, priority);
     }
 
     @Override

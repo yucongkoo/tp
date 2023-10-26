@@ -10,12 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Insurance {
 
-    public static final String MESSAGE_CONSTRAINT = "";
-    public static int MAX_INSURANCE_PERSON = 5;
-    private static String VALIDATION_REGEX = "";
+
+
+    public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
+    public static final int MAX_INSURANCE_COUNT = 5;
     private static int MAX_LENGTH = 32;
 
-
+    public static final String MESSAGE_CONSTRAINT =
+            String.format("Insurance name should be alphanumeric and should not exceed %d characters", MAX_LENGTH);
     private String insuranceName;
 
     /**
