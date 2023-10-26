@@ -28,8 +28,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_PRIORITY;
-import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_TAG;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_PRIORITY_ERROR;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_TAG_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -195,7 +195,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editTag_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG + "\n";
+        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR + "\n";
 
         // all fields specified with tag
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -218,7 +218,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editPriority_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_PRIORITY + "\n";
+        String exceptionMessage = MESSAGE_EDIT_PRIORITY_ERROR + "\n";
 
         // all fields specified with priority high
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -249,7 +249,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_bothTagAndPriority_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG + "\n" + MESSAGE_EDIT_PRIORITY + "\n";
+        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR + "\n" + MESSAGE_EDIT_PRIORITY_ERROR + "\n";
 
         // both tags and priority are valid
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB

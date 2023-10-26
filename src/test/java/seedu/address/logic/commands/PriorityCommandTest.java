@@ -68,7 +68,7 @@ public class PriorityCommandTest {
         Person expectedPerson = new PersonBuilder(personInFilteredList).withPriority(VALID_PRIORITY_LOW).build();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), expectedPerson);
-        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS,
+        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PRIORITY_SUCCESS,
                 Messages.format(expectedPerson));
 
         Index indexOfTargetPerson = INDEX_FIRST_PERSON;
@@ -80,7 +80,8 @@ public class PriorityCommandTest {
         expectedPerson = new PersonBuilder(personInFilteredList).withPriority(VALID_PRIORITY_NONE).build();
         expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()), expectedPerson);
-        expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, Messages.format(expectedPerson));
+        expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PRIORITY_SUCCESS,
+                Messages.format(expectedPerson));
 
         indexOfTargetPerson = INDEX_SECOND_PERSON;
         pc = new PriorityCommand(indexOfTargetPerson, nonePriority);

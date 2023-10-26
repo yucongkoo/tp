@@ -72,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
+        if (person.getPriorityLevel() != Priority.Level.NONE) {
             // priority.setText(person.getPriority().toString());
 
             // TODO: Use priority enum to construct the label, so that each priority will have differen display
