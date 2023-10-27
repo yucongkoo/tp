@@ -245,6 +245,18 @@ Alternative 1 was selected over alternative 2 because the primary reason for use
 they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
+## \[Proposed\] Appointment feature
+
+### Implementation
+
+The appointment feature supports 5 different type of command:
+
+1. `add appointment`
+2. `edit appointment`
+3. `delete appointment`
+4. `mark appointment`
+5. `unmark appointment`
+
 ## Priority feature
 
 ### Implementation
@@ -279,18 +291,6 @@ It will update the `Priority` of a `Person`.
 The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
-
-## \[Proposed\] Appointment feature
-
-### Implementation
-
-The appointment feature supports 5 different type of command:
-
-1. `add appointment`
-2. `edit appointment`
-3. `delete appointment`
-4. `mark appointment`
-5. `unmark appointment`
 
 ## \[Proposed\] Undo/redo feature
 
