@@ -50,10 +50,10 @@ public class PersonTest {
         Remark validRemark = new Remark(VALID_REMARK_AMY);
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
-        }};
+            }};
         Set<Insurance> validInsurances = new HashSet<>() {{
                 add(new Insurance(VALID_INSURANCE_CAR));
-        }};
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
 
         // with priority field
@@ -103,10 +103,10 @@ public class PersonTest {
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
-        }};
+            }};
         Set<Insurance> validInsurances = new HashSet<>() {{
-            add(new Insurance(VALID_INSURANCE_CAR));
-        }};
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
 
         // with priority field

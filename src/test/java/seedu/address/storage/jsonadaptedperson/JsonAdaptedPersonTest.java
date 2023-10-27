@@ -159,7 +159,7 @@ public class JsonAdaptedPersonTest {
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
                         invalidInsurances, VALID_PRIORITY);
 
-        String expectedMessage = Insurance.MESSAGE_CONSTRAINT;
+        String expectedMessage = Insurance.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

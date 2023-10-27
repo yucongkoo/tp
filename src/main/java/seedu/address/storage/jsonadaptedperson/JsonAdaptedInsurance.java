@@ -29,7 +29,7 @@ public class JsonAdaptedInsurance {
      */
     public Insurance toModelType() throws IllegalValueException {
         if (!Insurance.isValidInsuranceName(insuranceName)) {
-            throw new IllegalValueException(Insurance.MESSAGE_CONSTRAINT);
+            throw new IllegalValueException(Insurance.MESSAGE_CONSTRAINTS);
         }
         return new Insurance(insuranceName);
     }

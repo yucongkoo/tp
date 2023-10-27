@@ -14,7 +14,7 @@ public class Insurance {
     public static final int MAX_INSURANCE_COUNT = 5;
     private static final int MAX_LENGTH = 32;
 
-    public static final String MESSAGE_CONSTRAINT =
+    public static final String MESSAGE_CONSTRAINTS =
             String.format("Insurance name should be alphanumeric and should not exceed %d characters", MAX_LENGTH);
     private String insuranceName;
 
@@ -26,7 +26,7 @@ public class Insurance {
     public Insurance(String name) {
         requireNonNull(name);
         String trimmedName = name.trim();
-        checkArgument(isValidInsuranceName(trimmedName), MESSAGE_CONSTRAINT);
+        checkArgument(isValidInsuranceName(trimmedName), MESSAGE_CONSTRAINTS);
         this.insuranceName = trimmedName;
     }
 

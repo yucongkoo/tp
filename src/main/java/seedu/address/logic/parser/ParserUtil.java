@@ -143,7 +143,7 @@ public class ParserUtil {
         String trimmed = insurance.trim();
 
         if (!Insurance.isValidInsuranceName(trimmed)) {
-            throw new ParseException(Insurance.MESSAGE_CONSTRAINT);
+            throw new ParseException(Insurance.MESSAGE_CONSTRAINTS);
         }
 
         return new Insurance(trimmed);

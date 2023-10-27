@@ -259,10 +259,10 @@ public class AddCommandParserTest {
 
         // invalid insurance
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH + INVALID_INSURANCE_DESC1, Priority.MESSAGE_CONSTRAINTS);
+                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH + INVALID_INSURANCE_DESC1, Insurance.MESSAGE_CONSTRAINTS);
 
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH + INVALID_INSURANCE_DESC2, Priority.MESSAGE_CONSTRAINTS);
+                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH + INVALID_INSURANCE_DESC2, Insurance.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB
