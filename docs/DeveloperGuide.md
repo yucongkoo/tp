@@ -245,6 +245,56 @@ Alternative 1 was selected over alternative 2 because the primary reason for use
 they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
+## Find feature
+This find feature is designed to be a partial search or prefix search.
+
+### Implementation
+
+**Implementing `NameContainsKeywordsPredicate`**
+This class determine how the find feature find the customers. It contains a test method to test such, the details as below.
+* This find feature is a partial search, we said keyword match with the name when name contains keyword as a prefix.
+* This test method return true when all the keywords match with the name.
+* Using a stream to check if all the keywords match with the name.
+
+**Implementing `FindCommand`**
+This class execute the find command on `Model`, it will update the `Model` accordingly to
+reflect the changes after the find command completes its execution.
+
+### Design considerations:
+
+**Aspect: Design of test method:**
+
+* **Alternative 1(current choice):** Returns customers when their names match with all keywords as a prefix.
+    * Pros: Easy to implement, more flexible for user to find customers.
+    * Cons: Cannot differentiate `Lam Jiu` and `Jiu Lam`, a name can match with multiple keywords, i.e. name `song` match with keywords `song song`.
+* **Alternative 2:** Returns customers when their names match with all keywords as a prefix in order.
+    * Pros: Can easily and accurately find a specified customer.
+    * Cons: Harder to implement, less flexible for user to find for customer.
+* **Alternative 3:** Returns customers when their names match with all keywords as a prefix, where each name can only match with one keyword, i.e. name `song` cannot match with keywords `song song`.
+    * Pros: More intuitive design.
+    * Cons: Hard to implement, required a long algorithm to do so.
+
+In this case, we use choose Alternative 1 over Alternative 2 because the find feature become less useful when we restrict
+the name must match keywords in order. The consideration about our target user is a forgetful insurance agent affect our decision,
+since our target audience might forget and input the name in wrong order sometimes.</br>
+
+Alternative 1 over Alternative 3, although Alternative 3 seems like a more accurate version, but we do some research on most of the contact book like application.
+We found that most of the find feature design do not restrict that each name can only match with one keyword.
+In addition, Alternative 3 requires a more complicated algorithm.
+Hence, we choose Alternative 1 over 3.
+
+**Aspect: Implementation of test method:**
+
+* **Alternative 1(current choice):** Convert keywords to `Stream` and using `allMatch`.
+    * Pros: Easy to implement, code is clean.
+    * Cons: Less flexible, ex: cannot check the name match the keywords in order.
+* **Alternative 2:** Directly using the keywords as `List<String>` and using a for loop.
+    * Pros: More flexible, can add more constraint on the test method.
+    * Cons: Hard to implement, if we want to add many constraint, code is untidy.
+Alternative 1 over Alternative 2, because we choose a slightly simpler design and do not need much flexibility on implementation.
+Hence, we decided to choose an alternative which can keep our code clean and easy to implement.
+
+
 
 ## Insurance Feature
 This feature allows user to assign / remove insurance package(s) to / from customers in EZContact.
