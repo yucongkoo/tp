@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
 # AB-3 Developer Guide
@@ -317,6 +317,40 @@ The appointment feature supports 5 different type of command:
 4. `mark appointment`
 5. `unmark appointment`
 
+## Priority feature
+
+### Implementation
+
+The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+
+**The `Priority` class**
+
+The class is used to represent different priority levels for each `Person`.
+By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+
+<puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+**The `PriorityCommandParser` class**
+
+The class is used to parse the arguments into two information: `index` and `priority`.
+It will then return a `PriorityCommand` should the arguments are valid.
+
+The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
+
+Taking `parse(1 high)`as an example.
+
+<puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
+
+**The `PriorityCommand` class**
+
+The class is responsible in executing the task parsed by the `PriorityCommandParser`.
+It will update the `Priority` of a `Person`.
+
+### Design Consideration:
+
+The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
+The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+
 
 ## \[Proposed\] Undo/redo feature
 
@@ -535,15 +569,15 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**
-1.  User lists out the customers.
+1.  User requests to list out the customers.
 2.  System shows the list of customers.
-3.  User edits the customer with the index number shown in the displayed customer list and provides the field prefix along with the new details.
-4.  System displays the details of the deleted person.</br>
-   Use case ends.
+3.  User edits the details of customer with its respective index.
+4.  System displays the details of the edited customer.</br>
+    Use case ends.
 
 **Extensions:**</br>
-4a. Index provided by user or information provided by user is invalid.</br>
-&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
 #### Searching for a customer
@@ -566,8 +600,22 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2a1. System shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
+#### Assigning priority to customer
 
+**Use Case: UC06 - assign priority to a customer**
 
+**MSS:**
+
+1.  User requests to list out the customers.
+2.  System lists out the customers.
+3.  User assigns priority to the customer with its respective index.
+4.  System displays the new priority of customer.</br>
+    Use case ends.
+
+**Extensions:**</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
 
 ### Non-Functional Requirements
 
