@@ -218,9 +218,9 @@ Examples:
 `pr 2 -` Removes the priority assigned to the second customer.
 
 
-### Remark a customer: `remark`
+### Adding a remark to a customer: `remark`
 
-**Remarks a custom with some texts**.
+**You can add a remark to an existing customer, or update the current remark**.
 
 Format: `remark INDEX r/ [REMARK]`
 
