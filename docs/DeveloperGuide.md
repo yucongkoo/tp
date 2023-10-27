@@ -245,6 +245,66 @@ Alternative 1 was selected over alternative 2 because the primary reason for use
 they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
+
+## Insurance Feature
+This feature allows user to assign / remove insurance package(s) to / from customers in EZContact.
+
+### Implementation
+The implementation of the Insurance feature consists of few parts, distributed across different components :
+
+1. `Insurance` : stores the information about the insurance
+1. `InsuranceCommand` : executes the action to assign/remove insurance
+1. `InsuranceCommandParser` : parses the command to obtain required information
+
+**Implementing `Insurance`**
+
+`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds one information, `insuranceName`.
+It is stored inside a `Person` object to represent a set of `Insurance` that the customer is planning to buy or had bought.
+
+**[Class diagram of `Insurance` and `Person`]**
+
+
+**Implementing `InsuranceCommand`**
+
+`InsuranceCommand` executes its command on the `Model`, it will update the model accordingly to reflect the changes made by the command on the `Model`
+
+**[Sequence diagram of executing `InsuranceCommand`]**
+
+**Implementing `InsuranceCommandParser`**
+
+`InsuranceCommandParser` receives the remaining input after the command `ins`, and turns it into valid information needed by `InsuranceCommand`, which are
+`Index` and `UpdatedPersonInsuranceDescriptor`.
+
+`UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
+
+
+**Integrating `InsuranceCommand` and `InsuranceCommandParser`**
+
+In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command 
+`ins` and call `parse(String args)` from `InsuranceCommandParser`.
+
+From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand`.
+
+**[Sequence Diagram from `AddressBookParser` -> `Model`]**
+
+
+### Design Considerations:
+
+**Aspect: Storing of `Insurance` in `Person`**
+
+* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+  * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
+  * Cons: Chronological order of `Insurance` inserted is not maintained
+* **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
+  * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
+  * Cons: Handling of duplicates is more complicated
+
+Reasoning:
+
+The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical 
+order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
+ 
+
 ## \[Proposed\] Appointment feature
 
 ### Implementation
