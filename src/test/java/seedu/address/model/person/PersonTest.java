@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -27,6 +28,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -49,42 +51,50 @@ public class PersonTest {
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
 
         // with priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags, validPriority));
+                null, validTags, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null, validPriority));
+                validRemark, null, validInsurances, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, null));
+                validRemark, validTags, null, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances, null));
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags));
+                null, validTags, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null));
+                validRemark, null, validInsurances));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, null));
+
     }
 
     @Test
     public void constructor_allFieldsValid_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withPriority("-").build();
+        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR).withPriority("-").build();
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -94,15 +104,21 @@ public class PersonTest {
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
 
         // with priority field
-        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark,
-                validTags, validPriority);
+
+        Person testPerson = new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances, validPriority);
         assertEquals(expectedPerson, testPerson);
 
         // without priority field
-        testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark, validTags);
+        testPerson = new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances);
+
         assertEquals(expectedPerson, testPerson);
 
     }
@@ -298,9 +314,10 @@ public class PersonTest {
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", remark=" + ALICE.getRemark()
-                + ", tags=" + ALICE.getTags()
-                + ", priority=" + ALICE.getPriority() + "}";
+                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
+                + ", remark=" + ALICE.getRemark() + ", tags=" + ALICE.getTags()
+                + ", insurances=" + ALICE.getInsurances() + ", priority=" + ALICE.getPriority() + "}";
+
         assertEquals(expected, ALICE.toString());
     }
 }
