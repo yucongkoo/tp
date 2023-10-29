@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -13,7 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
-import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -24,13 +22,20 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
+
+    private static final Prefix[] validPrefixes = new Prefix[] { PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_INSURANCE, PREFIX_REMARK, PREFIX_PRIORITY};
+    private static final Prefix[] compulsoryPrefixes =
+            new Prefix[] { PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL };
+    private static final Prefix[] nonRepeatingPrefixes =
+            new Prefix[] { PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_PRIORITY };
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -40,17 +45,40 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_INSURANCE, PREFIX_REMARK, PREFIX_PRIORITY);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, validPrefixes);
+        verifyIsValidArgumentMultimap(argMultimap);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        Person personToAdd = createPersonToAdd(argMultimap);
+
+        return new AddCommand(personToAdd);
+    }
+
+    /**
+     * Throws a {@code ParseException} if the {@code map} is not a valid {@code ArgumentMultimap}
+     * for {@code AddCommand}.
+     */
+    private static void verifyIsValidArgumentMultimap(ArgumentMultimap argMultimap) throws ParseException {
+        requireNonNull(argMultimap);
+
+        if (!argMultimap.areAllPrefixesPresent(compulsoryPrefixes)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_REMARK, PREFIX_PRIORITY);
+        if (!argMultimap.isPreambleEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(nonRepeatingPrefixes);
+    }
+
+    /**
+     * Creates a {@code Person} using the information in {@code argMultimap}.
+     * @param argMultimap contains the information of the attributes of the person.
+     * @throws ParseException if there are certain attributes that could not be parsed.
+     */
+    private static Person createPersonToAdd(ArgumentMultimap argMultimap) throws ParseException {
+        requireNonNull(argMultimap);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -61,21 +89,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)
                 .orElse(Priority.NONE_PRIORITY_KEYWORD));
 
-        Person person = new Person(name, phone, email, address, remark, tagList, insurances, priority);
-
-
-        requireAllNonNull(name, phone, email, address, tagList, insurances, priority, person);
-
-        return new AddCommand(person);
+        return new Person(name, phone, email, address, remark, tagList, insurances, priority);
     }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        requireAllNonNull(argumentMultimap, prefixes);
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }

@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -81,10 +81,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
-            // priority.setText(person.getPriority().toString());
-
-            // TODO: Use priority enum to construct the label, so that each priority will have differen display
+        if (person.getPriorityLevel() != Priority.Level.NONE) {
             tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
                     FlowPaneLabel.Type.PRIORITY).getRoot());
         }

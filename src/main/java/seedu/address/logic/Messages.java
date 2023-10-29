@@ -1,7 +1,7 @@
 package seedu.address.logic;
 
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
-import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
+import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,11 +22,17 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NO_PERSON_FOUND = "No person found!";
+
     public static final String MESSAGE_TAG_COUNT_EXCEED =
             String.format("Command will cause number of tags to exceed the limit of %d.", MAXIMUM_TAGS_PER_PERSON);
 
     public static final String MESSAGE_INSURANCE_COUNT_EXCEED =
             String.format("Command will cause number of insurance to exceed the limit of %d.", MAX_INSURANCE_COUNT);
+
+    public static final String MESSAGE_PERSON_NOT_CHANGED =
+            "Information provided in the command does not change the targeted person.";
+
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import static seedu.address.model.priority.Priority.HIGH_PRIORITY_KEYWORD;
+import static seedu.address.model.priority.Priority.LOW_PRIORITY_KEYWORD;
+import static seedu.address.model.priority.Priority.MEDIUM_PRIORITY_KEYWORD;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -9,6 +13,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.model.priority.Priority.Level;
 
 /**
  * A UI component that displays the label within the FlowPane.
@@ -27,6 +32,7 @@ public class FlowPaneLabel extends UiPart<Region> {
     private HBox flowPaneLabel;
     @FXML
     private Label value;
+    private Level priorityLevel;
 
 
 
@@ -47,6 +53,7 @@ public class FlowPaneLabel extends UiPart<Region> {
             break;
 
         case PRIORITY:
+            assign_level(value);
             stylePriority();
             break;
         default:
@@ -75,13 +82,32 @@ public class FlowPaneLabel extends UiPart<Region> {
         stylePriorityValue();
     }
 
-    // TODO: provide styling of label, specifically saying the value of Color
     private void stylePriorityLabel() {
-        this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
+        if (this.priorityLevel == Level.HIGH) {
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.GREEN, radius, padding)));
+        } else if (this.priorityLevel == Level.MEDIUM) {
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.ORANGE, radius, padding)));
+        } else if (this.priorityLevel == Level.LOW) {
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
+        } else {
+            System.out.println(this.priorityLevel);
+            System.out.println("Error");
+        }
     }
 
-    // TODO: provide styling of text, specifically saying the value to -fx-text-fill
     private void stylePriorityValue() {
         this.value.setStyle("-fx-text-fill: #FFFFFF; -fx-background-color: transparent");
+    }
+
+    private void assign_level(String value) {
+        if (value.equals(HIGH_PRIORITY_KEYWORD)) {
+            this.priorityLevel = Level.HIGH;
+        } else if (value.equals(MEDIUM_PRIORITY_KEYWORD)) {
+            this.priorityLevel = Level.MEDIUM;
+        } else if (value.equals(LOW_PRIORITY_KEYWORD)) {
+            this.priorityLevel = Level.LOW;
+        } else {
+            this.priorityLevel = null;
+        }
     }
 }
