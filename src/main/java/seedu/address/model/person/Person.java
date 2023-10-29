@@ -13,7 +13,6 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
 import seedu.address.model.priority.Priority.Level;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.

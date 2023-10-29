@@ -1,7 +1,7 @@
 package seedu.address.logic;
 
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
-import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
+import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.Set;
 import java.util.stream.Collectors;
