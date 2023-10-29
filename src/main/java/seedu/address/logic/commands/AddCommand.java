@@ -5,8 +5,10 @@ import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.Messages.MESSAGE_TAG_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
@@ -29,11 +31,13 @@ public class AddCommand extends Command {
             + PREFIX_NAME + "<name> "
             + PREFIX_PHONE + "<phone number> "
             + PREFIX_EMAIL + "<email address> "
-            + "[" + PREFIX_ADDRESS + "<home/office address>]";
+            + "[" + PREFIX_ADDRESS + "<home/office address>]"
+            + "[" + PREFIX_TAG + "<tag>]..."
+            + "[" + PREFIX_PRIORITY + "<priority>]..."
+            + "[" + PREFIX_INSURANCE + "<insurance>]...\n";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    private static final String OPTIONAL_TAG_USAGE = "[" + PREFIX_TAG + "TAG]...\n";
     private final Person toAdd;
 
     /**
