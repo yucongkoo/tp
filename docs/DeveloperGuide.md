@@ -242,7 +242,7 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
-they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
+they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
 ## Find feature
@@ -302,6 +302,7 @@ This feature allows user to assign / remove insurance package(s) to / from custo
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
 
+
 1. `Insurance` : stores the information about the insurance
 1. `InsuranceCommand` : executes the action to assign/remove insurance
 1. `InsuranceCommandParser` : parses the command to obtain required information
@@ -309,7 +310,6 @@ The implementation of the Insurance feature consists of few parts, distributed a
 **Implementing `Insurance`**
 
 `Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds one information, `insuranceName`.
-It is stored inside a `Person` object to represent a set of `Insurance` that the customer is planning to buy or had bought.
 
 **[Class diagram of `Insurance` and `Person`]**
 
@@ -400,6 +400,7 @@ It will update the `Priority` of a `Person`.
 
 The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+
 
 
 ## \[Proposed\] Undo/redo feature

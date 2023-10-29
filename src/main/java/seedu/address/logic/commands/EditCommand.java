@@ -14,6 +14,7 @@ import static seedu.address.model.person.Person.createPersonWithEditedInformatio
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -24,11 +25,15 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.priority.Priority;
+import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -102,6 +107,26 @@ public class EditCommand extends Command {
             logger.finer("EditCommand execution failed due to duplicated persons in list");
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with {@code editPersonDescriptor}.
+     */
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+        assert personToEdit != null;
+
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Remark remark = personToEdit.getRemark();
+        Set<Tag> tags = personToEdit.getTags();
+        Set<Insurance> insurances = personToEdit.getInsurances();
+        Priority priority = personToEdit.getPriority();
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, remark, tags, insurances, priority);
+
     }
 
     @Override
