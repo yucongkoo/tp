@@ -82,9 +82,6 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadPriority() {
         if (person.getPriorityLevel() != Priority.Level.NONE) {
-            // priority.setText(person.getPriority().toString());
-
-            // TODO: Use priority enum to construct the label, so that each priority will have differen display
             tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
                     FlowPaneLabel.Type.PRIORITY).getRoot());
         }
