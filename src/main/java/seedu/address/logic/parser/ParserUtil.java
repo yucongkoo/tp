@@ -17,8 +17,8 @@ import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Tag;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
 
 /**
