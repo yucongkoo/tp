@@ -85,8 +85,19 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_failure() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         assertCommandFailure(editCommand, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
+    }
+
+    @Test
+    public void execute_noChangeToPerson_failure() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String nameOfPersonToEdit = personToEdit.getName().fullName;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(nameOfPersonToEdit).build();
+        EditCommand command = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(command, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
 
     @Test
