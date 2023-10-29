@@ -13,7 +13,13 @@
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
-    "tags": [ "friends" ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "medium"
+    }
   }, {
     "name" : {
       "value" : "Alice Pauline"
@@ -28,6 +34,12 @@
       "value" : "4th street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "medium"
+    }
   } ]
 }

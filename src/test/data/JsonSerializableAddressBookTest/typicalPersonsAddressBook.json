@@ -14,7 +14,14 @@
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
-    "tags": [ "friends" ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ "friends" ],
+    "insurances": [ "car insurance" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Benson Meier"
@@ -29,7 +36,14 @@
       "value" : "311, Clementi Ave 2, #02-25",
       "isEmptyAddress" : false
     },
-    "tags": [ "owesMoney", "friends" ]
+    "remark": {
+      "value" : "Owned me 1M"
+    },
+    "tags": [ "owesMoney", "friends" ],
+    "insurances": [ "AIA insurance", "ABC insurance" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Carl Kurz"
@@ -44,7 +58,14 @@
       "value" : "wall street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "insurances": [ "Great Eastern" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Daniel Meier"
@@ -59,7 +80,13 @@
       "value" : "10th street",
       "isEmptyAddress" : false
     },
-    "tags": [ "friends" ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ "friends" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Elle Meyer"
@@ -74,7 +101,14 @@
       "value" : "michegan ave",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "insurances": [ "InsureIQ" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Fiona Kunz"
@@ -89,7 +123,13 @@
       "value" : "little tokyo",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "George Best"
@@ -104,7 +144,14 @@
       "value" : "4th street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "insurances": [ "GGO Insurance" ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Calmen"
@@ -119,7 +166,13 @@
       "value" : "-",
       "isEmptyAddress" : true
     },
-    "tags": [ ]
+    "remark": {
+      "value" : "He like to eat apple"
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Jojo Best"
@@ -134,7 +187,13 @@
       "value" : "100th street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   }, {
     "name" : {
       "value" : "Kaka Der Many"
@@ -149,6 +208,12 @@
       "value" : "kaka street",
       "isEmptyAddress" : false
     },
-    "tags": [ ]
+    "remark": {
+      "value" : ""
+    },
+    "tags": [ ],
+    "priority" : {
+      "value" : "high"
+    }
   } ]
 }

@@ -372,3 +372,14 @@
     -fx-max-height: 5;
     -fx-max-width: 5;
 }
+
+.priority {
+    -fx-font-family: "Baloo Bhaijaan";
+    -fx-background-color: #2ebb1d;
+}
+
+.remark-card-container {
+    -fx-background-color: #808080;
+    -fx-background-radius: 10;
+    -fx-max-width: 200px;
+}

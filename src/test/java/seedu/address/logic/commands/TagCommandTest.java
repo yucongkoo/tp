@@ -62,6 +62,12 @@ public class TagCommandTest {
     }
 
     @Test
+    public void constructor_noTagToUpdate_assertionError() {
+        assertThrows(AssertionError.class, () ->
+                new TagCommand(INDEX_FIRST_PERSON, new UpdatePersonTagsDescriptor(new HashSet<>(), new HashSet<>())));
+    }
+
+    @Test
     public void execute_onlyAddSingleTag_success() {
         updatePersonTagsDescriptor.setTagsToAdd(getTagSet(VALID_TAG_HUSBAND));
         updatePersonTagsDescriptor.setTagsToDelete(new HashSet<>());

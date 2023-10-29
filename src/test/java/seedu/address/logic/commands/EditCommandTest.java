@@ -25,6 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -39,8 +40,12 @@ public class EditCommandTest {
 
     @Test
     public void execute_allValidFieldsSpecifiedUnfilteredList_success() {
-        Set<Tag> tags = model.getFilteredPersonList().get(0).getTags(); // tags should be inherited to the editedPerson
-        Person editedPerson = new PersonBuilder().withTags(tags).build();
+        // tags should be inherited to the editedPerson
+        Set<Tag> tags = model.getFilteredPersonList().get(0).getTags();
+        // insurances should be inherited to the edited person
+        Set<Insurance> insurances = model.getFilteredPersonList().get(0).getInsurances();
+
+        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances).build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
@@ -58,9 +63,12 @@ public class EditCommandTest {
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
         Set<Tag> tags = lastPerson.getTags(); // tags should be inherited to the editedPerson
 
+        // insurances should be inherited to the edited person
+        Set<Insurance> insurances = lastPerson.getInsurances();
+
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(tags).build();
+                .withTags(tags).withInsurances(insurances).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).build();
@@ -126,7 +134,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonListSize() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 

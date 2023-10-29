@@ -1,5 +1,7 @@
 package seedu.address.storage.jsonadaptedperson;
 
+import static java.util.Objects.requireNonNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,6 +27,7 @@ class JsonAdaptedEmail {
      * Converts a given {@code Email} into this class for Jackson use.
      */
     public JsonAdaptedEmail(Email email) {
+        requireNonNull(email);
         value = email.value;
     }
 
