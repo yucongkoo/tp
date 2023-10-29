@@ -52,6 +52,16 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        verifyIsValidPersonToAdd(model);
+
+        model.addPerson(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    /**
+     * Throws a {@code CommandException} if {@code toAdd} is not a valid person to add to {@code model}.
+     */
+    private void verifyIsValidPersonToAdd(Model model) throws CommandException {
         if (toAdd.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
             throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
         }
@@ -63,9 +73,6 @@ public class AddCommand extends Command {
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-
-        model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
     @Override

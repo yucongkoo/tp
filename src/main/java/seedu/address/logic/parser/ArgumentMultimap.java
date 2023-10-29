@@ -91,6 +91,6 @@ public class ArgumentMultimap {
      * Returns true if the preamble is empty.
      */
     public boolean verifyPreambleIsEmpty() {
-       return getPreamble().isEmpty();
+        return getPreamble().isEmpty();
     }
 }
