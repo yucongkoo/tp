@@ -13,7 +13,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.InsuranceCommand;
 import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescriptor;
-import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 
