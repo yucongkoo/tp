@@ -25,6 +25,8 @@ public class TagCommandParser implements Parser<TagCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(TagCommandParser.class);
 
+    private static final Prefix[] validPrefixes = new Prefix[] { PREFIX_ADD_TAG, PREFIX_DELETE_TAG };
+
     /**
      * Parses the given {@code String} of arguments in the context of the TagCommand
      * and returns a TagCommand object for execution.
@@ -34,26 +36,12 @@ public class TagCommandParser implements Parser<TagCommand> {
         requireNonNull(args);
         logger.fine("TagCommandParser parsing: " + args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_ADD_TAG, PREFIX_DELETE_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, validPrefixes);
 
-        Index index;
+        Index index = extractIndex(argMultimap);
+        UpdatePersonTagsDescriptor updatePersonTagsDescriptor = extractUpdatePersonTagsDescriptor(argMultimap);
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            logger.finer("TagCommandParser parse failed due to invalid index: " + argMultimap.getPreamble());
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), pe);
-        }
-
-        Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
-        Set<Tag> tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
-        UpdatePersonTagsDescriptor updatePersonTagsDescriptor = new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
-
-        if (!updatePersonTagsDescriptor.hasTagToUpdate()) {
-            logger.finer("TagCommandParser parse failed due to missing tags to update");
-            throw new ParseException(TagCommand.MESSAGE_NOT_UPDATED);
-        }
+        verifyHasTagsToUpdate(updatePersonTagsDescriptor);
 
         return new TagCommand(index, updatePersonTagsDescriptor);
     }
@@ -72,4 +60,43 @@ public class TagCommandParser implements Parser<TagCommand> {
         return Optional.of(ParserUtil.parseTags(tags));
     }
 
+    /**
+     * Extracts and returns the index from the {@code argMultimap}.
+     * @throws ParseException if the index is not an unsigned positive integer.
+     */
+    private Index extractIndex(ArgumentMultimap argMultimap) throws ParseException {
+        requireNonNull(argMultimap);
+
+        try {
+            return ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (ParseException pe) {
+            logger.finer("TagCommandParser parse failed due to invalid index: " + argMultimap);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), pe);
+        }
+    }
+
+    /**
+     * Extracts the tags to add and delete,
+     * and returns a {@code UpdatePersonTagsDescriptor} from the {@code argMultimap}.
+     * @throws ParseException if there are tags that are invalid.
+     */
+    private UpdatePersonTagsDescriptor extractUpdatePersonTagsDescriptor(ArgumentMultimap argMultimap)
+            throws ParseException {
+        requireNonNull(argMultimap);
+        Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
+        Set<Tag> tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
+        return new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
+
+    }
+
+    /**
+     * Throws a {@code ParseException} if the {@code descriptor} does not have any tags to update.
+     */
+    private void verifyHasTagsToUpdate(UpdatePersonTagsDescriptor descriptor) throws ParseException {
+        requireNonNull(descriptor);
+        if (!descriptor.hasTagToUpdate()) {
+            logger.finer("TagCommandParser parse failed due to missing tags to update");
+            throw new ParseException(TagCommand.MESSAGE_NOT_UPDATED);
+        }
+    }
 }

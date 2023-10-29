@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -60,8 +59,9 @@ public class RemarkCommand extends Command {
                 personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getInsurances(),
                 personToEdit.getPriority());
 
+        CommandUtil.verifyPersonChanged(personToEdit, editedPerson);
+
         model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }

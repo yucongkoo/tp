@@ -58,7 +58,7 @@ public class PriorityCommandTest {
         Index indexOfTargetPerson = INDEX_FIRST_PERSON;
         PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, highPriority); // default priority is high
 
-        assertCommandFailure(pc, model, PriorityCommand.MESSAGE_NOT_ASSIGNED);
+        assertCommandFailure(pc, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
 
     @Test
