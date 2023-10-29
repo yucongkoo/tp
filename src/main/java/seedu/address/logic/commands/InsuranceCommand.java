@@ -4,7 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Person.createPersonWithUpdatedInsurances;
 
@@ -90,9 +89,9 @@ public class InsuranceCommand extends Command {
         }
 
         requireAllNonNull(personToUpdate, updatedPerson);
+        CommandUtil.verifyPersonChanged(personToUpdate, updatedPerson);
 
         m.setPerson(personToUpdate, updatedPerson);
-        m.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_INSURANCE_PERSON_SUCCESS, Messages.format(updatedPerson)));
     }

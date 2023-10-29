@@ -83,7 +83,7 @@ public class ArgumentMultimap {
      * Returns true if all the prefixes given in {@code prefixes} appeared among the arguments.
      */
     public boolean areAllPrefixesPresent(Prefix... prefixes) {
-        requireAllNonNull(prefixes);
+        requireAllNonNull((Object) prefixes);
         return Stream.of(prefixes).distinct().allMatch(prefix -> getValue(prefix).isPresent());
     }
 
