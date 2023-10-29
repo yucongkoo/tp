@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -38,6 +39,8 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
+    private final List<JsonAdaptedInsurance> insurances = new ArrayList<>();
+
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
@@ -48,6 +51,7 @@ public class JsonAdaptedPerson {
                              @JsonProperty("address") JsonAdaptedAddress address,
                              @JsonProperty("remark") JsonAdaptedRemark remark,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("insurance") List<JsonAdaptedInsurance> insurances,
                              @JsonProperty("priority") JsonAdaptedPriority priority) {
         this.name = name;
         this.phone = phone;
@@ -56,6 +60,9 @@ public class JsonAdaptedPerson {
         this.remark = remark;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (insurances != null) {
+            this.insurances.addAll(insurances);
         }
         this.priority = priority;
     }
@@ -74,6 +81,10 @@ public class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        insurances.addAll(source.getInsurances()
+                .stream()
+                .map(JsonAdaptedInsurance::new)
+                .collect(Collectors.toList()));
         priority = new JsonAdaptedPriority(source.getPriority());
     }
 
@@ -83,8 +94,9 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(),
-                getModelRemark(), getModelTags(), getModelPriority());
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelRemark(),
+                getModelTags(), getModelInsurances(), getModelPriority());
+
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -128,6 +140,16 @@ public class JsonAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         return new HashSet<>(personTags);
+    }
+
+    private Set<Insurance> getModelInsurances() throws IllegalValueException {
+        List<Insurance> personInsurances = new ArrayList<>();
+
+        for (JsonAdaptedInsurance i : insurances) {
+            personInsurances.add(i.toModelType());
+        }
+
+        return new HashSet<>(personInsurances);
     }
 
     private Priority getModelPriority() throws IllegalValueException {
