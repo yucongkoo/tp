@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
