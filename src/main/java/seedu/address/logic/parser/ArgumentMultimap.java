@@ -82,7 +82,7 @@ public class ArgumentMultimap {
     /**
      * Returns true if all the prefixes given in {@code prefixes} appeared among the arguments.
      */
-    public boolean verifyPrefixesArePresent(Prefix... prefixes) {
+    public boolean areAllPrefixesPresent(Prefix... prefixes) {
         requireAllNonNull(prefixes);
         return Stream.of(prefixes).distinct().allMatch(prefix -> getValue(prefix).isPresent());
     }
@@ -90,7 +90,7 @@ public class ArgumentMultimap {
     /**
      * Returns true if the preamble is empty.
      */
-    public boolean verifyPreambleIsEmpty() {
+    public boolean isPreambleEmpty() {
         return getPreamble().isEmpty();
     }
 }

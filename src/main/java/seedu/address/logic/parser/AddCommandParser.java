@@ -60,11 +60,11 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static void verifyIsValidArgumentMultimap(ArgumentMultimap argMultimap) throws ParseException {
         requireNonNull(argMultimap);
 
-        if (!argMultimap.verifyPrefixesArePresent(compulsoryPrefixes)) {
+        if (!argMultimap.areAllPrefixesPresent(compulsoryPrefixes)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        if (!argMultimap.verifyPreambleIsEmpty()) {
+        if (!argMultimap.isPreambleEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
