@@ -14,7 +14,11 @@
       "value" : "123, Jurong West Ave 6, #08-111",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : ""
+    },
     "tags": [ "friends" ],
+    "insurances": [ "car insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -32,7 +36,11 @@
       "value" : "311, Clementi Ave 2, #02-25",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : "Owned me 1M"
+    },
     "tags": [ "owesMoney", "friends" ],
+    "insurances": [ "AIA insurance", "ABC insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -50,7 +58,11 @@
       "value" : "wall street",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : ""
+    },
     "tags": [ ],
+    "insurances": [ "Great Eastern" ],
     "priority" : {
       "value" : "high"
     }
@@ -67,6 +79,9 @@
     "address" : {
       "value" : "10th street",
       "isEmptyAddress" : false
+    },
+    "remark": {
+      "value" : ""
     },
     "tags": [ "friends" ],
     "priority" : {
@@ -86,7 +101,11 @@
       "value" : "michegan ave",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : ""
+    },
     "tags": [ ],
+    "insurances": [ "InsureIQ" ],
     "priority" : {
       "value" : "high"
     }
@@ -103,6 +122,9 @@
     "address" : {
       "value" : "little tokyo",
       "isEmptyAddress" : false
+    },
+    "remark": {
+      "value" : ""
     },
     "tags": [ ],
     "priority" : {
@@ -122,7 +144,11 @@
       "value" : "4th street",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : ""
+    },
     "tags": [ ],
+    "insurances": [ "GGO Insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -139,6 +165,9 @@
     "address" : {
       "value" : "-",
       "isEmptyAddress" : true
+    },
+    "remark": {
+      "value" : "He like to eat apple"
     },
     "tags": [ ],
     "priority" : {
@@ -158,6 +187,9 @@
       "value" : "100th street",
       "isEmptyAddress" : false
     },
+    "remark": {
+      "value" : ""
+    },
     "tags": [ ],
     "priority" : {
       "value" : "high"
@@ -175,6 +207,9 @@
     "address" : {
       "value" : "kaka street",
       "isEmptyAddress" : false
+    },
+    "remark": {
+      "value" : ""
     },
     "tags": [ ],
     "priority" : {

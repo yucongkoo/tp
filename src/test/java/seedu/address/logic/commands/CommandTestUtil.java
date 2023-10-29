@@ -3,12 +3,16 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -43,11 +47,19 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_DERRICK = "derrick@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_REMARK_AMY = "nothing to remark";
+    public static final String VALID_REMARK_BOB = "Owned me 30k";
+    public static final String VALID_REMARK_CALMEN = "He like to eat apple";
+    public static final String VALID_REMARK_DERRICK = "He don't like to shake hand with people";
     public static final String VALID_ADDRESS_DERRICK = "Block 432, Derrick Road";
     public static final String VALID_ADDRESS_WITH_PREFIX_TAG = "51, Kent Ridge/t";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_MALE = "male";
+
+    public static final String VALID_INSURANCE_CAR = "car insurance";
+    public static final String VALID_INSURANCE_LIFE = "life insurance";
+    public static final String VALID_INSURANCE_HEALTH = "health insurance";
     public static final String VALID_PRIORITY_HIGH = "high";
     public static final String VALID_PRIORITY_LOW = "low";
     public static final String VALID_PRIORITY_NONE = "-";
@@ -68,10 +80,25 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String ADDRESS_DESC_DERRICK = " " + PREFIX_ADDRESS + VALID_ADDRESS_DERRICK;
     public static final String ADDRESS_DESC_WITH_PREFIX_TAG = " " + PREFIX_ADDRESS + VALID_ADDRESS_WITH_PREFIX_TAG;
+    public static final String REMARK_DESC_AMY = " " + PREFIX_REMARK + VALID_REMARK_AMY;
+    public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
+    public static final String REMARK_DESC_CALMEN = " " + PREFIX_REMARK + VALID_REMARK_CALMEN;
+    public static final String REMARK_DESC_DERRICK = " " + PREFIX_REMARK + VALID_REMARK_DERRICK;
+
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String ADD_TAG_DESC_FRIEND = " " + PREFIX_ADD_TAG + VALID_TAG_FRIEND;
     public static final String DELETE_TAG_DESC_FRIEND = " " + PREFIX_DELETE_TAG + VALID_TAG_FRIEND;
+    public static final String INSURANCE_DESC_CAR = " " + PREFIX_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String INSURANCE_DESC_LIFE = " " + PREFIX_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String INSURANCE_DESC_HEALTH = " " + PREFIX_INSURANCE + VALID_INSURANCE_HEALTH;
+    public static final String ADD_INSURANCE_DESC_CAR = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String ADD_INSURANCE_DESC_LIFE = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String ADD_INSURANCE_DESC_HEALTH = " " + PREFIX_ADD_INSURANCE + VALID_INSURANCE_HEALTH;
+    public static final String DELETE_INSURANCE_DESC_CAR = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_CAR;
+    public static final String DELETE_INSURANCE_DESC_LIFE = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_LIFE;
+    public static final String DELETE_INSURANCE_DESC_HEALTH = " " + PREFIX_DELETE_INSURANCE + VALID_INSURANCE_HEALTH;
+
     public static final String PRIORITY_DESC_HIGH = " " + PREFIX_PRIORITY + VALID_PRIORITY_HIGH;
     public static final String PRIORITY_DESC_NONE = " " + PREFIX_PRIORITY + VALID_PRIORITY_NONE;
 
@@ -79,6 +106,8 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK + "this is a invalid remark because "
+            + "this remark is too long! too long until more than 100 character which is not allowed";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TAG_DESC2 = " " + PREFIX_TAG; // empty string not allowed for tags
     public static final String INVALID_ADD_TAG_DESC = " " + PREFIX_ADD_TAG + "hubby*"; // '*' not allowed in tags
@@ -86,6 +115,14 @@ public class CommandTestUtil {
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "high low"; // multiple arguments
     public static final String INVALID_PRIORITY_DESC2 = " " + PREFIX_PRIORITY + "1";
     public static final String INVALID_PRIORITY_DESC3 = " " + PREFIX_PRIORITY;
+    public static final String INVALID_INSURANCE_DESC1 = " " + PREFIX_INSURANCE + "/*-+"; // non-alphanumeric characters
+    public static final String INVALID_INSURANCE_DESC2 = " " + PREFIX_INSURANCE
+            + "12345678901234567890123456789012345"; // longer than 32 characters
+
+    public static final String INVALID_ADD_INSURANCE_DESC1 =
+            " " + PREFIX_ADD_INSURANCE + "/*-+"; // non-alphanumeric characters
+    public static final String INVALID_ADD_INSURANCE_DESC2 = " " + PREFIX_ADD_INSURANCE
+            + "12345678901234567890123456789012345"; // longer than 32 characters
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

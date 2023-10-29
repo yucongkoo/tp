@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.Set;
@@ -23,6 +24,9 @@ public class Messages {
     public static final String MESSAGE_NO_PERSON_FOUND = "No person found!";
     public static final String MESSAGE_TAG_COUNT_EXCEED =
             String.format("Command will cause number of tags to exceed the limit of %d.", MAXIMUM_TAGS_PER_PERSON);
+
+    public static final String MESSAGE_INSURANCE_COUNT_EXCEED =
+            String.format("Command will cause number of insurance to exceed the limit of %d.", MAX_INSURANCE_COUNT);
 
     /**
      * Returns an error message indicating the duplicate prefixes.

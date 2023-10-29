@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
 
 /**
@@ -24,32 +25,47 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
     private final Priority priority;
+
+    private final Set<Insurance> insurances = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+
+    public Person(Name name, Phone phone, Email email,
+                  Address address, Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
+
+        requireAllNonNull(name, phone, email, address, tags, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
+        this.insurances.addAll(insurances);
         this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
     }
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Priority priority) {
-        requireAllNonNull(name, phone, email, address, tags, priority);
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark,
+                  Set<Tag> tags, Set<Insurance> insurances, Priority priority) {
+
+        requireAllNonNull(name, phone, email, address, tags, priority, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.tags.addAll(tags);
+        this.insurances.addAll(insurances);
         this.priority = priority;
     }
 
@@ -69,8 +85,13 @@ public class Person {
         return address;
     }
 
+    public Remark getRemark() {
+        return remark;
+    }
+
     public Priority getPriority() {
         return priority;
+
     }
 
     /**
@@ -81,6 +102,10 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public Set<Insurance> getInsurances() {
+        return Collections.unmodifiableSet(insurances);
+    }
+
     /**
      * Returns the number of tags assigned to this person.
      */
@@ -88,6 +113,9 @@ public class Person {
         return tags.size();
     }
 
+    public int getInsurancesCount() {
+        return insurances.size();
+    }
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -114,7 +142,24 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address, updatedTags, source.priority);
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                updatedTags, source.insurances, source.priority);
+    }
+
+    /**
+     * Create a new copy of {@code Person} with update information of {@code Insurance}
+     */
+    public static Person createPersonWithUpdatedInsurances(Person source, Collection<Insurance> insurancesToAdd,
+                                                           Collection<Insurance> insurancesToDelete) {
+
+        requireAllNonNull(source, insurancesToAdd, insurancesToDelete);
+
+        Set<Insurance> updatedInsurances = new HashSet<>(source.insurances);
+        updatedInsurances.removeAll(insurancesToDelete);
+        updatedInsurances.addAll(insurancesToAdd);
+
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                source.tags, updatedInsurances, source.priority);
     }
 
     /**
@@ -123,7 +168,8 @@ public class Person {
      */
     public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
         requireAllNonNull(source, newPriority);
-        return new Person(source.name, source.phone, source.email, source.address, source.tags, newPriority);
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                source.tags, source.insurances, newPriority);
     }
 
     /**
@@ -153,14 +199,16 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && remark.equals(otherPerson.remark)
                 && tags.equals(otherPerson.tags)
+                && insurances.equals(otherPerson.insurances)
                 && priority.equals(otherPerson.priority);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, priority);
+        return Objects.hash(name, phone, email, address, tags, insurances, priority, remark);
     }
 
     @Override
@@ -170,7 +218,9 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("remark", remark)
                 .add("tags", tags)
+                .add("insurances", insurances)
                 .add("priority", priority)
                 .toString();
     }

@@ -24,9 +24,9 @@ public class Tag {
      */
     public Tag(String tagName) {
         requireNonNull(tagName);
-        tagName = tagName.trim();
-        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
+        String trimmedTagName = tagName.trim();
+        checkArgument(isValidTagName(trimmedTagName), MESSAGE_CONSTRAINTS);
+        this.tagName = trimmedTagName;
     }
 
     public String getTagName() {
