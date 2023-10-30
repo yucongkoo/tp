@@ -50,6 +50,8 @@ public class InsuranceCommand extends Command {
      */
     public InsuranceCommand(Index i, UpdatePersonInsuranceDescriptor u) {
         requireAllNonNull(i, u);
+        assert u.hasInsuranceToUpdate() : "It should have insurance to update";
+
         this.index = i;
         this.updatePersonInsuranceDescriptor = u;
     }
@@ -72,8 +74,10 @@ public class InsuranceCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        assert index.getZeroBased() < personList.size() : "index < listSize";
+
         if (updatePersonInsuranceDescriptor.hasCommonInsurance()) {
-            throw new CommandException("");
+            throw new CommandException(MESSAGE_INSURANCE_CONFLICT);
         }
 
         Person personToUpdate = personList.get(index.getZeroBased());
@@ -134,12 +138,11 @@ public class InsuranceCommand extends Command {
             return insurancesToDelete;
         }
 
-        public void setInsurancesToAdd(Set<Insurance> insurancesToAdd) {
-            this.insurancesToAdd = insurancesToAdd;
+        public void setInsurancesToAdd(Insurance i) {
+            this.insurancesToAdd.add(i);
         }
-
-        public void setInsurancesToDelete(Set<Insurance> insurancesToDelete) {
-            this.insurancesToDelete = insurancesToDelete;
+        public void setInsurancesToDelete(Insurance i) {
+            this.insurancesToDelete.add(i);
         }
 
         /**
