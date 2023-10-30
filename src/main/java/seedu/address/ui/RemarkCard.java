@@ -5,7 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class RemarkCard  extends UiPart<Region> {
+/**
+ * A UI Component that displays the remark of a person.
+ */
+public class RemarkCard extends UiPart<Region> {
     private static final String FXML = "RemarkCard.fxml";
 
     @FXML
