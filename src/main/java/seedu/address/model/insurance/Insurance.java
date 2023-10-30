@@ -1,5 +1,7 @@
 package seedu.address.model.insurance;
 
+import seedu.address.model.person.Name;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -65,5 +67,16 @@ public class Insurance {
 
     public String getInsuranceName() {
         return insuranceName;
+    }
+
+    public static boolean isContainsPrefix(String prefix, Insurance insurance) {
+        String lowerInsuranceName = insurance.insuranceName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerName: lowerInsuranceName.split("\\s+")) {
+            if (lowerName.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
