@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.person.Person.createPersonWithEditedInformation;
 
@@ -50,12 +51,15 @@ public class EditCommand extends Command {
             + "Please use \"tag\" command to add/delete tags.";
     public static final String MESSAGE_EDIT_PRIORITY_ERROR = "Cannot edit priorities. "
             + "Please use \"pr\" command to assign new priority.";
+    public static final String MESSAGE_EDIT_REMARK_ERROR = "Cannot edit remark. "
+            + "Please use \"remark\" command to modify remark.";
 
     /** Stores a prefix and its corresponding edit error message as a key-value pair. **/
     public static final HashMap<Prefix, String> PREFIX_EDIT_ERROR_MESSAGE_MAP = new HashMap<>() {
         {
             put(PREFIX_TAG, MESSAGE_EDIT_TAG_ERROR);
             put(PREFIX_PRIORITY, MESSAGE_EDIT_PRIORITY_ERROR);
+            put(PREFIX_REMARK, MESSAGE_EDIT_REMARK_ERROR);
         }
     };
 

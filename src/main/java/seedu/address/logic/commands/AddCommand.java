@@ -36,6 +36,7 @@ public class AddCommand extends Command {
             + "[" + PREFIX_INSURANCE + "<insurance>...] "
             + "[" + PREFIX_REMARK + "<remarks>]\n";
 
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     private final Person toAdd;
 
