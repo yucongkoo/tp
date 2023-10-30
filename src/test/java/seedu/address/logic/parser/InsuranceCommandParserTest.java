@@ -27,7 +27,6 @@ public class InsuranceCommandParserTest {
     public void setUp() {
         descriptor = new UpdatePersonInsuranceDescriptor(new HashSet<>(), new HashSet<>());
     }
-    
     @Test
     public void parse_nullArgument_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> parser.parse(null));
