@@ -25,7 +25,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(FindCommandParser.class);
     private static final Prefix[] validPrefixes = new Prefix[] { PREFIX_INSURANCE, PREFIX_NAME, PREFIX_TAG,
-            PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PRIORITY };
+            PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PRIORITY, PREFIX_REMARK };
 
 
     /**
@@ -54,6 +54,21 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
         if (argMultimap.getValue(PREFIX_INSURANCE).isPresent()) {
             predicateList.add(ParserUtil.parseInsuranceKeywords(argMultimap.getValue(PREFIX_INSURANCE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            predicateList.add(ParserUtil.parseAddressKeywords(argMultimap.getValue(PREFIX_ADDRESS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            predicateList.add(ParserUtil.parseEmailKeywords(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            predicateList.add(ParserUtil.parsePhoneKeywords(argMultimap.getValue(PREFIX_PHONE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            predicateList.add(ParserUtil.parseTagKeywords(argMultimap.getValue(PREFIX_TAG).get()));
+        }
+        if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            predicateList.add(ParserUtil.parseRemarkKeywords(argMultimap.getValue(PREFIX_REMARK).get()));
         }
 
 

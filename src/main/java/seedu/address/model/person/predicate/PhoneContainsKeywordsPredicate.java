@@ -3,16 +3,17 @@ package seedu.address.model.person.predicate;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
+public class PhoneContainsKeywordsPredicate implements Predicate<Person> {
 
     private final List<String> keywords;
 
-    public InsuranceContainsKeywordsPredicate(List<String> keywords) {
+    public PhoneContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -22,13 +23,9 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> isInsuranceContainsPrefix(person.getInsurances(), keyword));
+                .allMatch(keyword -> Phone.isPhoneContainsPrefix(person.getPhone(), keyword));
     }
 
-    private static boolean isInsuranceContainsPrefix(Set<Insurance> insurances, String prefix) {
-        return insurances.stream()
-                .anyMatch(insurance -> Insurance.isContainsPrefix(insurance, prefix));
-    }
 
     @Override
     public boolean equals(Object other) {
@@ -37,13 +34,13 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof InsuranceContainsKeywordsPredicate)) {
+        if (!(other instanceof PhoneContainsKeywordsPredicate)) {
             return false;
         }
 
-        InsuranceContainsKeywordsPredicate otherInsuranceContainsKeywordsPredicate =
-                (InsuranceContainsKeywordsPredicate) other;
-        return keywords.equals(otherInsuranceContainsKeywordsPredicate.keywords);
+        PhoneContainsKeywordsPredicate otherPhoneContainsKeywordsPredicate =
+                (PhoneContainsKeywordsPredicate) other;
+        return keywords.equals(otherPhoneContainsKeywordsPredicate.keywords);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import seedu.address.model.insurance.Insurance;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -68,4 +70,14 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    public static boolean isContainsPrefix(Tag tag, String prefix) {
+        String lowerTag = tag.tagName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerName: lowerTag.split("\\s+")) {
+            if (lowerName.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

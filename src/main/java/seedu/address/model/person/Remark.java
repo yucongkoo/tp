@@ -54,4 +54,24 @@ public class Remark {
     public int hashCode() {
         return value.hashCode();
     }
+
+    /**
+     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isRemarkContainsPrefix(Remark remark, String prefix) {
+        if (remark.isEmptyRemark()) {
+            return false;
+        }
+        String lowerRemark = remark.value.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerRemarkPart: lowerRemark.split("\\s+")) {
+            if (lowerRemarkPart.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

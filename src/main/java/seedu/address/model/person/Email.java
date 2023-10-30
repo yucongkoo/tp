@@ -84,4 +84,8 @@ public class Email {
         return value.hashCode();
     }
 
+    public static boolean isEmailContainsPrefix(Email email, String prefix) {
+        return email.value.startsWith(prefix);
+    }
+
 }

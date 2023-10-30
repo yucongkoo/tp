@@ -2,17 +2,18 @@ package seedu.address.model.person.predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
+public class EmailContainsKeywordsPredicate implements Predicate<Person> {
 
     private final List<String> keywords;
 
-    public InsuranceContainsKeywordsPredicate(List<String> keywords) {
+    public EmailContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -22,13 +23,9 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> isInsuranceContainsPrefix(person.getInsurances(), keyword));
+                .allMatch(keyword -> Email.isEmailContainsPrefix(person.getEmail(), keyword));
     }
 
-    private static boolean isInsuranceContainsPrefix(Set<Insurance> insurances, String prefix) {
-        return insurances.stream()
-                .anyMatch(insurance -> Insurance.isContainsPrefix(insurance, prefix));
-    }
 
     @Override
     public boolean equals(Object other) {
@@ -37,13 +34,13 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof InsuranceContainsKeywordsPredicate)) {
+        if (!(other instanceof EmailContainsKeywordsPredicate)) {
             return false;
         }
 
-        InsuranceContainsKeywordsPredicate otherInsuranceContainsKeywordsPredicate =
-                (InsuranceContainsKeywordsPredicate) other;
-        return keywords.equals(otherInsuranceContainsKeywordsPredicate.keywords);
+        EmailContainsKeywordsPredicate otherEmailContainsKeywordsPredicate =
+                (EmailContainsKeywordsPredicate) other;
+        return keywords.equals(otherEmailContainsKeywordsPredicate.keywords);
     }
 
     @Override

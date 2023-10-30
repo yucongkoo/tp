@@ -1,18 +1,18 @@
 package seedu.address.model.person.predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Tag;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
+public class TagContainsKeywordsPredicate implements Predicate<Person> {
 
     private final List<String> keywords;
 
-    public InsuranceContainsKeywordsPredicate(List<String> keywords) {
+    public TagContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -22,12 +22,12 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> isInsuranceContainsPrefix(person.getInsurances(), keyword));
+                .allMatch(keyword -> isTagContainsPrefix(person.getTags(), keyword));
     }
 
-    private static boolean isInsuranceContainsPrefix(Set<Insurance> insurances, String prefix) {
-        return insurances.stream()
-                .anyMatch(insurance -> Insurance.isContainsPrefix(insurance, prefix));
+    private static boolean isTagContainsPrefix(Set<Tag> tags, String prefix) {
+        return tags.stream()
+                .anyMatch(tag -> Tag.isContainsPrefix(tag, prefix));
     }
 
     @Override
@@ -37,13 +37,13 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof InsuranceContainsKeywordsPredicate)) {
+        if (!(other instanceof TagContainsKeywordsPredicate)) {
             return false;
         }
 
-        InsuranceContainsKeywordsPredicate otherInsuranceContainsKeywordsPredicate =
-                (InsuranceContainsKeywordsPredicate) other;
-        return keywords.equals(otherInsuranceContainsKeywordsPredicate.keywords);
+        TagContainsKeywordsPredicate otherTagContainsKeywordsPredicate =
+                (TagContainsKeywordsPredicate) other;
+        return keywords.equals(otherTagContainsKeywordsPredicate.keywords);
     }
 
     @Override

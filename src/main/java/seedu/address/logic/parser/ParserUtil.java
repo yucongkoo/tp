@@ -10,8 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
-import seedu.address.model.person.predicate.InsuranceContainsKeywordsPredicate;
-import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.*;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
@@ -201,6 +200,20 @@ public class ParserUtil {
         return new NameContainsKeywordsPredicate(Arrays.asList(keywords));
     }
 
+    public static Predicate<Person> parseAddressKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new AddressContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    public static Predicate<Person> parseEmailKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
     public static Predicate<Person> parseInsuranceKeywords(String keyword) {
         requireNonNull(keyword);
         String trimmedKeywords = keyword.trim();
@@ -208,4 +221,24 @@ public class ParserUtil {
         return new InsuranceContainsKeywordsPredicate(Arrays.asList(keywords));
     }
 
+    public static Predicate<Person> parsePhoneKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new PhoneContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    public static Predicate<Person> parseTagKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new TagContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    public static Predicate<Person> parseRemarkKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new RemarkContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
 }

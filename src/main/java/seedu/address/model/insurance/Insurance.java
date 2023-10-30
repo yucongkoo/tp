@@ -69,7 +69,7 @@ public class Insurance {
         return insuranceName;
     }
 
-    public static boolean isContainsPrefix(String prefix, Insurance insurance) {
+    public static boolean isContainsPrefix(Insurance insurance, String prefix) {
         String lowerInsuranceName = insurance.insuranceName.toLowerCase();
         String lowerPrefix = prefix.toLowerCase();
         for (String lowerName: lowerInsuranceName.split("\\s+")) {
