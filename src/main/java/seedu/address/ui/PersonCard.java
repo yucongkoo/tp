@@ -36,6 +36,7 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard phoneCard;
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
+    private RemarkCard remarkCard;
 
     @FXML
     private HBox cardPane;
@@ -52,11 +53,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox addressCardPlaceholder;
     @FXML
+    private VBox remarkCardPlaceholder;
+    @FXML
     private FlowPane tags;
-    @FXML
-    private Label remark;
-    @FXML
-    private Label remarkTitle;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -129,11 +128,12 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadRemarkCard() {
         String remarkString = person.getRemark().toString();
+
         if (remarkString.isEmpty()) {
-            remarkTitle.setText(Remark.REMARK_TITLE_NO_REMARK);
             return;
         }
-        remarkTitle.setText(Remark.REMARK_TITLE);
-        remark.setText(remarkString);
+
+        remarkCard = new RemarkCard(Remark.REMARK_TITLE, remarkString);
+        remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
     }
 }
