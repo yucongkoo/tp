@@ -1,9 +1,9 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 
@@ -61,7 +61,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new NonEmptyAddress(address));
+        descriptor.setAddress(Address.createAddress(address));
         return this;
     }
 

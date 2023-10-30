@@ -19,13 +19,16 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
+import seedu.address.model.person.PersonTestUtil;
 import seedu.address.model.person.Phone;
 import seedu.address.model.priority.Priority;
 
 public class JsonAdaptedPersonTest {
+
     private static final JsonAdaptedName INVALID_NAME = new JsonAdaptedName("R@chel");
     private static final JsonAdaptedPhone INVALID_PHONE = new JsonAdaptedPhone("+651234");
-    private static final JsonAdaptedAddress INVALID_ADDRESS = new JsonAdaptedAddress(" ", false);
+    private static final JsonAdaptedAddress INVALID_ADDRESS =
+            new JsonAdaptedAddress(PersonTestUtil.generateStringOfLength(NonEmptyAddress.MAX_LENGTH + 1));
     private static final JsonAdaptedEmail INVALID_EMAIL = new JsonAdaptedEmail("example.com");
     private static final String INVALID_TAG = "#friend";
     private static final JsonAdaptedPriority INVALID_PRIORITY = new JsonAdaptedPriority("top");

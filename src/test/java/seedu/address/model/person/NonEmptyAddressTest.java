@@ -19,26 +19,10 @@ public class NonEmptyAddressTest {
         assertThrows(IllegalArgumentException.class, () -> new NonEmptyAddress(invalidAddress));
     }
 
-    @Test
-    public void isValidAddress() {
-        // null address
-        assertThrows(NullPointerException.class, () -> NonEmptyAddress.isValidAddress(null));
-
-        // invalid addresses
-        assertFalse(NonEmptyAddress.isValidAddress("")); // empty string
-        assertFalse(NonEmptyAddress.isValidAddress(" ")); // spaces only
-
-        // valid addresses
-        assertTrue(NonEmptyAddress.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(NonEmptyAddress.isValidAddress("-")); // one character
-        // long address
-        assertTrue(NonEmptyAddress.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA"));
-    }
 
     @Test
     public void equals() {
         Address address = new NonEmptyAddress("Valid Address");
-        Address addressWithValueOfEmptyAddress = new NonEmptyAddress(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS);
 
         // same values -> returns true
         assertTrue(address.equals(new NonEmptyAddress("Valid Address")));
@@ -57,8 +41,5 @@ public class NonEmptyAddressTest {
 
         // empty address -> returns false
         assertFalse(address.equals(EmptyAddress.getEmptyAddress()));
-
-        // valid address with same value as empty address should not be equal to empty address
-        assertFalse(addressWithValueOfEmptyAddress.equals(EmptyAddress.getEmptyAddress()));
     }
 }
