@@ -113,6 +113,10 @@
     -fx-border-width: 1;
 }
 
+.list-cell:empty {
+    -fx-background-color: #F2F4F0;
+}
+
 
 .list-cell .label {
     -fx-text-fill: #0F120D;
@@ -349,18 +353,16 @@
 }
 
 
-#tags {
+#flowPaneLabels {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-    -fx-padding: 1 3 1 3;
+#flowPaneLabels .label {
+    -fx-padding: 3 3 3 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-font-size: 13;
 }
 
 .attribute-card {
@@ -391,7 +393,7 @@
 }
 
 .remark-card-container {
-    -fx-background-color: #808080;
+    -fx-background-color: #8DAA91;
     -fx-background-radius: 10;
     -fx-max-width: 200px;
 }
