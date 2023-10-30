@@ -133,7 +133,7 @@ public class PersonCard extends UiPart<Region> {
             return;
         }
 
-        remarkCard = new RemarkCard(Remark.REMARK_TITLE, remarkString);
+        remarkCard = new RemarkCard(remarkString);
         remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
     }
 }
