@@ -2,15 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.Messages.MESSAGE_TAG_COUNT_EXCEED;
+import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonTagCountIsValid;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
-import static seedu.address.model.tag.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -20,7 +19,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Tag;
 
 /**
  * Adds or deletes tags of a person identified using it's displayed index from the address book.
@@ -65,35 +64,34 @@ public class TagCommand extends Command {
 
         logger.fine("TagCommand executing...");
 
-        List<Person> lastShownList = model.getFilteredPersonList();
+        verifyCommandIsExecutable(model);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            logger.finer(String.format("TagCommand execution failed due to index %d out of bound",
-                    index.getOneBased()));
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        Person personToUpdate = getPersonToUpdate(model, index);
+        Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
+                updatePersonTagsDescriptor.getTagsToAdd(),
+                updatePersonTagsDescriptor.getTagsToDelete());
+        requireAllNonNull(personToUpdate, updatedPerson);
+
+        verifyPersonChanged(personToUpdate, updatedPerson);
+        verifyPersonTagCountIsValid(updatedPerson);
+
+        model.setPerson(personToUpdate, updatedPerson);
+
+        return new CommandResult(String.format(MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedPerson)));
+    }
+
+    /**
+     * Throws a {@code CommandException} if the command is not executable.
+     */
+    private void verifyCommandIsExecutable(Model model) throws CommandException {
+        requireNonNull(model);
 
         if (updatePersonTagsDescriptor.containsCommonTagToAddAndDelete()) {
             logger.finer("TagCommand execution failed due to common tag in add and delete");
             throw new CommandException(MESSAGE_COMMON_TAG_FAILURE);
         }
-
-        Person personToUpdate = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
-                updatePersonTagsDescriptor.getTagsToAdd(),
-                updatePersonTagsDescriptor.getTagsToDelete());
-
-        requireAllNonNull(personToUpdate, updatedPerson);
-
-        if (updatedPerson.getTagsCount() > MAXIMUM_TAGS_PER_PERSON) {
-            logger.finer("TagCommand execution failed due to exceeding maximum tag counts allowed");
-            throw new CommandException(MESSAGE_TAG_COUNT_EXCEED);
-        }
-
-        model.setPerson(personToUpdate, updatedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_TAG_PERSON_SUCCESS, Messages.format(updatedPerson)));
     }
+
 
     @Override
     public boolean equals(Object other) {

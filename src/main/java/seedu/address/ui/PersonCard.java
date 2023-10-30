@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -36,6 +36,7 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard phoneCard;
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
+    private RemarkCard remarkCard;
 
     @FXML
     private HBox cardPane;
@@ -52,11 +53,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox addressCardPlaceholder;
     @FXML
+    private VBox remarkCardPlaceholder;
+    @FXML
     private FlowPane tags;
-    @FXML
-    private Label remark;
-    @FXML
-    private Label remarkTitle;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -81,10 +80,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
-            // priority.setText(person.getPriority().toString());
-
-            // TODO: Use priority enum to construct the label, so that each priority will have differen display
+        if (person.getPriorityLevel() != Priority.Level.NONE) {
             tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
                     FlowPaneLabel.Type.PRIORITY).getRoot());
         }
@@ -132,11 +128,12 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadRemarkCard() {
         String remarkString = person.getRemark().toString();
+
         if (remarkString.isEmpty()) {
-            remarkTitle.setText(Remark.REMARK_TITLE_NO_REMARK);
             return;
         }
-        remarkTitle.setText(Remark.REMARK_TITLE);
-        remark.setText(remarkString);
+
+        remarkCard = new RemarkCard(Remark.REMARK_TITLE, remarkString);
+        remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
     }
 }

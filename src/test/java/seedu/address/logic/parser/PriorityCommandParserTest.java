@@ -20,7 +20,7 @@ import seedu.address.model.priority.Priority;
 public class PriorityCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, PriorityCommand.MESSAGE_USAGE);
-    private Parser parser = new PriorityCommandParser();
+    private final Parser<PriorityCommand> parser = new PriorityCommandParser();
 
     @Test
     public void parse_missingParts_failure() {

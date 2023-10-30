@@ -30,12 +30,6 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
-<!--        <Label fx:id="priority" styleClass="priority">-->
-<!--          <minWidth>-->
-<!--            &lt;!&ndash; Ensures that the label text is never truncated &ndash;&gt;-->
-<!--            <Region fx:constant="USE_PREF_SIZE" />-->
-<!--          </minWidth>-->
-<!--        </Label>-->
       </HBox>
 
       <VBox prefHeight="5" minHeight="5" maxHeight="5"/>
@@ -58,13 +52,7 @@
         <VBox fx:id="addressCardPlaceholder" />
       </VBox>
 
-      <VBox styleClass="remark-card-container" minWidth="200" maxWidth="200">
-        <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
-        </padding>
-        <Label fx:id="remarkTitle" styleClass="cell_big_label" wrapText="true"/>
-        <Label fx:id="remark" styleClass="cell_big_label" wrapText="true"/>
-      </VBox>
+      <VBox fx:id="remarkCardPlaceholder" />
     </HBox>
 
   </GridPane>

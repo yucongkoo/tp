@@ -9,9 +9,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.priority.Priority.Level;
 
 /**
  * Represents a Person in the address book.
@@ -95,6 +96,10 @@ public class Person {
 
     }
 
+    public Level getPriorityLevel() {
+        return priority.getPriorityLevel();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -167,10 +172,29 @@ public class Person {
      * Creates and returns a {@code Person} with details of {@code source}, assigning priority of
      * {@code newPriority}.
      */
-    public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
-        requireAllNonNull(source, newPriority);
-        return new Person(source.name, source.phone, source.email, source.address, source.remark,
-                source.tags, source.insurances, newPriority);
+    public static Person createPersonWithUpdatedPriority(Person personToUpdate, Priority newPriority) {
+        requireAllNonNull(personToUpdate, newPriority);
+        return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances, newPriority);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code personToEdit} edited with
+     * {@code editPersonDescriptor}.
+     */
+    public static Person createPersonWithEditedInformation(Person personToEdit,
+                                                            EditPersonDescriptor editPersonDescriptor) {
+        requireAllNonNull(personToEdit, editPersonDescriptor);
+
+        Name newName = editPersonDescriptor.getName().orElse(personToEdit.name);
+        Phone newPhone = editPersonDescriptor.getPhone().orElse(personToEdit.phone);
+        Email newEmail = editPersonDescriptor.getEmail().orElse(personToEdit.email);
+        Address newAddress = editPersonDescriptor.getAddress().orElse(personToEdit.address);
+        Remark remark = personToEdit.remark;
+        Set<Tag> tags = personToEdit.tags;
+        Priority priority = personToEdit.priority;
+
+        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, personToEdit.insurances, priority);
     }
 
     /**
