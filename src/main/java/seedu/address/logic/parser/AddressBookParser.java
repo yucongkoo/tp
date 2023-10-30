@@ -47,8 +47,10 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
+
+        final String processedArguments = ArgumentTokenizer.preprocessArgsString(arguments);
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
@@ -58,22 +60,22 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new AddCommandParser().parse(processedArguments);
 
         case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new EditCommandParser().parse(processedArguments);
 
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new DeleteCommandParser().parse(processedArguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            return new FindCommandParser().parse(processedArguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommandParser().parse(arguments);
+            return new ListCommandParser().parse(processedArguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -82,16 +84,16 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+            return new RemarkCommandParser().parse(processedArguments);
 
         case TagCommand.COMMAND_WORD:
-            return new TagCommandParser().parse(arguments);
+            return new TagCommandParser().parse(processedArguments);
 
         case PriorityCommand.COMMAND_WORD:
-            return new PriorityCommandParser().parse(arguments);
+            return new PriorityCommandParser().parse(processedArguments);
 
         case InsuranceCommand.COMMAND_WORD:
-            return new InsuranceCommandParser().parse(arguments);
+            return new InsuranceCommandParser().parse(processedArguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

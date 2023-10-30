@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
@@ -14,17 +16,17 @@ public class RemarkCard extends UiPart<Region> {
     @FXML
     private VBox remarkCard;
     @FXML
-    private Label remarkTitle;
-    @FXML
     private Label remark;
+    @FXML
+    private ImageView imageView;
+    private final Image image = new Image("images/remarks.png");
 
     /**
-     * Creates a remark card with the given {@code remarkTitle} and {@code remark}.
+     * Creates a remark card with the given {@code remark}.
      */
-    public RemarkCard(String remarkTitle, String remark) {
+    public RemarkCard(String remark) {
         super(FXML);
-        this.remarkTitle.setText(remarkTitle);
         this.remark.setText(remark);
+        imageView.setImage(image);
     }
-
 }

@@ -76,7 +76,7 @@ public class FlowPaneLabel extends UiPart<Region> {
     private void styleInsurance() {
         this.value.setStyle("-fx-text-fill: #000000; -fx-background-color: transparent");
         this.flowPaneLabel.setBackground(new Background(
-                new BackgroundFill(Color.rgb(225, 132, 16), radius, padding)));
+                new BackgroundFill(Color.rgb(233, 190, 255), radius, padding)));
     }
 
     private void stylePriority() {
