@@ -87,7 +87,7 @@ public class InsuranceCommand extends Command {
                 updatePersonInsuranceDescriptor.insurancesToAdd,
                 updatePersonInsuranceDescriptor.insurancesToDelete);
 
-        if (updatedPerson.getInsurancesCount() >= MAX_INSURANCE_COUNT) {
+        if (updatedPerson.getInsurancesCount() > MAX_INSURANCE_COUNT) {
             logger.finer("InsuranceCommand execution failed due to exceeding maximum insurance counts allowed");
             throw new CommandException(MESSAGE_INSURANCE_COUNT_EXCEED);
         }
