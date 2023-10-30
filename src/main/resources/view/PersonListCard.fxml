@@ -12,7 +12,7 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
-      <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="500" />
+      <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="350" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
@@ -45,7 +45,7 @@
 
       <VBox styleClass="attribute-card-container" minHeight="105" >
         <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
+          <Insets top="10" right="10" bottom="10"/>
         </padding>
         <VBox fx:id="phoneCardPlaceholder"/>
         <VBox fx:id="emailCardPlaceholder" />
