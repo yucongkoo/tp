@@ -9,7 +9,7 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #0F120D;
     -fx-opacity: 0.9;
@@ -18,8 +18,6 @@
 .menu .left-container {
     -fx-background-color: black;
 }
-
-
 
 /* Status bar(for the footer) */
 .status-bar {
