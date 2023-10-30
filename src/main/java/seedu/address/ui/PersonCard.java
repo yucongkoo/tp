@@ -55,7 +55,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox remarkCardPlaceholder;
     @FXML
-    private FlowPane tags;
+    private FlowPane flowPaneLabels;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -81,7 +81,7 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadPriority() {
         if (person.getPriorityLevel() != Priority.Level.NONE) {
-            tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
+            flowPaneLabels.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
                     FlowPaneLabel.Type.PRIORITY).getRoot());
         }
     }
@@ -94,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadInsurance() {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
-                .forEach(insurance -> tags.getChildren()
+                .forEach(insurance -> flowPaneLabels.getChildren()
                         .add(new FlowPaneLabel(insurance.getInsuranceName(),
                                 FlowPaneLabel.Type.INSURANCE).getRoot()));
     }
@@ -102,7 +102,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
-                .forEach(tag -> tags.getChildren().add(new FlowPaneLabel(tag.getTagName(),
+                .forEach(tag -> flowPaneLabels.getChildren().add(new FlowPaneLabel(tag.getTagName(),
                         FlowPaneLabel.Type.TAG).getRoot()));
     }
 
