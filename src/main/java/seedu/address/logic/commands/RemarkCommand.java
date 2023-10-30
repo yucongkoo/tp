@@ -21,12 +21,10 @@ public class RemarkCommand extends Command {
     public static final String COMMAND_WORD = "remark";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "<remarks>\n";
 
-    public static final String MESSAGE_USAGE = "Usage: \n"
-            + COMMAND_WORD + "<index> (must be a positive integer) "
-            + "r/ [remark]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + "r/ Likes to swim.";
     private final Index index;
     private final Remark remark;
 
@@ -69,7 +67,7 @@ public class RemarkCommand extends Command {
      */
     private String generateSuccessMessage(Person personToEdit) {
         String message = !remark.toString().isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
-        return String.format(message, personToEdit);
+        return String.format(message, Messages.format(personToEdit));
     }
 
     @Override

@@ -122,6 +122,7 @@ public class Person {
     public int getInsurancesCount() {
         return insurances.size();
     }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -133,6 +134,13 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
+    }
+
+    /**
+     * Returns true if the Person has a remarks.
+     */
+    public boolean hasRemark() {
+        return !this.remark.isEmptyRemark();
     }
 
     /**
@@ -243,10 +251,10 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("remark", remark)
+                .add("priority", priority)
                 .add("tags", tags)
                 .add("insurances", insurances)
-                .add("priority", priority)
+                .add("remark", remark)
                 .toString();
     }
 }

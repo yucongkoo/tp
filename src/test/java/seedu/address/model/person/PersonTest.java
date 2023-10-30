@@ -55,7 +55,7 @@ public class PersonTest {
     }
 
     @Test
-    public void constructor_oneNullField_throwsNullPointerException() {
+    public void constructor_oneNullFieldWithPriority_throwsNullPointerException() {
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -86,6 +86,25 @@ public class PersonTest {
                 validRemark, validTags, null, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 validRemark, validTags, validInsurances, null));
+    }
+
+    @Test
+    public void constructor_oneNullFieldWithoutPriority_throwsNullPointerException() {
+        Name validName = new Name(VALID_NAME_BOB);
+        Phone validPhone = new Phone(VALID_PHONE_BOB);
+        Email validEmail = new Email(VALID_EMAIL_BOB);
+        Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Remark validRemark = new Remark(VALID_REMARK_AMY);
+        Set<Tag> validTags = new HashSet<>() {
+            {
+                add(new Tag(VALID_TAG_FRIEND));
+            }
+        };
+        Set<Insurance> validInsurances = new HashSet<>() {
+            {
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }
+        };
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
@@ -102,7 +121,6 @@ public class PersonTest {
                 validRemark, null, validInsurances));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 validRemark, validTags, null));
-
     }
 
     @Test
@@ -298,8 +316,8 @@ public class PersonTest {
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-                + ", remark=" + ALICE.getRemark() + ", tags=" + ALICE.getTags()
-                + ", insurances=" + ALICE.getInsurances() + ", priority=" + ALICE.getPriority() + "}";
+                + ", priority=" + ALICE.getPriority() + ", tags=" + ALICE.getTags()
+                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark() + "}";
 
         assertEquals(expected, ALICE.toString());
     }
