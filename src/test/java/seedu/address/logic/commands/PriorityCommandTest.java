@@ -26,20 +26,18 @@ import seedu.address.model.priority.Priority;
 import seedu.address.testutil.PersonBuilder;
 
 public class PriorityCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Priority lowPriority = new Priority(VALID_PRIORITY_LOW);
-    private Priority highPriority = new Priority(VALID_PRIORITY_HIGH);
-    private Priority nonePriority = new Priority(VALID_PRIORITY_NONE);
+    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Priority lowPriority = new Priority(VALID_PRIORITY_LOW);
+    private final Priority highPriority = new Priority(VALID_PRIORITY_HIGH);
+    private final Priority nonePriority = new Priority(VALID_PRIORITY_NONE);
 
     @Test
     public void constructor_nullArguments_throwsNullPointerException() {
-        Index index = INDEX_FIRST_PERSON;
-
         // null index
         assertThrows(NullPointerException.class, () -> new PriorityCommand(null, lowPriority));
 
         // null priority
-        assertThrows(NullPointerException.class, () -> new PriorityCommand(index, null));
+        assertThrows(NullPointerException.class, () -> new PriorityCommand(INDEX_FIRST_PERSON, null));
 
         // null index and priority
         assertThrows(NullPointerException.class, () -> new PriorityCommand(null, null));
@@ -55,8 +53,7 @@ public class PriorityCommandTest {
 
     @Test
     public void execute_samePriority_throwsCommandException() {
-        Index indexOfTargetPerson = INDEX_FIRST_PERSON;
-        PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, highPriority); // default priority is high
+        PriorityCommand pc = new PriorityCommand(INDEX_FIRST_PERSON, highPriority); // default priority is high
 
         assertCommandFailure(pc, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
@@ -118,6 +115,7 @@ public class PriorityCommandTest {
         PriorityCommand pc = new PriorityCommand(index, lowPriority);
         String expected = PriorityCommand.class.getCanonicalName() + "{priority="
                 + Priority.LOW_PRIORITY_KEYWORD + "}";
+
         assertEquals(expected, pc.toString());
     }
 }

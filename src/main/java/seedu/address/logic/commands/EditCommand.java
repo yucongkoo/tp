@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.person.Person.createPersonWithEditedInformation;
 
@@ -37,13 +38,12 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a person's information. \n"
-            + "Usage: "
-            + "INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] ";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "[" + PREFIX_NAME + "<name>] "
+            + "[" + PREFIX_PHONE + "<phone>] "
+            + "[" + PREFIX_EMAIL + "<email>] "
+            + "[" + PREFIX_ADDRESS + "<address>]\n";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -51,12 +51,15 @@ public class EditCommand extends Command {
             + "Please use \"tag\" command to add/delete tags.";
     public static final String MESSAGE_EDIT_PRIORITY_ERROR = "Cannot edit priorities. "
             + "Please use \"pr\" command to assign new priority.";
+    public static final String MESSAGE_EDIT_REMARK_ERROR = "Cannot edit remark. "
+            + "Please use \"remark\" command to modify remark.";
 
     /** Stores a prefix and its corresponding edit error message as a key-value pair. **/
     public static final HashMap<Prefix, String> PREFIX_EDIT_ERROR_MESSAGE_MAP = new HashMap<>() {
         {
             put(PREFIX_TAG, MESSAGE_EDIT_TAG_ERROR);
             put(PREFIX_PRIORITY, MESSAGE_EDIT_PRIORITY_ERROR);
+            put(PREFIX_REMARK, MESSAGE_EDIT_REMARK_ERROR);
         }
     };
 

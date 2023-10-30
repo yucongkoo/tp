@@ -51,18 +51,48 @@ public class Messages {
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName())
-                .append("; Phone: ")
+        builder.append("\nName: ")
+                .append(person.getName())
+                .append(" Phone: ")
                 .append(person.getPhone())
-                .append("; Email: ")
+                .append(" Email: ")
                 .append(person.getEmail())
-                .append("; Address: ")
+                .append("\nAddress: ")
                 .append(person.getAddress())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
-        builder.append("; Priority: ")
+                .append("\nPriority: ")
                 .append(person.getPriority());
+
+        addTagString(builder, person);
+        addInsuranceString(builder, person);
+        addRemarkString(builder, person);
+
         return builder.toString();
     }
 
+    private static void addTagString(StringBuilder builder, Person person) {
+        builder.append("\nTags: ");
+        if (person.getTagsCount() == 0) {
+            builder.append("-");
+        } else {
+            person.getTags().forEach(builder::append);
+        }
+    }
+
+    private static void addInsuranceString(StringBuilder builder, Person person) {
+        builder.append("\nInsurances: ");
+        if (person.getInsurancesCount() == 0) {
+            builder.append("-");
+        } else {
+            person.getInsurances().forEach(builder::append);
+        }
+    }
+
+    private static void addRemarkString(StringBuilder builder, Person person) {
+        builder.append("\nRemarks: ");
+        if (person.hasRemark()) {
+            builder.append(person.getRemark());
+        } else {
+            builder.append("-");
+        }
+    }
 }

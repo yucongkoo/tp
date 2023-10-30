@@ -53,6 +53,7 @@ public class FlowPaneLabel extends UiPart<Region> {
             break;
 
         case PRIORITY:
+            this.value.setText("Priority." + value);
             assign_level(value);
             stylePriority();
             break;
@@ -90,9 +91,6 @@ public class FlowPaneLabel extends UiPart<Region> {
             this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.ORANGE, radius, padding)));
         } else if (this.priorityLevel == Level.LOW) {
             this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
-        } else {
-            System.out.println(this.priorityLevel);
-            System.out.println("Error");
         }
     }
 

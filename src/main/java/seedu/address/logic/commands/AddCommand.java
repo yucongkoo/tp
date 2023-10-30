@@ -26,16 +26,15 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. \n"
-            + "Usage: "
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD + " "
             + PREFIX_NAME + "<name> "
             + PREFIX_PHONE + "<phone number> "
             + PREFIX_EMAIL + "<email address> "
             + "[" + PREFIX_ADDRESS + "<home/office address>] "
             + "[" + PREFIX_PRIORITY + "<priority>] "
-            + "[" + PREFIX_TAG + "<tags>]... "
-            + "[" + PREFIX_INSURANCE + "<insurances>]... "
-            + "[" + PREFIX_REMARK + "<notes>]";
+            + "[" + PREFIX_TAG + "<tag>...] "
+            + "[" + PREFIX_INSURANCE + "<insurance>...] "
+            + "[" + PREFIX_REMARK + "<remarks>]\n";
 
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
