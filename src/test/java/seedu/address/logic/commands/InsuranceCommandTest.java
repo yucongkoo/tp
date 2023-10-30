@@ -87,7 +87,7 @@ public class InsuranceCommandTest {
         defaultDescriptor.setInsurancesToAdd(new Insurance(healthInsurance));
         InsuranceCommand command = new InsuranceCommand(firstIndex, defaultDescriptor);
 
-        Person updatedAlice = new PersonBuilder(alice).withInsurances(healthInsurance, carInsurance).build();
+        Person updatedAlice = new PersonBuilder(alice).withInsurances(carInsurance, healthInsurance).build();
         String expectedMessage = String.format(InsuranceCommand.MESSAGE_INSURANCE_PERSON_SUCCESS,
                 Messages.format(updatedAlice));
 
@@ -104,7 +104,7 @@ public class InsuranceCommandTest {
         InsuranceCommand command = new InsuranceCommand(firstIndex, defaultDescriptor);
 
         Person updatedAlice = new PersonBuilder(alice)
-                .withInsurances(lifeInsurance, healthInsurance, carInsurance).build();
+                .withInsurances(lifeInsurance, carInsurance, healthInsurance).build();
 
         String expectedMessage = String.format(InsuranceCommand.MESSAGE_INSURANCE_PERSON_SUCCESS,
                 Messages.format(updatedAlice));
@@ -164,8 +164,8 @@ public class InsuranceCommandTest {
     }
     @Test
     public void execute_insuranceCountAtLimit_success() {
-        defaultDescriptor.setInsurancesToAdd(new Insurance(healthInsurance));
         defaultDescriptor.setInsurancesToAdd(new Insurance(carInsurance));
+        defaultDescriptor.setInsurancesToAdd(new Insurance(healthInsurance));
         defaultDescriptor.setInsurancesToAdd(new Insurance(lifeInsurance));
 
         InsuranceCommand command = new InsuranceCommand(secondIndex, defaultDescriptor);
