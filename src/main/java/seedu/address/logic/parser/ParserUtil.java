@@ -13,9 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Tag;
@@ -74,20 +72,14 @@ public class ParserUtil {
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
-        if (address == null) {
-            return EmptyAddress.getEmptyAddress();
-        }
-
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!NonEmptyAddress.isValidAddress(trimmedAddress)) {
-            throw new ParseException(NonEmptyAddress.MESSAGE_CONSTRAINTS);
+        if (!Address.isValidAddress(trimmedAddress)) {
+            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        return new NonEmptyAddress(trimmedAddress);
+        return Address.createAddress(address.trim());
     }
 
     /**

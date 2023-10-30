@@ -10,8 +10,7 @@
       "value" : "hans@example.com"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "tags" : [ ],
     "priority" : {
