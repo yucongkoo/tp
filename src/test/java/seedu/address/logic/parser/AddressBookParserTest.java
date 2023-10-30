@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_HEALTH;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,11 +28,13 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.InsuranceCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PriorityCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Tag;
@@ -120,6 +125,23 @@ public class AddressBookParserTest {
 
         PriorityCommand expectedCommand = new PriorityCommand(testIndex, priority);
         Command actualCommand = parser.parseCommand(PersonUtil.getPriorityCommand(testIndex, priority));
+
+        assertEquals(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void parseCommand_insurance() throws Exception {
+        Index testIndex = INDEX_FIRST_PERSON;
+        Insurance carInsurance = new Insurance(VALID_INSURANCE_CAR);
+        Insurance healthInsurance = new Insurance(VALID_INSURANCE_HEALTH);
+        InsuranceCommand.UpdatePersonInsuranceDescriptor descriptor =
+                new InsuranceCommand.UpdatePersonInsuranceDescriptor(new HashSet<>(), new HashSet<>());
+
+        descriptor.setInsurancesToAdd(carInsurance);
+        descriptor.setInsurancesToDelete(healthInsurance);
+
+        InsuranceCommand expectedCommand = new InsuranceCommand(testIndex, descriptor);
+        Command actualCommand = parser.parseCommand(PersonUtil.getInsuranceCommand(testIndex, descriptor));
 
         assertEquals(expectedCommand, actualCommand);
     }
