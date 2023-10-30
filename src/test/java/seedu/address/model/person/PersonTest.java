@@ -95,12 +95,16 @@ public class PersonTest {
         Email validEmail = new Email(VALID_EMAIL_BOB);
         Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
         Remark validRemark = new Remark(VALID_REMARK_AMY);
-        Set<Tag> validTags = new HashSet<>() {{
-            add(new Tag(VALID_TAG_FRIEND));
-        }};
-        Set<Insurance> validInsurances = new HashSet<>() {{
-            add(new Insurance(VALID_INSURANCE_CAR));
-        }};
+        Set<Tag> validTags = new HashSet<>() {
+            {
+                add(new Tag(VALID_TAG_FRIEND));
+            }
+        };
+        Set<Insurance> validInsurances = new HashSet<>() {
+            {
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }
+        };
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,

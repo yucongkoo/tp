@@ -6,6 +6,7 @@ import java.util.HashMap;
 import seedu.address.model.person.Person;
 import seedu.address.model.priority.Priority.Level;
 
+/** Compares two Persons according to their priority level. **/
 public class PersonComparator implements Comparator<Person> {
     public static final HashMap<Level, Integer> LEVEL_TO_INT_MAP = new HashMap<>() {
         {

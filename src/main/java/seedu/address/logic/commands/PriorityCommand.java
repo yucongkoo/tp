@@ -20,8 +20,8 @@ import seedu.address.model.priority.Priority;
 public class PriorityCommand extends Command {
     public static final String COMMAND_WORD = "priority";
 
-    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD +
-            " <index> "
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
             + "<priority_level>\n";
 
     // public static final String MESSAGE_NOT_ASSIGNED = "Priority given is the same as previous one.";
