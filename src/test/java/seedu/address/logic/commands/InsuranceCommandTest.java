@@ -104,7 +104,7 @@ public class InsuranceCommandTest {
         InsuranceCommand command = new InsuranceCommand(firstIndex, defaultDescriptor);
 
         Person updatedAlice = new PersonBuilder(alice)
-                .withInsurances(lifeInsurance, carInsurance,  healthInsurance).build();
+                .withInsurances(lifeInsurance, carInsurance, healthInsurance).build();
 
         String expectedMessage = String.format(InsuranceCommand.MESSAGE_INSURANCE_PERSON_SUCCESS,
                 Messages.format(updatedAlice));
