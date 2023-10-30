@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_HEALTH;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -131,11 +132,13 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_insurance() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
-        Insurance insurance = new Insurance(VALID_INSURANCE_CAR);
+        Insurance carInsurance = new Insurance(VALID_INSURANCE_CAR);
+        Insurance healthInsurance = new Insurance(VALID_INSURANCE_HEALTH);
         InsuranceCommand.UpdatePersonInsuranceDescriptor descriptor =
                 new InsuranceCommand.UpdatePersonInsuranceDescriptor(new HashSet<>(), new HashSet<>());
 
-        descriptor.setInsurancesToAdd(insurance);
+        descriptor.setInsurancesToAdd(carInsurance);
+        descriptor.setInsurancesToDelete(healthInsurance);
 
         InsuranceCommand expectedCommand = new InsuranceCommand(testIndex, descriptor);
         Command actualCommand = parser.parseCommand(PersonUtil.getInsuranceCommand(testIndex, descriptor));

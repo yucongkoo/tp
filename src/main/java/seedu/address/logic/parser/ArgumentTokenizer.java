@@ -52,10 +52,10 @@ public class ArgumentTokenizer {
     public static String preprocessArgsString(String argsString) {
         requireNonNull(argsString);
 
-        Prefix[] uppercasePrefixes = new Prefix[] {PREFIX_NAME_UPPER,
-                PREFIX_PHONE_UPPER, PREFIX_EMAIL_UPPER, PREFIX_PRIORITY_UPPER, PREFIX_TAG_UPPER, PREFIX_REMARK_UPPER,
-                PREFIX_INSURANCE_UPPER, PREFIX_ADDRESS_UPPER, PREFIX_ADD_INSURANCE_UPPER,
-                PREFIX_DELETE_INSURANCE_UPPER, PREFIX_ADD_TAG_UPPER, PREFIX_DELETE_TAG_UPPER};
+        Prefix[] uppercasePrefixes = new Prefix[] { PREFIX_NAME_UPPER, PREFIX_PHONE_UPPER,
+            PREFIX_EMAIL_UPPER, PREFIX_PRIORITY_UPPER, PREFIX_TAG_UPPER, PREFIX_REMARK_UPPER,
+            PREFIX_INSURANCE_UPPER, PREFIX_ADDRESS_UPPER, PREFIX_ADD_INSURANCE_UPPER,
+            PREFIX_DELETE_INSURANCE_UPPER, PREFIX_ADD_TAG_UPPER, PREFIX_DELETE_TAG_UPPER };
 
         String processedArgs = argsString;
 
@@ -63,7 +63,7 @@ public class ArgumentTokenizer {
             String upperPrefix = p.getPrefix();
             String lowerPrefix = upperPrefix.toLowerCase();
 
-            processedArgs = processedArgs.replaceAll(" " + upperPrefix," " + lowerPrefix);
+            processedArgs = processedArgs.replaceAll(" " + upperPrefix, " " + lowerPrefix);
         }
 
         return processedArgs;
