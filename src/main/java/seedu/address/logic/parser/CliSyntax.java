@@ -19,4 +19,16 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADD_INSURANCE = new Prefix("ai/");
     public static final Prefix PREFIX_DELETE_INSURANCE = new Prefix("di/");
     public static final Prefix PREFIX_PRIORITY = new Prefix("pr/");
+    public static final Prefix PREFIX_NAME_UPPER = new Prefix("N/");
+    public static final Prefix PREFIX_PHONE_UPPER = new Prefix("P/");
+    public static final Prefix PREFIX_EMAIL_UPPER = new Prefix("E/");
+    public static final Prefix PREFIX_ADDRESS_UPPER = new Prefix("A/");
+    public static final Prefix PREFIX_TAG_UPPER = new Prefix("T/");
+    public static final Prefix PREFIX_REMARK_UPPER = new Prefix("R/");
+    public static final Prefix PREFIX_ADD_TAG_UPPER = new Prefix("AT/");
+    public static final Prefix PREFIX_DELETE_TAG_UPPER = new Prefix("DT/");
+    public static final Prefix PREFIX_INSURANCE_UPPER = new Prefix("I/");
+    public static final Prefix PREFIX_ADD_INSURANCE_UPPER = new Prefix("AI/");
+    public static final Prefix PREFIX_DELETE_INSURANCE_UPPER = new Prefix("DI/");
+    public static final Prefix PREFIX_PRIORITY_UPPER = new Prefix("PR/");
 }
