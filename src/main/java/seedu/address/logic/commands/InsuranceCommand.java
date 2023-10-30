@@ -26,7 +26,7 @@ import seedu.address.model.person.Person;
  */
 public class InsuranceCommand extends Command {
 
-    public static final String COMMAND_WORD = "ins";
+    public static final String COMMAND_WORD = "insurance";
 
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "

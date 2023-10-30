@@ -78,15 +78,17 @@ public class PersonUtil {
 
     public static String getInsuranceCommand(Index index,
                                              UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor) {
+
         String insurancesToAddString = updatePersonInsuranceDescriptor.getInsurancesToAdd().stream()
                 .map(i -> " " + PREFIX_ADD_TAG + i.getInsuranceName())
                 .collect(Collectors.joining());
+
         String insurancesToDeleteString = updatePersonInsuranceDescriptor.getInsurancesToDelete().stream()
                 .map(i -> " " + PREFIX_DELETE_TAG + i.getInsuranceName())
                 .collect(Collectors.joining());
 
         return InsuranceCommand.COMMAND_WORD + " " + index.getOneBased()
-                + insurancesToAddString + insurancesToAddString;
+                + insurancesToAddString + insurancesToDeleteString;
     }
 
     public static String getPriorityCommand(Index index, Priority priority) {
