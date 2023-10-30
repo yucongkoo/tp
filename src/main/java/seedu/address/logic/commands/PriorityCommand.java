@@ -18,14 +18,11 @@ import seedu.address.model.priority.Priority;
 
 /** Assigns priority to a person. **/
 public class PriorityCommand extends Command {
-    public static final String COMMAND_WORD = "pr";
+    public static final String COMMAND_WORD = "priority";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assign priority to a person "
-            + "by the index number used in the displayed person list.\n"
-            + "Usage: "
-            + COMMAND_WORD + " <INDEX> (must be a positive integer) "
-            + "<PRIORITY_LEVEL>\n"
-            + Priority.MESSAGE_CONSTRAINTS;
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD +
+            " <index> "
+            + "<priority_level>\n";
 
     // public static final String MESSAGE_NOT_ASSIGNED = "Priority given is the same as previous one.";
     public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";

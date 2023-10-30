@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Objects;
+
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
@@ -28,10 +30,14 @@ public class Remark {
         value = remark;
     }
 
-
     public static boolean isValidRemark(String remark) {
         return remark.length() <= 150;
     }
+
+    public boolean isEmptyRemark() {
+        return Objects.equals(this.value, "");
+    }
+
     @Override
     public String toString() {
         return value;

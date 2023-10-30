@@ -28,12 +28,10 @@ public class InsuranceCommand extends Command {
 
     public static final String COMMAND_WORD = "ins";
 
-    public static final String MESSAGE_USAGE =
-            COMMAND_WORD + ": Assign/Remove insurance policy to/from customer identified "
-            + "by index shown in the displayed customer list.\n"
-            + "Usage: " + COMMAND_WORD + " <INDEX> "
-            + "[" + PREFIX_ADD_INSURANCE + "<INSURANCE_TO_ADD>]... "
-            + "[" + PREFIX_DELETE_INSURANCE + "<INSURANCE_TO_DELETE>]...\n";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "[" + PREFIX_ADD_INSURANCE + "<insurance_to_add>...] "
+            + "[" + PREFIX_DELETE_INSURANCE + "<insurance_to_delete>...]\n";
 
     public static final String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of person: %s";
 
