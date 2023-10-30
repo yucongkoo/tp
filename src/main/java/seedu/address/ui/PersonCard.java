@@ -10,7 +10,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
 
