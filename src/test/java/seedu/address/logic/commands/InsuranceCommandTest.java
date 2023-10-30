@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -206,10 +207,13 @@ public class InsuranceCommandTest {
     @Test
     public void execute_exceedInsuranceMaxCount_throwsCommandException() {
         defaultDescriptor.setInsurancesToAdd(new Insurance(healthInsurance));
+        defaultDescriptor.setInsurancesToAdd(new Insurance(carInsurance));
+        defaultDescriptor.setInsurancesToAdd(new Insurance(lifeInsurance));
+        defaultDescriptor.setInsurancesToAdd(new Insurance("Great eastern insurance"));
 
-        InsuranceCommand command = new InsuranceCommand(outOfBoundIndex, defaultDescriptor);
+        InsuranceCommand command = new InsuranceCommand(secondIndex, defaultDescriptor);
 
-        assertCommandFailure(command, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, model, MESSAGE_INSURANCE_COUNT_EXCEED);
     }
 
     @Test
