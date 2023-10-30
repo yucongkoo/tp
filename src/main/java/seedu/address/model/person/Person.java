@@ -132,8 +132,11 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return this.phone.equals(otherPerson.phone) || this.email.equals(otherPerson.email);
     }
 
     /**
