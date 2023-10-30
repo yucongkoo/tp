@@ -145,11 +145,11 @@ Examples:
 *  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd customer to be `Betsy Crower`.
 
-### Finding persons : `find`
+### Finding customers : `find`
 
 Finds customers whose names contain all the given keywords as prefix.
 
-Format: `find KEYWORD [MORE_KEYWORD]`
+Format: `find KEYWORD [MORE_KEYWORD]...`
 
 * The search is case-insensitive. e.g. `find Adam` returns `adam`
 * The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
@@ -217,6 +217,30 @@ Examples:
 
 `pr 2 -` Removes the priority assigned to the second customer.
 
+
+### Adding a remark to a customer: `remark`
+
+**You can add a remark to an existing customer, or update the current remark**.
+
+Format: `remark INDEX r/ [REMARK]`
+
+* Updates the remark of the customer at `INDEX` in the displayed customer list.
+* If you wish to delete the remark, update the remark without text after `r/`, e.g. `remark INDEX r/`.
+
+<box type="warning" seamless>
+
+**Caution:**
+* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `Remark` cannot be longer than 150 characters.
+
+</box>
+
+Examples:
+
+`remark 1 r/ he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+
+`remark 2 r/` Removes the remark from the second customer in the displayed list.
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -231,13 +255,14 @@ _More coming soon ..._
 
 ## Command summary
 
-| Action       | Format and Examples                                                                                                                                                    |
-|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]...`         <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall` |
-| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                        |
-| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                         |
-| **List**     | `list`                                                                      <hr>                                                                                       |
-| **Find**     | `find NAME`                                        <hr>                                                                                                                |
-| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                 |
-| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                            |
+| Action       | Format and Examples                                                                                                                                                                               |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]... [r/REMAEK]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                                                   |
+| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                    |
+| **List**     | `list`                                                                      <hr>                                                                                                                  |
+| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                     |
+| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                            |
+| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                      |
+| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                        |
 

@@ -4,7 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Person.createPersonWithUpdatedInsurances;
 
@@ -29,12 +28,10 @@ public class InsuranceCommand extends Command {
 
     public static final String COMMAND_WORD = "ins";
 
-    public static final String MESSAGE_USAGE =
-            COMMAND_WORD + ": Assign/Remove insurance policy to/from customer identified "
-            + "by index shown in the displayed customer list.\n"
-            + "Usage: " + COMMAND_WORD + " <INDEX> "
-            + "[" + PREFIX_ADD_INSURANCE + "<INSURANCE_TO_ADD>]... "
-            + "[" + PREFIX_DELETE_INSURANCE + "<INSURANCE_TO_DELETE>]...\n";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "[" + PREFIX_ADD_INSURANCE + "<insurance_to_add>...] "
+            + "[" + PREFIX_DELETE_INSURANCE + "<insurance_to_delete>...]\n";
 
     public static final String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of person: %s";
 
@@ -53,6 +50,8 @@ public class InsuranceCommand extends Command {
      */
     public InsuranceCommand(Index i, UpdatePersonInsuranceDescriptor u) {
         requireAllNonNull(i, u);
+        assert u.hasInsuranceToUpdate() : "It should have insurance to update";
+
         this.index = i;
         this.updatePersonInsuranceDescriptor = u;
     }
@@ -75,8 +74,10 @@ public class InsuranceCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        assert index.getZeroBased() < personList.size() : "index < listSize";
+
         if (updatePersonInsuranceDescriptor.hasCommonInsurance()) {
-            throw new CommandException("");
+            throw new CommandException(MESSAGE_INSURANCE_CONFLICT);
         }
 
         Person personToUpdate = personList.get(index.getZeroBased());
@@ -84,15 +85,15 @@ public class InsuranceCommand extends Command {
                 updatePersonInsuranceDescriptor.insurancesToAdd,
                 updatePersonInsuranceDescriptor.insurancesToDelete);
 
-        if (updatedPerson.getInsurancesCount() >= MAX_INSURANCE_COUNT) {
+        if (updatedPerson.getInsurancesCount() > MAX_INSURANCE_COUNT) {
             logger.finer("InsuranceCommand execution failed due to exceeding maximum insurance counts allowed");
             throw new CommandException(MESSAGE_INSURANCE_COUNT_EXCEED);
         }
 
         requireAllNonNull(personToUpdate, updatedPerson);
+        CommandUtil.verifyPersonChanged(personToUpdate, updatedPerson);
 
         m.setPerson(personToUpdate, updatedPerson);
-        m.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_INSURANCE_PERSON_SUCCESS, Messages.format(updatedPerson)));
     }
@@ -137,12 +138,11 @@ public class InsuranceCommand extends Command {
             return insurancesToDelete;
         }
 
-        public void setInsurancesToAdd(Set<Insurance> insurancesToAdd) {
-            this.insurancesToAdd = insurancesToAdd;
+        public void setInsurancesToAdd(Insurance i) {
+            this.insurancesToAdd.add(i);
         }
-
-        public void setInsurancesToDelete(Set<Insurance> insurancesToDelete) {
-            this.insurancesToDelete = insurancesToDelete;
+        public void setInsurancesToDelete(Insurance i) {
+            this.insurancesToDelete.add(i);
         }
 
         /**

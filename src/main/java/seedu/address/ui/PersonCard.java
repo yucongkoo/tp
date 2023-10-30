@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -36,6 +36,7 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard phoneCard;
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
+    private RemarkCard remarkCard;
 
     @FXML
     private HBox cardPane;
@@ -52,11 +53,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox addressCardPlaceholder;
     @FXML
-    private FlowPane tags;
+    private VBox remarkCardPlaceholder;
     @FXML
-    private Label remark;
-    @FXML
-    private Label remarkTitle;
+    private FlowPane flowPaneLabels;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -81,11 +80,8 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriority().getPriorityLevel() != Priority.Level.NONE) {
-            // priority.setText(person.getPriority().toString());
-
-            // TODO: Use priority enum to construct the label, so that each priority will have differen display
-            tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
+        if (person.getPriorityLevel() != Priority.Level.NONE) {
+            flowPaneLabels.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
                     FlowPaneLabel.Type.PRIORITY).getRoot());
         }
     }
@@ -98,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadInsurance() {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
-                .forEach(insurance -> tags.getChildren()
+                .forEach(insurance -> flowPaneLabels.getChildren()
                         .add(new FlowPaneLabel(insurance.getInsuranceName(),
                                 FlowPaneLabel.Type.INSURANCE).getRoot()));
     }
@@ -106,7 +102,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
-                .forEach(tag -> tags.getChildren().add(new FlowPaneLabel(tag.getTagName(),
+                .forEach(tag -> flowPaneLabels.getChildren().add(new FlowPaneLabel(tag.getTagName(),
                         FlowPaneLabel.Type.TAG).getRoot()));
     }
 
@@ -132,11 +128,12 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadRemarkCard() {
         String remarkString = person.getRemark().toString();
+
         if (remarkString.isEmpty()) {
-            remarkTitle.setText(Remark.REMARK_TITLE_NO_REMARK);
             return;
         }
-        remarkTitle.setText(Remark.REMARK_TITLE);
-        remark.setText(remarkString);
+
+        remarkCard = new RemarkCard(Remark.REMARK_TITLE, remarkString);
+        remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
     }
 }

@@ -11,9 +11,17 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.predicate.InsuranceContainsKeywordsPredicate;
-import seedu.address.model.person.*;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.EmptyAddress;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.NonEmptyAddress;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

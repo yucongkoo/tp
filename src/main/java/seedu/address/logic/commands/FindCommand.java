@@ -20,9 +20,8 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE =
-            "Usage: "
-            + COMMAND_WORD + "<PREFIX> [MORE_PREFIX]..."
-            +
+            "Usage: \n"
+            + COMMAND_WORD + "<prefix> <keyword>... [more_prefix and keyword]...\n";
     private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
     private final PersonContainsKeywordsPredicate predicate;
 

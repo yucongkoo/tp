@@ -26,20 +26,18 @@ import seedu.address.model.priority.Priority;
 import seedu.address.testutil.PersonBuilder;
 
 public class PriorityCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Priority lowPriority = new Priority(VALID_PRIORITY_LOW);
-    private Priority highPriority = new Priority(VALID_PRIORITY_HIGH);
-    private Priority nonePriority = new Priority(VALID_PRIORITY_NONE);
+    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Priority lowPriority = new Priority(VALID_PRIORITY_LOW);
+    private final Priority highPriority = new Priority(VALID_PRIORITY_HIGH);
+    private final Priority nonePriority = new Priority(VALID_PRIORITY_NONE);
 
     @Test
     public void constructor_nullArguments_throwsNullPointerException() {
-        Index index = INDEX_FIRST_PERSON;
-
         // null index
         assertThrows(NullPointerException.class, () -> new PriorityCommand(null, lowPriority));
 
         // null priority
-        assertThrows(NullPointerException.class, () -> new PriorityCommand(index, null));
+        assertThrows(NullPointerException.class, () -> new PriorityCommand(INDEX_FIRST_PERSON, null));
 
         // null index and priority
         assertThrows(NullPointerException.class, () -> new PriorityCommand(null, null));
@@ -55,10 +53,9 @@ public class PriorityCommandTest {
 
     @Test
     public void execute_samePriority_throwsCommandException() {
-        Index indexOfTargetPerson = INDEX_FIRST_PERSON;
-        PriorityCommand pc = new PriorityCommand(indexOfTargetPerson, highPriority); // default priority is high
+        PriorityCommand pc = new PriorityCommand(INDEX_FIRST_PERSON, highPriority); // default priority is high
 
-        assertCommandFailure(pc, model, PriorityCommand.MESSAGE_NOT_ASSIGNED);
+        assertCommandFailure(pc, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
 
     @Test
@@ -68,7 +65,7 @@ public class PriorityCommandTest {
         Person expectedPerson = new PersonBuilder(personInFilteredList).withPriority(VALID_PRIORITY_LOW).build();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), expectedPerson);
-        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS,
+        String expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PRIORITY_SUCCESS,
                 Messages.format(expectedPerson));
 
         Index indexOfTargetPerson = INDEX_FIRST_PERSON;
@@ -80,7 +77,8 @@ public class PriorityCommandTest {
         expectedPerson = new PersonBuilder(personInFilteredList).withPriority(VALID_PRIORITY_NONE).build();
         expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()), expectedPerson);
-        expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, Messages.format(expectedPerson));
+        expectedMessage = String.format(PriorityCommand.MESSAGE_ASSIGN_PRIORITY_SUCCESS,
+                Messages.format(expectedPerson));
 
         indexOfTargetPerson = INDEX_SECOND_PERSON;
         pc = new PriorityCommand(indexOfTargetPerson, nonePriority);
@@ -117,6 +115,7 @@ public class PriorityCommandTest {
         PriorityCommand pc = new PriorityCommand(index, lowPriority);
         String expected = PriorityCommand.class.getCanonicalName() + "{priority="
                 + Priority.LOW_PRIORITY_KEYWORD + "}";
+
         assertEquals(expected, pc.toString());
     }
 }
