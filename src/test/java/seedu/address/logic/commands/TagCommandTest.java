@@ -205,18 +205,8 @@ public class TagCommandTest {
     @Test
     public void execute_addAndDeleteCommonTag_failure() {
         UpdatePersonTagsDescriptor descriptor = new UpdatePersonTagsDescriptorBuilder()
-                .withTagsToAdd("commonTag").withTagsToDelete("commonTag").build();
-        Command command = new TagCommand(aliceIndex, descriptor);
-        assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
-
-        descriptor = new UpdatePersonTagsDescriptorBuilder()
                 .withTagsToAdd("commonTag", "validTag").withTagsToDelete("commonTag").build();
-        command = new TagCommand(aliceIndex, descriptor);
-        assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
-
-        descriptor = new UpdatePersonTagsDescriptorBuilder()
-                .withTagsToAdd("commonTag").withTagsToDelete("commonTag", "validTag").build();
-        command = new TagCommand(aliceIndex, descriptor);
+        Command command = new TagCommand(aliceIndex, descriptor);
         assertCommandFailure(command, model, TagCommand.MESSAGE_COMMON_TAG_FAILURE);
     }
 

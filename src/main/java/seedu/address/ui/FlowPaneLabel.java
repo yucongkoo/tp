@@ -25,7 +25,7 @@ public class FlowPaneLabel extends UiPart<Region> {
      */
     public enum Type { TAG, INSURANCE, PRIORITY }
     private static final String FXML = "FlowPaneLabel.fxml";
-    private static final CornerRadii radius = new CornerRadii(3);
+    private static final CornerRadii RADIUS = new CornerRadii(3);
     private static final Insets padding = new Insets(1);
 
     @javafx.fxml.FXML
@@ -66,7 +66,7 @@ public class FlowPaneLabel extends UiPart<Region> {
         styleTagLabel();
     }
     private void styleTagLabel() {
-        this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, radius, padding)));
+        this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, RADIUS, padding)));
     }
 
     private void styleTagValue() {
@@ -76,7 +76,7 @@ public class FlowPaneLabel extends UiPart<Region> {
     private void styleInsurance() {
         this.value.setStyle("-fx-text-fill: #000000; -fx-background-color: transparent");
         this.flowPaneLabel.setBackground(new Background(
-                new BackgroundFill(Color.rgb(233, 190, 255), radius, padding)));
+                new BackgroundFill(Color.rgb(233, 190, 255), RADIUS, padding)));
     }
 
     private void stylePriority() {
@@ -86,11 +86,11 @@ public class FlowPaneLabel extends UiPart<Region> {
 
     private void stylePriorityLabel() {
         if (this.priorityLevel == Level.HIGH) {
-            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.GREEN, radius, padding)));
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.GREEN, RADIUS, padding)));
         } else if (this.priorityLevel == Level.MEDIUM) {
-            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.ORANGE, radius, padding)));
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.ORANGE, RADIUS, padding)));
         } else if (this.priorityLevel == Level.LOW) {
-            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, radius, padding)));
+            this.flowPaneLabel.setBackground(new Background(new BackgroundFill(Color.RED, RADIUS, padding)));
         }
     }
 

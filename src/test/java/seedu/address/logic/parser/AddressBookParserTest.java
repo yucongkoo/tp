@@ -104,7 +104,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tag() throws Exception {
+    public void parseCommand_tag_returnsTagCommand() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
 
         Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));
