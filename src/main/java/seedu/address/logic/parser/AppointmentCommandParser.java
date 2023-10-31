@@ -60,8 +60,7 @@ public class AppointmentCommandParser implements Parser<AppointmentCommand> {
         String retrievedDate = checkInputDate(argMultimap.getValue(PREFIX_APPOINTMENT)
                 .orElse(Appointment.NO_APPOINTMENT));
         String parsedDate = parseDateString(retrievedDate);
-        logger.info(parsedDate);
-        return parsedDate; // 02 mar 2025
+        return parsedDate;
     }
 
     private String getParsedTime(ArgumentMultimap argMultimap) throws ParseException {

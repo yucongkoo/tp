@@ -7,14 +7,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.parser.AppointmentCommandParser;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -31,8 +27,8 @@ public class Appointment {
     public static final String NO_VENUE = "";
     public static final String INVALID_DATE_INPUT = "Date parameter must be YY-MM-DD, "
             + "with valid calendar year, month and days";
-//    public static final String PREVIOUS_DATE_INPUT = "Unable to schedule your appointment " +
-//            "on a date/time in the past";
+    public static final String PREVIOUS_DATE_INPUT = "Unable to schedule your appointment " +
+            "on a date/time in the past";
     public static final String INVALID_TIME_INPUT = "Time field must be HH:MM";
         ;
     public static final String INVALID_VENUE_INPUT = "Venue field must not be greater than 30 characters";
@@ -53,7 +49,6 @@ public class Appointment {
      */
     public Appointment(String date, String time, String venue) {
         requireNonNull(date);
-        logger.info("creating appt calss");
         checkArgument(isValidDateFormat(date), INVALID_DATE_INPUT);
         checkArgument(isValidTimeFormat(time), INVALID_TIME_INPUT);
         checkArgument(isValidVenueFormat(time), INVALID_VENUE_INPUT);

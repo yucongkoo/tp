@@ -228,7 +228,7 @@ public class ParserUtil {
         LocalDate now = LocalDate.now();
 
         if (localDate.isBefore(now)) {
-            throw new ParseException(Appointment.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Appointment.PREVIOUS_DATE_INPUT);
         }
     }
 

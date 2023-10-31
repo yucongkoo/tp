@@ -35,7 +35,9 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_TAG = "#friend";
     private static final JsonAdaptedPriority INVALID_PRIORITY = new JsonAdaptedPriority("top");
     private static final String INVALID_INSURANCE = "/*weird insurance";
-    private static final String INVALID_APPOINTMENT = "2021-10-10";
+
+    private static final JsonAdaptedAppointment INVALID_APPOINTMENT = new JsonAdaptedAppointment(
+            new Appointment("10 Oct 2025", "10:00", "Suntec"));
     private static final String INVALID_APPOINTMENT_TIME = "10:00";
     private static final String INVALID_APPOINTMENT_VENUE = "test1test2test3test4test5test6test7";
     private static final String INVALID_APPOINTMENT_COUNT = "-1000";
@@ -192,6 +194,17 @@ public class JsonAdaptedPersonTest {
                 VALID_REMARK, VALID_TAGS, VALID_INSURANCES, VALID_APPOINTMENT, VALID_APPOINTMENT_COUNT, null);
 
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidAppointment_throwsIllegalValueException() {
+        JsonAdaptedPerson person =
+
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
+                        VALID_INSURANCES, VALID_APPOINTMENT, VALID_APPOINTMENT_COUNT, VALID_PRIORITY);
+
+        String expectedMessage = Appointment.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 }

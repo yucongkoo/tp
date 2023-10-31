@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TIME;
@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
@@ -57,7 +56,7 @@ public class AppointmentCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToEdit = getPersonToUpdate(model, index);
+        Person personToEdit = getPersonAtIndex(model, index);
         logger.fine("AppointmentCommand executing...");
 
         if (!Appointment.isAppointmentEmpty(personToEdit.getAppointment())) {

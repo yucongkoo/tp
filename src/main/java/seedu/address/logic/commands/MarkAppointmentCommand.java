@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -45,7 +45,7 @@ public class MarkAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        Person personToEdit = getPersonToUpdate(model, index);
+        Person personToEdit = getPersonAtIndex(model, index);
 
         if (Appointment.isAppointmentEmpty(personToEdit.getAppointment())) {
             logger.warning("-----Invalid Mark Appointment Command: Appointment does not exist-----");
