@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_CHANGED;
 import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
@@ -96,7 +95,7 @@ public class EditCommand extends Command {
         Person personToEdit = getPersonAtIndex(model, index);
         Person editedPerson = createPersonWithEditedInformation(personToEdit, editPersonDescriptor);
 
-        checkPersonIsChanged(personToEdit, editedPerson);
+        verifyPersonChanged(personToEdit, editedPerson);
         checkIsDuplicatePerson(model, personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
@@ -117,14 +116,6 @@ public class EditCommand extends Command {
                 logger.finer("EditCommand execution failed due to duplicated persons in list");
                 throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
             }
-        }
-    }
-
-    private void checkPersonIsChanged(Person personToEdit, Person editedPerson) throws CommandException {
-        requireAllNonNull(personToEdit, editedPerson);
-        if (personToEdit.equals(editedPerson)) {
-            logger.finer("Command execution failed due to no changes in person.");
-            throw new CommandException(MESSAGE_PERSON_NOT_CHANGED);
         }
     }
 
