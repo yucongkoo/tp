@@ -25,12 +25,12 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> isTagContainsPrefix(person.getTags(), keyword));
+                .allMatch(keyword -> isTagsContainPrefix(person.getTags(), keyword));
     }
 
-    private static boolean isTagContainsPrefix(Set<Tag> tags, String prefix) {
+    private static boolean isTagsContainPrefix(Set<Tag> tags, String prefix) {
         return tags.stream()
-                .anyMatch(tag -> Tag.isContainsPrefix(tag, prefix));
+                .anyMatch(tag -> Tag.isTagContainsPrefix(tag, prefix));
     }
 
     @Override

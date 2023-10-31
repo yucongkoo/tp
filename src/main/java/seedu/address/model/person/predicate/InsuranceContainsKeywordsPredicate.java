@@ -25,12 +25,12 @@ public class InsuranceContainsKeywordsPredicate implements Predicate<Person> {
             return false;
         }
         return keywords.stream()
-                .allMatch(keyword -> isInsuranceContainsPrefix(person.getInsurances(), keyword));
+                .allMatch(keyword -> isInsurancesContainPrefix(person.getInsurances(), keyword));
     }
 
-    private static boolean isInsuranceContainsPrefix(Set<Insurance> insurances, String prefix) {
+    private static boolean isInsurancesContainPrefix(Set<Insurance> insurances, String prefix) {
         return insurances.stream()
-                .anyMatch(insurance -> Insurance.isContainsPrefix(insurance, prefix));
+                .anyMatch(insurance -> Insurance.isInsuranceContainsPrefix(insurance, prefix));
     }
 
     @Override

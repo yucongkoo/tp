@@ -73,7 +73,7 @@ public class Insurance {
      * @param prefix The prefix to search for.
      * @return True if any word in the insurance name starts with the specified prefix, false otherwise.
      */
-    public static boolean isContainsPrefix(Insurance insurance, String prefix) {
+    public static boolean isInsuranceContainsPrefix(Insurance insurance, String prefix) {
         String lowerInsuranceName = insurance.insuranceName.toLowerCase();
         String lowerPrefix = prefix.toLowerCase();
         for (String lowerNamePart: lowerInsuranceName.split("\\s+")) {

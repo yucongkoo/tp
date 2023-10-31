@@ -74,7 +74,7 @@ public class Tag {
      * @param prefix The prefix to search for.
      * @return True if any word in the tag name starts with the specified prefix, false otherwise.
      */
-    public static boolean isContainsPrefix(Tag tag, String prefix) {
+    public static boolean isTagContainsPrefix(Tag tag, String prefix) {
         String lowerTagName = tag.tagName.toLowerCase();
         String lowerPrefix = prefix.toLowerCase();
         for (String lowerNamePart: lowerTagName.split("\\s+")) {
