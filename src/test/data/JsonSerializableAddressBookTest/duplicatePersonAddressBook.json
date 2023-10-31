@@ -10,8 +10,7 @@
       "value" : "alice@example.com"
     },
     "address" : {
-      "value" : "123, Jurong West Ave 6, #08-111",
-      "isEmptyAddress" : false
+      "value" : "123, Jurong West Ave 6, #08-111"
     },
     "remark": {
       "value" : ""
@@ -31,8 +30,7 @@
       "value" : "pauline@example.com"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "remark": {
       "value" : ""
