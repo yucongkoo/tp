@@ -123,7 +123,7 @@ public class Priority {
      * @return True if the priority level starts with the specified prefix, false otherwise.
      */
     public static boolean isPriorityContainsPrefix(Priority priority, String prefix) {
-        if (priority.level == Level.NONE) {
+        if (priority.level.equals(Level.NONE)) {
             return false;
         }
         String lowerCasePriority = priority.toString().toLowerCase();
