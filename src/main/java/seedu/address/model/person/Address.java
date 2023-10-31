@@ -10,7 +10,7 @@ public abstract class Address {
     public static final int MAX_LENGTH = 100;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Address should be non-empty and not longer than 100 characters.";
+            "Address should not be longer than 100 characters.";
 
     /**
      * Creates and returns the {@code Address} object with value {@code address}.
