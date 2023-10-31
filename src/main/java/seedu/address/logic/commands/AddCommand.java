@@ -32,8 +32,8 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "<email address> "
             + "[" + PREFIX_ADDRESS + "<home/office address>] "
             + "[" + PREFIX_PRIORITY + "<priority>] "
-            + "[" + PREFIX_TAG + "<tag>...] "
-            + "[" + PREFIX_INSURANCE + "<insurance>...] "
+            + "[" + PREFIX_TAG + "<tag>]... "
+            + "[" + PREFIX_INSURANCE + "<insurance>]... "
             + "[" + PREFIX_REMARK + "<remarks>]\n";
 
 
