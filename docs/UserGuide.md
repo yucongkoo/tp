@@ -123,50 +123,55 @@ Examples:
 
 ### Deleting a customer : `delete`
 
-Deletes the specified customer from EZContact.
+**Format:**
 
-Format: `delete INDEX`
-* Deletes the customer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed customers list.
-* The `INDEX` is 1-indexed
+`delete <index>`
 
-<box type="warning" seamless>
-
-**Caution:** The index **must be a positive integer** 1, 2, 3, ...
-</box>
-
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd customer in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
-
-
-### Editing a customer : `edit`
-
-Edits an existing customer in EZContact.
-
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
-
-* Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+**Description:**
+* Deletes the customer at the specified `<index>`.
+* `<index>` refers to the index number shown in the displayed customer list.
 
 <box type="warning" seamless>
 
 **Caution:**
-* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `NAME` should **not be longer than 64 characters**.
-* `PHONE_NUMBER` should be an **8-digit number**(i.e. a Singapore number).
-* `EMAIL` should be a **valid email address**(i.e. `local-part@domain`).
-* `ADDRESS` should be **non-empty**.
+* `<index>` should only be one of the indices shown in the displayed list.
+</box>
+
+**Examples:**
+* `list` followed by `delete 2` deletes the 2nd customer in the displayed list.
+* `find Betsy` followed by `delete 1` deletes the 1st customer appeared in the list displayed by the `find` command.
+
+
+### Editing a customer : `edit`
+
+**Format:**
+
+`edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>]`
+
+**Description:**
+* Edits the customer at the specified `<index>`. 
+* `<index>` refers to the index number shown in the displayed customer list.
+* If values are provided for certain fields, existing values of their respective fields will be edited to the provided values.
+* If no value is provided, the values of the fields remain unchanged.
+
+<box type="warning" seamless>
+
+**Caution:**
+* **At least one** of the optional fields must be provided.
+* `<index>` should **only be one of** the indices shown in the displayed list.
+* `<name>` should be **alphanumeric**, **non-empty** and **not longer than 64 characters**.
+* `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
+* `<email>` should be a **valid email address**(i.e. `local-part@domain`).
+* `<address>` should **not be longer than 100 characters**.
 * Tags are not editable.
 * Priorities are not editable.
+* Remarks are not editable.
 
 </box>
 
-Examples:
-*  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
-*  `edit 2 n/Betsy Crower` Edits the name of the 2nd customer to be `Betsy Crower`.
+**Examples:**
+*  `edit 1 p/91234567 e/fong@example.com` edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
+*  `edit 2 n/Betsy Crower` edits the name of the 2nd customer to be `Betsy Crower`.
 
 ### Finding customers : `find`
 
@@ -222,28 +227,30 @@ After:
 ![TagEgAfter](images/tag-command-examples/after.png)
 
 
-### Updating priority of a customer: `pr`
+### Updating priority of a customer: `priority`
 
-**Updates the priority assigned to an existing customer**.
+**Format:**
 
-Format: `pr INDEX NEW_PRIORITY`
+`priority <index> <priority>`
 
-* Updates the priority of the customer at `INDEX` in the displayed customer list to `NEW_PRIORITY`.
-* If the customer is not previously assigned any priority, `NEW_PRIORITY` is assigned to the customer.
-* Letting `NEW_PRIORITY` to be  `-`  means removing the priority previously assigned the customer.
+**Description:**
+
+* Updates the priority of the customer at the specified `<index>` in the displayed customer list to `<priority>`.
+* If the customer has not been assigned any priority previously, `<priority>` is assigned directly to the customer.
+* If `<priority>` is  `-` , the priority previously assigned the customer will be **removed**.
 <box type="warning" seamless>
 
 **Caution:**
-* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `NEW_PRIORITY` should be **ONE** of `high`, `medium`, `low`, `-`.
+* `<index>` should **only be one of** the indices shown in the displayed list.
+* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-`.
 
 </box>
 
-Examples:
+**Examples:**
 
-`pr 1 high` Updates the priority of the first customer to be `high`.
+`pr 1 high` updates the priority of the first customer to be `high`.
 
-`pr 2 -` Removes the priority assigned to the second customer.
+`pr 2 -` removes the priority assigned to the second customer.
 
 
 ### Adding a remark to a customer: `remark`
@@ -269,11 +276,68 @@ Examples:
 
 `remark 2 r/` Removes the remark from the second customer in the displayed list.
 
+### Clearing the customer list : `clear`
+
+**Format:**
+
+`clear`
+
+**Description:**
+* Clears the customer list.
+
+<box type="warning" seamless>
+
+**Caution:**
+* No parameter is needed for this command, all parameter provided will be ignored.
+
+</box>
+
+**Examples:**
+
+* `clear` clears the customer list in EzContact.
+* `clear 123` will be interpreted as `clear`.
+
+### Requesting for help : `help`
+
+**Format:**
+
+`help`
+
+**Description:**
+* Opens the help window.
+
+<box type="warning" seamless>
+
+**Caution:**
+* No parameter is needed for this command, all parameter provided will be ignored.
+
+</box>
+
+**Examples:**
+
+* `help` opens the help window.
+* `help 123` will be interpreted as `help`.
+
 ### Exiting the program : `exit`
 
-Exits the program.
+**Format:**
 
-Format: `exit`
+`exit`
+
+**Description:**
+* Exits the program.
+
+<box type="warning" seamless>
+
+**Caution:**
+* No parameter is needed for this command, all parameter provided will be ignored.
+
+</box>
+
+**Examples:**
+
+* `exit` exits EzContact.
+* `exit 123` will be interpreted as `exit`.
 
 ----------------------------------------------------------------------------------------------------------------------
 ## Advanced Features
