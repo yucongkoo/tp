@@ -48,7 +48,7 @@ public class PriorityCommandParserTest {
 
     @Test
     public void parse_invalidPriority_failure() {
-        assertParseFailure(parser, "1 " + INVALID_PRIORITY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 " + INVALID_PRIORITY, MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1 " + INVALID_PRIORITY2, MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1 " + INVALID_PRIORITY3, MESSAGE_INVALID_FORMAT);
     }
