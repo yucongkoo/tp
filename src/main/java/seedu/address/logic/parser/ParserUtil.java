@@ -25,6 +25,7 @@ import seedu.address.model.person.predicate.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.predicate.InsuranceContainsKeywordsPredicate;
 import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
 import seedu.address.model.person.predicate.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PriorityContainsKeywordsPredicate;
 import seedu.address.model.person.predicate.RemarkContainsKeywordsPredicate;
 import seedu.address.model.person.predicate.TagContainsKeywordsPredicate;
 import seedu.address.model.priority.Priority;
@@ -269,5 +270,16 @@ public class ParserUtil {
         String trimmedKeywords = keyword.trim();
         String[] keywords = trimmedKeywords.split("\\s+");
         return new RemarkContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parsePriorityKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new PriorityContainsKeywordsPredicate(Arrays.asList(keywords));
     }
 }

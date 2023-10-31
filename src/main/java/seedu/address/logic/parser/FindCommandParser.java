@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -29,7 +30,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(FindCommandParser.class);
     private static final Prefix[] validPrefixes = new Prefix[] {
-        PREFIX_INSURANCE, PREFIX_NAME, PREFIX_TAG,
+        PREFIX_INSURANCE, PREFIX_NAME, PREFIX_TAG, PREFIX_PRIORITY,
         PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK
     };
 
@@ -75,6 +76,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
         if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
             predicateList.add(ParserUtil.parseRemarkKeywords(argMultimap.getValue(PREFIX_REMARK).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
+            predicateList.add(ParserUtil.parsePriorityKeywords(argMultimap.getValue(PREFIX_PRIORITY).get()));
         }
 
 

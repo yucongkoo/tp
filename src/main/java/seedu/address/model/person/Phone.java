@@ -67,7 +67,7 @@ public class Phone {
      * @return True if the phone starts with the specified prefix, false otherwise.
      */
     public static boolean isPhoneContainsPrefix(Phone phone, String prefix) {
-        return phone.value.startsWith(prefix);
+        return phone.value.startsWith(prefix.toLowerCase());
     }
 
 }
