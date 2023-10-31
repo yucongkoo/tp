@@ -137,7 +137,9 @@ public class JsonAdaptedPerson {
     private Set<Tag> getModelTags() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
+            if (tag != null) {
+                personTags.add(tag.toModelType());
+            }
         }
         return new HashSet<>(personTags);
     }
@@ -146,7 +148,9 @@ public class JsonAdaptedPerson {
         List<Insurance> personInsurances = new ArrayList<>();
 
         for (JsonAdaptedInsurance i : insurances) {
-            personInsurances.add(i.toModelType());
+            if (i != null) {
+                personInsurances.add(i.toModelType());
+            }
         }
 
         return new HashSet<>(personInsurances);
