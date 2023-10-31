@@ -24,7 +24,7 @@ while still having the benefits of a Graphical User Interface (GUI).
 2. Download the latest `ezcontact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. 
+4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds.
 Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 1. Refer to the [Features](#features) below for details of each command.
@@ -35,7 +35,7 @@ Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 
 Consider the following UI split into three parts:
 ![UiWithDescription](images/UiWithDescription.png)
-As illustrated above, the UI will be split into three sections, we will be providing a name for each section and 
+As illustrated above, the UI will be split into three sections, we will be providing a name for each section and
 will be using these names to refer to the section specified in the following User Guide.
 
 **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
@@ -72,7 +72,7 @@ will be using these names to refer to the section specified in the following Use
 
 ### Adding a customer: `add`
 
-**Format:** 
+**Format:**
 
 `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`
 
@@ -91,7 +91,7 @@ will be using these names to refer to the section specified in the following Use
 * `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
-* A customer **must not have more than 10 tags** assigned to it. 
+* A customer **must not have more than 10 tags** assigned to it.
 * A customer **must not have more than 5 insurances** assigned to it.
 * Adding a customer with a `<phone number>` or `<email>` that **already exists** in EzContact is **not allowed**.
 </box>
@@ -283,7 +283,7 @@ Format: `exit`
 EzContact's data is stored as a json file at : `<JAR file directory>/data/addressbook.json`, where `<JAR file directory>`
 is the directory you placed our `EzContact.jar` file.
 
-**Saving data:** 
+**Saving data:**
 
 EzContact's data is saved automaticaly whenever a command that changes the data is executed.
 
@@ -294,15 +294,15 @@ Advanced users are welcomed to update the data stored in EzContact directly by e
 <box type="warning" seamless>
 
 **Caution:**
-If the format of the file becomes invalid after an edit, EzContact will launch with an empty data file, and will 
-overwrite the whole data file after a command that changes the data file is executed. Hence, users are **strongly 
+If the format of the file becomes invalid after an edit, EzContact will launch with an empty data file, and will
+overwrite the whole data file after a command that changes the data file is executed. Hence, users are **strongly
 recommended to store a backup** of the data file before editing it.
 
 </box>
 
-**Storing/Restoring backup data files:** 
+**Storing/Restoring backup data files:**
 
-Users can store a backup of the current data file by simply creating a copy of the `addressbook.json` file. 
+Users can store a backup of the current data file by simply creating a copy of the `addressbook.json` file.
 To restore a previously backed-up file, simply place the json file in the `<JAR file directory>/data` directory
 and rename the file to `addressbook.json`.
 
