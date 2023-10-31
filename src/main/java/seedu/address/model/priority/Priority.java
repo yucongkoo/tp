@@ -50,22 +50,25 @@ public class Priority {
     public Priority(String priority) {
         requireNonNull(priority);
         checkArgument(isValidPriority(priority), MESSAGE_CONSTRAINTS);
-        assignPriorityLevel(priority);
+        this.level = parsePriorityLevel(priority);
     }
 
-    private void assignPriorityLevel(String priority) {
+    /**
+     * Parses the {@code priority} and returns the responding {@code Level}.
+     */
+    public static Level parsePriorityLevel(String priority) {
+        requireNonNull(priority);
+        assert isValidPriority(priority);
+
         switch (priority) {
         case HIGH_PRIORITY_KEYWORD:
-            this.level = Level.HIGH;
-            break;
+            return Level.HIGH;
         case MEDIUM_PRIORITY_KEYWORD:
-            this.level = Level.MEDIUM;
-            break;
+            return Level.MEDIUM;
         case LOW_PRIORITY_KEYWORD:
-            this.level = Level.LOW;
-            break;
+            return Level.LOW;
         default:
-            this.level = Level.NONE;
+            return Level.NONE;
         }
     }
 

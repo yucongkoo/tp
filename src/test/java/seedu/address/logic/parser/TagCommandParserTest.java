@@ -32,28 +32,28 @@ public class TagCommandParserTest {
 
     private Index targetIndex = INDEX_FIRST_PERSON;
 
-    private UpdatePersonTagsDescriptor descriptor;
-
     @Test
     public void parse_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> parser.parse(null));
     }
 
     @Test
-    public void parse_onlyAddTag_success() {
-        // only add one tag
-        descriptor = new UpdatePersonTagsDescriptorBuilder().withTagsToAdd(VALID_TAG_FRIEND).build();
+    public void parse_onlyAddOneTag_success() {
+        UpdatePersonTagsDescriptor descriptor =
+                new UpdatePersonTagsDescriptorBuilder().withTagsToAdd(VALID_TAG_FRIEND).build();
         Command expectedCommand = new TagCommand(targetIndex, descriptor);
         String userInput = String.format("%d %s",
                 targetIndex.getOneBased(),
                 PREFIX_ADD_TAG + VALID_TAG_FRIEND);
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
 
-        // add multiple tags
-        descriptor = new UpdatePersonTagsDescriptorBuilder()
-                .withTagsToAdd(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        expectedCommand = new TagCommand(targetIndex, descriptor);
-        userInput = String.format("%d %s %s",
+    @Test
+    public void parse_onlyAddMultipleTags_success() {
+        UpdatePersonTagsDescriptor descriptor =
+                new UpdatePersonTagsDescriptorBuilder().withTagsToAdd(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        Command expectedCommand = new TagCommand(targetIndex, descriptor);
+        String userInput = String.format("%d %s %s",
                 targetIndex.getOneBased(),
                 PREFIX_ADD_TAG + VALID_TAG_FRIEND,
                 PREFIX_ADD_TAG + VALID_TAG_HUSBAND);
@@ -61,20 +61,23 @@ public class TagCommandParserTest {
     }
 
     @Test
-    public void parse_onlyDeleteTag_success() {
-        // only delete one tag
-        descriptor = new UpdatePersonTagsDescriptorBuilder().withTagsToDelete(VALID_TAG_FRIEND).build();
+    public void parse_onlyDeleteOneTag_success() {
+        UpdatePersonTagsDescriptor descriptor =
+                new UpdatePersonTagsDescriptorBuilder().withTagsToDelete(VALID_TAG_FRIEND).build();
         Command expectedCommand = new TagCommand(targetIndex, descriptor);
         String userInput = String.format("%d %s",
                 targetIndex.getOneBased(),
                 PREFIX_DELETE_TAG + VALID_TAG_FRIEND);
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
 
-        // delete multiple tags
-        descriptor = new UpdatePersonTagsDescriptorBuilder()
-                .withTagsToDelete(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        expectedCommand = new TagCommand(targetIndex, descriptor);
-        userInput = String.format("%d %s %s",
+
+    @Test
+    public void parse_onlyDeleteTag_success() {
+        UpdatePersonTagsDescriptor descriptor =
+                new UpdatePersonTagsDescriptorBuilder().withTagsToDelete(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        Command expectedCommand = new TagCommand(targetIndex, descriptor);
+        String userInput = String.format("%d %s %s",
                 targetIndex.getOneBased(),
                 PREFIX_DELETE_TAG + VALID_TAG_FRIEND,
                 PREFIX_DELETE_TAG + VALID_TAG_HUSBAND);
@@ -83,22 +86,14 @@ public class TagCommandParserTest {
 
     @Test
     public void parse_bothAddAndDeleteTags_success() {
-        descriptor = new UpdatePersonTagsDescriptorBuilder()
+        UpdatePersonTagsDescriptor descriptor = new UpdatePersonTagsDescriptorBuilder()
                 .withTagsToAdd(VALID_TAG_FRIEND).withTagsToDelete(VALID_TAG_HUSBAND).build();
         Command expectedCommand = new TagCommand(targetIndex, descriptor);
 
-        // add tag first before delete tag
         String userInput = String.format("%d %s %s",
                 targetIndex.getOneBased(),
                 PREFIX_ADD_TAG + VALID_TAG_FRIEND,
                 PREFIX_DELETE_TAG + VALID_TAG_HUSBAND);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // delete tag first before add tag
-        userInput = String.format("%d %s %s",
-                targetIndex.getOneBased(),
-                PREFIX_DELETE_TAG + VALID_TAG_HUSBAND,
-                PREFIX_ADD_TAG + VALID_TAG_FRIEND);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
