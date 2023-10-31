@@ -38,9 +38,10 @@ Consider the following UI split into three parts:
 As illustrated above, the UI will be split into three sections, we will be providing a name for each section and 
 will be using these names to refer to the section specified in the following User Guide.
 
-**Command Box**: Box for users to input the command to be executed by EzContact.<br/>
-**Output Display Box**: Box that displays the output of executing the entered command.<br/>
-**Person List Panel**: Panel that displays the person list.<br/>
+**Command Box:** Box for users to input the command to be executed by EzContact.<br/>
+**Result Display Box:** Box that displays the result of executing the entered command.<br/>
+**Customer List Panel:** Panel that displays whole list of Customer Cards.<br/>
+**Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -71,9 +72,11 @@ will be using these names to refer to the section specified in the following Use
 
 ### Adding a customer: `add`
 
-**Adds a new customer to EZContact**.
+**Format:** 
 
-Format: `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]...`
+`add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`
+
+**Description:**
 
 * Adds a new customer with the respective details to EzContact.
 
@@ -83,20 +86,25 @@ Format: `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [
 * `<name>` should be **alphanumeric**, **non-empty** and **not longer than 64 characters**.
 * `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
-* `<address>` should be **non-empty** and **not longer than 100 characters**.
+* `<address>` should **not be longer than 100 characters**.
 * `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
-* `<tag>` should be **alphanumeric** and **not longer than 20 characters**.
-* A customer **must not have more than 10 tags** assigned to it.
+* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
+* `<remark>` should **not be longer than 150 characters**.
+* A customer **must not have more than 10 tags** assigned to it. 
+* A customer **must not have more than 5 insurances** assigned to it.
 * Adding a customer with a `<phone number>` or `<email>` that **already exists** in EzContact is **not allowed**.
 </box>
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.`
-  * Adds the following Person to the [Person List Panel](#ui-layout-description)
-  ![AddEg1](images/add-command-examples/example1.png)
-* `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium`
-  * Adds the following Person to the [Person List Panel](#ui-layout-description)
-  ![AddEg2](images/add-command-examples/example2.png)
+**Examples:**
+
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.`
+* Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+![AddEg1](images/add-command-examples/example1.png)
+
+`add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`
+* Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+![AddEg2](images/add-command-examples/example2.png)
 
 ### Listing all customers : `list`
 
@@ -180,34 +188,39 @@ Examples:
 
 ### Tagging a customer: `tag`
 
-**Updates the tags assigned to an existing customer**.
+**Format:**
 
-Format: `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`
+`tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`
 
-* Updates the tags assigned to the customer at `INDEX` in the displayed customer list.
+**Description:**
+
+* Updates the tags assigned to the customer at `<index>` in the displayed customer list.
 * Duplicate tags to add/delete will be ignored by EzContact.
 * Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
 
 <box type="warning" seamless>
 
 **Caution:**
-* **At least one** `TAG_TO_ADD` or `TAG_TO_DELETE` should be provided.
+* **At least one** `<tag to add>` or `<tag to delete>` should be provided.
 * Adding and deleting the same tag is **not allowed**.
-* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `TAG_TO_ADD` and `TAG_TO_DELETE` should be **alphanumeric** and **not longer than 20 characters**.
-* The number of tags assigned to the customer after an update should **not exceed 10 tags**.
+* `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* The number of tags assigned to the customer after the update should **not exceed 10 tags**.
+* The targeted customer's tags should **not remain unchanged** after the update command.
 
 </box>
 
-Examples:
+**Examples:**
 
-`tag 1 at/tall dt/short`
-* Adds `tall` tag to the first person.
-* Deletes `short` tag from the first person(ignored if the first person does not have `short` tag originally).
+`tag 3 at/ tall at/male dt/short dt/skinny`
+* Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
 
-`tag 2 at/tall at/wears spectacles dt/short at/tall`
-* Adds `tall` and `wears spectacles` tag to the second person (duplicate `tall` is ignored).
-* Deletes `short` tag from the second person.
+Before:
+![TagEgBefore](images/tag-command-examples/before.png)
+
+After:
+![TagEgAfter](images/tag-command-examples/after.png)
+
 
 ### Updating priority of a customer: `pr`
 
@@ -270,14 +283,14 @@ _More coming soon ..._
 
 ## Command summary
 
-| Action       | Format and Examples                                                                                                                                                                               |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]... [r/REMAEK]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                                                   |
-| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                    |
-| **List**     | `list`                                                                      <hr>                                                                                                                  |
-| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                     |
-| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                            |
-| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                      |
-| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                        |
+| Action       | Format and Examples                                                                                                                                                                                 |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**      | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                                                     |
+| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                      |
+| **List**     | `list`                                                                      <hr>                                                                                                                    |
+| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                       |
+| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                              |
+| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                        |
+| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                          |
 
