@@ -2,12 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -56,29 +57,20 @@ public class AppointmentCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        Person personToEdit = getPersonToUpdate(model, index);
         logger.fine("AppointmentCommand executing...");
 
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            logger.finer(String.format("AppointmentCommand execution failed due to index %d out of bound",
-                    index.getOneBased()));
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToUpdate = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = Person.createPersonWithAddedAppointment(personToUpdate, appointment);
-
-        if (!Appointment.isAppointmentEmpty(personToUpdate.getAppointment())) {
+        if (!Appointment.isAppointmentEmpty(personToEdit.getAppointment())) {
             logger.warning("-----Invalid Add Appointment Command: Appointment Already Exist-----");
             throw new CommandException(MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST);
         }
-
-        model.setPerson(personToUpdate, updatedPerson);
+        Person editedPerson = Person.createPersonWithEditedAppointment(personToEdit, appointment);
+        verifyPersonChanged(personToEdit, editedPerson);
+        model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Add Appointment Command: Appointment added successfully-----");
 
-        return new CommandResult(generateSuccessMessage(updatedPerson));
+        return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
     /**
@@ -86,7 +78,6 @@ public class AppointmentCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person editedPerson) {
-
         return String.format(MESSAGE_ADD_APPOINTMENT_SUCCESS, editedPerson.getName().fullName,
                 editedPerson.getAppointment().getDate(),
                 editedPerson.getAppointment().getTimeFormatted(),

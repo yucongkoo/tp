@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.List;
 import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -24,7 +24,7 @@ public class UnmarkAppointmentCommand extends Command {
     public static final String MESSAGE_UNMARK_APPOINTMENT_SUCCESS = "Successfully undo marking of appointment with "
             + "%1$s.";
     public static final String MESSAGE_UNMARK_APPOINTMENT_FAILURE_ZERO_COUNT = "You cannot undo marking of appointment "
-            + "if you have not done any appointment!";
+            + "if you have not fnished any appointment!";
 
     public static final String MESSAGE_UNMARK_APPOINTMENT_FAILURE_APPT_EXIST = "You cannot undo marking of appointment "
             + "if you have a scheduled appointment with %1$s currently!";
@@ -49,16 +49,10 @@ public class UnmarkAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = getPersonToUpdate(model, index);
 
         // AppointmentCount cannot go below 0.
-        if (!AppointmentCount.isValidDecrementCount(personToEdit.getCount())) {
+        if (!AppointmentCount.isValidDecrementCount(personToEdit.getAppointmentCount())) {
             logger.warning("-----Invalid Unmark Appointment Command: Appointment Count cannot go below 0-----");
             throw new CommandException(MESSAGE_UNMARK_APPOINTMENT_FAILURE_ZERO_COUNT);
         }
@@ -70,8 +64,8 @@ public class UnmarkAppointmentCommand extends Command {
                     personToEdit.getName()));
         }
 
-        Person editedPerson = Person.createPersonWithDecreasedCount(personToEdit, appointment, personToEdit.getCount());
-
+        Person editedPerson = Person.createPersonWithDecreasedCount(personToEdit,
+                appointment, personToEdit.getAppointmentCount());
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Unmark Appointment Command: Appointment unmarked successfully-----");

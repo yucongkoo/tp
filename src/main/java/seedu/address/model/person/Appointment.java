@@ -26,7 +26,7 @@ public class Appointment {
             + "DATE (must be dd/mm/yyyy), \n"
             + "TIME (must be HHmm (24-hour format)), \n"
             + "VENUE (maximum 30 characters long).";
-    public static final String NO_APPOINTMENT = "No Appointment Scheduled Yet";
+    public static final String NO_APPOINTMENT = "-";
     public static final String NO_TIME = "";
     public static final String NO_VENUE = "";
     public static final String INVALID_DATE_INPUT = "Date parameter must be YY-MM-DD, "
@@ -53,6 +53,7 @@ public class Appointment {
      */
     public Appointment(String date, String time, String venue) {
         requireNonNull(date);
+        logger.info("creating appt calss");
         checkArgument(isValidDateFormat(date), INVALID_DATE_INPUT);
         checkArgument(isValidTimeFormat(time), INVALID_TIME_INPUT);
         checkArgument(isValidVenueFormat(time), INVALID_VENUE_INPUT);

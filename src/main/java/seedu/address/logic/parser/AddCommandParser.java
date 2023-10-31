@@ -17,6 +17,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentCount;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -86,9 +88,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Insurance> insurances = ParserUtil.parseInsurances(argMultimap.getAllValues(PREFIX_INSURANCE));
+        Appointment appointment = Appointment.getDefaultEmptyAppointment();
+        AppointmentCount count = AppointmentCount.getDefaultAppointmentCount();
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)
                 .orElse(Priority.NONE_PRIORITY_KEYWORD));
 
-        return new Person(name, phone, email, address, remark, tagList, insurances, priority);
+        return new Person(name, phone, email, address, remark, tagList, insurances,
+                appointment, count, priority);
     }
 }

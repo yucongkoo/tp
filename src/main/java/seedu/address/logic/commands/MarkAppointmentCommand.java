@@ -1,19 +1,14 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-
-import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Appointment;
@@ -50,20 +45,16 @@ public class MarkAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = getPersonToUpdate(model, index);
 
         if (Appointment.isAppointmentEmpty(personToEdit.getAppointment())) {
             logger.warning("-----Invalid Mark Appointment Command: Appointment does not exist-----");
             throw new CommandException(MESSAGE_MARK_APPOINTMENT_FAILURE_EMPTY_APPT);
         }
 
-        Person editedPerson = Person.createPersonWithIncreasedCount(personToEdit, appointment, personToEdit.getCount());
+        Person editedPerson = Person.createPersonWithIncreasedCount(personToEdit,
+                appointment, personToEdit.getAppointmentCount());
+        verifyPersonChanged(personToEdit, editedPerson);
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Mark Appointment Command: Appointment marked successfully-----");

@@ -65,6 +65,8 @@ public class Messages {
         addTagString(builder, person);
         addInsuranceString(builder, person);
         addRemarkString(builder, person);
+        builder.append("\nAppointment: ")
+                .append(person.getAppointment());
 
         return builder.toString();
     }

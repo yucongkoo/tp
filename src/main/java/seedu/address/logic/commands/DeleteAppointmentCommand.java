@@ -52,10 +52,7 @@ public class DeleteAppointmentCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(index.getZeroBased());
-        Person updatedPerson = new Person(
-                personToDelete.getName(), personToDelete.getPhone(), personToDelete.getEmail(),
-                personToDelete.getAddress(), personToDelete.getRemark(),
-                personToDelete.getTags(), appointment, personToDelete.getCount());
+        Person updatedPerson = Person.createPersonWithEditedAppointment(personToDelete, appointment);
 
         String name = personToDelete.getName().fullName;
 
