@@ -4,7 +4,11 @@ title: "Developer Guide"
 pageNav: 3
 ---
 
+<<<<<<< Updated upstream
 # EzContact Developer Guide
+=======
+# EZContact Developer Guide
+>>>>>>> Stashed changes
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -119,7 +123,8 @@ How the parsing works:
 ## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="700" />
+
 
 
 The `Model` component,
@@ -142,7 +147,7 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" width="600" />
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
@@ -302,16 +307,17 @@ This feature allows user to assign / remove insurance package(s) to / from custo
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
 
-
 1. `Insurance` : stores the information about the insurance
 1. `InsuranceCommand` : executes the action to assign/remove insurance
 1. `InsuranceCommandParser` : parses the command to obtain required information
 
 **Implementing `Insurance`**
 
-`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds one information, `insuranceName`.
+`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds only one information, `insuranceName`.
 
-**[Class diagram of `Insurance` and `Person`]**
+<puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
+
+
 
 
 **Implementing `InsuranceCommand`**
@@ -322,10 +328,11 @@ The implementation of the Insurance feature consists of few parts, distributed a
 
 **Implementing `InsuranceCommandParser`**
 
-`InsuranceCommandParser` receives the remaining input after the command `ins`, and turns it into valid information needed by `InsuranceCommand`, which are
+`InsuranceCommandParser` interprets the remaining input after the `insurance` command, and parses it into relevant information needed by `InsuranceCommand`, which are
 `Index` and `UpdatedPersonInsuranceDescriptor`.
 
-`UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
+* `Index` indicates the customer on the list to perform action on
+* `UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
 
 
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
@@ -340,20 +347,65 @@ From here, `InsuranceCommandParser` will extract out the relevant information an
 
 ### Design Considerations:
 
-**Aspect: Storing of `Insurance` in `Person`**
+###### **Aspect: Storing of `Insurance` in `Person`**
 
+<<<<<<< Updated upstream
 * **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
+=======
+* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+  * Pros: Able to handle duplicates gracefully and maintain the uniqueness of each insurance with `Set<Insurance>`
+>>>>>>> Stashed changes
   * Cons: Chronological order of `Insurance` inserted is not maintained
 * **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
-  * Cons: Handling of duplicates is more complicated
+  * Cons: Cannot ensure the uniqueness of each insurance and unable to handle duplicates in an efficient manner  
 
-Reasoning:
+**Reasoning:**
 
+Alternative 1 is chosen over Alternative 2 for its ability to handle the duplicates more efficiently. We believe that this ability is more important
+than the ability to sort the list in a more effective manner, as there are other workarounds that can be almost as efficient using `Set<Insurances>`.
+
+
+###### **Aspect: Handling duplicate `Insurnace` entries**
+
+* **Alternative 1** (Current Solution) : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+  * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate 
+  * Cons: Users might not be aware of themselves entering duplicate `Insurance`  
+* **Alternative 2** : Blocks the users from performing the action and warn them about the duplicate `Insurance`
+  * Pros: Easy to implement
+  * Cons: Users will be clearly aware of their mistakes in entering duplicate `Insurance`
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product. 
+The reasoning comes from the users' intention of inserting the `InsuranceCommand`, that is wanting to assign an `Insurance` to a customer, so with 
+entering duplicate `Insurance`, the users' goal is still achieved, thus we think that there is no need to purposely block the users
+for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
+it will not cause any error.
+
+###### **Aspect: Deleting non-existing `Insurance`**
+
+* **Alternative 1** (Current Solution) : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+    * Pros: Ease of use for the users, as the users are not blocked for deleting non-existing `Insurance`
+    * Cons: Users might not be aware of their mistakes
+* **Alternative 2** : Blocks the users from performing the action and warn them about the mistake
+    * Pros: Easy to implement
+    * Cons: Users will be clearly aware of their mistakes 
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of deleting an `Insurance`, that is wanting to remove that `Insurance` from the customer, so removing
+a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
+for such action. 
+
+<<<<<<< Updated upstream
 The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical
 order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
 
+=======
+>>>>>>> Stashed changes
 
 ## \[Proposed\] Appointment feature
 
