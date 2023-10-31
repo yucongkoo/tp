@@ -330,7 +330,7 @@ The implementation of the Insurance feature consists of few parts, distributed a
 
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
 
-In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command 
+In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
 `ins` and call `parse(String args)` from `InsuranceCommandParser`.
 
 From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand`.
@@ -342,7 +342,7 @@ From here, `InsuranceCommandParser` will extract out the relevant information an
 
 **Aspect: Storing of `Insurance` in `Person`**
 
-* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
   * Cons: Chronological order of `Insurance` inserted is not maintained
 * **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
@@ -351,9 +351,9 @@ From here, `InsuranceCommandParser` will extract out the relevant information an
 
 Reasoning:
 
-The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical 
+The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical
 order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
- 
+
 
 ## \[Proposed\] Appointment feature
 

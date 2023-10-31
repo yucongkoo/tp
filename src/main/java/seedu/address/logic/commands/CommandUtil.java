@@ -26,7 +26,7 @@ public class CommandUtil {
     /**
      * Returns the person from the model at a specific index.
      */
-    public static Person getPersonToUpdate(Model model, Index index) throws CommandException {
+    public static Person getPersonAtIndex(Model model, Index index) throws CommandException {
         requireAllNonNull(model, index);
         List<Person> lastShownList = model.getFilteredPersonList();
 

@@ -1,6 +1,7 @@
 package seedu.address.storage.jsonadaptedperson;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,6 +39,10 @@ class JsonAdaptedAddress {
      * @throws IllegalValueException if there were any data constraints violated in the adapted address.
      */
     public Address toModelType() throws IllegalValueException {
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        }
+
         if (!Address.isValidAddress(value)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }

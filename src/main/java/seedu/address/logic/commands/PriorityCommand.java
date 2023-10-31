@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_CHANGED;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 
 import java.util.logging.Logger;
@@ -22,9 +22,8 @@ public class PriorityCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "<priority_level>\n";
+            + "<priority>\n";
 
-    // public static final String MESSAGE_NOT_ASSIGNED = "Priority given is the same as previous one.";
     public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(PriorityCommand.class);
@@ -52,7 +51,7 @@ public class PriorityCommand extends Command {
 
         logger.fine("PriorityCommand executing...");
 
-        Person personToUpdate = getPersonToUpdate(model, index);
+        Person personToUpdate = getPersonAtIndex(model, index);
         Person updatedPerson = createPersonWithUpdatedPriority(personToUpdate, priority);
 
         checkIsOldPriority(personToUpdate);

@@ -1,11 +1,13 @@
 package seedu.address.storage.jsonadaptedperson;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 
 /**
@@ -37,6 +39,10 @@ class JsonAdaptedName {
      * @throws IllegalValueException if there were any data constraints violated in the adapted name.
      */
     public Name toModelType() throws IllegalValueException {
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
         if (!Name.isValidName(value)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }

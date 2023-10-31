@@ -43,7 +43,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_PRIORITY);
+                        PREFIX_PRIORITY, PREFIX_INSURANCE, PREFIX_REMARK);
         assert argMultimap != null : "ArgumentTokenizer.tokenize returns null";
 
         Index index;
@@ -53,7 +53,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             logger.finer("Parsing failed due to invalid command format");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
-
 
         checkPrefixPresent(argMultimap, PREFIX_TAG, PREFIX_PRIORITY, PREFIX_INSURANCE, PREFIX_REMARK);
 
@@ -100,19 +99,11 @@ public class EditCommandParser implements Parser<EditCommand> {
      * @throws ParseException when prefixes are found.
      */
     private void checkPrefixPresent(ArgumentMultimap argMultimap, Prefix... prefixes) throws ParseException {
-        String exceptionMessage = "";
-        boolean hasInvalidPrefix = false;
-
         for (Prefix targetPrefix : prefixes) {
             if (argMultimap.getValue(targetPrefix).isPresent()) {
-                exceptionMessage += PREFIX_EDIT_ERROR_MESSAGE_MAP.get(targetPrefix) + "\n";
-                hasInvalidPrefix = true;
+                logger.finer("Parsing failed due to invalid prefixes provided.");
+                throw new ParseException(PREFIX_EDIT_ERROR_MESSAGE_MAP.get(targetPrefix));
             }
-        }
-
-        if (hasInvalidPrefix) {
-            logger.finer("Parsing failed due to invalid prefixes provided.");
-            throw new ParseException(exceptionMessage);
         }
     }
 }

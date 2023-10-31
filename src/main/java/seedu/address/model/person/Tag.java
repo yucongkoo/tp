@@ -9,11 +9,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Tags names should be alphanumeric and not be empty nor longer than 20 characters.";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
     public static final int MAXIMUM_TAG_LENGTH = 20;
     public static final int MAXIMUM_TAGS_PER_PERSON = 10;
+
+    public static final String MESSAGE_CONSTRAINTS =
+            String.format("Tags names should be alphanumeric,"
+                    + "non-empty and not longer than %d characters.", MAXIMUM_TAG_LENGTH);
 
     private final String tagName;
 
