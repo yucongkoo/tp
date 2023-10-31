@@ -275,9 +275,36 @@ Exits the program.
 
 Format: `exit`
 
+----------------------------------------------------------------------------------------------------------------------
+## Advanced Features
 
+### Managing data
 
-_More coming soon ..._
+EzContact's data is stored as a json file at : `<JAR file directory>/data/addressbook.json`, where `<JAR file directory>`
+is the directory you placed our `EzContact.jar` file.
+
+**Saving data:** 
+
+EzContact's data is saved automaticaly whenever a command that changes the data is executed.
+
+**Editing the data file:**
+
+Advanced users are welcomed to update the data stored in EzContact directly by editing the `addressbook.json` file.
+
+<box type="warning" seamless>
+
+**Caution:**
+If the format of the file becomes invalid after an edit, EzContact will launch with an empty data file, and will 
+overwrite the whole data file after a command that changes the data file is executed. Hence, users are **strongly 
+recommended to store a backup** of the data file before editing it.
+
+</box>
+
+**Storing/Restoring backup data files:** 
+
+Users can store a backup of the current data file by simply creating a copy of the `addressbook.json` file. 
+To restore a previously backed-up file, simply place the json file in the `<JAR file directory>/data` directory
+and rename the file to `addressbook.json`.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -294,3 +321,10 @@ _More coming soon ..._
 | **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                        |
 | **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                          |
 
+-----------------------------------------------------------------------------------------------------------------------
+## Glossary
+
+|Term | Meaning|
+| --------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Alphanumeric | Alphanumeric characters include uppercase letters from ‘A’ to ‘Z’, lowercase letters from ‘a’ to ‘z’, and numbers from ‘0` to ‘9’. |
+| json file | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |
