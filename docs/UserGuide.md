@@ -8,9 +8,9 @@ pageNav: 3
 
 EzContact is a
 
-* desktop app made for insurance agents to manage customer details, optimized for usage via Command Line Interface (CLI)
-* while still having the benefits of a Graphical User Interface (GUI).
-* If you can type fast, EzContact can get your contact management tasks done faster than traditional GUI apps.
+* Desktop app made for insurance agents to manage customer details, optimized for usage via Command Line Interface (CLI)
+while still having the benefits of a Graphical User Interface (GUI).
+* Contact management app that strives to get tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -38,20 +38,20 @@ EzContact is a
 
 **Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `<>` are the parameters to be supplied by the user.<br>
+  e.g. in `add n/<name>`, `name` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items in `[]` are optional.<br>
+  e.g `n/<name> [a/<address>]` can be used as `n/John Doe a/Kent Ridge` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/<tag>]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+  e.g. if the command is `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
@@ -145,11 +145,11 @@ Examples:
 *  `edit 1 p/91234567 e/jiufong@example.com` Edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd customer to be `Betsy Crower`.
 
-### Finding persons : `find`
+### Finding customers : `find`
 
 Finds customers whose names contain all the given keywords as prefix.
 
-Format: `find KEYWORD [MORE_KEYWORD]`
+Format: `find KEYWORD [MORE_KEYWORD]...`
 
 * The search is case-insensitive. e.g. `find Adam` returns `adam`
 * The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
@@ -217,6 +217,30 @@ Examples:
 
 `pr 2 -` Removes the priority assigned to the second customer.
 
+
+### Adding a remark to a customer: `remark`
+
+**You can add a remark to an existing customer, or update the current remark**.
+
+Format: `remark INDEX r/ [REMARK]`
+
+* Updates the remark of the customer at `INDEX` in the displayed customer list.
+* If you wish to delete the remark, update the remark without text after `r/`, e.g. `remark INDEX r/`.
+
+<box type="warning" seamless>
+
+**Caution:**
+* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `Remark` cannot be longer than 150 characters.
+
+</box>
+
+Examples:
+
+`remark 1 r/ he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+
+`remark 2 r/` Removes the remark from the second customer in the displayed list.
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -231,13 +255,14 @@ _More coming soon ..._
 
 ## Command summary
 
-| Action       | Format and Examples                                                                                                                                                    |
-|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]...`         <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall` |
-| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                        |
-| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                         |
-| **List**     | `list`                                                                      <hr>                                                                                       |
-| **Find**     | `find NAME`                                        <hr>                                                                                                                |
-| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                 |
-| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                            |
+| Action       | Format and Examples                                                                                                                                                                               |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**      | `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]... [r/REMAEK]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                                                   |
+| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                    |
+| **List**     | `list`                                                                      <hr>                                                                                                                  |
+| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                     |
+| **Tag**      | `tag INDEX [at/TAG_TO_ADD]... [dt/TAG_TO_DELETE]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                            |
+| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                      |
+| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                        |
 

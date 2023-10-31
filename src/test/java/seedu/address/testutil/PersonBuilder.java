@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
@@ -11,8 +12,8 @@ import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -33,6 +34,7 @@ public class PersonBuilder {
     private Address address;
     private Remark remark;
     private Set<Tag> tags;
+    private Set<Insurance> insurances;
     private Priority priority;
 
     /**
@@ -45,6 +47,7 @@ public class PersonBuilder {
         remark = new Remark(DEFAULT_REMARK);
         address = new NonEmptyAddress(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        insurances = new HashSet<>();
         priority = new Priority(DEFAULT_PRIORITY);
     }
 
@@ -58,6 +61,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         remark = personToCopy.getRemark();
         tags = new HashSet<>(personToCopy.getTags());
+        insurances = new HashSet<>(personToCopy.getInsurances());
         priority = personToCopy.getPriority();
     }
 
@@ -84,6 +88,22 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(Set<Tag> tags) {
         this.tags = tags;
+        return this;
+    }
+
+    /**
+     * Assigns the customer with {@code Insurance}
+     */
+    public PersonBuilder withInsurances(String... insurances) {
+        this.insurances = SampleDataUtil.getInsuranceSet(insurances);
+        return this;
+    }
+
+    /**
+     * Assigns the customer with {@code Insurance}
+     */
+    public PersonBuilder withInsurances(Set<Insurance> insurances) {
+        this.insurances = insurances;
         return this;
     }
 
@@ -136,8 +156,12 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Create the {@code Person} with all information
+     */
     public Person build() {
-        return new Person(name, phone, email, address, remark, tags, priority);
+        return new Person(name, phone, email, address, remark, tags, insurances, priority);
+
     }
 
 }

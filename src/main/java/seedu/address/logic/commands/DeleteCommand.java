@@ -18,9 +18,7 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = "Usage: "
-            + COMMAND_WORD + "<INDEX> (INDEX must be a positive integer)\n"
-            + "INDEX: the index shown in the displayed list";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD + " <index>\n";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 

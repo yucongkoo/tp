@@ -25,8 +25,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -39,8 +40,12 @@ public class EditCommandTest {
 
     @Test
     public void execute_allValidFieldsSpecifiedUnfilteredList_success() {
-        Set<Tag> tags = model.getFilteredPersonList().get(0).getTags(); // tags should be inherited to the editedPerson
-        Person editedPerson = new PersonBuilder().withTags(tags).build();
+        // tags should be inherited to the editedPerson
+        Set<Tag> tags = model.getFilteredPersonList().get(0).getTags();
+        // insurances should be inherited to the edited person
+        Set<Insurance> insurances = model.getFilteredPersonList().get(0).getInsurances();
+
+        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances).build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
@@ -58,9 +63,12 @@ public class EditCommandTest {
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
         Set<Tag> tags = lastPerson.getTags(); // tags should be inherited to the editedPerson
 
+        // insurances should be inherited to the edited person
+        Set<Insurance> insurances = lastPerson.getInsurances();
+
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(tags).build();
+                .withTags(tags).withInsurances(insurances).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).build();
@@ -75,15 +83,21 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
+    }
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+    @Test
+    public void execute_noChangeToPerson_failure() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        String nameOfPersonToEdit = personToEdit.getName().fullName;
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(nameOfPersonToEdit).build();
+        EditCommand command = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(command, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
 
     @Test
@@ -109,7 +123,7 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
@@ -121,7 +135,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test

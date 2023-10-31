@@ -3,17 +3,15 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Objects;
+
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Remark {
 
-    public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 150 characters.";
-
-    public static final String REMARK_TITLE = "Remark: ";
-
-    public static final String REMARK_TITLE_NO_REMARK = "No remark";
+    public static final String MESSAGE_CONSTRAINTS = "Remark should  not be empty nor longer than 150 characters.";
 
     private final String value;
 
@@ -28,10 +26,14 @@ public class Remark {
         value = remark;
     }
 
-
     public static boolean isValidRemark(String remark) {
         return remark.length() <= 150;
     }
+
+    public boolean isEmptyRemark() {
+        return Objects.equals(this.value, "");
+    }
+
     @Override
     public String toString() {
         return value;

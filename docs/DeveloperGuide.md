@@ -1,10 +1,10 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# EzContact Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -242,8 +242,166 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
-they wish to prevent the tagged customer from having that tag. Therefore, whether or not the targeted customer
+they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
+
+## Find feature
+This find feature is designed to be a partial search or prefix search.
+
+### Implementation
+
+**Implementing `NameContainsKeywordsPredicate`**
+This class determine how the find feature find the customers. It contains a test method to test such, the details as below.
+* This find feature is a partial search, we said keyword match with the name when name contains keyword as a prefix.
+* This test method return true when all the keywords match with the name.
+* Using a stream to check if all the keywords match with the name.
+
+**Implementing `FindCommand`**
+This class execute the find command on `Model`, it will update the `Model` accordingly to
+reflect the changes after the find command completes its execution.
+
+### Design considerations:
+
+**Aspect: Design of test method:**
+
+* **Alternative 1(current choice):** Returns customers when their names match with all keywords as a prefix.
+    * Pros: Easy to implement, more flexible for user to find customers.
+    * Cons: Cannot differentiate `Lam Jiu` and `Jiu Lam`, a name can match with multiple keywords, i.e. name `song` match with keywords `song song`.
+* **Alternative 2:** Returns customers when their names match with all keywords as a prefix in order.
+    * Pros: Can easily and accurately find a specified customer.
+    * Cons: Harder to implement, less flexible for user to find for customer.
+* **Alternative 3:** Returns customers when their names match with all keywords as a prefix, where each name can only match with one keyword, i.e. name `song` cannot match with keywords `song song`.
+    * Pros: More intuitive design.
+    * Cons: Hard to implement, required a long algorithm to do so.
+
+In this case, we use choose Alternative 1 over Alternative 2 because the find feature become less useful when we restrict
+the name must match keywords in order. The consideration about our target user is a forgetful insurance agent affect our decision,
+since our target audience might forget and input the name in wrong order sometimes.</br>
+
+Alternative 1 over Alternative 3, although Alternative 3 seems like a more accurate version, but we do some research on most of the contact book like application.
+We found that most of the find feature design do not restrict that each name can only match with one keyword.
+In addition, Alternative 3 requires a more complicated algorithm.
+Hence, we choose Alternative 1 over 3.
+
+**Aspect: Implementation of test method:**
+
+* **Alternative 1(current choice):** Convert keywords to `Stream` and using `allMatch`.
+    * Pros: Easy to implement, code is clean.
+    * Cons: Less flexible, ex: cannot check the name match the keywords in order.
+* **Alternative 2:** Directly using the keywords as `List<String>` and using a for loop.
+    * Pros: More flexible, can add more constraint on the test method.
+    * Cons: Hard to implement, if we want to add many constraint, code is untidy.
+Alternative 1 over Alternative 2, because we choose a slightly simpler design and do not need much flexibility on implementation.
+Hence, we decided to choose an alternative which can keep our code clean and easy to implement.
+
+
+
+## Insurance Feature
+This feature allows user to assign / remove insurance package(s) to / from customers in EZContact.
+
+### Implementation
+The implementation of the Insurance feature consists of few parts, distributed across different components :
+
+
+1. `Insurance` : stores the information about the insurance
+1. `InsuranceCommand` : executes the action to assign/remove insurance
+1. `InsuranceCommandParser` : parses the command to obtain required information
+
+**Implementing `Insurance`**
+
+`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds one information, `insuranceName`.
+
+**[Class diagram of `Insurance` and `Person`]**
+
+
+**Implementing `InsuranceCommand`**
+
+`InsuranceCommand` executes its command on the `Model`, it will update the model accordingly to reflect the changes made by the command on the `Model`
+
+**[Sequence diagram of executing `InsuranceCommand`]**
+
+**Implementing `InsuranceCommandParser`**
+
+`InsuranceCommandParser` receives the remaining input after the command `ins`, and turns it into valid information needed by `InsuranceCommand`, which are
+`Index` and `UpdatedPersonInsuranceDescriptor`.
+
+`UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
+
+
+**Integrating `InsuranceCommand` and `InsuranceCommandParser`**
+
+In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command 
+`ins` and call `parse(String args)` from `InsuranceCommandParser`.
+
+From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand`.
+
+**[Sequence Diagram from `AddressBookParser` -> `Model`]**
+
+
+### Design Considerations:
+
+**Aspect: Storing of `Insurance` in `Person`**
+
+* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+  * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
+  * Cons: Chronological order of `Insurance` inserted is not maintained
+* **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
+  * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
+  * Cons: Handling of duplicates is more complicated
+
+Reasoning:
+
+The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical 
+order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
+ 
+
+## \[Proposed\] Appointment feature
+
+### Implementation
+
+The appointment feature supports 5 different type of command:
+
+1. `add appointment`
+2. `edit appointment`
+3. `delete appointment`
+4. `mark appointment`
+5. `unmark appointment`
+
+## Priority feature
+
+### Implementation
+
+The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+
+**The `Priority` class**
+
+The class is used to represent different priority levels for each `Person`.
+By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+
+<puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+**The `PriorityCommandParser` class**
+
+The class is used to parse the arguments into two information: `index` and `priority`.
+It will then return a `PriorityCommand` should the arguments are valid.
+
+The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
+
+Taking `parse(1 high)`as an example.
+
+<puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
+
+**The `PriorityCommand` class**
+
+The class is responsible in executing the task parsed by the `PriorityCommandParser`.
+It will update the `Priority` of a `Person`.
+
+### Design Consideration:
+
+The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
+The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+
+
 
 ## \[Proposed\] Undo/redo feature
 
@@ -462,15 +620,15 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**
-1.  User lists out the customers.
+1.  User requests to list out the customers.
 2.  System shows the list of customers.
-3.  User edits the customer with the index number shown in the displayed customer list and provides the field prefix along with the new details.
-4.  System displays the details of the deleted person.</br>
-   Use case ends.
+3.  User edits the details of customer with its respective index.
+4.  System displays the details of the edited customer.</br>
+    Use case ends.
 
 **Extensions:**</br>
-4a. Index provided by user or information provided by user is invalid.</br>
-&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
 
 #### Searching for a customer
@@ -493,8 +651,22 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2a1. System shows an empty list.</br>
 &emsp;&emsp;&emsp;&nbsp;Use case ends.
 
+#### Assigning priority to customer
 
+**Use Case: UC06 - assign priority to a customer**
 
+**MSS:**
+
+1.  User requests to list out the customers.
+2.  System lists out the customers.
+3.  User assigns priority to the customer with its respective index.
+4.  System displays the new priority of customer.</br>
+    Use case ends.
+
+**Extensions:**</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;Use case ends.
 
 ### Non-Functional Requirements
 

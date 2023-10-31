@@ -10,15 +10,14 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -73,20 +72,14 @@ public class ParserUtil {
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
-        if (address == null) {
-            return EmptyAddress.getEmptyAddress();
-        }
-
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!NonEmptyAddress.isValidAddress(trimmedAddress)) {
-            throw new ParseException(NonEmptyAddress.MESSAGE_CONSTRAINTS);
+        if (!Address.isValidAddress(trimmedAddress)) {
+            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        return new NonEmptyAddress(trimmedAddress);
+        return Address.createAddress(address.trim());
     }
 
     /**
@@ -129,6 +122,36 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parse a {@code String insurance} into a {@code Insurance}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     */
+    private static Insurance parseInsurance(String insurance) throws ParseException {
+        requireNonNull(insurance);
+
+        String trimmed = insurance.trim();
+
+        if (!Insurance.isValidInsuranceName(trimmed)) {
+            throw new ParseException(Insurance.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Insurance(trimmed);
+    }
+
+    /**
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>}.
+     */
+    public static Set<Insurance> parseInsurances(Collection<String> insurances) throws ParseException {
+        requireNonNull(insurances);
+        Set<Insurance> insuranceSet = new HashSet<>();
+        for (String i : insurances) {
+            insuranceSet.add(parseInsurance(i));
+        }
+
+        return insuranceSet;
     }
 
     /**

@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Tags names should be alphanumeric and should not be longer than 20 characters.";
+            "Tags names should be alphanumeric and not be empty nor longer than 20 characters.";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
     public static final int MAXIMUM_TAG_LENGTH = 20;
     public static final int MAXIMUM_TAGS_PER_PERSON = 10;

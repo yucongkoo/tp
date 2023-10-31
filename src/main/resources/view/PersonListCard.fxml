@@ -12,17 +12,17 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
-      <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="200" />
+      <ColumnConstraints hgrow="NEVER" minWidth="10" prefWidth="350" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
-    <!-- Left VBox for name, priority and tags -->
+    <!-- Left HBox for name, priority and tags -->
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
 
-      <HBox spacing="5" alignment="CENTER_LEFT">
+      <HBox spacing="5" alignment="CENTER_LEFT" >
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
@@ -30,41 +30,29 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
-<!--        <Label fx:id="priority" styleClass="priority">-->
-<!--          <minWidth>-->
-<!--            &lt;!&ndash; Ensures that the label text is never truncated &ndash;&gt;-->
-<!--            <Region fx:constant="USE_PREF_SIZE" />-->
-<!--          </minWidth>-->
-<!--        </Label>-->
       </HBox>
 
       <VBox prefHeight="5" minHeight="5" maxHeight="5"/>
 
-      <FlowPane fx:id="tags" />
+      <FlowPane fx:id="flowPaneLabels" />
     </VBox>
 
     <!-- Right HBox for customers information -->
-    <HBox GridPane.columnIndex="1" spacing="10" HBox.hgrow="ALWAYS">
+    <HBox GridPane.columnIndex="1" spacing="10">
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
 
       <VBox styleClass="attribute-card-container" minHeight="105" >
         <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
+          <Insets top="10" right="10" bottom="10"/>
         </padding>
         <VBox fx:id="phoneCardPlaceholder"/>
         <VBox fx:id="emailCardPlaceholder" />
         <VBox fx:id="addressCardPlaceholder" />
       </VBox>
 
-      <VBox styleClass="remark-card-container" minWidth="200" maxWidth="200">
-        <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
-        </padding>
-        <Label fx:id="remarkTitle" styleClass="cell_big_label" wrapText="true"/>
-        <Label fx:id="remark" styleClass="cell_big_label" wrapText="true"/>
-      </VBox>
+      <VBox fx:id="remarkCardPlaceholder" />
     </HBox>
 
   </GridPane>

@@ -11,13 +11,13 @@
       "value" : "alice@example.com"
     },
     "address" : {
-      "value" : "123, Jurong West Ave 6, #08-111",
-      "isEmptyAddress" : false
+      "value" : "123, Jurong West Ave 6, #08-111"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ "friends" ],
+    "insurances": [ "car insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -32,13 +32,13 @@
       "value" : "johnd@example.com"
     },
     "address" : {
-      "value" : "311, Clementi Ave 2, #02-25",
-      "isEmptyAddress" : false
+      "value" : "311, Clementi Ave 2, #02-25"
     },
     "remark": {
       "value" : "Owned me 1M"
     },
     "tags": [ "owesMoney", "friends" ],
+    "insurances": [ "AIA insurance", "ABC insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -53,13 +53,13 @@
       "value" : "heinz@example.com"
     },
     "address" : {
-      "value" : "wall street",
-      "isEmptyAddress" : false
+      "value" : "wall street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "insurances": [ "Great Eastern" ],
     "priority" : {
       "value" : "high"
     }
@@ -74,8 +74,7 @@
       "value" : "cornelia@example.com"
     },
     "address" : {
-      "value" : "10th street",
-      "isEmptyAddress" : false
+      "value" : "10th street"
     },
     "remark": {
       "value" : ""
@@ -95,13 +94,13 @@
       "value" : "werner@example.com"
     },
     "address" : {
-      "value" : "michegan ave",
-      "isEmptyAddress" : false
+      "value" : "michegan ave"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "insurances": [ "InsureIQ" ],
     "priority" : {
       "value" : "high"
     }
@@ -116,8 +115,7 @@
       "value" : "lydia@example.com"
     },
     "address" : {
-      "value" : "little tokyo",
-      "isEmptyAddress" : false
+      "value" : "little tokyo"
     },
     "remark": {
       "value" : ""
@@ -137,13 +135,13 @@
       "value" : "anna@example.com"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "insurances": [ "GGO Insurance" ],
     "priority" : {
       "value" : "high"
     }
@@ -158,8 +156,7 @@
       "value" : "calmen@example.com"
     },
     "address" : {
-      "value" : "-",
-      "isEmptyAddress" : true
+      "value" : " "
     },
     "remark": {
       "value" : "He like to eat apple"
@@ -179,8 +176,7 @@
       "value" : "jojo@example.com"
     },
     "address" : {
-      "value" : "100th street",
-      "isEmptyAddress" : false
+      "value" : "100th street"
     },
     "remark": {
       "value" : ""
@@ -200,8 +196,7 @@
       "value" : "kaka@example.com"
     },
     "address" : {
-      "value" : "kaka street",
-      "isEmptyAddress" : false
+      "value" : "kaka street"
     },
     "remark": {
       "value" : ""

@@ -9,8 +9,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.priority.Priority.Level;
 
 /**
  * Represents a Person in the address book.
@@ -29,32 +31,43 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Priority priority;
 
+    private final Set<Insurance> insurances = new HashSet<>();
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, remark, tags);
+
+    public Person(Name name, Phone phone, Email email,
+                  Address address, Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
+
+        requireAllNonNull(name, phone, email, address, tags, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.remark = remark;
         this.tags.addAll(tags);
+        this.insurances.addAll(insurances);
         this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
     }
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
-                  Remark remark, Set<Tag> tags, Priority priority) {
-        requireAllNonNull(name, phone, email, address, remark, tags, priority);
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark,
+                  Set<Tag> tags, Set<Insurance> insurances, Priority priority) {
+
+        requireAllNonNull(name, phone, email, address, tags, priority, insurances, remark);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.remark = remark;
         this.tags.addAll(tags);
+        this.insurances.addAll(insurances);
         this.priority = priority;
     }
 
@@ -83,6 +96,10 @@ public class Person {
 
     }
 
+    public Level getPriorityLevel() {
+        return priority.getPriorityLevel();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -91,11 +108,19 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public Set<Insurance> getInsurances() {
+        return Collections.unmodifiableSet(insurances);
+    }
+
     /**
      * Returns the number of tags assigned to this person.
      */
     public int getTagsCount() {
         return tags.size();
+    }
+
+    public int getInsurancesCount() {
+        return insurances.size();
     }
 
     /**
@@ -107,8 +132,18 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return this.phone.equals(otherPerson.phone) || this.email.equals(otherPerson.email);
+    }
+
+    /**
+     * Returns true if the Person has a remarks.
+     */
+    public boolean hasRemark() {
+        return !this.remark.isEmptyRemark();
     }
 
     /**
@@ -124,18 +159,53 @@ public class Person {
         updatedTags.removeAll(tagsToDelete);
         updatedTags.addAll(tagsToAdd);
 
-        return new Person(source.name, source.phone, source.email, source.address,
-                source.remark, updatedTags, source.priority);
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                updatedTags, source.insurances, source.priority);
+    }
+
+    /**
+     * Create a new copy of {@code Person} with update information of {@code Insurance}
+     */
+    public static Person createPersonWithUpdatedInsurances(Person source, Collection<Insurance> insurancesToAdd,
+                                                           Collection<Insurance> insurancesToDelete) {
+
+        requireAllNonNull(source, insurancesToAdd, insurancesToDelete);
+
+        Set<Insurance> updatedInsurances = new HashSet<>(source.insurances);
+        updatedInsurances.removeAll(insurancesToDelete);
+        updatedInsurances.addAll(insurancesToAdd);
+
+        return new Person(source.name, source.phone, source.email, source.address, source.remark,
+                source.tags, updatedInsurances, source.priority);
     }
 
     /**
      * Creates and returns a {@code Person} with details of {@code source}, assigning priority of
      * {@code newPriority}.
      */
-    public static Person createPersonWithUpdatedPriority(Person source, Priority newPriority) {
-        requireAllNonNull(source, newPriority);
-        return new Person(source.name, source.phone, source.email, source.address,
-                source.remark, source.tags, newPriority);
+    public static Person createPersonWithUpdatedPriority(Person personToUpdate, Priority newPriority) {
+        requireAllNonNull(personToUpdate, newPriority);
+        return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances, newPriority);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code personToEdit} edited with
+     * {@code editPersonDescriptor}.
+     */
+    public static Person createPersonWithEditedInformation(Person personToEdit,
+                                                            EditPersonDescriptor editPersonDescriptor) {
+        requireAllNonNull(personToEdit, editPersonDescriptor);
+
+        Name newName = editPersonDescriptor.getName().orElse(personToEdit.name);
+        Phone newPhone = editPersonDescriptor.getPhone().orElse(personToEdit.phone);
+        Email newEmail = editPersonDescriptor.getEmail().orElse(personToEdit.email);
+        Address newAddress = editPersonDescriptor.getAddress().orElse(personToEdit.address);
+        Remark remark = personToEdit.remark;
+        Set<Tag> tags = personToEdit.tags;
+        Priority priority = personToEdit.priority;
+
+        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, personToEdit.insurances, priority);
     }
 
     /**
@@ -167,13 +237,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && remark.equals(otherPerson.remark)
                 && tags.equals(otherPerson.tags)
+                && insurances.equals(otherPerson.insurances)
                 && priority.equals(otherPerson.priority);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, remark, tags, priority);
+        return Objects.hash(name, phone, email, address, tags, insurances, priority, remark);
     }
 
     @Override
@@ -183,9 +254,10 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("remark", remark)
-                .add("tags", tags)
                 .add("priority", priority)
+                .add("tags", tags)
+                .add("insurances", insurances)
+                .add("remark", remark)
                 .toString();
     }
 }

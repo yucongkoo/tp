@@ -12,16 +12,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.AppointmentCount;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -42,6 +41,8 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedAppointment appointment;
     private final JsonAdaptedAppointmentCount appointmentCount;
 
+    private final List<JsonAdaptedInsurance> insurances = new ArrayList<>();
+
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
@@ -52,7 +53,8 @@ public class JsonAdaptedPerson {
                              @JsonProperty("address") JsonAdaptedAddress address,
                              @JsonProperty("remark") JsonAdaptedRemark remark,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("priority") JsonAdaptedPriority priority,
+                             @JsonProperty("insurance") List<JsonAdaptedInsurance> insurances,
+                             @JsonProperty("priority") JsonAdaptedPriority priority) {
                              @JsonProperty("appointment") JsonAdaptedAppointment appointment,
                              @JsonProperty("appointment count") JsonAdaptedAppointmentCount count) {
         this.name = name;
@@ -62,6 +64,9 @@ public class JsonAdaptedPerson {
         this.remark = remark;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (insurances != null) {
+            this.insurances.addAll(insurances);
         }
         this.priority = priority;
         this.appointment = appointment;
@@ -82,6 +87,10 @@ public class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        insurances.addAll(source.getInsurances()
+                .stream()
+                .map(JsonAdaptedInsurance::new)
+                .collect(Collectors.toList()));
         priority = new JsonAdaptedPriority(source.getPriority());
         appointment = new JsonAdaptedAppointment(source.getAppointment());
         appointmentCount = new JsonAdaptedAppointmentCount(source.getCount());
@@ -93,8 +102,9 @@ public class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(),
-                getModelRemark(), getModelTags(), getModelPriority(), getModelAppointment(), getModelAppointmentCount());
+        return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelRemark(),
+                getModelTags(), getModelInsurances(), getModelPriority(), getModelAppointment(), getModelAppointmentCount());
+
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -138,6 +148,16 @@ public class JsonAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         return new HashSet<>(personTags);
+    }
+
+    private Set<Insurance> getModelInsurances() throws IllegalValueException {
+        List<Insurance> personInsurances = new ArrayList<>();
+
+        for (JsonAdaptedInsurance i : insurances) {
+            personInsurances.add(i.toModelType());
+        }
+
+        return new HashSet<>(personInsurances);
     }
 
     private Priority getModelPriority() throws IllegalValueException {
