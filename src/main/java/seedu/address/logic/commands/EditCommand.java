@@ -106,7 +106,6 @@ public class EditCommand extends Command {
     private void checkIsDuplicatePerson(Model model, Person personToEdit, Person editedPerson) throws CommandException {
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             logger.finer("EditCommand execution failed due to duplicated persons in list");
-            //model.addPerson(personToEdit);
             throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }
 

@@ -22,7 +22,7 @@ public class PriorityCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "<priority_level>\n";
+            + "<priority>\n";
 
     public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";
 
