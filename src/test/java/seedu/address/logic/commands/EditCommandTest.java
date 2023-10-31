@@ -27,6 +27,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -40,19 +41,23 @@ public class EditCommandTest {
 
     @Test
     public void execute_allValidFieldsSpecifiedUnfilteredList_success() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
         // tags should be inherited to the editedPerson
-        Set<Tag> tags = model.getFilteredPersonList().get(0).getTags();
+        Set<Tag> tags = personToEdit.getTags();
         // insurances should be inherited to the edited person
-        Set<Insurance> insurances = model.getFilteredPersonList().get(0).getInsurances();
+        Set<Insurance> insurances = personToEdit.getInsurances();
+        // remarks should be inherited to the edited person
+        Remark remarks = personToEdit.getRemark();
 
-        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances).build();
+        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances).withRemark(remarks).build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        expectedModel.setPerson(personToEdit, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -84,6 +89,11 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        //expectedModel.setPerson(lastPerson, editedPerson);
+
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         assertCommandFailure(editCommand, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
     }
