@@ -30,6 +30,8 @@ public abstract class Address {
      * Returns true if a given string is a valid address.
      */
     public static boolean isValidAddress(String test) {
+        requireNonNull(test);
+
         int addressLen = test.trim().length();
         return addressLen <= MAX_LENGTH;
     }

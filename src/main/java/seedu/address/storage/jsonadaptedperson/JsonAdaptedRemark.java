@@ -3,9 +3,13 @@ package seedu.address.storage.jsonadaptedperson;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Remark;
 import seedu.address.model.priority.Priority;
+
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 /**
  * Jackson-friendly version of {@link Priority}.
@@ -34,6 +38,10 @@ public class JsonAdaptedRemark {
      * @throws IllegalValueException if there were any data constraints violated in the adapted remark.
      */
     public Remark toModelType() throws IllegalValueException {
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
         if (!Remark.isValidRemark(value)) {
             throw new IllegalValueException(Remark.MESSAGE_CONSTRAINTS);
         }

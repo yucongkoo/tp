@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Email;
 import seedu.address.model.priority.Priority;
+
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 /**
  * Jackson-friendly version of {@link Priority}.
@@ -33,6 +36,10 @@ public class JsonAdaptedPriority {
      * @throws IllegalValueException if there were any data constraints violated in the adapted priority.
      */
     public Priority toModelType() throws IllegalValueException {
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
         if (!Priority.isValidPriority(value)) {
             throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
         }
