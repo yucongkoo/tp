@@ -60,4 +60,14 @@ public class Phone {
         return value.hashCode();
     }
 
+    /**
+     * Checks if the phone starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the phone starts with the specified prefix, false otherwise.
+     */
+    public static boolean isPhoneContainsPrefix(Phone phone, String prefix) {
+        return phone.value.startsWith(prefix.toLowerCase());
+    }
+
 }

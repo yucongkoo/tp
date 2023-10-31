@@ -47,4 +47,26 @@ public abstract class Address {
      */
     public abstract String getValue();
 
+    /**
+     * Checks if the full address contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return False if there is an empty address,
+     *     True if any word in the full address starts with the specified prefix,
+     *     false otherwise.
+     */
+    public static boolean isAddressContainsPrefix(Address address, String prefix) {
+        if (address.isEmptyAddress()) {
+            return false;
+        }
+        String lowerFullAddress = address.getValue().toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerAddress: lowerFullAddress.split("\\s+")) {
+            if (lowerAddress.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
