@@ -374,16 +374,19 @@ and rename the file to `addressbook.json`.
 
 ## Command summary
 
-| Action       | Format and Examples                                                                                                                                                                                 |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Action       | Format and Examples                                                                                                                                                                                                                              |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**      | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**   | `delete INDEX`                                            <hr>       `delete 3`                                                                                                                     |
-| **Edit**     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                      |
-| **List**     | `list`                                                                      <hr>                                                                                                                    |
-| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                       |
-| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                              |
-| **Priority** | `pr INDEX NEW_PRIORITY`  <hr>  `pr 1 medium`                                                                                                                                                        |
-| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                          |
+| **Delete**   | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
+| **Edit**     | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
+| **List**     | `list`                                                                      <hr>                                                                                                                                                                 |
+| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                                                                    |
+| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
+| **Priority** | `pr <index> <priority>`  <hr>  `pr 1 medium`                                                                                                                                                                                                     |
+| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                                                                       |
+| **Clear**    | `clear`                                                                                                                                                                                                                                          |
+| **Help**     | `help`                                                                                                                                                                                                                                           |
+| **Exit**     | `exit`                                                                                                                                                                                                                                           |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
