@@ -15,8 +15,8 @@ public class Insurance {
     private static final int MAX_LENGTH = 32;
 
     public static final String MESSAGE_CONSTRAINTS =
-            String.format("Insurance name should be alphanumeric," +
-                    "non-empty and not longer than %d characters", MAX_LENGTH);
+            String.format("Insurance name should be alphanumeric,"
+                    + "non-empty and not longer than %d characters", MAX_LENGTH);
     private String insuranceName;
 
     /**
