@@ -149,6 +149,15 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the of the {@code Person} to {@code remark}.
+     *
+     */
+    public PersonBuilder withRemark(Remark remark) {
+        this.remark = remark;
+        return this;
+    }
+
+    /**
      * Sets the {@code Priority} of the {@code Person} that we are building.
      */
     public PersonBuilder withPriority(String priority) {
