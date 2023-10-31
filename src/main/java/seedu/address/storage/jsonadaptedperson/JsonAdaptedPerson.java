@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentCount;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -37,6 +39,8 @@ public class JsonAdaptedPerson {
     private final JsonAdaptedRemark remark;
     private final JsonAdaptedPriority priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final JsonAdaptedAppointment appointment;
+    private final JsonAdaptedAppointmentCount appointmentCount;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -48,7 +52,9 @@ public class JsonAdaptedPerson {
                              @JsonProperty("address") JsonAdaptedAddress address,
                              @JsonProperty("remark") JsonAdaptedRemark remark,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("priority") JsonAdaptedPriority priority) {
+                             @JsonProperty("priority") JsonAdaptedPriority priority,
+                             @JsonProperty("appointment") JsonAdaptedAppointment appointment,
+                             @JsonProperty("appointment count") JsonAdaptedAppointmentCount count) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -58,6 +64,8 @@ public class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.priority = priority;
+        this.appointment = appointment;
+        this.appointmentCount = count;
     }
 
     /**
@@ -75,6 +83,8 @@ public class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         priority = new JsonAdaptedPriority(source.getPriority());
+        appointment = new JsonAdaptedAppointment(source.getAppointment());
+        appointmentCount = new JsonAdaptedAppointmentCount(source.getCount());
     }
 
     /**
@@ -84,7 +94,7 @@ public class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(),
-                getModelRemark(), getModelTags(), getModelPriority());
+                getModelRemark(), getModelTags(), getModelPriority(), getModelAppointment(), getModelAppointmentCount());
     }
 
     private Name getModelName() throws IllegalValueException {
@@ -136,5 +146,21 @@ public class JsonAdaptedPerson {
                     Priority.class.getSimpleName()));
         }
         return priority.toModelType();
+    }
+
+    private Appointment getModelAppointment() throws IllegalValueException {
+        if (appointment == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Appointment.class.getSimpleName()));
+        }
+        return appointment.toModelType();
+    }
+
+    private AppointmentCount getModelAppointmentCount() throws IllegalValueException {
+        if (appointmentCount == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    AppointmentCount.class.getSimpleName()));
+        }
+        return appointmentCount.toModelType();
     }
 }
