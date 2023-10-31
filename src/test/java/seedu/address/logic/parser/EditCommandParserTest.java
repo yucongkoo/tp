@@ -82,7 +82,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 in/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -200,7 +200,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editTag_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR + "\n";
+        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR;
 
         // all fields specified with tag
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -223,7 +223,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editPriority_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_PRIORITY_ERROR + "\n";
+        String exceptionMessage = MESSAGE_EDIT_PRIORITY_ERROR;
 
         // all fields specified with priority high
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -253,37 +253,38 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_bothTagAndPriority_failure() {
+        // error message for tag will be thrown since we check for tag first
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR + "\n" + MESSAGE_EDIT_PRIORITY_ERROR + "\n";
+        String exceptionMessageTag = MESSAGE_EDIT_TAG_ERROR;
 
         // both tags and priority are valid
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
-                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+                + PRIORITY_DESC_HIGH + TAG_DESC_FRIEND;
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // empty tag
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC2 + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // empty priority
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + TAG_DESC_FRIEND + INVALID_PRIORITY_DESC3;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // both tag and priority are empty
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC2 + INVALID_PRIORITY_DESC3;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // invalid tag
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // invalid priority
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + TAG_DESC_FRIEND + INVALID_PRIORITY_DESC;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
     }
 }

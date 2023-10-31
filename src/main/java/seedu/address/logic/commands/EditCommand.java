@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_CHANGED;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
@@ -93,31 +93,37 @@ public class EditCommand extends Command {
 
         logger.fine("EditCommand executing...");
 
-        Person personToEdit = getPersonToUpdate(model, index);
-        model.deletePerson(personToEdit);
+        Person personToEdit = getPersonAtIndex(model, index);
         Person editedPerson = createPersonWithEditedInformation(personToEdit, editPersonDescriptor);
 
-        checkPersonIsChanged(model, personToEdit, editedPerson);
+        checkPersonIsChanged(personToEdit, editedPerson);
         checkIsDuplicatePerson(model, personToEdit, editedPerson);
 
-        model.addPerson(editedPerson);
+        model.setPerson(personToEdit, editedPerson);
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
     private void checkIsDuplicatePerson(Model model, Person personToEdit, Person editedPerson) throws CommandException {
-        if (!personToEdit.isSamePerson(editedPerson) || model.hasPerson(editedPerson)) {
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             logger.finer("EditCommand execution failed due to duplicated persons in list");
-            model.addPerson(personToEdit);
+            //model.addPerson(personToEdit);
             throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+        }
+
+        for (int i = 0; i < model.getFilteredPersonListSize(); i++) {
+            Person personAtIndex = getPersonAtIndex(model, Index.fromZeroBased(i));
+            if (i != index.getZeroBased() && editedPerson.isSamePerson(personAtIndex)) {
+                logger.finer("EditCommand execution failed due to duplicated persons in list");
+                throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+            }
         }
     }
 
-    private void checkPersonIsChanged(Model model, Person personToEdit, Person editedPerson) throws CommandException {
+    private void checkPersonIsChanged(Person personToEdit, Person editedPerson) throws CommandException {
         requireAllNonNull(personToEdit, editedPerson);
         if (personToEdit.equals(editedPerson)) {
             logger.finer("Command execution failed due to no changes in person.");
-            model.addPerson(personToEdit);
             throw new CommandException(MESSAGE_PERSON_NOT_CHANGED);
         }
     }

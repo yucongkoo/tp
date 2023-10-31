@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonTagCountIsValid;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
@@ -64,7 +64,7 @@ public class TagCommand extends Command {
 
         verifyCommandIsExecutable(model);
 
-        Person personToUpdate = getPersonToUpdate(model, index);
+        Person personToUpdate = getPersonAtIndex(model, index);
         Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
                 updatePersonTagsDescriptor.getTagsToAdd(),
                 updatePersonTagsDescriptor.getTagsToDelete());
