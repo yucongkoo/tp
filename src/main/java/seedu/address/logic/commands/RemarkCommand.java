@@ -27,10 +27,10 @@ public class RemarkCommand extends Command {
             + " <index> "
             + "<remarks>\n";
 
+    private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
     private final Index index;
     private final Remark remark;
 
-    private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
 
 
     /**

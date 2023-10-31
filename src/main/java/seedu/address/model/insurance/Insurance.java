@@ -1,7 +1,5 @@
 package seedu.address.model.insurance;
 
-import seedu.address.model.person.Name;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -69,11 +67,17 @@ public class Insurance {
         return insuranceName;
     }
 
+    /**
+     * Checks if the insurance name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the insurance name starts with the specified prefix, false otherwise.
+     */
     public static boolean isContainsPrefix(Insurance insurance, String prefix) {
         String lowerInsuranceName = insurance.insuranceName.toLowerCase();
         String lowerPrefix = prefix.toLowerCase();
-        for (String lowerName: lowerInsuranceName.split("\\s+")) {
-            if (lowerName.startsWith(lowerPrefix)) {
+        for (String lowerNamePart: lowerInsuranceName.split("\\s+")) {
+            if (lowerNamePart.startsWith(lowerPrefix)) {
                 return true;
             }
         }

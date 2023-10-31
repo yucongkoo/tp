@@ -1,14 +1,15 @@
 package seedu.address.model.person.predicate;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
 
-import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
-
+/**
+ * Tests that a {@code Person}'s {@code Email} matches all the keywords given.
+ */
 public class EmailContainsKeywordsPredicate implements Predicate<Person> {
 
     private final List<String> keywords;

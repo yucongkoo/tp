@@ -1,15 +1,18 @@
 package seedu.address.model.person.predicate;
 
-import seedu.address.model.person.Person;
-
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.model.person.Person;
+
+/**
+ * Tests that a {@code Person}'s {@code Predicate} all are true.
+ */
 public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
     private final List<Predicate<Person>> predicates;
 
-    public PersonContainsKeywordsPredicate (List<Predicate<Person>> predicates) {
+    public PersonContainsKeywordsPredicate(List<Predicate<Person>> predicates) {
         this.predicates = predicates;
     }
 

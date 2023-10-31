@@ -46,10 +46,12 @@ public abstract class Address {
     public abstract String getValue();
 
     /**
-     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     * Checks if the full address contains a word that starts with the given prefix, ignoring case.
      *
      * @param prefix The prefix to search for.
-     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     * @return False if there is an empty address,
+     *     True if any word in the full address starts with the specified prefix,
+     *     false otherwise.
      */
     public static boolean isAddressContainsPrefix(Address address, String prefix) {
         if (address.isEmptyAddress()) {

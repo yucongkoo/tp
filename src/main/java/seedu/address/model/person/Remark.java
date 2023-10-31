@@ -52,10 +52,10 @@ public class Remark {
     }
 
     /**
-     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     * Checks if the full remark contains a word that starts with the given prefix, ignoring case.
      *
      * @param prefix The prefix to search for.
-     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     * @return True if any word in the remark starts with the specified prefix, false otherwise.
      */
     public static boolean isRemarkContainsPrefix(Remark remark, String prefix) {
         if (remark.isEmptyRemark()) {

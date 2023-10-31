@@ -61,10 +61,10 @@ public class Phone {
     }
 
     /**
-     * Checks if the full name contains a word that starts with the given prefix, ignoring case.
+     * Checks if the phone starts with the given prefix, ignoring case.
      *
      * @param prefix The prefix to search for.
-     * @return True if any word in the full name starts with the specified prefix, false otherwise.
+     * @return True if the phone starts with the specified prefix, false otherwise.
      */
     public static boolean isPhoneContainsPrefix(Phone phone, String prefix) {
         return phone.value.startsWith(prefix);

@@ -1,15 +1,19 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
@@ -24,8 +28,10 @@ import seedu.address.model.person.predicate.PersonContainsKeywordsPredicate;
 public class FindCommandParser implements Parser<FindCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(FindCommandParser.class);
-    private static final Prefix[] validPrefixes = new Prefix[] { PREFIX_INSURANCE, PREFIX_NAME, PREFIX_TAG,
-            PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PRIORITY, PREFIX_REMARK };
+    private static final Prefix[] validPrefixes = new Prefix[] {
+        PREFIX_INSURANCE, PREFIX_NAME, PREFIX_TAG,
+        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK
+    };
 
 
     /**
@@ -75,7 +81,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         return new FindCommand(new PersonContainsKeywordsPredicate(predicateList));
     }
 
-    public static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+    private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         requireAllNonNull(argumentMultimap, prefixes);
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
