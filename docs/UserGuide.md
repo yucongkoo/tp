@@ -24,17 +24,29 @@ EzContact is a
 2. Download the latest `ezcontact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ezcontact.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
-5. Type the command in the command box and press Enter to execute it.
+4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. 
+Note how the app contains some sample data.<br>![Ui](images/Ui.png)
+5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## UI Layout Description
+
+Consider the following UI split into three parts:
+![UiWithDescription](images/UiWithDescription.png)
+As illustrated above, the UI will be split into three sections, we will be providing a name for each section and 
+will be using these names to refer to the section specified in the following User Guide.
+
+**Command Box**: Box for users to input the command to be executed by EzContact.<br/>
+**Output Display Box**: Box that displays the output of executing the entered command.<br/>
+**Person List Panel**: Panel that displays the person list.<br/>
+
+-----------------------------------------------------------------------------------------------------------------------
+
 ## Features
 
-<box type="info" seamless>
+<div markdown="block" class="alert alert-info">
 
 **Notes about the command format:**<br>
 
@@ -54,34 +66,37 @@ EzContact is a
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+</div>
 
 
 ### Adding a customer: `add`
 
 **Adds a new customer to EZContact**.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [pr/PRIORITY] [t/TAG]...`
+Format: `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]...`
 
 * Adds a new customer with the respective details to EzContact.
 
 <box type="warning" seamless>
 
 **Caution:**
-* `NAME` should **not be longer than 64 characters**.
-* `PHONE_NUMBER` should be an **8-digit number**(i.e. a Singapore number).
-* `EMAIL` should be a **valid email address**(i.e. `local-part@domain`).
-* `ADDRESS` should be **non-empty**.
-* `PRIORITY` should be one of: `high`, `medium`, `low`, `-`
-* `TAG` should be **alphanumeric** and **not longer than 20 characters**.
+* `<name>` should be **alphanumeric**, **non-empty** and **not longer than 64 characters**.
+* `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
+* `<email>` should be a **valid email address**(i.e. `local-part@domain`).
+* `<address>` should be **non-empty** and **not longer than 100 characters**.
+* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
+* `<tag>` should be **alphanumeric** and **not longer than 20 characters**.
 * A customer **must not have more than 10 tags** assigned to it.
-* Adding a customer with a `NAME` that **already exists** in EzContact is **not allowed**.
+* Adding a customer with a `<phone number>` or `<email>` that **already exists** in EzContact is **not allowed**.
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe e/betsycrowe@example.com p/12345678`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.`
+  * Adds the following Person to the [Person List Panel](#ui-layout-description)
+  ![AddEg1](images/add-command-examples/example1.png)
 * `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium`
+  * Adds the following Person to the [Person List Panel](#ui-layout-description)
+  ![AddEg2](images/add-command-examples/example2.png)
 
 ### Listing all customers : `list`
 
