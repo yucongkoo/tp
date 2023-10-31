@@ -18,6 +18,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
+        if (predicates.isEmpty()) {
+            return false;
+        }
         return predicates.stream()
                 .allMatch(predicate -> predicate.test(person));
     }
