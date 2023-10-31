@@ -11,11 +11,7 @@ import java.util.Objects;
  */
 public class Remark {
 
-    public static final String MESSAGE_CONSTRAINTS = "Remark should not be longer than 150 characters.";
-
-    public static final String REMARK_TITLE = "Remark: ";
-
-    public static final String REMARK_TITLE_NO_REMARK = "No remark";
+    public static final String MESSAGE_CONSTRAINTS = "Remark should  not be empty nor longer than 150 characters.";
 
     private final String value;
 
