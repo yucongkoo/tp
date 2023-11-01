@@ -175,21 +175,55 @@ Examples:
 
 ### Finding customers : `find`
 
-Finds customers whose names contain all the given keywords as prefix.
+**Format:**
 
-Format: `find KEYWORD [MORE_KEYWORD]...`
+Format: `find <prefix [keyword]...> [<prefix [keywords]...>]...`
 
-* The search is case-insensitive. e.g. `find Adam` returns `adam`
-* The order of the keywords does not matter. e.g.`find Adam Leong` returns `Leong Adam` or `Adam Chen Leong`
-* Only the name information is searched.
-* The search support partial search, only required keywords match name as a prefix. e.g. `find A` returns `Adam Leong` or `Andy Chong`
-* Only the customers matching all the keywords will be returned e.g. </br>
-`find Adam Leong` return `Adam Leong Keng Fat` but not `Adam Huat`</br>
-`find A L` return `Adam Leong` but not `Adam Tan`
+**Description:**
 
-Examples:
-* `find Adam H` Finds all the customers whose name contains `Adam` and  `H` as prefix
-* `find Song` Finds all the customers whose name contains `Song` as prefix
+Search for customers by specifying keywords for various attributes (except `appointment`).
+
+* Attributes match with keywords when:
+  1. Any word in the attribute contains the keyword as a prefix.
+  2. If there are multiple keywords, all must be present as prefixes.
+  3. Keywords are not case-sensitive and can be in any order.
+* For `tag` and `insurance`, only one of the customer's `tag`/`insurance` must contain keywords as a prefix. </br>
+These keywords can be spread across different `tag`/`insurance` entries.
+* When searching with multiple attributes, all customer attributes must match the keywords.
+
+<box type="warning" seamless>
+
+**Caution:**
+* **At least one** prefix should be provided. 
+* Available prefix:
+  1. `address`: `a/`
+  2. `email`: `e/`
+  3. `insurance`: `i/`
+  4. `name`: `n/`
+  5. `phone`: `p/`
+  6. `priority`: `pr/`
+  7. `reamrk`: `r/`
+  8. `tag`: `t/`
+* A keyword is **NOT** mandatory.
+
+</box>
+
+**Examples:**
+
+* `find t/rich pr/m` Finds all the customers whose tag matches keyword `rich`  and whose priority matches keyword `m`. </br>
+If there is a customer with the tag `Rich Client` and their priority is `medium`, this customer would be included in the search results.
+
+* `find n/Song i/` Finds all the customers whose name matches keyword `Song`  and have an insurance. </br>
+If there's a customer named `Song Wei` and another customer named `John Song`, and both of them have insurance,
+they would be included in the search results because their names contain the keyword `Song`, and they also have an insurance attribute.
+
+<box type="info" seamless>
+
+Note that if you search using `find n/Song Song`, </br>
+it will match a customer named `Song Guo Xuan` because all the specified keywords are present in the customer's name.
+
+</box>
+
 
 ### Tagging a customer: `tag`
 
@@ -257,24 +291,24 @@ After:
 
 **You can add a remark to an existing customer, or update the current remark**.
 
-Format: `remark INDEX r/ [REMARK]`
+Format: `remark <index> [remark]`
 
-* Updates the remark of the customer at `INDEX` in the displayed customer list.
-* If you wish to delete the remark, update the remark without text after `r/`, e.g. `remark INDEX r/`.
+* Updates the remark of the customer at `<index>` in the displayed customer list.
+* If you wish to delete the remark, update the remark without text after the command, e.g. `remark <index>`.
 
 <box type="warning" seamless>
 
 **Caution:**
-* `INDEX` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
 * `Remark` cannot be longer than 150 characters.
 
 </box>
 
 Examples:
 
-`remark 1 r/ he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+`remark 1 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
 
-`remark 2 r/` Removes the remark from the second customer in the displayed list.
+`remark 2` Removes the remark from the second customer in the displayed list.
 
 ### Clearing the customer list : `clear`
 
@@ -380,10 +414,10 @@ and rename the file to `addressbook.json`.
 | **Delete**   | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**     | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**     | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**     | `find KEYWORD [MORE_KEYWORD]...`                     <hr>      `find Any Cho`                                                                                                                                                                    |
+| **Find**     | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
 | **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Priority** | `pr <index> <priority>`  <hr>  `pr 1 medium`                                                                                                                                                                                                     |
-| **Remark**   | `remark INDEX r/ [REMARK]` <hr>  `remark 2 r/some remarks`                                                                                                                                                                                       |
+| **Remark**   | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
 | **Clear**    | `clear`                                                                                                                                                                                                                                          |
 | **Help**     | `help`                                                                                                                                                                                                                                           |
 | **Exit**     | `exit`                                                                                                                                                                                                                                           |
