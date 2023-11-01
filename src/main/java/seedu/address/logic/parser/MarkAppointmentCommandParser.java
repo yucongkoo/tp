@@ -9,6 +9,9 @@ import seedu.address.logic.commands.MarkAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 
+/**
+ * Parses input arguments and creates a new MarkAppointmentCommand object
+ */
 public class MarkAppointmentCommandParser implements Parser<MarkAppointmentCommand> {
     @Override
     public MarkAppointmentCommand parse(String args) throws ParseException {

@@ -9,6 +9,9 @@ import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 
+/**
+ * Parses input arguments and creates a new DeleteAppointment object
+ */
 public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
     @Override
     public DeleteAppointmentCommand parse(String args) throws ParseException {

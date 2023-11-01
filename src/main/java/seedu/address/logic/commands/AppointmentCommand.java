@@ -19,7 +19,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 
 /**
- * Adds/Edits the appointment with an existing person in the FAST.
+ * Adds/Edits the appointment with an existing person in the address book.
  */
 public class AppointmentCommand extends Command {
 
@@ -34,9 +34,9 @@ public class AppointmentCommand extends Command {
 
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "Added appointment with customer: %1$s %2$s %3$s %4$s";
     public static final String MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST = "Appointment already exists!";
+    private static final Logger logger = LogsCenter.getLogger(AppointmentCommand.class);
     private final Index index;
     private final Appointment appointment;
-    private static final Logger logger = LogsCenter.getLogger(AppointmentCommand.class);
 
 
     /**
@@ -45,7 +45,7 @@ public class AppointmentCommand extends Command {
      * @param index index of the customer list to add appointment for
      * @param appointment appointment scheduled with the target
      */
-    public AppointmentCommand(Index index, Appointment appointment)  {
+    public AppointmentCommand(Index index, Appointment appointment) {
         requireAllNonNull(index, appointment);
 
         this.index = index;
@@ -74,7 +74,7 @@ public class AppointmentCommand extends Command {
 
     /**
      * Generates a command execution success message when appointment has been added successfully.
-     * {@code personToEdit}.
+     * {@code editedPerson}.
      */
     private String generateSuccessMessage(Person editedPerson) {
         return String.format(MESSAGE_ADD_APPOINTMENT_SUCCESS, editedPerson.getName().fullName,

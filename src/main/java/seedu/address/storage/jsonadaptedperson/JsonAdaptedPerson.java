@@ -105,7 +105,7 @@ public class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         return new Person(getModelName(), getModelPhone(), getModelEmail(), getModelAddress(), getModelRemark(),
-                getModelTags(), getModelInsurances(),getModelAppointment(),
+                getModelTags(), getModelInsurances(), getModelAppointment(),
                 getModelAppointmentCount(), getModelPriority());
 
     }

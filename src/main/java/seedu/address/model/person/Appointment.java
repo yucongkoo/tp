@@ -1,21 +1,22 @@
 package seedu.address.model.person;
 
-import javax.swing.text.html.Option;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Objects;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
+/**
+ * Represents an appointment with the Person in the address book.
+ * Guarantees: immutable; is always valid.
+ */
 public class Appointment {
-    private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     public static final String MESSAGE_CONSTRAINTS =
             "INDEX (must be a positive integer) \n"
@@ -27,19 +28,18 @@ public class Appointment {
     public static final String NO_VENUE = "";
     public static final String INVALID_DATE_INPUT = "Date parameter must be YY-MM-DD, "
             + "with valid calendar year, month and days";
-    public static final String PREVIOUS_DATE_INPUT = "Unable to schedule your appointment " +
-            "on a date/time in the past";
+    public static final String PREVIOUS_DATE_INPUT = "Unable to schedule your appointment "
+            + "on a date/time in the past";
     public static final String INVALID_TIME_INPUT = "Time field must be HH:MM";
-        ;
     public static final String INVALID_VENUE_INPUT = "Venue field must not be greater than 30 characters";
-    public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-    public static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmm");
+    private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     private String date;
     private String time;
     private String venue;
     private LocalDate localDate;
-
     /**
      * Constructs an {@code Appointment}.
      *
@@ -65,9 +65,9 @@ public class Appointment {
      */
     public LocalDate createDate() {
         if (date.equals(NO_APPOINTMENT)) {
-            return LocalDate.MAX;   // no date -> return max localdate
+            return LocalDate.MAX; // no date -> return max localdate
         }
-        return LocalDate.parse(this.date, dateFormatter);
+        return LocalDate.parse(this.date, DATE_FORMATTER);
     }
 
 
@@ -132,7 +132,7 @@ public class Appointment {
             return true;
         }
         try {
-            LocalDate.parse(test, dateFormatter);
+            LocalDate.parse(test, DATE_FORMATTER);
             return true;
         } catch (DateTimeParseException e) {
             return false;
@@ -150,7 +150,7 @@ public class Appointment {
             return true;
         }
         try {
-            LocalTime.parse(test, timeFormatter);
+            LocalTime.parse(test, TIME_FORMATTER);
             logger.info("can parse to appt class");
             return true;
         } catch (DateTimeParseException e) {

@@ -1,12 +1,13 @@
 package seedu.address.storage.jsonadaptedperson;
 
+import static java.util.Objects.requireNonNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Appointment;
 
-import static java.util.Objects.requireNonNull;
 
 /**
  * Jackson-friendly version of {@link Appointment}.

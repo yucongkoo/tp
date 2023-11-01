@@ -40,7 +40,8 @@ public class AppointmentCommandParser implements Parser<AppointmentCommand> {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             logger.finer("AppointmentCommandParser parse failed due to invalid index: " + argMultimap.getPreamble());
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointmentCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AppointmentCommand.MESSAGE_USAGE), pe);
         }
         String parsedDate = getParsedDate(argMultimap);
         String parsedTime = getParsedTime(argMultimap);
