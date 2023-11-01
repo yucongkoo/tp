@@ -31,4 +31,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADD_INSURANCE_UPPER = new Prefix("AI/");
     public static final Prefix PREFIX_DELETE_INSURANCE_UPPER = new Prefix("DI/");
     public static final Prefix PREFIX_PRIORITY_UPPER = new Prefix("PR/");
+    public static final Prefix PREFIX_APPOINTMENT = new Prefix("d/");
+    public static final Prefix PREFIX_APPOINTMENT_TIME = new Prefix("t/");
+    public static final Prefix PREFIX_APPOINTMENT_VENUE = new Prefix("v/");
 }

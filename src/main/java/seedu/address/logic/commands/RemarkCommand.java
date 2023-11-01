@@ -58,7 +58,7 @@ public class RemarkCommand extends Command {
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getInsurances(),
-                personToEdit.getPriority());
+                personToEdit.getAppointment(), personToEdit.getAppointmentCount(), personToEdit.getPriority());
 
         CommandUtil.verifyPersonChanged(personToEdit, editedPerson);
 

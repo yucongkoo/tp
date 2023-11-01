@@ -3,6 +3,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.priority.Priority.isValidPriority;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +18,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -281,5 +286,77 @@ public class ParserUtil {
         String trimmedKeywords = keyword.trim();
         String[] keywords = trimmedKeywords.split("\\s+");
         return new PriorityContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Checks if the retrieved date from user input is valid.
+     *
+     * A valid date input is of the format yyyy-mm-dd.
+     * `mm` is a 2-digit number in the range 01-12, which represents a calendar month.
+     * `dd` is a 2-digit number in the range of 01-31, depending on the number of days in the calendar month.
+     *
+     * If the retrieved date is valid, returns the date in `dd MMM yyyy` format.
+     * Otherwise, it means that the user did not enter the correct input. A ParseException will be thrown.
+     *
+     * @param date Date String retrieved from user input
+     * @return A String representing the date in the specified format if it is valid (for add/update)
+     * @throws ParseException Thrown when the date retrieved is invalid
+     */
+    public static String parseDateString(String date) throws ParseException {
+        try {
+            checkDate(date);
+            // converts the date to the specified format
+            date = LocalDate.parse(date).format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        } catch (DateTimeParseException dtpe) {
+            throw new ParseException(Appointment.MESSAGE_CONSTRAINTS);
+        }
+
+        return date.trim();
+    }
+
+    /**
+     * Checks if the date input has already passed.
+     * If date input is in the past, date is invalid, throws an error.
+     *
+     * @param date Input date string.
+     * @throws ParseException Date input has passed.
+     */
+    private static void checkDate(String date) throws ParseException {
+        LocalDate localDate = LocalDate.parse(date);
+        LocalDate now = LocalDate.now();
+
+        if (localDate.isBefore(now)) {
+            throw new ParseException(Appointment.PREVIOUS_DATE_INPUT);
+        }
+    }
+
+    /**
+     * Checks if the retrieved time from user input is valid.
+     *
+     * A valid time input is of the format hh:mm (in 24-hour format).
+     * `hh` is a 2-digit number in the range 00-23, which represents the hour in the 24-hour format.
+     * `mm` is a 2-digit number in the range of 00-59, which represents the minute in the 24-hour format.
+     *
+     * If the retrieved time is valid, returns the time in `HHmm` format.
+     * Otherwise, it means that the user did not enter the correct input. A ParseException will be thrown.
+     *
+     * @param time Time String retrieved from user input
+     * @return A String representing the time in the specified format if it is valid.
+     * @throws ParseException Thrown when the date retrieved is invalid
+     */
+    public static String parseTimeString(String time) throws ParseException {
+        String validationPattern = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
+
+        if (!time.equals(Appointment.NO_TIME)) {
+            // checks that time only contains HH:mm and nothing else
+            if (!time.matches(validationPattern)) {
+                throw new ParseException(Appointment.MESSAGE_CONSTRAINTS);
+            }
+
+            // converts the time to the specified format
+            time = LocalTime.parse(time).format(DateTimeFormatter.ofPattern("HHmm"));
+        }
+
+        return time.trim();
     }
 }

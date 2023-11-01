@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Tag;
@@ -48,8 +49,10 @@ public class EditCommandTest {
         Set<Insurance> insurances = personToEdit.getInsurances();
         // remarks should be inherited to the edited person
         Remark remarks = personToEdit.getRemark();
+        Appointment appointment = personToEdit.getAppointment();
 
-        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances).withRemark(remarks).build();
+        Person editedPerson = new PersonBuilder().withTags(tags).withInsurances(insurances)
+                .withRemark(remarks).withAppointment(appointment).build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
