@@ -180,7 +180,7 @@ public class ParserUtil {
     public static Priority parsePriority(String priority) throws ParseException {
         requireNonNull(priority);
         String trimmedPriority = priority.trim();
-        String formattedPriority = trimmedPriority.toLowerCase();  //disable case-sensitivity
+        String formattedPriority = trimmedPriority.toLowerCase(); // disable case-sensitivity
         if (!isValidPriority(formattedPriority)) {
             throw new ParseException((Priority.MESSAGE_CONSTRAINTS));
         }
