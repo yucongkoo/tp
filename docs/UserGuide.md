@@ -391,7 +391,7 @@ and rename the file to `addressbook.json`.
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
 
-|Term | Meaning|
+|Term | Meaning                                                                                                                            |
 | --------------|------------------------------------------------------------------------------------------------------------------------------------|
 | Alphanumeric | Alphanumeric characters include uppercase letters from ‘A’ to ‘Z’, lowercase letters from ‘a’ to ‘z’, and numbers from ‘0` to ‘9’. |
-| json file | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |
+| json file | Abbreviation for JavaScript Object Notation file, a file format that stores data in a human-readable form.                         |

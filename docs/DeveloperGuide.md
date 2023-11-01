@@ -96,10 +96,10 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-<box type="info" seamless>
+<div markdown="block" class="alert alert-info">
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</box>
+**Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 How the `Logic` component works:
 
@@ -163,22 +163,44 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Implementation
 
+**Implementing `Tag`**
+
 Before implementing the actual command execution of tag,
 tags first needs to be stored in a `Person` object accordingly.
 A `Person` is associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
+**Integrating a command for handling tag features into the execution logic**
+
+In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
+we first update the `AddressBookParser` to recognise the `tag` [command word](#glossary) and will create a `TagCommandParser` subsequently.
+The `TagCommandParser` will then parse the [command arguments](#glossary) to create a `TagCommand` that can be executed. 
+
+The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
+taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
+
+<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+
 
 **Implementing `TagCommandParser`**
 
-`TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
-`tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
-Note that **duplicate tags will be ignored**.
+`TagCommandParser` plays the role of parsing [command arguments](#glossary) into two information:<br/>
+* `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
+* `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
+Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
+The parsing steps is as follows:
+1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`.
+1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
+1. Verify that there is at least one tag to add/delete.
+1. Construct and return the `TagCommand`.
+
+Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. Note that the 
+**reference frames have been omitted** as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
@@ -186,28 +208,25 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 **Implementing `TagCommand`**
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution.
+reflect the changes after the tag command completes its execution.<br/>
+The execution step is as follows:<br/>
+1. Retrieve `personToUpdate` from the model using `index`.
+1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
+1. Create the `updatedPerson` from the above information.
+1. Verify that the `updatedPerson` has a different tag set from `personToUpdate` (i.e. the command execution will change the person).
+1. Verify that the `updatedPerson` has a valid number of tags (i.e. not exceeding the maximum allowed tag count).
+1. Set the `personToUpdate` to `updatedPerson` in the `Model`.
+1. Returns the `CommandResult` of the execution.
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
-taking `execute(m)` call to the `TagCommand` as an example.
+taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
+as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
-**Integrating `TagCommandParser` and `TagCommand` into execution logic**
-
-Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
-is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
-The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser`
-to parse the arguments.
-
-The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
-taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
-
-<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
-
 ### Design considerations:
 
-**Aspect: Data structure to store tags in a Person object:**
+###### **Aspect: Data structure to store tags in a Person object:**
 
 * **Alternative 1(current choice):** Using `Set<Tag>`.
   * Pros: Easy to implement, enforces implicit uniqueness of each `Tag` in the `Set<Tag>`.
@@ -216,10 +235,11 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
 
+**Reasoning:**<br/>
 Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
-**Aspect: Duplicate tags handling:**
+###### **Aspect: Duplicate tags handling:**
 
 * **Alternative 1(current choice):** Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
   * Pros: Users will not be blocked from their action if they accidentally entered a duplicate tag.
@@ -228,12 +248,13 @@ storing tags.
   * Pros: Easy to implement
   * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
 
+**Reasoning:**<br/>
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the user's strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
 
-**Aspect: Deletion of non-existing tags:**
+###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
   * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
   * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
@@ -241,6 +262,7 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
+**Reasoning:**<br/>
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
 they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
@@ -520,6 +542,7 @@ Target user : Insurance agent
 * needs to provide services / insurance plans to customer
 * has a need to manage a significant number of customers
 * needs to maintain interactions with his/her customers over a long time span
+* often forgets details about his/her customers
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -682,6 +705,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Command word:** The first word of a user command(e.g. `tag` is the command word of the command `tag 1 at/tall dt/short`)
+* **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
 
 --------------------------------------------------------------------------------------------------------------------
 
