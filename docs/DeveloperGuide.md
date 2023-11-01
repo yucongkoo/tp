@@ -548,7 +548,10 @@ Target user : Insurance agent
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
+**Value proposition**: 
+
+Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
+alongside helping users increase the chance of sealing deals with customers.
 
 
 ## User stories
@@ -591,16 +594,21 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **Use Case: UC01 - add a customer**
 
-**MSS:**
-1. User enters the details of customer to be added.
-2. System adds the customer.
-3. System displays the details of customer added by user.</br>
-   Use case ends.
+**MSS:**<br/>
+&emsp;1. User enters the details of a customer to be added.</br>
+&emsp;2. System adds the customer.</br>
+&emsp;3. System displays the details of customer added by user.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;2a1. System shows an error message to alert User.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;1a.  Details provided by user is incomplete or invalid.</br>
+&emsp;&emsp;1a1. System displays an error message to alert User.</br>
+&emsp;&emsp;Use case ends.
+
+&emsp;1b.  Customer to be added is already in the System.<br/>
+&emsp;&emsp;1b1. System displays an error message to alert User.<br/>
+&emsp;&emsp;Use case ends.
+
 
 #### Filtering customers
 
@@ -690,6 +698,26 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 3a. User provides invalid index or information.</br>
 &emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;&emsp;Use case ends.
+
+#### Updating tags of a customer
+
+**Use Case: UC07 - update tags of a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests to list out the customers.<br/>
+&emsp;2. System displays the requested list of customers to the user.<br/>
+&emsp;3. User enters index of targeted customer and information of tags to update.<br/>
+&emsp;4. System updates the tags of the specified customer accordingly.<br/>
+&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;3a. User provided invalid index or information.<br/>
+&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
 
 ### Non-Functional Requirements
 
