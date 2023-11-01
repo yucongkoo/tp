@@ -638,7 +638,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 2a.  Details provided by user is incomplete or invalid.</br>
 &emsp;2a1. System shows an error message to alert User.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Filtering customers
 
@@ -648,17 +648,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 1. User chooses to filter customers.
 2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.
 3. System filters the customers list.
-4. System displays the list of customers that meet the criteria.
+4. System displays the list of customers that meet the criteria.</br>
    Use case ends.
 
 **Extensions:**</br>
-2b.  User doesn't select any categories to filter for.<br>
-&emsp;2b1. System shows an error message to alert User about the invalid command.
-&emsp;&emsp;&emsp;Use case ends.
+2b.  User doesn't select any categories to filter for.</br>
+&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-3a.  None of the contacts meet the filter criteria.
-&emsp;3a1. System shows an empty list with a warning message.
-&emsp;&emsp;&emsp;Use case ends.### Searching for a person
+3a.  None of the contacts meet the filter criteria.</br>
+&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Deleting a customer
 
@@ -674,7 +674,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 4a. Invalid delete command or invalid index.</br>
 &emsp;4a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Editing a customer
 
@@ -690,7 +690,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 3a. User provides invalid index or information.</br>
 &emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
 #### Searching for a customer
 
@@ -727,9 +727,45 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 3a. User provides invalid index or information.</br>
 &emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
 
-### Non-Functional Requirements
+
+#### Assigning insurance to customer
+
+**Use Case: UC07 - assign insurance to a customer**
+
+**MSS:**
+
+1.  User requests to list out the customers.
+2.  System lists out the customers.
+3.  User assigns insurance to the customer with its respective index.
+4.  System displays the new insurance of customer.</br>
+    Use case ends.
+
+**Extensions:**</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
+
+#### Removing insurance from customer
+
+**Use Case: UC08 - remove insurance from a customer**
+
+**MSS:**
+
+1.  User requests to list out the customers.
+2.  System lists out the customers.
+3.  User removes insurance from the customer with its respective index.
+4.  System displays the new insurance of customer.</br>
+    Use case ends.
+
+**Extensions:**</br>
+3a. User provides invalid index or information.</br>
+&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;&emsp;&nbsp;Use case ends.
+
+
+## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 customer without a noticeable sluggishness in performance for typical usage.
@@ -743,6 +779,35 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+
+--------------------------------------------------------------------------------------------------------------------
+# **Appendix: Planned Enhancements**
+
+This section covers the enhancements we plan to implement in the future.
+
+#### Enhancement 
+(details of the enhancement...)
+
+**Feature flaw:** (feature flaw it fixes...)
+
+(explain how enhancement fixes the flaws... )
+
+--------------------------------------------------------------------------------------------------------------------
+# **Appendix: Effort**
+
+This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
+
+####  Challenges faced / Achievement accomplished `* * *` <- indicates the significance
+
+(details... )
+
+**Effort:** 
+
+(effort put in for this to be done... )
+
+**Result :**
+
+(results achieved with this implementation... )
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -759,26 +824,27 @@ testers are expected to do more *exploratory* testing.
 
 ## Launch and shutdown
 
-1. Initial launch
+**Initial launch**
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file  <br/>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+**Saving window preferences**
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Deleting a person
 
-1. Deleting a person while all persons are being shown
+**Deleting a person while all persons are being shown**
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -789,12 +855,22 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Saving data
 
-1. Dealing with missing/corrupted data files
+**Dealing with missing/corrupted data files**
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+## Feature to show
+
+**Scenario**
+
+Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
+
+1. Test case : `value` <br/>
+    Expected : `result`
+1. ...
+
+_{ more test cases …​ }_
