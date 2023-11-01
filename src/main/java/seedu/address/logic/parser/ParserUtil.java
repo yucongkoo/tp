@@ -1,19 +1,34 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.priority.Priority.isValidPriority;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Tag;
+import seedu.address.model.person.predicate.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.InsuranceContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PriorityContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.RemarkContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.TagContainsKeywordsPredicate;
+import seedu.address.model.priority.Priority;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -68,8 +83,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
@@ -77,7 +90,7 @@ public class ParserUtil {
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return Address.createAddress(address.trim());
     }
 
     /**
@@ -120,5 +133,153 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parse a {@code String insurance} into a {@code Insurance}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     */
+    private static Insurance parseInsurance(String insurance) throws ParseException {
+        requireNonNull(insurance);
+
+        String trimmed = insurance.trim();
+
+        if (!Insurance.isValidInsuranceName(trimmed)) {
+            throw new ParseException(Insurance.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Insurance(trimmed);
+    }
+
+    /**
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>}.
+     */
+    public static Set<Insurance> parseInsurances(Collection<String> insurances) throws ParseException {
+        requireNonNull(insurances);
+        Set<Insurance> insuranceSet = new HashSet<>();
+        for (String i : insurances) {
+            insuranceSet.add(parseInsurance(i));
+        }
+
+        return insuranceSet;
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priority) throws ParseException {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        if (!isValidPriority(trimmedPriority)) {
+            throw new ParseException((Priority.MESSAGE_CONSTRAINTS));
+        }
+        return new Priority(trimmedPriority);
+    }
+
+    /**
+     * Parses a {@code String remark} into a {@code remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code remark} is invalid.
+     */
+    public static Remark parseRemark(String remark) throws ParseException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new ParseException((Remark.MESSAGE_CONSTRAINTS));
+        }
+        return new Remark(trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseNameKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new NameContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseAddressKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new AddressContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseEmailKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseInsuranceKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new InsuranceContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parsePhoneKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new PhoneContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseTagKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new TagContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parseRemarkKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new RemarkContainsKeywordsPredicate(Arrays.asList(keywords));
+    }
+
+    /**
+     * Parses a {@code String keyword} into corresponding {@code Predicate<Person>}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Predicate<Person> parsePriorityKeywords(String keyword) {
+        requireNonNull(keyword);
+        String trimmedKeywords = keyword.trim();
+        String[] keywords = trimmedKeywords.split("\\s+");
+        return new PriorityContainsKeywordsPredicate(Arrays.asList(keywords));
     }
 }

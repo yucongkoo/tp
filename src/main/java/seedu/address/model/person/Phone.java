@@ -11,8 +11,8 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String VALIDATION_REGEX = "\\d{3,}";
+            "Phone number should be an 8-digit number(i.e. a Singapore number).";
+    public static final String VALIDATION_REGEX = "\\d{8}";
     public final String value;
 
     /**
@@ -28,6 +28,8 @@ public class Phone {
 
     /**
      * Returns true if a given string is a valid phone number.
+     *
+     * The phone number has to be 8 digits (Singapore number)
      */
     public static boolean isValidPhone(String test) {
         return test.matches(VALIDATION_REGEX);
@@ -56,6 +58,16 @@ public class Phone {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    /**
+     * Checks if the phone starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the phone starts with the specified prefix, false otherwise.
+     */
+    public static boolean isPhoneContainsPrefix(Phone phone, String prefix) {
+        return phone.value.startsWith(prefix.toLowerCase());
     }
 
 }

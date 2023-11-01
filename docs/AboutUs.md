@@ -7,7 +7,7 @@ title: "About Us"
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `e0960521@u.nus.edu`
+You can reach us at the email `ezcontact@gmail.com`
 
 ## Project team
 
@@ -23,7 +23,7 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 ### Joshua Wee
 
-<img src="images/joshuawee.png" width="200px">
+<img src="images/jweewee.png" width="200px">
 
 [[github](http://github.com/jweewee)]
 [[portfolio](team/jweewee.md)]
@@ -35,7 +35,7 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 <img src="images/songfangyl.png" width="200px">
 
-[[github](http://github.com/songfangyl)] 
+[[github](http://github.com/songfangyl)]
 [[portfolio](team/songfangyl.md)]
 
 * Role: Code quality
@@ -43,9 +43,9 @@ You can reach us at the email `e0960521@u.nus.edu`
 
 ### Lian Zhi Xuan
 
-<img src="images/lianzhixuan.png" width="200px">
+<img src="images/tehopanas.png" width="200px">
 
-[[github](https://github.com/TehOPanas)] [[portfolio](team/lianzhixuan.md)]
+[[github](https://github.com/TehOPanas)] [[portfolio](team/tehopanas.md)]
 
 * Role: Developer, Documentation
 * Responsibilities: Responsible for the quality of various project documents

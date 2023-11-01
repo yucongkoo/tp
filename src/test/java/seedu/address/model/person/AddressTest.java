@@ -1,56 +1,72 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 public class AddressTest {
+    private String validAddress = "some valid address";
+    private String invalidAddress = PersonTestUtil.generateStringOfLength(Address.MAX_LENGTH + 1);
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Address(null));
+    public void createAddress_nullValue_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> Address.createAddress(null));
     }
 
     @Test
-    public void constructor_invalidAddress_throwsIllegalArgumentException() {
-        String invalidAddress = "";
-        assertThrows(IllegalArgumentException.class, () -> new Address(invalidAddress));
+    public void createAddress_validAddress_returnsNonEmptyAddress() {
+        assertEquals(new NonEmptyAddress(validAddress), Address.createAddress(validAddress));
     }
 
     @Test
-    public void isValidAddress() {
-        // null address
-        assertThrows(NullPointerException.class, () -> Address.isValidAddress(null));
-
-        // invalid addresses
-        assertFalse(Address.isValidAddress("")); // empty string
-        assertFalse(Address.isValidAddress(" ")); // spaces only
-
-        // valid addresses
-        assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(Address.isValidAddress("-")); // one character
-        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+    public void createAddress_invalidAddress_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> Address.createAddress(invalidAddress));
     }
 
     @Test
-    public void equals() {
-        Address address = new Address("Valid Address");
+    public void createAddress_emptyString_returnsEmptyAddress() {
+        assertEquals(EmptyAddress.getEmptyAddress(), Address.createAddress(""));
+    }
 
-        // same values -> returns true
-        assertTrue(address.equals(new Address("Valid Address")));
+    @Test
+    public void isValidAddress_emptyString_returnsTrue() {
+        assertTrue(Address.isValidAddress(""));
+        assertTrue(Address.isValidAddress("  "));
+    }
 
-        // same object -> returns true
-        assertTrue(address.equals(address));
+    @Test
+    public void isValidAddress_nonEmptyValidString_returnsTrue() {
+        assertTrue(Address.isValidAddress(validAddress));
+    }
 
-        // null -> returns false
-        assertFalse(address.equals(null));
+    @Test
+    public void isValidAddress_invalidString_returnsFalse() {
+        assertFalse(Address.isValidAddress(invalidAddress));
+    }
 
-        // different types -> returns false
-        assertFalse(address.equals(5.0f));
+    @Test
+    public void isEmptyAddress() {
+        // empty address
+        assertTrue(EmptyAddress.getEmptyAddress().isEmptyAddress());
 
-        // different values -> returns false
-        assertFalse(address.equals(new Address("Other Valid Address")));
+        // non-empty address
+        assertFalse(Address.createAddress("Some address").isEmptyAddress());
+
+        // address with empty value
+        assertTrue(Address.createAddress(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS).isEmptyAddress());
+    }
+
+    @Test
+    public void getValue() {
+        // empty address
+        Address emptyAddress = EmptyAddress.getEmptyAddress();
+        assertEquals(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS, emptyAddress.getValue());
+
+        // non-empty address
+        Address nonEmptyAddress = new NonEmptyAddress("Some address");
+        assertEquals("Some address", nonEmptyAddress.getValue());
     }
 }

@@ -1,10 +1,10 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# EzContact Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,15 @@
 
 # **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
+
+#### feature / implementation involved
+
+**Sources used** :
+1. (sources with hyperlink)
+1. ...
+
+(describe how it is used in the mentioned part...)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -84,7 +92,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-## Logic component
+## Logic component <a id="logic-component"/>
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
@@ -119,7 +127,8 @@ How the parsing works:
 ## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="700" />
+
 
 
 The `Model` component,
@@ -142,7 +151,7 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" width="600" />
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
@@ -158,6 +167,308 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 # **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+## Tag feature
+
+This feature allows user to assign / remove tags to / from customers in EZContact to make customer more recognizable for users.
+
+### Implementation
+
+Before implementing the actual command execution of tag,
+tags first needs to be stored in a `Person` object accordingly.
+A `Person` is associated to any number of `Tag`s.
+
+<puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
+
+
+###### **Implementing `TagCommandParser`**
+
+`TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
+`tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
+Note that **duplicate tags will be ignored**.
+
+
+The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
+
+<puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
+
+
+###### **Implementing `TagCommand`**
+
+`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
+reflect the changes after the tag command completes its execution.
+
+The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
+taking `execute(m)` call to the `TagCommand` as an example.
+
+<puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
+
+###### **Integrating `TagCommandParser` and `TagCommand` into execution logic**
+
+Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
+is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
+The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser`
+to parse the arguments.
+
+The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
+taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
+
+<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+
+### Design considerations:
+
+###### **Aspect: Data structure to store tags in a Person object:**
+
+* **Alternative 1 (Current choice)** : Using `Set<Tag>`.
+  * Pros: Easy to implement, enforces implicit uniqueness of each `Tag` in the `Set<Tag>`.
+  * Cons: Tags are not ordered according to the time it is added.
+* **Alternative 2** : Using `List<Tag>`.
+  * Pros: Tags are ordered according to the time it is added.
+  * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
+
+**Reasoning :**
+
+Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
+storing tags.
+
+###### **Aspect: Duplicate tags handling:**
+
+* **Alternative 1 (Current choice)** : Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
+  * Pros: Users will not be blocked from their action if they accidentally entered a duplicate tag.
+  * Cons: Users might not be warned that they have entered a duplicate tag.
+* **Alternative 2** : Block users from adding/deleting duplicate tags
+  * Pros: Easy to implement
+  * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
+
+**Reasoning :**
+
+Alternative 1 was chosen over alternative 2 based on the following reasons:
+* Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
+* The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
+
+
+###### **Aspect: Deletion of non-existing tags:**
+* **Alternative 1 (Current choice)** : Simply ignore such deletions.
+  * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
+  * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
+* **Alternative 2** : Block users from such deletions.
+  * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
+  * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
+
+**Reasoning :**
+
+Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
+they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
+initially possesses the tag is of lesser importance in this context.
+
+## Find feature
+This find feature is designed to do partial search or prefix search on the customer list.
+
+### Implementation
+
+###### **Implementing `NameContainsKeywordsPredicate`**
+This class determine how the `find` feature searches for the right customers.
+It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
+
+1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
+
+   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
+   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - else returns false
+
+###### **Implementing `FindCommand`**
+`FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
+reflect the changes after the `FindCommand` completes its execution.
+
+### Design considerations:
+
+###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
+
+* **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
+    * Pros: Easy to implement, provides more flexibility to users for finding their customers.
+    * Cons: Cannot differentiate `Lam Jiu` from `Jiu Lam`, a name can also match with multiple keywords (i.e. name `song` match with keywords `song song`).
+* **Alternative 2** : Return customer when all keywords can be found as prefix in customer's name **in order**.
+    * Pros: Can easily and accurately find a specified customer.
+    * Cons: Harder to implement, less flexibility for the users to find the customer.
+* **Alternative 3** : Returns customer when all keywords can be found as prefix in customer's name, where each prefix corresponds to a different word in name, i.e. name `song` cannot match with keywords `song song`.
+    * Pros: More intuitive design.
+    * Cons: Harder to implement, required a long algorithm to do so.
+
+**Reasoning :**
+
+In this case, we chose Alternative 1 over Alternative 2 because the find feature becomes less versatile when we enforce the rule that
+the name must match keywords in order. The consideration about our target users being forgetful affects our decision,
+where users might forget and input the name in the wrong order.</br>
+
+We also chose Alternative 1 over Alternative 3, although Alternative 3 provides a more accurate result, after doing some
+research on many contact book-like applications, we found that most applications do not enforce that each word of the name can only match with one keyword.
+In addition, Alternative 3 requires a more complicated algorithm.
+
+###### **Aspect: Implementation of test method:**
+
+* **Alternative 1 (Current choice)** : Convert keywords to `Stream` and use `allMatch`.
+    * Pros: Easy to implement, code is clean.
+    * Cons: Less flexible, e.g. cannot check the name matches the keywords in order.
+* **Alternative 2** : Directly using the keywords as `List<String>` and using a for loop.
+    * Pros: More flexible, can add more constraint on the test method.
+    * Cons: Harder to implement, given many constraint, code becomes untidy.
+
+**Reasoning :**
+
+Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
+
+## Insurance Feature
+This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
+
+### Implementation
+The implementation of the Insurance feature consists of few parts, distributed across different components :
+
+1. `Insurance` : stores the information about the insurance
+1. `InsuranceCommand` : executes the action to assign/remove insurance
+1. `InsuranceCommandParser` : parses the command to obtain required information
+
+**Implementing `Insurance`**
+
+`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds only one information, `insuranceName`.
+
+<puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
+
+
+**Implementing `InsuranceCommand`**
+
+`InsuranceCommand` executes its command on the `Model`, it will update the `Model` accordingly to reflect the changes made by the command on the `Model`.
+
+Sequence diagram below shows the execution of `InsuranceCommand`.
+
+<puml src="diagrams/insurance-feature/ExecuteInsuranceSequenceDiagram.puml" />
+
+
+**Implementing `InsuranceCommandParser`**
+
+`InsuranceCommandParser` interprets the remaining input after the `insurance` command, and parses it into relevant information needed by `InsuranceCommand`, which are
+`Index` and `UpdatedPersonInsuranceDescriptor`.
+
+* `Index` indicates the customer on the list to perform action on.
+* `UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add(`insurancesToAdd`) and delete(`insurancesToDelete`).
+
+Sequence diagram below shows the execution of `InsuranceCommandParser#parse(String arguments)` with input `(1 ai/car insurance\n di/health insurance)`
+
+<puml src="diagrams/insurance-feature/ParseInsuranceSequenceDiagram.puml" />
+
+**Integrating `InsuranceCommand` and `InsuranceCommandParser`**
+
+In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
+`insurance` and call `parse(arguments)` from `InsuranceCommandParser`.
+
+From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand` and the command will be executed by other `Logic` components.
+
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("insurance 1 \nai/AIA di/Great Eastern)`
+
+<puml src="diagrams/insurance-feature/InsuranceSequence.puml" />
+
+
+### Design Considerations:
+
+###### **Aspect: Storing of `Insurance` in `Person`**
+
+
+* **Alternative 1 (Current choice)** : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
+  * Pros: Able to handle duplicates gracefully and maintain the uniqueness of each insurance with `Set<Insurance>`
+  * Cons: Chronological order of `Insurance` inserted is not maintained
+* **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
+  * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
+  * Cons: Cannot ensure the uniqueness of each insurance and unable to handle duplicates in an efficient manner
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 for its ability to handle the duplicates more efficiently. We believe that this ability is more important
+than the ability to sort the list in a more effective manner, as there are other workarounds that can be almost as efficient using `Set<Insurances>`.
+
+
+###### **Aspect: Handling duplicate `Insurnace` entries**
+
+* **Alternative 1 (Current choice)** : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+  * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate
+  * Cons: Users might not be aware of themselves entering duplicate `Insurance`
+* **Alternative 2** : Blocks the users from performing the action and warn them about the duplicate `Insurance`
+  * Pros: Easy to implement
+  * Cons: Users will be clearly aware of their mistakes in entering duplicate `Insurance`
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of inserting the `InsuranceCommand`, that is wanting to assign an `Insurance` to a customer, so with
+entering duplicate `Insurance`, the users' goal is still achieved, thus we think that there is no need to purposely block the users
+for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
+it will not cause any error.
+
+###### **Aspect: Deleting non-existing `Insurance`**
+
+* **Alternative 1 (Current choice)** : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+    * Pros: Ease of use for the users, as the users are not blocked for deleting non-existing `Insurance`
+    * Cons: Users might not be aware of their mistakes
+* **Alternative 2** : Blocks the users from performing the action and warn them about the mistake
+    * Pros: Easy to implement
+    * Cons: Users will be clearly aware of their mistakes
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of deleting an `Insurance`, that is wanting to remove that `Insurance` from the customer, so removing
+a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
+for such action.
+
+
+## \[Proposed\] Appointment feature
+
+### Implementation
+
+The appointment feature supports 5 different type of command:
+
+1. `add appointment`
+2. `edit appointment`
+3. `delete appointment`
+4. `mark appointment`
+5. `unmark appointment`
+
+## Priority feature
+
+### Implementation
+
+The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+
+**The `Priority` class**
+
+The class is used to represent different priority levels for each `Person`.
+By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+
+<puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+**The `PriorityCommandParser` class**
+
+The class is used to parse the arguments into two information: `index` and `priority`.
+It will then return a `PriorityCommand` should the arguments are valid.
+
+The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
+
+Taking `parse(1 high)`as an example.
+
+<puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
+
+**The `PriorityCommand` class**
+
+The class is responsible in executing the task parsed by the `PriorityCommandParser`.
+It will update the `Priority` of a `Person`.
+
+### Design Consideration:
+
+The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
+The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+
+
 
 ## \[Proposed\] Undo/redo feature
 
@@ -271,106 +582,204 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+Target user : Insurance agent
+
+* needs to provide services / insurance plans to customer
+* has a need to manage a significant number of customers
+* needs to remember customer's information
+* busy
+* needs to maintain interactions with his/her customers over a long time span
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
 
 
 ## User stories
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​           | I want to …​                                                                      | So that I can…​                                                   |
-|----------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `* * *`  | salesperson       | to be able to add new contacts to my address book                                 | keep track of potential leads and customers                       |
-| `* * *`  | salesperson       | update my contacts/information easily                                             |                                                                   |
-| `* * *`  | salesperson       | be able to provide priorities to each contact                                     | prioritise customers that have a high chance on revisiting        |
-| `* * *`  | salesperson       | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                   |
-| `* * *`  | user              | be able to delete contacts                                                        |                                                                   |
-| `* * *`  | user              | to list out all my contacts                                                       | to see all the person in my list                                  |
-| `* * *`  | user              | be able to see my total numbers of entries in my addressbook                      | know how many contacts are in my addressbook now                  |
-| `* *`    | first time user   | be able to know what are the features to use the address book                     | play around with the features and get used to the application     |
-| `* *`    | advanced user     | create my own shortcut key                                                        | execute command easily                                            |
-| `* *`    | salesperson       | tag characteristics to contacts                                                   | visualise what the customer looks like                            |
-| `* *`    | careless person   | be able to undo previous command                                                  | recover from unintentional commands                               |
-| `* *`    | careless person   | be able to detect duplicates entries                                              | avoid adding multiple entries                                     |
-| `* *`    | careless person   | want the adressbook to suggest similar names when im searching for a person       | avoid the effect of typo                                          |
-| `* *`    | forgetful person  | have the application remind me of important task associated with certain contacts |                                                                   |
-| `* *`    | advanced user     | search a contact by its other particulars(not necessarily names)                  | be more flexible when searching for contacts                      |
-| `*`      | first time user   | import my data from external sources into the address book                        | avoid manually add in all the data                                |
-| `*`      | advanced user     | have multiple address books                                                       | differentiate between different contacts                          |
-| `*`      | advanced user     | be able to export my data                                                         | have a backup when data loss happens                              |
-| `*`      | careless person   | be able to add remarks to a certain contact                                       | be reminded of things i should take note when contacting a person |
-| `*`      | salesperson       | know the local time at different countries                                        | <br/>                                                             |
+| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
+|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
+| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
+| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
+| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
+| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
+| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
+| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
+| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
+| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
+| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
+| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
+| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
+| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
+| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
+| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
+| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
+| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
+| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
+| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
+| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
+
 
 
 
 ## Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Adding a person
+#### Adding a customer
 
-**Use Case: UC01 - add a person**
+**Use Case: UC01 - add a customer**
 
-**MSS:**
-1. User enters the details of person to be added.
-2. AddressBook adds the person.
-3. AddressBook displays the details of person added to user.</br>
-   Use case ends.
-
-**Extensions:**</br>
-2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;2a1. AddressBook shows an error message to alert User.</br>
-&emsp;&emsp;&emsp;Use case ends.
-
-#### Delete a person
-
-**Use Case: UC03 - delete a person**
-
-**MSS:**
-1. User lists out the persons.
-2. AddressBook shows the list of persons to user.
-3. User deletes the person with the index number shown in the displayed list.
-4. AddressBook displays the details of the deleted person.</br>
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User enters the details of customer to be added.</br>
+&emsp;2. System adds the customer.</br>
+&emsp;3. System displays the details of customer added by user.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-4a. Invalid delete command or invalid index.</br>
-&emsp;4a1. AddressBook shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;2a.  Details provided by user is incomplete or invalid.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;&emsp;Use case ends.
 
+#### Filtering customers
 
-#### Searching for a person
+**Use case: UC02 - filter customers**
 
-**Use Case: UC05 - search for a person**
-
-**MSS:**
-
-1.  User searches with a prompt.
-2.  AddressBook shows a list of person matching the prompt.
-3.  User views the person's information.</br>
-    Use case ends.
+**MSS:**</br>
+&emsp;1. User chooses to filter customers.</br>
+&emsp;2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.</br>
+&emsp;3. System filters the customers list.</br>
+&emsp;4. System displays the list of customers that meet the criteria.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-1a. User searches with an invalid prompt format</br>
-&emsp;1a1. AddressBook shows an error message to User.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;2b.  User doesn't select any categories to filter for.</br>
+&emsp;&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
-2a. There is no person that match the prompt.</br>
-&emsp;2a1. AddressBook shows an empty list.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a.  None of the contacts meet the filter criteria.</br>
+&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;&emsp;Use case ends.
+
+#### Deleting a customer
+
+**Use Case: UC03 - delete a customer**
+
+**MSS:**</br>
+&emsp;1. User lists out the customers.</br>
+&emsp;2. System shows the list of customers to user.</br>
+&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
+&emsp;4. System displays the details of the removed customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;4a. Invalid delete command or invalid index.</br>
+&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+#### Editing a customer
+
+**Use Case: UC04 - edit a customer's details**
+
+**MSS:**</br>
+&emsp;1. User requests to list out the customers.</br>
+&emsp;2. System shows the list of customers.</br>
+&emsp;3. User edits the details of customer with its respective index.</br>
+&emsp;4. System displays the details of the edited customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+#### Searching for a customer
+
+**Use Case: UC05 - search for a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User searches with a prompt.</br>
+&emsp;2.  System shows a list of customers matching the prompt.</br>
+&emsp;3.  User views the customers' information.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;1a. User searches with an invalid prompt format</br>
+&emsp;&emsp;1a1. System shows an error message to User.</br>
+&emsp;&emsp;Use case ends.
+
+&emsp;2a. There is no customer that match the prompt.</br>
+&emsp;&emsp;2a1. System shows an empty list.</br>
+&emsp;&emsp;Use case ends.
+
+#### Assigning priority to customer
+
+**Use Case: UC06 - assign priority to a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns priority to the customer with its respective index.</br>
+&emsp;4.  System displays the new priority of customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 
-### Non-Functional Requirements
+#### Assigning insurance to customer
+
+**Use Case: UC07 - assign insurance to a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns insurance to the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+#### Removing insurance from customer
+
+**Use Case: UC08 - remove insurance from a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User removes insurance from the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+
+## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 customer without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
+5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 
 *{More to be added}*
 
@@ -378,6 +787,35 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+
+--------------------------------------------------------------------------------------------------------------------
+# **Appendix: Planned Enhancements**
+
+This section covers the enhancements we plan to implement in the future.
+
+#### Enhancement
+(details of the enhancement...)
+
+**Feature flaw:** (feature flaw it fixes...)
+
+(explain how enhancement fixes the flaws... )
+
+--------------------------------------------------------------------------------------------------------------------
+# **Appendix: Effort**
+
+This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
+
+####  Challenges faced / Achievement accomplished `* * *` <- indicates the significance
+
+(details... )
+
+**Effort:**
+
+(effort put in for this to be done... )
+
+**Result :**
+
+(results achieved with this implementation... )
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -394,26 +832,27 @@ testers are expected to do more *exploratory* testing.
 
 ## Launch and shutdown
 
-1. Initial launch
+**Initial launch**
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file  <br/>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+**Saving window preferences**
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Deleting a person
 
-1. Deleting a person while all persons are being shown
+**Deleting a person while all persons are being shown**
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -424,12 +863,22 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Saving data
 
-1. Dealing with missing/corrupted data files
+**Dealing with missing/corrupted data files**
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+## Feature to show
+
+**Scenario**
+
+Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
+
+1. Test case : `value` <br/>
+    Expected : `result`
+1. ...
+
+_{ more test cases …​ }_

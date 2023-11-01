@@ -1,13 +1,37 @@
 {
   "persons": [ {
-    "name": "Valid Person",
-    "phone": "9482424",
-    "email": "hans@example.com",
-    "address": "4th street"
+    "name" : {
+      "value" : "Valid Person"
+    },
+    "phone" : {
+      "value" : "94824245"
+    },
+    "email" : {
+      "value" : "hans@example.com"
+    },
+    "address" : {
+      "value" : "4th street"
+    },
+    "tags" : [ ],
+    "priority" : {
+      "value" : "medium"
+    }
   }, {
-    "name": "Person With Invalid Phone Field",
-    "phone": "948asdf2424",
-    "email": "hans@example.com",
-    "address": "4th street"
+    "name" : {
+      "value" : "Person With Invalid Phone Field"
+    },
+    "phone" : {
+      "value" : "948asdf2424"
+    },
+    "email" : {
+      "value" : "hans@example.com"
+    },
+    "address" : {
+      "value" : "4th street"
+    },
+    "tags" : [ ],
+    "priority" : {
+      "value" : "medium"
+    }
   } ]
 }

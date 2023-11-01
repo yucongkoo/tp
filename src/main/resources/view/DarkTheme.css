@@ -3,6 +3,164 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+/* Menu bar(for the header) */
+.menu-bar {
+    -fx-background-color: derive(#F2F4F0, 20%);
+}
+
+.menu-bar .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #0F120D;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+/* Status bar(for the footer) */
+.status-bar {
+    -fx-background-color: derive(#F2F4F0, 30%);
+}
+
+
+.status-bar .label {
+      -fx-font-family: "Segoe UI Light";
+      -fx-text-fill: #0F120D;
+      -fx-padding: 4px;
+      -fx-pref-height: 30px;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#F2F4F0, 30%);
+    -fx-border-color: derive(#F2F4F0, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: #0F120D;
+}
+
+/* Command box */
+.stack-pane {
+     -fx-background-color: derive(#D6E1DD, 20%);
+     -fx-border-radius: 15;
+     -fx-border-width: 0;
+     -fx-background-radius: 15;
+}
+
+.pane-with-border {
+    -fx-background-color: derive(#F2F4F0, 20%);
+    -fx-border-color: derive(#F2F4F0, 10%);
+    -fx-border-top-width: 1px;
+}
+
+#commandTextField {
+    -fx-background-color: transparent #D6E1DD transparent #D6E1DD;
+    -fx-background-insets: 0;
+    -fx-border-color: #F2F4F0;
+    -fx-border-insets: 0;
+    -fx-border-width: 0;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: #0F120D;
+}
+
+
+/* Result display box */
+.result-display {
+    -fx-background-color: transparent #D6E1DD transparent #D6E1DD;
+    -fx-background-insets: 0;
+    -fx-border-color: #F2F4F0;
+    -fx-border-insets: 0;
+    -fx-border-width: 0;
+    -fx-border-radius: 15;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: #0F120D;
+}
+
+
+.result-display .content {
+    -fx-background-color: derive(#D6E1DD, 20%);
+}
+
+/* List view(for result display) */
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: derive(#F2F4F0, 20%);
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #D6E1DD;
+    -fx-border-color: #8DAA91;
+    -fx-border-width: 1;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #D6E1DD;
+    -fx-border-color: #8DAA91;
+    -fx-border-width: 1;
+}
+
+.list-cell:empty {
+    -fx-background-color: #F2F4F0;
+}
+
+
+.list-cell .label {
+    -fx-text-fill: #0F120D;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px !important;
+    -fx-text-fill: #0F120D;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 16px;
+    -fx-text-fill: #0F120D;
+}
+
+/* Scroll bar */
+.scroll-bar {
+    -fx-background-color: derive(#D6E1DD, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#D6E1DD, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+/* -----------------------------------------------original---------------------------------------------------- */
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -87,92 +245,6 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-.list-view {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.list-cell {
-    -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #515658;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
-}
-
-.list-cell .label {
-    -fx-text-fill: white;
-}
-
-.cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
-}
-
-.cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #010504;
-}
-
-.stack-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
-}
-
-.status-bar {
-    -fx-background-color: derive(#1d1d1d, 30%);
-}
-
-.result-display {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-}
-
-.result-display .label {
-    -fx-text-fill: black !important;
-}
-
-.status-bar .label {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-padding: 4px;
-    -fx-pref-height: 30px;
-}
-
-.status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
-    -fx-border-width: 1px;
-}
-
-.status-bar-with-border .label {
-    -fx-text-fill: white;
-}
 
 .grid-pane {
     -fx-background-color: derive(#1d1d1d, 30%);
@@ -191,22 +263,6 @@
 .context-menu .label {
     -fx-text-fill: white;
 }
-
-.menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
-.menu .left-container {
-    -fx-background-color: black;
-}
-
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
@@ -281,32 +337,6 @@
     -fx-text-fill: white;
 }
 
-.scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
-}
-
-.scroll-bar .increment-button, .scroll-bar .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
-}
-
-.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-}
-
-.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
-}
-
-.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
-}
-
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -317,36 +347,52 @@
     -fx-text-fill: #F70D1A;
 }
 
-#commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
-    -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-}
-
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
-#resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
-}
 
-#tags {
+#flowPaneLabels {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-    -fx-padding: 1 3 1 3;
+#flowPaneLabels .label {
+    -fx-padding: 3 3 3 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-font-size: 13;
+}
+
+.attribute-card {
+    -fx-background-radius: 10;
+    -fx-background-color: #FFFFFF;
+    -fx-min-width: 200px;
+}
+
+.attribute-card-container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-max-width: 200px;
+}
+
+.attribute-card-label-container {
+    -fx-background-radius: 5;
+    -fx-background-color: #FFFFFF;
+}
+
+.icons-container {
+    -fx-max-height: 5;
+    -fx-max-width: 5;
+}
+
+.priority {
+    -fx-font-family: "Baloo Bhaijaan";
+    -fx-background-color: #2ebb1d;
+}
+
+.remark-card-container {
+    -fx-background-color: #8DAA91;
+    -fx-background-radius: 10;
+    -fx-max-width: 200px;
 }

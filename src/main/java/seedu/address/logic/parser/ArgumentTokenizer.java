@@ -1,5 +1,20 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_UPPER;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +41,32 @@ public class ArgumentTokenizer {
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
+    }
+
+    /**
+     * Converts all uppercase {@code Prefix} to lowercase {@code Prefix}
+     *
+     * @param argsString arguments that may contain uppercase prefixes
+     * @return processed arguments containing only lowercase prefixes
+     */
+    public static String preprocessArgsString(String argsString) {
+        requireNonNull(argsString);
+
+        Prefix[] uppercasePrefixes = new Prefix[] { PREFIX_NAME_UPPER, PREFIX_PHONE_UPPER,
+            PREFIX_EMAIL_UPPER, PREFIX_PRIORITY_UPPER, PREFIX_TAG_UPPER, PREFIX_REMARK_UPPER,
+            PREFIX_INSURANCE_UPPER, PREFIX_ADDRESS_UPPER, PREFIX_ADD_INSURANCE_UPPER,
+            PREFIX_DELETE_INSURANCE_UPPER, PREFIX_ADD_TAG_UPPER, PREFIX_DELETE_TAG_UPPER };
+
+        String processedArgs = argsString;
+
+        for (Prefix p : uppercasePrefixes) {
+            String upperPrefix = p.getPrefix();
+            String lowerPrefix = upperPrefix.toLowerCase();
+
+            processedArgs = processedArgs.replaceAll(" " + upperPrefix, " " + lowerPrefix);
+        }
+
+        return processedArgs;
     }
 
     /**
@@ -90,11 +131,11 @@ public class ArgumentTokenizer {
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
         // Insert a PrefixPosition to represent the preamble
-        PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
+        PrefixPosition preambleMarker = new PrefixPosition(PREFIX_EMPTY, 0);
         prefixPositions.add(0, preambleMarker);
 
         // Add a dummy PrefixPosition to represent the end of the string
-        PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());
+        PrefixPosition endPositionMarker = new PrefixPosition(PREFIX_EMPTY, argsString.length());
         prefixPositions.add(endPositionMarker);
 
         // Map prefixes to their argument values (if any)
@@ -116,10 +157,9 @@ public class ArgumentTokenizer {
     private static String extractArgumentValue(String argsString,
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
-        Prefix prefix = currentPrefixPosition.getPrefix();
-
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
-        String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
+        int valueStartPos = currentPrefixPosition.getEndPosition();
+        int valueEndPos = nextPrefixPosition.getStartPosition();
+        String value = argsString.substring(valueStartPos, valueEndPos);
 
         return value.trim();
     }
@@ -142,6 +182,14 @@ public class ArgumentTokenizer {
 
         Prefix getPrefix() {
             return prefix;
+        }
+
+
+        /**
+         * Returns the end position of the prefix.
+         */
+        int getEndPosition() {
+            return startPosition + prefix.getPrefixLength();
         }
     }
 
