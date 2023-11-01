@@ -1,5 +1,4 @@
 <head-bottom>
-  <link rel="icon" href="{{baseUrl}}/images/address_book.png">
   <link rel="stylesheet" href="{{baseUrl}}/stylesheets/main.css">
 </head-bottom>
 
