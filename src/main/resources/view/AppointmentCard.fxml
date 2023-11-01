@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<VBox fx:id="appointmentCard" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" styleClass="remark-card-container" minWidth="200" maxWidth="200" VBox.vgrow="ALWAYS">
+    <padding>
+        <Insets top="15" right="10" bottom="10" left="12" />
+    </padding>
+
+    <VBox>
+        <HBox>
+            <ImageView fx:id="dateIcon" fitWidth="25" fitHeight="25" preserveRatio="true"/>
+            <Label fx:id="date" styleClass="cell_small_label" wrapText="true"/>
+        </HBox>
+
+        <HBox>
+            <ImageView fx:id="timeIcon" fitWidth="25" fitHeight="25" preserveRatio="true"/>
+            <Label fx:id="time" styleClass="cell_small_label" wrapText="true"/>
+        </HBox>
+
+        <HBox>
+            <ImageView fx:id="venueIcon" fitWidth="25" fitHeight="25" preserveRatio="true"/>
+            <Label fx:id="venue" styleClass="cell_small_label" wrapText="true"/>
+        </HBox>
+
+        <HBox>
+            <Label fx:id="count" styleClass="cell_small_label" wrapText="true"/>
+        </HBox>
+
+    </VBox>
+</VBox>
+

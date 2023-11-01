@@ -39,9 +39,8 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
     private RemarkCard remarkCard;
-    //    private AppointmentAttributeCard dateCard;
-    //    private AppointmentAttributeCard timeCard;
-    //    private AppointmentAttributeCard venueCard;
+
+    private AppointmentAttributeCard appointmentCard;
 
 
     @FXML
@@ -60,6 +59,8 @@ public class PersonCard extends UiPart<Region> {
     private VBox addressCardPlaceholder;
     @FXML
     private VBox remarkCardPlaceholder;
+    @FXML
+    private VBox appointmentCardPlaceholder;
     @FXML
     private FlowPane flowPaneLabels;
 
@@ -83,6 +84,7 @@ public class PersonCard extends UiPart<Region> {
         loadInsurance();
         loadTags();
         loadRemarkCard();
+        loadAppointmentCard();
     }
 
     private void loadPriority() {
@@ -140,5 +142,18 @@ public class PersonCard extends UiPart<Region> {
 
         remarkCard = new RemarkCard(remarkString);
         remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
+    }
+
+    private void loadAppointmentCard() {
+        /*
+        String appointmentDateString = person.getAppointment().getDate();
+
+        if (appointmentDateString.equals("-")) {
+            return;
+        } currently thinking of a way to do this, current method is not feasible
+        as it causes appointmentCard to disappear when it is unmarked/decremented.
+         */
+        appointmentCard = new AppointmentAttributeCard(person.getAppointment(), person.getAppointmentCount());
+        appointmentCardPlaceholder.getChildren().add(appointmentCard.getRoot());
     }
 }
