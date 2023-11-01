@@ -1,10 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
@@ -45,14 +46,16 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "<email>] "
             + "[" + PREFIX_ADDRESS + "<address>]\n";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited customer: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_EDIT_TAG_ERROR = "Cannot edit tags. "
             + "Please use \"tag\" command to add/delete tags.";
-    public static final String MESSAGE_EDIT_PRIORITY_ERROR = "Cannot edit priorities. "
+    public static final String MESSAGE_EDIT_PRIORITY_ERROR = "Cannot edit priority. "
             + "Please use \"pr\" command to assign new priority.";
     public static final String MESSAGE_EDIT_REMARK_ERROR = "Cannot edit remark. "
             + "Please use \"remark\" command to modify remark.";
+    public static final String MESSAGE_EDIT_INSURANCE_ERROR = "Cannot edit insurance. "
+            + "Please use \"insurance\" command to add/delete insurances.";
 
     /** Stores a prefix and its corresponding edit error message as a key-value pair. **/
     public static final HashMap<Prefix, String> PREFIX_EDIT_ERROR_MESSAGE_MAP = new HashMap<>() {
@@ -60,6 +63,7 @@ public class EditCommand extends Command {
             put(PREFIX_TAG, MESSAGE_EDIT_TAG_ERROR);
             put(PREFIX_PRIORITY, MESSAGE_EDIT_PRIORITY_ERROR);
             put(PREFIX_REMARK, MESSAGE_EDIT_REMARK_ERROR);
+            put(PREFIX_INSURANCE, MESSAGE_EDIT_INSURANCE_ERROR);
         }
     };
 
@@ -88,7 +92,7 @@ public class EditCommand extends Command {
 
         logger.fine("EditCommand executing...");
 
-        Person personToEdit = getPersonToUpdate(model, index);
+        Person personToEdit = getPersonAtIndex(model, index);
         Person editedPerson = createPersonWithEditedInformation(personToEdit, editPersonDescriptor);
 
         verifyPersonChanged(personToEdit, editedPerson);
@@ -100,7 +104,17 @@ public class EditCommand extends Command {
     }
 
     private void checkIsDuplicatePerson(Model model, Person personToEdit, Person editedPerson) throws CommandException {
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        boolean hasDuplicateInModel = !personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson);
+        boolean isDuplicateOfOthersInModel = false;
+
+        for (int i = 0; i < model.getFilteredPersonListSize(); i++) {
+            Person personAtIndex = getPersonAtIndex(model, Index.fromZeroBased(i));
+            if (i != index.getZeroBased() && editedPerson.isSamePerson(personAtIndex)) {
+                isDuplicateOfOthersInModel = true;
+            }
+        }
+
+        if (hasDuplicateInModel || isDuplicateOfOthersInModel) {
             logger.finer("EditCommand execution failed due to duplicated persons in list");
             throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }

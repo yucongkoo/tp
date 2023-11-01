@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonTagCountIsValid;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
@@ -32,7 +32,7 @@ public class TagCommand extends Command {
             + "[" + PREFIX_ADD_TAG + "<tag_to_add>]... "
             + "[" + PREFIX_DELETE_TAG + "<tag_to_delete>]...\n";
 
-    public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of person: %s";
+    public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of customer: %s";
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
 
@@ -64,7 +64,7 @@ public class TagCommand extends Command {
 
         verifyCommandIsExecutable(model);
 
-        Person personToUpdate = getPersonToUpdate(model, index);
+        Person personToUpdate = getPersonAtIndex(model, index);
         Person updatedPerson = createPersonWithUpdatedTags(personToUpdate,
                 updatePersonTagsDescriptor.getTagsToAdd(),
                 updatePersonTagsDescriptor.getTagsToDelete());

@@ -35,9 +35,10 @@ import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Tag;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PersonContainsKeywordsPredicate;
 import seedu.address.model.priority.Priority;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -85,9 +86,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        NameContainsKeywordsPredicate nameContainsKeywordsPredicate = new NameContainsKeywordsPredicate(keywords);
+
+        PersonContainsKeywordsPredicate predicate =
+                new PersonContainsKeywordsPredicate(List.of(nameContainsKeywordsPredicate));
+
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(predicate), command);
     }
 
     @Test
@@ -104,7 +110,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tag() throws Exception {
+    public void parseCommand_tag_returnsTagCommand() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
 
         Set<Tag> testSetToAdd = Set.of(new Tag("tagToAdd"));

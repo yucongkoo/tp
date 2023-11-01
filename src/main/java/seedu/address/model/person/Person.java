@@ -204,8 +204,9 @@ public class Person {
         Remark remark = personToEdit.remark;
         Set<Tag> tags = personToEdit.tags;
         Priority priority = personToEdit.priority;
+        Set<Insurance> insurances = personToEdit.insurances;
 
-        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, personToEdit.insurances, priority);
+        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, insurances, priority);
     }
 
     /**

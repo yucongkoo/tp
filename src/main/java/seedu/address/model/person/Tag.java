@@ -70,4 +70,20 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    /**
+     * Checks if the tag name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the tag name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isTagContainsPrefix(Tag tag, String prefix) {
+        String lowerTagName = tag.tagName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerNamePart: lowerTagName.split("\\s+")) {
+            if (lowerNamePart.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
