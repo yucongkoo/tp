@@ -75,4 +75,14 @@ public class Email {
         return value.hashCode();
     }
 
+    /**
+     * Checks if the email starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the email starts with the specified prefix, false otherwise.
+     */
+    public static boolean isEmailContainsPrefix(Email email, String prefix) {
+        return email.value.startsWith(prefix.toLowerCase());
+    }
+
 }

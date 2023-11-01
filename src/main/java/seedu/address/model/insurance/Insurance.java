@@ -67,4 +67,21 @@ public class Insurance {
     public String getInsuranceName() {
         return insuranceName;
     }
+
+    /**
+     * Checks if the insurance name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the insurance name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isInsuranceContainsPrefix(Insurance insurance, String prefix) {
+        String lowerInsuranceName = insurance.insuranceName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerNamePart: lowerInsuranceName.split("\\s+")) {
+            if (lowerNamePart.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

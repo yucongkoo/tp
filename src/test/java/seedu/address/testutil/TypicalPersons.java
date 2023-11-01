@@ -87,7 +87,7 @@ public class TypicalPersons {
             .withAppointmentCount(INITIAL_COUNT)
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94821427")
-            .withEmail("lydia@example.com").withAddress("little tokyo")
+            .withEmail("lydia@example.com").withAddress("little tokyo").withPriority("low")
             .withAppointment("25 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
@@ -110,7 +110,7 @@ public class TypicalPersons {
             .build();
 
     public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
-            .withEmail("jojo@example.com").withAddress("100th street")
+            .withEmail("jojo@example.com").withAddress("100th street").withRemark("Some remark")
             .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
@@ -129,6 +129,7 @@ public class TypicalPersons {
             .withAppointment(VALID_APPOINTMENT_AMY, VALID_APPOINTMENT_TIME_AMY, VALID_APPOINTMENT_VENUE_AMY)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
+
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withRemark(VALID_REMARK_BOB)
@@ -168,6 +169,7 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, CALMEN, JOJO, KAKA));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE,
+                CALMEN, JOJO, KAKA));
     }
 }
