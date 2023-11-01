@@ -4,11 +4,7 @@ title: "Developer Guide"
 pageNav: 3
 ---
 
-<<<<<<< Updated upstream
 # EzContact Developer Guide
-=======
-# EZContact Developer Guide
->>>>>>> Stashed changes
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -166,6 +162,8 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
+This feature allows user to assign / remove tags to / from customers in EZContact to make customer more recognizable for users.
+
 ### Implementation
 
 Before implementing the actual command execution of tag,
@@ -175,7 +173,7 @@ A `Person` is associated to any number of `Tag`s.
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
 
-**Implementing `TagCommandParser`**
+###### **Implementing `TagCommandParser`**
 
 `TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
 `tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
@@ -188,7 +186,7 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
 
-**Implementing `TagCommand`**
+###### **Implementing `TagCommand`**
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
 reflect the changes after the tag command completes its execution.
@@ -198,7 +196,7 @@ taking `execute(m)` call to the `TagCommand` as an example.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
-**Integrating `TagCommandParser` and `TagCommand` into execution logic**
+###### **Integrating `TagCommandParser` and `TagCommand` into execution logic**
 
 Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
 is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
@@ -212,97 +210,110 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
 
 ### Design considerations:
 
-**Aspect: Data structure to store tags in a Person object:**
+###### **Aspect: Data structure to store tags in a Person object:**
 
-* **Alternative 1(current choice):** Using `Set<Tag>`.
+* **Alternative 1 (Current choice)** : Using `Set<Tag>`.
   * Pros: Easy to implement, enforces implicit uniqueness of each `Tag` in the `Set<Tag>`.
   * Cons: Tags are not ordered according to the time it is added.
-* **Alternative 2:** Using `List<Tag>`.
+* **Alternative 2** : Using `List<Tag>`.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
+
+**Reasoning :**
 
 Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
-**Aspect: Duplicate tags handling:**
+###### **Aspect: Duplicate tags handling:**
 
-* **Alternative 1(current choice):** Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
+* **Alternative 1 (Current choice)** : Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
   * Pros: Users will not be blocked from their action if they accidentally entered a duplicate tag.
   * Cons: Users might not be warned that they have entered a duplicate tag.
-* **Alternative 2:** Block users from adding/deleting duplicate tags
+* **Alternative 2** : Block users from adding/deleting duplicate tags
   * Pros: Easy to implement
   * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
 
+**Reasoning :**
+
 Alternative 1 was chosen over alternative 2 based on the following reasons:
-* Repeated action signals the user's strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
+* Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
 
-**Aspect: Deletion of non-existing tags:**
-* **Alternative 1(current choice):** Simply ignore such deletions.
+###### **Aspect: Deletion of non-existing tags:**
+* **Alternative 1 (Current choice)** : Simply ignore such deletions.
   * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
   * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
-* **Alternative 2:** Block users from such deletions.
+* **Alternative 2** : Block users from such deletions.
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
+
+**Reasoning :**
 
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
 they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
 ## Find feature
-This find feature is designed to be a partial search or prefix search.
+This find feature is designed to do partial search or prefix search on the customer list.
 
 ### Implementation
 
-**Implementing `NameContainsKeywordsPredicate`**
-This class determine how the find feature find the customers. It contains a test method to test such, the details as below.
-* This find feature is a partial search, we said keyword match with the name when name contains keyword as a prefix.
-* This test method return true when all the keywords match with the name.
-* Using a stream to check if all the keywords match with the name.
+###### **Implementing `NameContainsKeywordsPredicate`**
+This class determine how the `find` feature searches for the right customers.
+It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
-**Implementing `FindCommand`**
-This class execute the find command on `Model`, it will update the `Model` accordingly to
-reflect the changes after the find command completes its execution.
+1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria: 
+
+   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true 
+   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - else returns false
+
+###### **Implementing `FindCommand`**
+`FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
+reflect the changes after the `FindCommand` completes its execution.
 
 ### Design considerations:
 
-**Aspect: Design of test method:**
+###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
 
-* **Alternative 1(current choice):** Returns customers when their names match with all keywords as a prefix.
-    * Pros: Easy to implement, more flexible for user to find customers.
-    * Cons: Cannot differentiate `Lam Jiu` and `Jiu Lam`, a name can match with multiple keywords, i.e. name `song` match with keywords `song song`.
-* **Alternative 2:** Returns customers when their names match with all keywords as a prefix in order.
+* **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
+    * Pros: Easy to implement, provides more flexibility to users for finding their customers.
+    * Cons: Cannot differentiate `Lam Jiu` from `Jiu Lam`, a name can also match with multiple keywords (i.e. name `song` match with keywords `song song`).
+* **Alternative 2** : Return customer when all keywords can be found as prefix in customer's name **in order**.
     * Pros: Can easily and accurately find a specified customer.
-    * Cons: Harder to implement, less flexible for user to find for customer.
-* **Alternative 3:** Returns customers when their names match with all keywords as a prefix, where each name can only match with one keyword, i.e. name `song` cannot match with keywords `song song`.
+    * Cons: Harder to implement, less flexibility for the users to find the customer.
+* **Alternative 3** : Returns customer when all keywords can be found as prefix in customer's name, where each prefix corresponds to a different word in name, i.e. name `song` cannot match with keywords `song song`.
     * Pros: More intuitive design.
-    * Cons: Hard to implement, required a long algorithm to do so.
+    * Cons: Harder to implement, required a long algorithm to do so.
 
-In this case, we use choose Alternative 1 over Alternative 2 because the find feature become less useful when we restrict
-the name must match keywords in order. The consideration about our target user is a forgetful insurance agent affect our decision,
-since our target audience might forget and input the name in wrong order sometimes.</br>
+**Reasoning :**
 
-Alternative 1 over Alternative 3, although Alternative 3 seems like a more accurate version, but we do some research on most of the contact book like application.
-We found that most of the find feature design do not restrict that each name can only match with one keyword.
+In this case, we chose Alternative 1 over Alternative 2 because the find feature becomes less versatile when we enforce the rule that
+the name must match keywords in order. The consideration about our target users being forgetful affects our decision,
+where users might forget and input the name in the wrong order.</br>
+
+We also chose Alternative 1 over Alternative 3, although Alternative 3 provides a more accurate result, after doing some 
+research on many contact book-like applications, we found that most applications do not enforce that each word of the name can only match with one keyword.
 In addition, Alternative 3 requires a more complicated algorithm.
-Hence, we choose Alternative 1 over 3.
 
-**Aspect: Implementation of test method:**
+###### **Aspect: Implementation of test method:**
 
-* **Alternative 1(current choice):** Convert keywords to `Stream` and using `allMatch`.
+* **Alternative 1 (Current choice)** : Convert keywords to `Stream` and use `allMatch`.
     * Pros: Easy to implement, code is clean.
-    * Cons: Less flexible, ex: cannot check the name match the keywords in order.
-* **Alternative 2:** Directly using the keywords as `List<String>` and using a for loop.
+    * Cons: Less flexible, e.g. cannot check the name matches the keywords in order.
+* **Alternative 2** : Directly using the keywords as `List<String>` and using a for loop.
     * Pros: More flexible, can add more constraint on the test method.
-    * Cons: Hard to implement, if we want to add many constraint, code is untidy.
-Alternative 1 over Alternative 2, because we choose a slightly simpler design and do not need much flexibility on implementation.
-Hence, we decided to choose an alternative which can keep our code clean and easy to implement.
+    * Cons: Harder to implement, given many constraint, code becomes untidy.
 
+**Reasoning :** 
 
+Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
 ## Insurance Feature
-This feature allows user to assign / remove insurance package(s) to / from customers in EZContact.
+This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
 
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
@@ -318,44 +329,46 @@ The implementation of the Insurance feature consists of few parts, distributed a
 <puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
 
 
-
-
 **Implementing `InsuranceCommand`**
 
-`InsuranceCommand` executes its command on the `Model`, it will update the model accordingly to reflect the changes made by the command on the `Model`
+`InsuranceCommand` executes its command on the `Model`, it will update the `Model` accordingly to reflect the changes made by the command on the `Model`.
 
-**[Sequence diagram of executing `InsuranceCommand`]**
+Sequence diagram below shows the execution of `InsuranceCommand`.
+
+<puml src="diagrams/insurance-feature/ExecuteInsuranceSequenceDiagram.puml" />
+
 
 **Implementing `InsuranceCommandParser`**
 
 `InsuranceCommandParser` interprets the remaining input after the `insurance` command, and parses it into relevant information needed by `InsuranceCommand`, which are
 `Index` and `UpdatedPersonInsuranceDescriptor`.
 
-* `Index` indicates the customer on the list to perform action on
-* `UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
+* `Index` indicates the customer on the list to perform action on.
+* `UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add(`insurancesToAdd`) and delete(`insurancesToDelete`).
 
+Sequence diagram below shows the execution of `InsuranceCommandParser#parse(String arguments)` with input `(1 ai/car insurance\n di/health insurance)`
+
+<puml src="diagrams/insurance-feature/ParseInsuranceSequenceDiagram.puml" />
 
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
 
 In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
-`ins` and call `parse(String args)` from `InsuranceCommandParser`.
+`insurance` and call `parse(arguments)` from `InsuranceCommandParser`.
 
-From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand`.
+From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand` and the command will be executed by other `Logic` components.
 
-**[Sequence Diagram from `AddressBookParser` -> `Model`]**
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("insurance 1 \nai/AIA di/Great Eastern)`
+
+<puml src="diagrams/insurance-feature/InsuranceSequence.puml" />
 
 
 ### Design Considerations:
 
 ###### **Aspect: Storing of `Insurance` in `Person`**
 
-<<<<<<< Updated upstream
-* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
-  * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
-=======
-* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+
+* **Alternative 1 (Current choice)** : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
   * Pros: Able to handle duplicates gracefully and maintain the uniqueness of each insurance with `Set<Insurance>`
->>>>>>> Stashed changes
   * Cons: Chronological order of `Insurance` inserted is not maintained
 * **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
@@ -369,7 +382,7 @@ than the ability to sort the list in a more effective manner, as there are other
 
 ###### **Aspect: Handling duplicate `Insurnace` entries**
 
-* **Alternative 1** (Current Solution) : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+* **Alternative 1 (Current choice)** : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
   * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate 
   * Cons: Users might not be aware of themselves entering duplicate `Insurance`  
 * **Alternative 2** : Blocks the users from performing the action and warn them about the duplicate `Insurance`
@@ -386,7 +399,7 @@ it will not cause any error.
 
 ###### **Aspect: Deleting non-existing `Insurance`**
 
-* **Alternative 1** (Current Solution) : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+* **Alternative 1 (Current choice)** : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
     * Pros: Ease of use for the users, as the users are not blocked for deleting non-existing `Insurance`
     * Cons: Users might not be aware of their mistakes
 * **Alternative 2** : Blocks the users from performing the action and warn them about the mistake
@@ -400,12 +413,6 @@ The reasoning comes from the users' intention of deleting an `Insurance`, that i
 a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
 for such action. 
 
-<<<<<<< Updated upstream
-The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical
-order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
-
-=======
->>>>>>> Stashed changes
 
 ## \[Proposed\] Appointment feature
 
@@ -571,6 +578,8 @@ Target user : Insurance agent
 
 * needs to provide services / insurance plans to customer
 * has a need to manage a significant number of customers
+* needs to remember customer's information
+* busy
 * needs to maintain interactions with his/her customers over a long time span
 * prefer desktop apps over other types
 * can type fast
