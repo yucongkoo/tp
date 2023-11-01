@@ -106,6 +106,8 @@ will be using these names to refer to the section specified in the following Use
 * Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
 ![AddEg2](images/add-command-examples/example2.png)
 
+<br>
+
 ### Listing all customers : `list`
 
 Shows a list of all existing customers in EZContact and the size of the list.
@@ -120,6 +122,8 @@ Examples:
 * `list` shows a list of all existing customers and the size of the list.
 
 </box>
+
+<br>
 
 ### Deleting a customer : `delete`
 
@@ -141,6 +145,7 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd customer in the displayed list.
 * `find Betsy` followed by `delete 1` deletes the 1st customer appeared in the list displayed by the `find` command.
 
+<br>
 
 ### Editing a customer : `edit`
 
@@ -149,7 +154,7 @@ Examples:
 `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>]`
 
 **Description:**
-* Edits the customer at the specified `<index>`. 
+* Edits the customer at the specified `<index>`.
 * `<index>` refers to the index number shown in the displayed customer list.
 * If values are provided for certain fields, existing values of their respective fields will be edited to the provided values.
 * If no value is provided, the values of the fields remain unchanged.
@@ -172,6 +177,8 @@ Examples:
 **Examples:**
 *  `edit 1 p/91234567 e/fong@example.com` edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
 *  `edit 2 n/Betsy Crower` edits the name of the 2nd customer to be `Betsy Crower`.
+
+<br>
 
 ### Finding customers : `find`
 
@@ -225,6 +232,8 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 </box>
 
 
+<br>
+
 ### Tagging a customer: `tag`
 
 **Format:**
@@ -260,6 +269,7 @@ Before:
 After:
 ![TagEgAfter](images/tag-command-examples/after.png)
 
+<br>
 
 ### Updating priority of a customer: `priority`
 
@@ -282,10 +292,11 @@ After:
 
 **Examples:**
 
-`pr 1 high` updates the priority of the first customer to be `high`.
+`priority 1 high` updates the priority of the first customer to be `high`.
 
-`pr 2 -` removes the priority assigned to the second customer.
+`priority 2 -` removes the priority assigned to the second customer.
 
+<br>
 
 ### Adding a remark to a customer: `remark`
 
@@ -310,6 +321,8 @@ Examples:
 
 `remark 2` Removes the remark from the second customer in the displayed list.
 
+<br>
+
 ### Clearing the customer list : `clear`
 
 **Format:**
@@ -331,6 +344,8 @@ Examples:
 * `clear` clears the customer list in EzContact.
 * `clear 123` will be interpreted as `clear`.
 
+<br>
+
 ### Requesting for help : `help`
 
 **Format:**
@@ -351,6 +366,8 @@ Examples:
 
 * `help` opens the help window.
 * `help 123` will be interpreted as `help`.
+
+<br>
 
 ### Exiting the program : `exit`
 
@@ -406,6 +423,17 @@ and rename the file to `addressbook.json`.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## FAQ
+
+**Q:** Can I transfer my data to another computer? <br>
+**A:** Yes, you can. Install EzContact in the computer and replace the `addressbook.json` file in the `<JAR file directory>/data` directory
+with the `addressbook.js` file from your previous computer. <br> <br>
+**Q:** Why are there sample customers when I first launch EzContact and how do I get rid of them? <br>
+**A:** The sample customers are for new users to try out various commands in EzContact. To get rid of them, simply type `clear` in the
+command box.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Command summary
 
 | Action       | Format and Examples                                                                                                                                                                                                                              |
@@ -415,9 +443,9 @@ and rename the file to `addressbook.json`.
 | **Edit**     | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**     | `list`                                                                      <hr>                                                                                                                                                                 |
 | **Find**     | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
-| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
-| **Priority** | `pr <index> <priority>`  <hr>  `pr 1 medium`                                                                                                                                                                                                     |
-| **Remark**   | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
+| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                                                                 |
+| **Remark**   | `remark <index> [remark]` <hr>   `remark 2 some remarks`     
+| **Priority** | `priority <index> <priority>`  <hr>  `priority 1 medium` 
 | **Clear**    | `clear`                                                                                                                                                                                                                                          |
 | **Help**     | `help`                                                                                                                                                                                                                                           |
 | **Exit**     | `exit`                                                                                                                                                                                                                                           |

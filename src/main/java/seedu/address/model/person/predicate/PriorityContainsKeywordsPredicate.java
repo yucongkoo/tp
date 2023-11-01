@@ -9,7 +9,7 @@ import seedu.address.model.priority.Priority;
 
 
 /**
- * Tests that a {@code Person}'s {@code Email} matches all the keywords given.
+ * Tests that a {@code Person}'s {@code Priority} matches all the keywords given.
  */
 public class PriorityContainsKeywordsPredicate implements Predicate<Person> {
 
