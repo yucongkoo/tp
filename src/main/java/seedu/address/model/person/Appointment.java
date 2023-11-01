@@ -151,7 +151,6 @@ public class Appointment {
         }
         try {
             LocalTime.parse(test, TIME_FORMATTER);
-            logger.info("can parse to appt class");
             return true;
         } catch (DateTimeParseException e) {
             return false;
@@ -170,7 +169,6 @@ public class Appointment {
         }
         return test.length() <= 30;
     }
-
     /**
      * Checks whether an appointment has been scheduled.
      *

@@ -3,11 +3,31 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_NONE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.DERRICK;
+import static seedu.address.testutil.TypicalPersons.INITIAL_COUNT;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,7 +86,7 @@ public class PersonTest {
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
                 validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount,  validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
                 null, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
@@ -309,7 +329,8 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", priority=" + ALICE.getPriority() + ", tags=" + ALICE.getTags()
-                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark() + "}";
+                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark()
+                + ", appointment=" + ALICE.getAppointment() + "}";
 
         assertEquals(expected, ALICE.toString());
     }

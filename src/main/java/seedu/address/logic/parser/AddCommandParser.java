@@ -90,6 +90,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Insurance> insurances = ParserUtil.parseInsurances(argMultimap.getAllValues(PREFIX_INSURANCE));
         Appointment appointment = Appointment.getDefaultEmptyAppointment();
         AppointmentCount count = AppointmentCount.getDefaultAppointmentCount();
+
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)
                 .orElse(Priority.NONE_PRIORITY_KEYWORD));
 

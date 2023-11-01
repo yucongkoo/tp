@@ -7,15 +7,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_DERRICK
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_CALMEN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_CALMEN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_CALMEN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_DERRICK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CALMEN;
@@ -41,6 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 
 
@@ -58,7 +56,7 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withTags("friends")
             .withInsurances("car insurance")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
@@ -67,7 +65,7 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withRemark("Owned me 1M")
             .withInsurances("AIA insurance", "ABC insurance")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
 
@@ -78,7 +76,7 @@ public class TypicalPersons {
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822224")
@@ -100,24 +98,24 @@ public class TypicalPersons {
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84829424")
             .withEmail("stefan@example.com").withAddress("little india")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84824131")
             .withEmail("hans@example.com").withAddress("chicago ave")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
 
     public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
             .withEmail("jojo@example.com").withAddress("100th street").withRemark("Some remark")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
 
     public static final Person KAKA = new PersonBuilder().withName("Kaka Der Many").withPhone("78756232")
             .withEmail("kaka@example.com").withAddress("kaka street")
-            .withAppointment(NO_APPT, NO_APPT_TIME, NO_APPT_VENUE)
+            .withAppointment("10 Oct 2025", NO_APPT_TIME, NO_APPT_VENUE)
             .withAppointmentCount(INITIAL_COUNT)
             .build();
 
@@ -149,7 +147,7 @@ public class TypicalPersons {
     public static final Person DERRICK = new PersonBuilder().withName(VALID_NAME_DERRICK).withPhone(VALID_PHONE_DERRICK)
             .withEmail(VALID_EMAIL_DERRICK).withAddress(VALID_ADDRESS_DERRICK)
             .withInsurances(VALID_INSURANCE_CAR).withPriority(VALID_PRIORITY_HIGH)
-            .withAppointment(VALID_APPOINTMENT_DERRICK, VALID_APPOINTMENT_TIME_DERRICK, VALID_APPOINTMENT_VENUE_DERRICK)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
             .withAppointmentCount(INITIAL_COUNT)
             .build();
 
