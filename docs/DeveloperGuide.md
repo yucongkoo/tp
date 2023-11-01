@@ -17,7 +17,7 @@ pageNav: 3
 
 #### feature / implementation involved
 
-**Sources used** : 
+**Sources used** :
 1. (sources with hyperlink)
 1. ...
 
@@ -272,10 +272,10 @@ This class determine how the `find` feature searches for the right customers.
 It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
 1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
-1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria: 
+1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
 
    - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
-   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true 
+   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
    - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
    - else returns false
 
@@ -303,7 +303,7 @@ In this case, we chose Alternative 1 over Alternative 2 because the find feature
 the name must match keywords in order. The consideration about our target users being forgetful affects our decision,
 where users might forget and input the name in the wrong order.</br>
 
-We also chose Alternative 1 over Alternative 3, although Alternative 3 provides a more accurate result, after doing some 
+We also chose Alternative 1 over Alternative 3, although Alternative 3 provides a more accurate result, after doing some
 research on many contact book-like applications, we found that most applications do not enforce that each word of the name can only match with one keyword.
 In addition, Alternative 3 requires a more complicated algorithm.
 
@@ -316,7 +316,7 @@ In addition, Alternative 3 requires a more complicated algorithm.
     * Pros: More flexible, can add more constraint on the test method.
     * Cons: Harder to implement, given many constraint, code becomes untidy.
 
-**Reasoning :** 
+**Reasoning :**
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
@@ -375,12 +375,12 @@ Sequence diagram below shows the interactions between `Logic` components when ex
 ###### **Aspect: Storing of `Insurance` in `Person`**
 
 
-* **Alternative 1 (Current choice)** : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object 
+* **Alternative 1 (Current choice)** : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Able to handle duplicates gracefully and maintain the uniqueness of each insurance with `Set<Insurance>`
   * Cons: Chronological order of `Insurance` inserted is not maintained
 * **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
-  * Cons: Cannot ensure the uniqueness of each insurance and unable to handle duplicates in an efficient manner  
+  * Cons: Cannot ensure the uniqueness of each insurance and unable to handle duplicates in an efficient manner
 
 **Reasoning:**
 
@@ -391,16 +391,16 @@ than the ability to sort the list in a more effective manner, as there are other
 ###### **Aspect: Handling duplicate `Insurnace` entries**
 
 * **Alternative 1 (Current choice)** : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
-  * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate 
-  * Cons: Users might not be aware of themselves entering duplicate `Insurance`  
+  * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate
+  * Cons: Users might not be aware of themselves entering duplicate `Insurance`
 * **Alternative 2** : Blocks the users from performing the action and warn them about the duplicate `Insurance`
   * Pros: Easy to implement
   * Cons: Users will be clearly aware of their mistakes in entering duplicate `Insurance`
 
 **Reasoning:**
 
-Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product. 
-The reasoning comes from the users' intention of inserting the `InsuranceCommand`, that is wanting to assign an `Insurance` to a customer, so with 
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of inserting the `InsuranceCommand`, that is wanting to assign an `Insurance` to a customer, so with
 entering duplicate `Insurance`, the users' goal is still achieved, thus we think that there is no need to purposely block the users
 for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
 it will not cause any error.
@@ -412,14 +412,14 @@ it will not cause any error.
     * Cons: Users might not be aware of their mistakes
 * **Alternative 2** : Blocks the users from performing the action and warn them about the mistake
     * Pros: Easy to implement
-    * Cons: Users will be clearly aware of their mistakes 
+    * Cons: Users will be clearly aware of their mistakes
 
 **Reasoning:**
 
 Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
 The reasoning comes from the users' intention of deleting an `Insurance`, that is wanting to remove that `Insurance` from the customer, so removing
 a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
-for such action. 
+for such action.
 
 
 ## \[Proposed\] Appointment feature
@@ -793,7 +793,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement 
+#### Enhancement
 (details of the enhancement...)
 
 **Feature flaw:** (feature flaw it fixes...)
@@ -809,7 +809,7 @@ This section gives an overview of the challenges, we as a team faced and the eff
 
 (details... )
 
-**Effort:** 
+**Effort:**
 
 (effort put in for this to be done... )
 

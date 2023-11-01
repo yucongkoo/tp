@@ -154,7 +154,7 @@ Examples:
 `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>]`
 
 **Description:**
-* Edits the customer at the specified `<index>`. 
+* Edits the customer at the specified `<index>`.
 * `<index>` refers to the index number shown in the displayed customer list.
 * If values are provided for certain fields, existing values of their respective fields will be edited to the provided values.
 * If no value is provided, the values of the fields remain unchanged.
@@ -392,7 +392,7 @@ and rename the file to `addressbook.json`.
 ## FAQ
 
 **Q:** Can I transfer my data to another computer? <br>
-**A:** Yes, you can. Install EzContact in the computer and replace the `addressbook.json` file in the `<JAR file directory>/data` directory 
+**A:** Yes, you can. Install EzContact in the computer and replace the `addressbook.json` file in the `<JAR file directory>/data` directory
 with the `addressbook.js` file from your previous computer. <br> <br>
 **Q:** Why are there sample customers when I first launch EzContact and how do I get rid of them? <br>
 **A:** The sample customers are for new users to try out various commands in EzContact. To get rid of them, simply type `clear` in the
