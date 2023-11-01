@@ -16,8 +16,15 @@
       "value" : ""
     },
     "tags": [ "friends" ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "medium"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -36,8 +43,15 @@
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "medium"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   } ]
 }

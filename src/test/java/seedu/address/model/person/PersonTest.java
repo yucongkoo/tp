@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
@@ -24,6 +27,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.DERRICK;
+import static seedu.address.testutil.TypicalPersons.INITIAL_COUNT;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -70,24 +74,27 @@ public class PersonTest {
                 add(new Insurance(VALID_INSURANCE_CAR));
             }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
 
         // with priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags, validInsurances, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags, validInsurances, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags, validInsurances, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validInsurances, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags, validInsurances, validPriority));
+                null, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null, validInsurances, validPriority));
+                validRemark, null, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, null, validPriority));
+                validRemark, validTags, null, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, validInsurances, null));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, null));
     }
 
     @Test
@@ -107,27 +114,29 @@ public class PersonTest {
                 add(new Insurance(VALID_INSURANCE_CAR));
             }
         };
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags, validInsurances));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags, validInsurances));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags, validInsurances));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validInsurances));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags, validInsurances));
+                null, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null, validInsurances));
+                validRemark, null, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, null));
+                validRemark, validTags, null, validAppointment, validAppointmentCount));
     }
 
     @Test
     public void constructor_allFieldsValid_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR).withPriority("-").build();
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -141,16 +150,22 @@ public class PersonTest {
                 add(new Insurance(VALID_INSURANCE_CAR));
             }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
+
+        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR)
+                .withAppointment(validAppointment).withPriority("-").build();
 
         // with priority field
 
         Person testPerson = new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, validInsurances, validPriority);
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority);
         assertEquals(expectedPerson, testPerson);
 
         // without priority field
         testPerson = new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, validInsurances);
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount);
 
         assertEquals(expectedPerson, testPerson);
 
@@ -305,6 +320,10 @@ public class PersonTest {
         // different priority -> returns false
         editedAlice = new PersonBuilder(ALICE).withPriority(VALID_PRIORITY_LOW).build(); // default priority is high
         assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new PersonBuilder(ALICE).withAppointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB).build(); // default appointment is empty
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
@@ -312,7 +331,8 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", priority=" + ALICE.getPriority() + ", tags=" + ALICE.getTags()
-                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark() + "}";
+                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark()
+                + ", appointment=" + ALICE.getAppointment() + "}";
 
         assertEquals(expected, ALICE.toString());
     }
