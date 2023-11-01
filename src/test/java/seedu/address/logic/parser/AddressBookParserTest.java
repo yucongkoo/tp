@@ -35,6 +35,7 @@ import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Tag;
 import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
@@ -50,7 +51,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withAppointment(Appointment.getDefaultEmptyAppointment()).build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }

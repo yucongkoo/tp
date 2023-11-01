@@ -39,6 +39,10 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
     private RemarkCard remarkCard;
+    //    private AppointmentAttributeCard dateCard;
+    //    private AppointmentAttributeCard timeCard;
+    //    private AppointmentAttributeCard venueCard;
+
 
     @FXML
     private HBox cardPane;

@@ -15,6 +15,14 @@ pageNav: 3
 
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
 
+#### feature / implementation involved
+
+**Sources used** :
+1. (sources with hyperlink)
+1. ...
+
+(describe how it is used in the mentioned part...)
+
 --------------------------------------------------------------------------------------------------------------------
 
 # **Setting up, getting started**
@@ -119,7 +127,8 @@ How the parsing works:
 ## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="700" />
+
 
 
 The `Model` component,
@@ -142,7 +151,7 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" width="600" />
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
@@ -161,17 +170,20 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
+This feature allows users to assign tags to / remove tags from customers in EZContact, increasing the recognizability 
+of customers to users.
+
 ### Implementation
 
-**Implementing `Tag`**
+###### **Implementing `Tag`**
 
 Before implementing the actual command execution of tag,
 tags first needs to be stored in a `Person` object accordingly.
-A `Person` is associated to any number of `Tag`s.
+Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
-**Integrating a command for handling tag features into the execution logic**
+###### **Integrating a command for handling tag features into the execution logic**
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
 we first update the `AddressBookParser` to recognise the `tag` [command word](#glossary) and will create a `TagCommandParser` subsequently.
@@ -183,14 +195,14 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager
 <puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
 
 
-**Implementing `TagCommandParser`**
+###### **Implementing `TagCommandParser`**
 
 `TagCommandParser` plays the role of parsing [command arguments](#glossary) into two information:<br/>
 * `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
 * `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
 Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
-The parsing steps is as follows:
+The parsing steps are as follows:
 1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`.
 1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
 1. Verify that there is at least one tag to add/delete.
@@ -205,11 +217,13 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
 
-**Implementing `TagCommand`**
+###### **Implementing `TagCommand`**
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution.<br/>
-The execution step is as follows:<br/>
+reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
+is a common tag to add and delete), the command execution will fail.<br/>
+The execution steps are as follows:<br/>
+1. Verify that the `TagCommand` is executable(i.e. there is no conflicting tag in the `updatePersonDescriptor`).
 1. Retrieve `personToUpdate` from the model using `index`.
 1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
 1. Create the `updatedPerson` from the above information.
@@ -224,33 +238,42 @@ as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
+###### **Wrapping up the tag feature**
+
+As reaching this point, we have completed the implementation of the tag feature, where users are allowed to add and delete
+tags of a person in the same command. The following section will discuss certain design considerations when implementing 
+this feature.
+
+<br/>
+<br/>
+
 ### Design considerations:
 
 ###### **Aspect: Data structure to store tags in a Person object:**
 
-* **Alternative 1(current choice):** Using `Set<Tag>`.
+* **Alternative 1 (Current choice)** : Using `Set<Tag>`.
   * Pros: Easy to implement, enforces implicit uniqueness of each `Tag` in the `Set<Tag>`.
   * Cons: Tags are not ordered according to the time it is added.
-* **Alternative 2:** Using `List<Tag>`.
+* **Alternative 2** : Using `List<Tag>`.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
 
-**Reasoning:**<br/>
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
 ###### **Aspect: Duplicate tags handling:**
 
-* **Alternative 1(current choice):** Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
+* **Alternative 1 (Current choice)** : Allow users to add/delete duplicate tags as long as not conflicting(i.e. not adding and deleting the same tag).
   * Pros: Users will not be blocked from their action if they accidentally entered a duplicate tag.
   * Cons: Users might not be warned that they have entered a duplicate tag.
-* **Alternative 2:** Block users from adding/deleting duplicate tags
+* **Alternative 2** : Block users from adding/deleting duplicate tags
   * Pros: Easy to implement
   * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
 
-**Reasoning:**<br/>
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 based on the following reasons:
-* Repeated action signals the user's strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
+* Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
 
@@ -258,7 +281,7 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
 * **Alternative 1(current choice):** Simply ignore such deletions.
   * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
   * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
-* **Alternative 2:** Block users from such deletions.
+* **Alternative 2** : Block users from such deletions.
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
@@ -267,63 +290,77 @@ Alternative 1 was selected over alternative 2 because the primary reason for use
 they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
 
+###### **Aspect: Addition of existing tags:**
+This aspect is similar to the above aspect regarding **Deletion of non-existing tags**, the current choice is to simply
+ignore such additions due to the same reason stated above.
+
+<br/>
+<br/>
+<br/>
+
 ## Find feature
-This find feature is designed to be a partial search or prefix search.
+This find feature is designed to do partial search or prefix search on the customer list.
 
 ### Implementation
 
-**Implementing `NameContainsKeywordsPredicate`**
-This class determine how the find feature find the customers. It contains a test method to test such, the details as below.
-* This find feature is a partial search, we said keyword match with the name when name contains keyword as a prefix.
-* This test method return true when all the keywords match with the name.
-* Using a stream to check if all the keywords match with the name.
+###### **Implementing `NameContainsKeywordsPredicate`**
+This class determine how the `find` feature searches for the right customers.
+It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
-**Implementing `FindCommand`**
-This class execute the find command on `Model`, it will update the `Model` accordingly to
-reflect the changes after the find command completes its execution.
+1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
+
+   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
+   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - else returns false
+
+###### **Implementing `FindCommand`**
+`FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
+reflect the changes after the `FindCommand` completes its execution.
 
 ### Design considerations:
 
-**Aspect: Design of test method:**
+###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
 
-* **Alternative 1(current choice):** Returns customers when their names match with all keywords as a prefix.
-    * Pros: Easy to implement, more flexible for user to find customers.
-    * Cons: Cannot differentiate `Lam Jiu` and `Jiu Lam`, a name can match with multiple keywords, i.e. name `song` match with keywords `song song`.
-* **Alternative 2:** Returns customers when their names match with all keywords as a prefix in order.
+* **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
+    * Pros: Easy to implement, provides more flexibility to users for finding their customers.
+    * Cons: Cannot differentiate `Lam Jiu` from `Jiu Lam`, a name can also match with multiple keywords (i.e. name `song` match with keywords `song song`).
+* **Alternative 2** : Return customer when all keywords can be found as prefix in customer's name **in order**.
     * Pros: Can easily and accurately find a specified customer.
-    * Cons: Harder to implement, less flexible for user to find for customer.
-* **Alternative 3:** Returns customers when their names match with all keywords as a prefix, where each name can only match with one keyword, i.e. name `song` cannot match with keywords `song song`.
+    * Cons: Harder to implement, less flexibility for the users to find the customer.
+* **Alternative 3** : Returns customer when all keywords can be found as prefix in customer's name, where each prefix corresponds to a different word in name, i.e. name `song` cannot match with keywords `song song`.
     * Pros: More intuitive design.
-    * Cons: Hard to implement, required a long algorithm to do so.
+    * Cons: Harder to implement, required a long algorithm to do so.
 
-In this case, we use choose Alternative 1 over Alternative 2 because the find feature become less useful when we restrict
-the name must match keywords in order. The consideration about our target user is a forgetful insurance agent affect our decision,
-since our target audience might forget and input the name in wrong order sometimes.</br>
+**Reasoning :**
 
-Alternative 1 over Alternative 3, although Alternative 3 seems like a more accurate version, but we do some research on most of the contact book like application.
-We found that most of the find feature design do not restrict that each name can only match with one keyword.
+In this case, we chose Alternative 1 over Alternative 2 because the find feature becomes less versatile when we enforce the rule that
+the name must match keywords in order. The consideration about our target users being forgetful affects our decision,
+where users might forget and input the name in the wrong order.</br>
+
+We also chose Alternative 1 over Alternative 3, although Alternative 3 provides a more accurate result, after doing some
+research on many contact book-like applications, we found that most applications do not enforce that each word of the name can only match with one keyword.
 In addition, Alternative 3 requires a more complicated algorithm.
-Hence, we choose Alternative 1 over 3.
 
-**Aspect: Implementation of test method:**
+###### **Aspect: Implementation of test method:**
 
-* **Alternative 1(current choice):** Convert keywords to `Stream` and using `allMatch`.
+* **Alternative 1 (Current choice)** : Convert keywords to `Stream` and use `allMatch`.
     * Pros: Easy to implement, code is clean.
-    * Cons: Less flexible, ex: cannot check the name match the keywords in order.
-* **Alternative 2:** Directly using the keywords as `List<String>` and using a for loop.
+    * Cons: Less flexible, e.g. cannot check the name matches the keywords in order.
+* **Alternative 2** : Directly using the keywords as `List<String>` and using a for loop.
     * Pros: More flexible, can add more constraint on the test method.
-    * Cons: Hard to implement, if we want to add many constraint, code is untidy.
-Alternative 1 over Alternative 2, because we choose a slightly simpler design and do not need much flexibility on implementation.
-Hence, we decided to choose an alternative which can keep our code clean and easy to implement.
+    * Cons: Harder to implement, given many constraint, code becomes untidy.
 
+**Reasoning :**
 
+Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
 ## Insurance Feature
-This feature allows user to assign / remove insurance package(s) to / from customers in EZContact.
+This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
 
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
-
 
 1. `Insurance` : stores the information about the insurance
 1. `InsuranceCommand` : executes the action to assign/remove insurance
@@ -331,50 +368,94 @@ The implementation of the Insurance feature consists of few parts, distributed a
 
 **Implementing `Insurance`**
 
-`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds one information, `insuranceName`.
+`Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds only one information, `insuranceName`.
 
-**[Class diagram of `Insurance` and `Person`]**
+<puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
 
 
 **Implementing `InsuranceCommand`**
 
-`InsuranceCommand` executes its command on the `Model`, it will update the model accordingly to reflect the changes made by the command on the `Model`
+`InsuranceCommand` executes its command on the `Model`, it will update the `Model` accordingly to reflect the changes made by the command on the `Model`.
 
-**[Sequence diagram of executing `InsuranceCommand`]**
+Sequence diagram below shows the execution of `InsuranceCommand`.
+
+<puml src="diagrams/insurance-feature/ExecuteInsuranceSequenceDiagram.puml" />
+
 
 **Implementing `InsuranceCommandParser`**
 
-`InsuranceCommandParser` receives the remaining input after the command `ins`, and turns it into valid information needed by `InsuranceCommand`, which are
+`InsuranceCommandParser` interprets the remaining input after the `insurance` command, and parses it into relevant information needed by `InsuranceCommand`, which are
 `Index` and `UpdatedPersonInsuranceDescriptor`.
 
-`UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add and delete.
+* `Index` indicates the customer on the list to perform action on.
+* `UpdatedPersonInsruanceDescriptor` holds the sets of insurances to add(`insurancesToAdd`) and delete(`insurancesToDelete`).
 
+Sequence diagram below shows the execution of `InsuranceCommandParser#parse(String arguments)` with input `(1 ai/car insurance\n di/health insurance)`
+
+<puml src="diagrams/insurance-feature/ParseInsuranceSequenceDiagram.puml" />
 
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
 
 In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
-`ins` and call `parse(String args)` from `InsuranceCommandParser`.
+`insurance` and call `parse(arguments)` from `InsuranceCommandParser`.
 
-From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand`.
+From here, `InsuranceCommandParser` will extract out the relevant information and create the corresponding `InsuranceCommand` and the command will be executed by other `Logic` components.
 
-**[Sequence Diagram from `AddressBookParser` -> `Model`]**
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("insurance 1 \nai/AIA di/Great Eastern)`
+
+<puml src="diagrams/insurance-feature/InsuranceSequence.puml" />
 
 
 ### Design Considerations:
 
-**Aspect: Storing of `Insurance` in `Person`**
+###### **Aspect: Storing of `Insurance` in `Person`**
 
-* **Alternative 1** (Current solution) : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
-  * Pros: Able to handle duplicates gracefully with `Set<Insurance>`
+
+* **Alternative 1 (Current choice)** : use `Set<Insurance>` to hold all `Insurance` instances in `Person` object
+  * Pros: Able to handle duplicates gracefully and maintain the uniqueness of each insurance with `Set<Insurance>`
   * Cons: Chronological order of `Insurance` inserted is not maintained
 * **Alternative 2**: use `List<Insurance>` to hold all `Insurance` instances in `Person` object
   * Pros: Maintain the chronological order of `Insurance` inserted and sorting can be easily done on `Insurance` instances
-  * Cons: Handling of duplicates is more complicated
+  * Cons: Cannot ensure the uniqueness of each insurance and unable to handle duplicates in an efficient manner
 
-Reasoning:
+**Reasoning:**
 
-The handling of duplicates is a more important aspect to handle as compared to the keeping track of the order of `Insurance` instances inserted where lexicographical
-order has more significance in our product. There are also easy workaround to perform sorting with `Set<Insurance>`.
+Alternative 1 is chosen over Alternative 2 for its ability to handle the duplicates more efficiently. We believe that this ability is more important
+than the ability to sort the list in a more effective manner, as there are other workarounds that can be almost as efficient using `Set<Insurances>`.
+
+
+###### **Aspect: Handling duplicate `Insurnace` entries**
+
+* **Alternative 1 (Current choice)** : Allows the users to add / delete duplicate `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+  * Pros: Ease of use for the users, as the users are not blocked for entering a duplicate
+  * Cons: Users might not be aware of themselves entering duplicate `Insurance`
+* **Alternative 2** : Blocks the users from performing the action and warn them about the duplicate `Insurance`
+  * Pros: Easy to implement
+  * Cons: Users will be clearly aware of their mistakes in entering duplicate `Insurance`
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of inserting the `InsuranceCommand`, that is wanting to assign an `Insurance` to a customer, so with
+entering duplicate `Insurance`, the users' goal is still achieved, thus we think that there is no need to purposely block the users
+for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
+it will not cause any error.
+
+###### **Aspect: Deleting non-existing `Insurance`**
+
+* **Alternative 1 (Current choice)** : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
+    * Pros: Ease of use for the users, as the users are not blocked for deleting non-existing `Insurance`
+    * Cons: Users might not be aware of their mistakes
+* **Alternative 2** : Blocks the users from performing the action and warn them about the mistake
+    * Pros: Easy to implement
+    * Cons: Users will be clearly aware of their mistakes
+
+**Reasoning:**
+
+Alternative 1 is chosen over Alternative 2 because we believe doing so will provide users a smoother experience with our product.
+The reasoning comes from the users' intention of deleting an `Insurance`, that is wanting to remove that `Insurance` from the customer, so removing
+a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
+for such action.
 
 
 ## \[Proposed\] Appointment feature
@@ -541,6 +622,8 @@ Target user : Insurance agent
 
 * needs to provide services / insurance plans to customer
 * has a need to manage a significant number of customers
+* needs to remember customer's information
+* busy
 * needs to maintain interactions with his/her customers over a long time span
 * often forgets details about his/her customers
 * prefer desktop apps over other types
@@ -603,8 +686,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 &emsp;1a.  Details provided by user is incomplete or invalid.</br>
 &emsp;&emsp;1a1. System displays an error message to alert User.</br>
-&emsp;&emsp;Use case ends.
-
+&emsp;&emsp;Use case ends.<br/>
 &emsp;1b.  Customer to be added is already in the System.<br/>
 &emsp;&emsp;1b1. System displays an error message to alert User.<br/>
 &emsp;&emsp;Use case ends.
@@ -614,94 +696,129 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **Use case: UC02 - filter customers**
 
-**MSS:**
-1. User chooses to filter customers.
-2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.
-3. System filters the customers list.
-4. System displays the list of customers that meet the criteria.
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User chooses to filter customers.</br>
+&emsp;2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.</br>
+&emsp;3. System filters the customers list.</br>
+&emsp;4. System displays the list of customers that meet the criteria.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-2b.  User doesn't select any categories to filter for.<br>
-&emsp;2b1. System shows an error message to alert User about the invalid command.
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;2b.  User doesn't select any categories to filter for.</br>
+&emsp;&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
-3a.  None of the contacts meet the filter criteria.
-&emsp;3a1. System shows an empty list with a warning message.
-&emsp;&emsp;&emsp;Use case ends.### Searching for a person
+&emsp;3a.  None of the contacts meet the filter criteria.</br>
+&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;&emsp;Use case ends.
 
 #### Deleting a customer
 
 **Use Case: UC03 - delete a customer**
 
-**MSS:**
-1. User lists out the customers.
-2. System shows the list of customers to user.
-3. User deletes the customer with the index number shown in the displayed list.
-4. System displays the details of the removed customer.</br>
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User lists out the customers.</br>
+&emsp;2. System shows the list of customers to user.</br>
+&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
+&emsp;4. System displays the details of the removed customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-4a. Invalid delete command or invalid index.</br>
-&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;4a. Invalid delete command or invalid index.</br>
+&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 #### Editing a customer
 
 **Use Case: UC04 - edit a customer's details**
 
-**MSS:**
-1.  User requests to list out the customers.
-2.  System shows the list of customers.
-3.  User edits the details of customer with its respective index.
-4.  System displays the details of the edited customer.</br>
-    Use case ends.
+**MSS:**</br>
+&emsp;1. User requests to list out the customers.</br>
+&emsp;2. System shows the list of customers.</br>
+&emsp;3. User edits the details of customer with its respective index.</br>
+&emsp;4. System displays the details of the edited customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 #### Searching for a customer
 
 **Use Case: UC05 - search for a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User searches with a prompt.
-2.  System shows a list of customers matching the prompt.
-3.  User views the customers' information.</br>
-    Use case ends.
+&emsp;1.  User searches with a prompt.</br>
+&emsp;2.  System shows a list of customers matching the prompt.</br>
+&emsp;3.  User views the customers' information.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-1a. User searches with an invalid prompt format</br>
-&emsp;1a1. System shows an error message to User.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;1a. User searches with an invalid prompt format</br>
+&emsp;&emsp;1a1. System shows an error message to User.</br>
+&emsp;&emsp;Use case ends.
 
-2a. There is no customer that match the prompt.</br>
-&emsp;2a1. System shows an empty list.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;2a. There is no customer that match the prompt.</br>
+&emsp;&emsp;2a1. System shows an empty list.</br>
+&emsp;&emsp;Use case ends.
 
 #### Assigning priority to customer
 
 **Use Case: UC06 - assign priority to a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User requests to list out the customers.
-2.  System lists out the customers.
-3.  User assigns priority to the customer with its respective index.
-4.  System displays the new priority of customer.</br>
-    Use case ends.
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns priority to the customer with its respective index.</br>
+&emsp;4.  System displays the new priority of customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+#### Assigning insurance to customer
+
+**Use Case: UC07 - assign insurance to a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns insurance to the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
+#### Removing insurance from customer
+
+**Use Case: UC08 - remove insurance from a customer**
+
+**MSS:**</br>
+
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User removes insurance from the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
+
+**Extensions:**</br>
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
+
 
 #### Updating tags of a customer
 
-**Use Case: UC07 - update tags of a customer**
+**Use Case: UC09 - update tags of a customer**
 
 **Mss:**<br/>
 &emsp;1. User requests to list out the customers.<br/>
@@ -719,7 +836,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 customer without a noticeable sluggishness in performance for typical usage.
@@ -737,6 +854,35 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 * **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
 
 --------------------------------------------------------------------------------------------------------------------
+# **Appendix: Planned Enhancements**
+
+This section covers the enhancements we plan to implement in the future.
+
+#### Enhancement
+(details of the enhancement...)
+
+**Feature flaw:** (feature flaw it fixes...)
+
+(explain how enhancement fixes the flaws... )
+
+--------------------------------------------------------------------------------------------------------------------
+# **Appendix: Effort**
+
+This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
+
+####  Challenges faced / Achievement accomplished `* * *` <- indicates the significance
+
+(details... )
+
+**Effort:**
+
+(effort put in for this to be done... )
+
+**Result :**
+
+(results achieved with this implementation... )
+
+--------------------------------------------------------------------------------------------------------------------
 
 # **Appendix: Instructions for manual testing**
 
@@ -751,26 +897,27 @@ testers are expected to do more *exploratory* testing.
 
 ## Launch and shutdown
 
-1. Initial launch
+**Initial launch**
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file  <br/>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+**Saving window preferences**
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Deleting a person
 
-1. Deleting a person while all persons are being shown
+**Deleting a person while all persons are being shown**
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -781,12 +928,22 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+_{ more test cases …​ }_
 
 ## Saving data
 
-1. Dealing with missing/corrupted data files
+**Dealing with missing/corrupted data files**
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+## Feature to show
+
+**Scenario**
+
+Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
+
+1. Test case : `value` <br/>
+    Expected : `result`
+1. ...
+
+_{ more test cases …​ }_

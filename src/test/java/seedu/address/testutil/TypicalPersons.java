@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 
 
@@ -36,12 +37,18 @@ import seedu.address.model.person.Person;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
+    public static final String NO_APPT = "No Appointment Scheduled Yet";
+    public static final String NO_APPT_TIME = "";
+    public static final String NO_APPT_VENUE = "";
+    public static final String INITIAL_COUNT = "0";
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
             .withTags("friends")
             .withInsurances("car insurance")
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .withAppointmentCount(INITIAL_COUNT)
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -49,50 +56,90 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withRemark("Owned me 1M")
             .withInsurances("AIA insurance", "ABC insurance")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
             .build();
 
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withInsurances("Great Eastern").build();
+            .withEmail("heinz@example.com").withAddress("wall street").withInsurances("Great Eastern")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
+            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withInsurances("InsureIQ").build();
+            .withEmail("werner@example.com").withAddress("michegan ave").withInsurances("InsureIQ")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94821427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withPriority("low").build();
+            .withEmail("lydia@example.com").withAddress("little tokyo").withPriority("low")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("94828442")
-            .withEmail("anna@example.com").withAddress("4th street").withInsurances("GGO Insurance").build();
+            .withEmail("anna@example.com").withAddress("4th street").withInsurances("GGO Insurance")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84829424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
+            .withEmail("stefan@example.com").withAddress("little india")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84824131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+            .withEmail("hans@example.com").withAddress("chicago ave")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
 
     public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
-            .withEmail("jojo@example.com").withAddress("100th street").withRemark("Some remark").build();
+            .withEmail("jojo@example.com").withAddress("100th street").withRemark("Some remark")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
 
     public static final Person KAKA = new PersonBuilder().withName("Kaka Der Many").withPhone("78756232")
-            .withEmail("kaka@example.com").withAddress("kaka street").build();
+            .withEmail("kaka@example.com").withAddress("kaka street")
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withRemark(VALID_REMARK_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
+            .withTags(VALID_TAG_FRIEND)
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();
+
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withRemark(VALID_REMARK_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
             .build();
 
     // Person without address
     public static final Person CALMEN = new PersonBuilder().withName(VALID_NAME_CALMEN).withPhone(VALID_PHONE_CALMEN)
-            .withEmail(VALID_EMAIL_CALMEN).withoutAddress().withRemark(VALID_REMARK_CALMEN).build();
+            .withEmail(VALID_EMAIL_CALMEN).withoutAddress().withRemark(VALID_REMARK_CALMEN)
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
+            .build();;
 
     // Person with priority
     public static final Person DERRICK = new PersonBuilder().withName(VALID_NAME_DERRICK).withPhone(VALID_PHONE_DERRICK)
             .withEmail(VALID_EMAIL_DERRICK).withAddress(VALID_ADDRESS_DERRICK)
             .withInsurances(VALID_INSURANCE_CAR).withPriority(VALID_PRIORITY_HIGH)
+            .withAppointmentCount(INITIAL_COUNT)
+            .withAppointment(Appointment.getDefaultEmptyAppointment())
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
