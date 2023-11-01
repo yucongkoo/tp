@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -25,8 +27,10 @@ public class RemarkCommand extends Command {
             + " <index> "
             + "<remarks>\n";
 
+    private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
     private final Index index;
     private final Remark remark;
+
 
 
     /**
@@ -41,6 +45,9 @@ public class RemarkCommand extends Command {
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
+
+        logger.fine("RemarkCommand executing...");
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

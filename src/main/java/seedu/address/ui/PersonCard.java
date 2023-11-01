@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.FlowPaneLabel.Type;
+import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
+
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -80,8 +83,8 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadPriority() {
         if (person.getPriorityLevel() != Priority.Level.NONE) {
-            flowPaneLabels.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
-                    FlowPaneLabel.Type.PRIORITY).getRoot());
+            flowPaneLabels.getChildren().add(0,
+                    createFlowPaneLabel(Type.PRIORITY, person.getPriority().toString()).getRoot());
         }
     }
 
@@ -94,15 +97,14 @@ public class PersonCard extends UiPart<Region> {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
                 .forEach(insurance -> flowPaneLabels.getChildren()
-                        .add(new FlowPaneLabel(insurance.getInsuranceName(),
-                                FlowPaneLabel.Type.INSURANCE).getRoot()));
+                        .add(createFlowPaneLabel(Type.INSURANCE, insurance.getInsuranceName()).getRoot()));
     }
 
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
-                .forEach(tag -> flowPaneLabels.getChildren().add(new FlowPaneLabel(tag.getTagName(),
-                        FlowPaneLabel.Type.TAG).getRoot()));
+                .forEach(tag -> flowPaneLabels.getChildren()
+                        .add(createFlowPaneLabel(Type.TAG, tag.getTagName()).getRoot()));
     }
 
     private void loadPhoneCard() {

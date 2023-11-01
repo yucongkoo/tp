@@ -76,8 +76,8 @@ public class TagCommandParser implements Parser<TagCommand> {
     }
 
     /**
-     * Extracts the tags to add and delete,
-     * and returns a {@code UpdatePersonTagsDescriptor} from the {@code argMultimap}.
+     * Extracts the tags to add and delete from the {@code argMultimap},
+     * and returns a {@code UpdatePersonTagsDescriptor}.
      * @throws ParseException if there are tags that are invalid.
      */
     private UpdatePersonTagsDescriptor extractUpdatePersonTagsDescriptor(ArgumentMultimap argMultimap)

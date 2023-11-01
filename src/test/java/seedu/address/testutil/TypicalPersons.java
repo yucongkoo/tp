@@ -58,7 +58,7 @@ public class TypicalPersons {
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822224")
             .withEmail("werner@example.com").withAddress("michegan ave").withInsurances("InsureIQ").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94821427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
+            .withEmail("lydia@example.com").withAddress("little tokyo").withPriority("low").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("94828442")
             .withEmail("anna@example.com").withAddress("4th street").withInsurances("GGO Insurance").build();
 
@@ -69,7 +69,7 @@ public class TypicalPersons {
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     public static final Person JOJO = new PersonBuilder().withName("Jojo Best").withPhone("14445656")
-            .withEmail("jojo@example.com").withAddress("100th street").build();
+            .withEmail("jojo@example.com").withAddress("100th street").withRemark("Some remark").build();
 
     public static final Person KAKA = new PersonBuilder().withName("Kaka Der Many").withPhone("78756232")
             .withEmail("kaka@example.com").withAddress("kaka street").build();
@@ -111,6 +111,7 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, CALMEN, JOJO, KAKA));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE,
+                CALMEN, JOJO, KAKA));
     }
 }
