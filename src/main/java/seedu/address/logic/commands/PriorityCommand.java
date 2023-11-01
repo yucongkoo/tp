@@ -24,7 +24,7 @@ public class PriorityCommand extends Command {
             + " <index> "
             + "<priority>\n";
 
-    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";
+    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of customer: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(PriorityCommand.class);
 
