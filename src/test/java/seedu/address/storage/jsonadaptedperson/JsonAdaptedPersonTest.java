@@ -9,10 +9,12 @@ import static seedu.address.testutil.TypicalPersons.DERRICK;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
@@ -25,6 +27,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.priority.Priority;
 
 public class JsonAdaptedPersonTest {
+    private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     private static final JsonAdaptedName INVALID_NAME = new JsonAdaptedName("R@chel");
     private static final JsonAdaptedPhone INVALID_PHONE = new JsonAdaptedPhone("+651234");
@@ -35,11 +38,13 @@ public class JsonAdaptedPersonTest {
     private static final JsonAdaptedPriority INVALID_PRIORITY = new JsonAdaptedPriority("top");
     private static final String INVALID_INSURANCE = "/*weird insurance";
 
-    private static final JsonAdaptedAppointment INVALID_APPOINTMENT = new JsonAdaptedAppointment(
-            new Appointment("10 Oct 2025", "10:00", "Suntec"));
+    private static final String INVALID_APPOINTMENT_DATE = "10 Oct 2025";
     private static final String INVALID_APPOINTMENT_TIME = "10:00";
     private static final String INVALID_APPOINTMENT_VENUE = "test1test2test3test4test5test6test7";
     private static final String INVALID_APPOINTMENT_COUNT = "-1000";
+
+    private static final JsonAdaptedAppointment INVALID_APPOINTMENT =
+            new JsonAdaptedAppointment(INVALID_APPOINTMENT_DATE, INVALID_APPOINTMENT_TIME, INVALID_APPOINTMENT_VENUE);
 
     private static final JsonAdaptedName VALID_NAME = new JsonAdaptedName(BENSON.getName().toString());
     private static final JsonAdaptedPhone VALID_PHONE = new JsonAdaptedPhone(BENSON.getPhone().toString());
@@ -62,6 +67,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
         JsonAdaptedPerson person = new JsonAdaptedPerson(BENSON);
+        logger.info(BENSON.toString());
+        logger.info(person.toModelType().toString());
         assertEquals(BENSON, person.toModelType());
     }
 
@@ -201,7 +208,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
 
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
-                        VALID_INSURANCES, VALID_APPOINTMENT, VALID_APPOINTMENT_COUNT, VALID_PRIORITY);
+                        VALID_INSURANCES, INVALID_APPOINTMENT, VALID_APPOINTMENT_COUNT, VALID_PRIORITY);
 
         String expectedMessage = Appointment.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);

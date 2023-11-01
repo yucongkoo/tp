@@ -137,7 +137,6 @@ public class PersonTest {
 
     @Test
     public void constructor_allFieldsValid_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR).withPriority("-").build();
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -154,6 +153,9 @@ public class PersonTest {
         Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
                 VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
         AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
+
+        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR)
+                .withAppointment(validAppointment).withPriority("-").build();
 
         // with priority field
 
