@@ -20,9 +20,8 @@ import seedu.address.model.person.Person;
 public class UnmarkAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "unmarkappt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unmarks a customer's appointment. \n"
-            + "Usage: "
-            + "INDEX (must be a positive integer)";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index>";
 
     public static final String MESSAGE_UNMARK_APPOINTMENT_SUCCESS = "Successfully undo marking of appointment with "
             + "%1$s.";
