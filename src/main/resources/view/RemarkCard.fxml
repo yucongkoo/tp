@@ -16,6 +16,6 @@
         <padding>
             <Insets top="10" />
         </padding>
-        <Label fx:id="remark" styleClass="cell_big_label" wrapText="true"/>
+        <Label fx:id="remark" styleClass="cell_small_label" wrapText="true"/>
     </HBox>
 </VBox>
