@@ -637,140 +637,140 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **Use Case: UC01 - add a customer**
 
-**MSS:**
-1. User enters the details of customer to be added.
-2. System adds the customer.
-3. System displays the details of customer added by user.</br>
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User enters the details of customer to be added.</br>
+&emsp;2. System adds the customer.</br>
+&emsp;3. System displays the details of customer added by user.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;2a1. System shows an error message to alert User.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;2a.  Details provided by user is incomplete or invalid.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;&emsp;Use case ends.
 
 #### Filtering customers
 
 **Use case: UC02 - filter customers**
 
-**MSS:**
-1. User chooses to filter customers.
-2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.
-3. System filters the customers list.
-4. System displays the list of customers that meet the criteria.</br>
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User chooses to filter customers.</br>
+&emsp;2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.</br>
+&emsp;3. System filters the customers list.</br>
+&emsp;4. System displays the list of customers that meet the criteria.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-2b.  User doesn't select any categories to filter for.</br>
-&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;2b.  User doesn't select any categories to filter for.</br>
+&emsp;&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
-3a.  None of the contacts meet the filter criteria.</br>
-&emsp;3a1. System shows an empty list with a warning message.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a.  None of the contacts meet the filter criteria.</br>
+&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;&emsp;Use case ends.
 
 #### Deleting a customer
 
 **Use Case: UC03 - delete a customer**
 
-**MSS:**
-1. User lists out the customers.
-2. System shows the list of customers to user.
-3. User deletes the customer with the index number shown in the displayed list.
-4. System displays the details of the removed customer.</br>
-   Use case ends.
+**MSS:**</br>
+&emsp;1. User lists out the customers.</br>
+&emsp;2. System shows the list of customers to user.</br>
+&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
+&emsp;4. System displays the details of the removed customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-4a. Invalid delete command or invalid index.</br>
-&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;4a. Invalid delete command or invalid index.</br>
+&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 #### Editing a customer
 
 **Use Case: UC04 - edit a customer's details**
 
-**MSS:**
-1.  User requests to list out the customers.
-2.  System shows the list of customers.
-3.  User edits the details of customer with its respective index.
-4.  System displays the details of the edited customer.</br>
-    Use case ends.
+**MSS:**</br>
+&emsp;1. User requests to list out the customers.</br>
+&emsp;2. System shows the list of customers.</br>
+&emsp;3. User edits the details of customer with its respective index.</br>
+&emsp;4. System displays the details of the edited customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 #### Searching for a customer
 
 **Use Case: UC05 - search for a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User searches with a prompt.
-2.  System shows a list of customers matching the prompt.
-3.  User views the customers' information.</br>
-    Use case ends.
+&emsp;1.  User searches with a prompt.</br>
+&emsp;2.  System shows a list of customers matching the prompt.</br>
+&emsp;3.  User views the customers' information.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-1a. User searches with an invalid prompt format</br>
-&emsp;1a1. System shows an error message to User.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;1a. User searches with an invalid prompt format</br>
+&emsp;&emsp;1a1. System shows an error message to User.</br>
+&emsp;&emsp;Use case ends.
 
-2a. There is no customer that match the prompt.</br>
-&emsp;2a1. System shows an empty list.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;2a. There is no customer that match the prompt.</br>
+&emsp;&emsp;2a1. System shows an empty list.</br>
+&emsp;&emsp;Use case ends.
 
 #### Assigning priority to customer
 
 **Use Case: UC06 - assign priority to a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User requests to list out the customers.
-2.  System lists out the customers.
-3.  User assigns priority to the customer with its respective index.
-4.  System displays the new priority of customer.</br>
-    Use case ends.
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns priority to the customer with its respective index.</br>
+&emsp;4.  System displays the new priority of customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 
 #### Assigning insurance to customer
 
 **Use Case: UC07 - assign insurance to a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User requests to list out the customers.
-2.  System lists out the customers.
-3.  User assigns insurance to the customer with its respective index.
-4.  System displays the new insurance of customer.</br>
-    Use case ends.
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User assigns insurance to the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 #### Removing insurance from customer
 
 **Use Case: UC08 - remove insurance from a customer**
 
-**MSS:**
+**MSS:**</br>
 
-1.  User requests to list out the customers.
-2.  System lists out the customers.
-3.  User removes insurance from the customer with its respective index.
-4.  System displays the new insurance of customer.</br>
-    Use case ends.
+&emsp;1.  User requests to list out the customers.</br>
+&emsp;2.  System lists out the customers.</br>
+&emsp;3.  User removes insurance from the customer with its respective index.</br>
+&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;Use case ends.
 
 **Extensions:**</br>
-3a. User provides invalid index or information.</br>
-&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
-&emsp;&emsp;&emsp;&nbsp;Use case ends.
+&emsp;3a. User provides invalid index or information.</br>
+&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;Use case ends.
 
 
 ## Non-Functional Requirements
