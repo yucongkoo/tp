@@ -308,7 +308,20 @@ reflect the changes after the `FindCommand` completes its execution.
 
 ### Design considerations:
 
-###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
+###### **Aspect: Overall design of predicate:**
+
+* **Alternative 1 (Current choice)** : Each attribute has their corresponding `Predicate`, `PersonContainsKeywordsPredicate` is responsible for testing them."
+  * Pros: Code base be more modular.
+  * Cons: Need to create quite amount of class.
+* **Alternative 2** : Create a single predicate `PersonContainsKeywordsPredicate` which contains different methods to test different attributes against keywords.
+  * Pros: Easier to implement, and the code is more straightforward to understand.
+  * Cons: Harder to maintain the code when extending the search to include new attributes, as modifications to this class are required.
+
+**Reasoning :**
+
+Due to the Open-Closed Principle, we have opted for Alternative 1 to maintain modularity in our codebase.
+
+###### **Aspect: Implementation of `XYZContainsKeywordsPredicate` regarding prefix:**
 
 * **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
     * Pros: Easy to implement, provides more flexibility to users for finding their customers.
@@ -342,6 +355,23 @@ In addition, Alternative 3 requires a more complicated algorithm.
 **Reasoning :**
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
+
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
+  * Pros: Simplifies user input for convenience.
+  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
+* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
+  * Pros: Provides improved differentiation and flexibility for users.
+  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
+
+**Reasoning :**
+
+In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
+and the use of a single prefix with multiple keywords serves this purpose effectively. 
+By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
+Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
+
 
 ## Insurance Feature
 This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
