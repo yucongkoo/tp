@@ -95,7 +95,7 @@ public class AddCommandTest {
 
     @Test
     public void execute_insuranceExceedLimit_success() throws Exception {
-        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5", "6", "7", "8","9").build();
+        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5", "6", "7", "8", "9").build();
 
         AddCommand command = new AddCommand(person);
 
