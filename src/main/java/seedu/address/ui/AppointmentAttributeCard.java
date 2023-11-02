@@ -48,10 +48,22 @@ public class AppointmentAttributeCard extends UiPart<Region> {
         timeIcon.setImage(timeImg);
         venueIcon.setImage(venueImg);
 
-        date.setText(appointment.getDate());
-        time.setText(appointment.getTime());
-        venue.setText(appointment.getVenue());
-        count.setText("Appointments completed: " + String.valueOf(appointmentCount.getCount()));
+        if (appointment.getDate().equals("-")) {
+            date.setText("-");
+        } else {
+            date.setText(appointment.getDate());
+        }
+        if (appointment.getTime().isEmpty()) {
+            time.setText("-");
+        } else {
+            time.setText(appointment.getTime());
+        }
+        if (appointment.getVenue().isEmpty()) {
+            venue.setText("-");
+        } else {
+            venue.setText(appointment.getVenue());
+        }
+        count.setText("Appointments completed: " + appointmentCount.getCount());
 
     }
 }
