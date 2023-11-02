@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_UPPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE_UPPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TIME_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_UPPER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_VENUE_UPPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE_UPPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG_UPPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_UPPER;
@@ -55,7 +58,8 @@ public class ArgumentTokenizer {
         Prefix[] uppercasePrefixes = new Prefix[] { PREFIX_NAME_UPPER, PREFIX_PHONE_UPPER,
             PREFIX_EMAIL_UPPER, PREFIX_PRIORITY_UPPER, PREFIX_TAG_UPPER, PREFIX_REMARK_UPPER,
             PREFIX_INSURANCE_UPPER, PREFIX_ADDRESS_UPPER, PREFIX_ADD_INSURANCE_UPPER,
-            PREFIX_DELETE_INSURANCE_UPPER, PREFIX_ADD_TAG_UPPER, PREFIX_DELETE_TAG_UPPER };
+            PREFIX_DELETE_INSURANCE_UPPER, PREFIX_ADD_TAG_UPPER, PREFIX_DELETE_TAG_UPPER, PREFIX_APPOINTMENT_UPPER,
+            PREFIX_APPOINTMENT_TIME_UPPER, PREFIX_APPOINTMENT_VENUE_UPPER};
 
         String processedArgs = argsString;
 
