@@ -88,7 +88,7 @@ will be using these names to refer to the section specified in the following Use
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
 * `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
-* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
 * A customer **must not have more than 10 tags** assigned to it.
@@ -243,6 +243,8 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Description:**
 
 * Updates the tags assigned to the customer at `<index>` in the displayed customer list.
+* Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
+* Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
 * Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
 
@@ -252,7 +254,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * **At least one** `<tag to add>` or `<tag to delete>` should be provided.
 * Adding and deleting the same tag is **not allowed**.
 * `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * The number of tags assigned to the customer after the update should **not exceed 10 tags**.
 * The targeted customer's tags should **not remain unchanged** after the update command.
 

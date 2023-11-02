@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.StringUtil;
 
 /**
  * The main entry point to the application.
@@ -36,7 +35,6 @@ public class Main {
         // the user (if looking at the log output) that the said warning appearing in the log
         // can be ignored.
         logger.warning("The warning about Unsupported JavaFX configuration below can be ignored.");
-        System.out.println(StringUtil.countCharactersWithoutSpaces(" 1 2 3 4 5 6 7   8  9 0 1 2 3 4 5 6 7 8 9 0 "));
         Application.launch(MainApp.class, args);
     }
 }
