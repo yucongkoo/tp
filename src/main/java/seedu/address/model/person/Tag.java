@@ -17,7 +17,7 @@ public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
             String.format("Tags names should be alphanumeric,"
-                    + "non-empty and not longer than %d characters.", MAXIMUM_TAG_LENGTH);
+                    + "non-empty and not longer than %d characters(excluding spaces).", MAXIMUM_TAG_LENGTH);
 
     private final String tagName;
 
