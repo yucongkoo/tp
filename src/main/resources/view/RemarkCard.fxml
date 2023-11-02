@@ -7,7 +7,7 @@
 
 <VBox fx:id="remarkCard" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" styleClass="remark-card-container" minWidth="200" maxWidth="200" VBox.vgrow="ALWAYS">
     <padding>
-        <Insets top="15" right="10" bottom="10" left="12" />
+        <Insets top="9" right="10" bottom="10" left="10" />
     </padding>
     <HBox>
         <ImageView fx:id="imageView" fitWidth="25" fitHeight="25" preserveRatio="true"/>
@@ -16,6 +16,6 @@
         <padding>
             <Insets top="10" />
         </padding>
-        <Label fx:id="remark" styleClass="cell_big_label" wrapText="true"/>
+        <Label fx:id="remark" styleClass="cell_small_label" wrapText="true"/>
     </HBox>
 </VBox>

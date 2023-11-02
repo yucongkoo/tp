@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.FlowPaneLabel.Type;
+import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
+
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -37,6 +40,9 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard addressCard;
     private RemarkCard remarkCard;
 
+    private AppointmentAttributeCard appointmentCard;
+
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -54,7 +60,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox remarkCardPlaceholder;
     @FXML
+    private VBox appointmentCardPlaceholder;
+    @FXML
     private FlowPane flowPaneLabels;
+    @FXML
+    private HBox informationBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -76,12 +86,14 @@ public class PersonCard extends UiPart<Region> {
         loadInsurance();
         loadTags();
         loadRemarkCard();
+        loadAppointmentCard();
+        setInformationBox();
     }
 
     private void loadPriority() {
         if (person.getPriorityLevel() != Priority.Level.NONE) {
-            flowPaneLabels.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
-                    FlowPaneLabel.Type.PRIORITY).getRoot());
+            flowPaneLabels.getChildren().add(0,
+                    createFlowPaneLabel(Type.PRIORITY, person.getPriority().toString()).getRoot());
         }
     }
 
@@ -94,15 +106,14 @@ public class PersonCard extends UiPart<Region> {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
                 .forEach(insurance -> flowPaneLabels.getChildren()
-                        .add(new FlowPaneLabel(insurance.getInsuranceName(),
-                                FlowPaneLabel.Type.INSURANCE).getRoot()));
+                        .add(createFlowPaneLabel(Type.INSURANCE, insurance.getInsuranceName()).getRoot()));
     }
 
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
-                .forEach(tag -> flowPaneLabels.getChildren().add(new FlowPaneLabel(tag.getTagName(),
-                        FlowPaneLabel.Type.TAG).getRoot()));
+                .forEach(tag -> flowPaneLabels.getChildren()
+                        .add(createFlowPaneLabel(Type.TAG, tag.getTagName()).getRoot()));
     }
 
     private void loadPhoneCard() {
@@ -134,5 +145,28 @@ public class PersonCard extends UiPart<Region> {
 
         remarkCard = new RemarkCard(remarkString);
         remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
+    }
+
+    private void loadAppointmentCard() {
+        /*
+        String appointmentDateString = person.getAppointment().getDate();
+
+        if (appointmentDateString.equals("-")) {
+            return;
+        } currently thinking of a way to do this, current method is not feasible
+        as it causes appointmentCard to disappear when it is unmarked/decremented.
+         */
+        appointmentCard = new AppointmentAttributeCard(person.getAppointment(), person.getAppointmentCount());
+        appointmentCardPlaceholder.getChildren().add(appointmentCard.getRoot());
+    }
+
+    private void setInformationBox() {
+        String remarkString = person.getRemark().toString();
+
+        if (remarkString.isEmpty()) {
+            informationBox.setSpacing(5);
+        } else {
+            informationBox.setSpacing(10);
+        }
     }
 }

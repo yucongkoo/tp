@@ -46,7 +46,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "<email>] "
             + "[" + PREFIX_ADDRESS + "<address>]\n";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited customer: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_EDIT_TAG_ERROR = "Cannot edit tags. "
             + "Please use \"tag\" command to add/delete tags.";
@@ -104,18 +104,19 @@ public class EditCommand extends Command {
     }
 
     private void checkIsDuplicatePerson(Model model, Person personToEdit, Person editedPerson) throws CommandException {
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            logger.finer("EditCommand execution failed due to duplicated persons in list");
-            //model.addPerson(personToEdit);
-            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
-        }
+        boolean hasDuplicateInModel = !personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson);
+        boolean isDuplicateOfOthersInModel = false;
 
         for (int i = 0; i < model.getFilteredPersonListSize(); i++) {
             Person personAtIndex = getPersonAtIndex(model, Index.fromZeroBased(i));
             if (i != index.getZeroBased() && editedPerson.isSamePerson(personAtIndex)) {
-                logger.finer("EditCommand execution failed due to duplicated persons in list");
-                throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
+                isDuplicateOfOthersInModel = true;
             }
+        }
+
+        if (hasDuplicateInModel || isDuplicateOfOthersInModel) {
+            logger.finer("EditCommand execution failed due to duplicated persons in list");
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_PERSON);
         }
     }
 

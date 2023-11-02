@@ -22,10 +22,9 @@ public class PriorityCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "<priority_level>\n";
+            + "<priority>\n";
 
-    // public static final String MESSAGE_NOT_ASSIGNED = "Priority given is the same as previous one.";
-    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";
+    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of customer: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(PriorityCommand.class);
 

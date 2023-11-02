@@ -6,7 +6,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's non-empty address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class NonEmptyAddress extends Address {
 

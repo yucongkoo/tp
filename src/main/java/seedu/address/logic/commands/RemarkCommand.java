@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -19,14 +21,16 @@ public class RemarkCommand extends Command {
 
 
     public static final String COMMAND_WORD = "remark";
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to customer: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from customer: %1$s";
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
             + "<remarks>\n";
 
+    private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
     private final Index index;
     private final Remark remark;
+
 
 
     /**
@@ -41,6 +45,9 @@ public class RemarkCommand extends Command {
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
+
+        logger.fine("RemarkCommand executing...");
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -51,7 +58,7 @@ public class RemarkCommand extends Command {
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getInsurances(),
-                personToEdit.getPriority());
+                personToEdit.getAppointment(), personToEdit.getAppointmentCount(), personToEdit.getPriority());
 
         CommandUtil.verifyPersonChanged(personToEdit, editedPerson);
 

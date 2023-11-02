@@ -30,7 +30,7 @@ public class PriorityCommandParser implements Parser<PriorityCommand> {
         logger.fine("PriorityCommandParser parsing...");
 
         String trimmedArgs = args.trim();
-        String[] separatedArgs = trimmedArgs.split("\\s+");
+        String[] separatedArgs = trimmedArgs.split("\\s+", 2);
 
         assert separatedArgs.length >= 1 : "separatedArgs length is smaller than 1";
         Index index;

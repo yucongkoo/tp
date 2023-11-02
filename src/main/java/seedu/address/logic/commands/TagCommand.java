@@ -32,7 +32,7 @@ public class TagCommand extends Command {
             + "[" + PREFIX_ADD_TAG + "<tag_to_add>]... "
             + "[" + PREFIX_DELETE_TAG + "<tag_to_delete>]...\n";
 
-    public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of person: %s";
+    public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of customer: %s";
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
 
