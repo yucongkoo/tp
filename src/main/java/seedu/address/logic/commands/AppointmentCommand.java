@@ -24,13 +24,11 @@ import seedu.address.model.person.Person;
 public class AppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "addappt";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add appointment with the customer identified"
-            + " by the index number used in the displayed person list.\n"
-            + "Usage: "
-            + COMMAND_WORD + " <INDEX> "
-            + "[" + PREFIX_APPOINTMENT + "<DATE>]..."
-            + "[" + PREFIX_APPOINTMENT_TIME + "<TIME>] "
-            + "[" + PREFIX_APPOINTMENT_VENUE + "VENUE]...\n";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "[" + PREFIX_APPOINTMENT + "<date>]..."
+            + "[" + PREFIX_APPOINTMENT_TIME + "<time>]... "
+            + "[" + PREFIX_APPOINTMENT_VENUE + "<venue>]...\n";
 
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "Added appointment with customer: %1$s %2$s %3$s %4$s";
     public static final String MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST = "Appointment already exists!";

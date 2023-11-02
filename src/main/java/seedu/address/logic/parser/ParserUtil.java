@@ -149,6 +149,7 @@ public class ParserUtil {
         requireNonNull(insurance);
 
         String trimmed = insurance.trim();
+        trimmed = trimmed.replaceAll("\\s+", " ");
 
         if (!Insurance.isValidInsuranceName(trimmed)) {
             throw new ParseException(Insurance.MESSAGE_CONSTRAINTS);
@@ -173,16 +174,18 @@ public class ParserUtil {
     /**
      * Parses a {@code String priority} into a {@code Priority}.
      * Leading and trailing whitespaces will be trimmed.
+     * Input will be formatted to lower case to disable case-sensitivity.
      *
      * @throws ParseException if the given {@code priority} is invalid.
      */
     public static Priority parsePriority(String priority) throws ParseException {
         requireNonNull(priority);
         String trimmedPriority = priority.trim();
-        if (!isValidPriority(trimmedPriority)) {
+        String formattedPriority = trimmedPriority.toLowerCase(); // disable case-sensitivity
+        if (!isValidPriority(formattedPriority)) {
             throw new ParseException((Priority.MESSAGE_CONSTRAINTS));
         }
-        return new Priority(trimmedPriority);
+        return new Priority(formattedPriority);
     }
 
     /**
