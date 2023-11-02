@@ -62,7 +62,7 @@ will be using these names to refer to the section specified in the following Use
 1. **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
 1. **Result Display Box:** Box that displays the result of executing the entered command.<br/>
 1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
-   - **Customer Card:** Card that displays information about each customer.<br/>
+1. **Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
