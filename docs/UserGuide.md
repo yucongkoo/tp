@@ -243,7 +243,7 @@ These keywords can be spread across different `tag`/`insurance` entries.
   4. `name`: `n/`
   5. `phone`: `p/`
   6. `priority`: `pr/`
-  7. `reamrk`: `r/`
+  7. `remark`: `r/`
   8. `tag`: `t/`
 * A keyword is **NOT** mandatory.
 
@@ -403,7 +403,7 @@ After:
 
 ### Adding a remark to a customer: `remark`
 
-Format: `remark <index> <remark>`
+Format: `remark <index> [remark]`
 
 **Description:**
 
