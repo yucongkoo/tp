@@ -21,9 +21,8 @@ public class DeleteAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "deleteappt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a customer's appointment. \n"
-            + "Usage: "
-            + "INDEX (must be a positive integer)";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index>";
 
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Deleted appointment with %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_FAILED_EMPTY_APPT = "No appointment with %1$s yet!";
