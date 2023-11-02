@@ -11,11 +11,11 @@ pageNav: 3
 Welcome to the User Guide (UG) of **EZContact**
 
 &emsp;&emsp;In the dynamic and ever-evolving world of insurance, staying connected and organized is paramount.
-Meet EzContact, your go-to solution designed exclusively for insurance agents. Navigating the complex network of clients, 
-policies, and leads has never been easier. EzContact empowers you to manage your contacts, streamline communication, 
+Meet EzContact, your go-to solution designed exclusively for insurance agents. Navigating the complex network of clients,
+policies, and leads has never been easier. EzContact empowers you to manage your contacts, streamline communication,
 and boost your productivity, all from the tips of your fingers.
 
-&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduces the 
+&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduces the
 hassle of having to remember everything. It is optimized for use via Command Line Interface (CLI), meaning that users would
 have to enter text command to execute them, while still having the benefits of Graphical User Interface (GUI) where users
 can view the information easily through the application.
@@ -27,7 +27,7 @@ With EZContact, our users are able to :
 *  Schedule appointments and follow-ups without missing a beat.
 
 &emsp;&emsp;If you are a fast typist, EzContact is the perfect tool for you to keep track of all your customer
-, it is faster than any other traditional GUI-based application available in the market! Remember, Time is Money ! The 
+, it is faster than any other traditional GUI-based application available in the market! Remember, Time is Money ! The
 faster you approach your customer, the more deal you seal.
 
 &emsp;&emsp;If you are interested in EzContact, hop on over to our [Quick Start](#quick-start) to get started and
@@ -222,7 +222,7 @@ These keywords can be spread across different `tag`/`insurance` entries.
 <box type="warning" seamless>
 
 **Caution:**
-* **At least one** prefix should be provided. 
+* **At least one** prefix should be provided.
 * Available prefix:
   1. `address`: `a/`
   2. `email`: `e/`
@@ -517,6 +517,7 @@ command box.
 | Term                           | Meaning                                                                                                                            |
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | Alphanumeric                   | Alphanumeric characters include uppercase letters from ‘A’ to ‘Z’, lowercase letters from ‘a’ to ‘z’, and numbers from ‘0` to ‘9’. |
-| json file                      | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |  
+| json file                      | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |
 | Command-line Interface (CLI)   | Text-based user interface that receives text commands to run the program                                                           |
 | Graphical User Interface (GUI) | Interface where user interact with graphical component, such as icons, buttons and menus to run the program                        |
+
