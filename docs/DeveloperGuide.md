@@ -522,6 +522,41 @@ The `Level` enum class is chosen because our system only allows four priority le
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
 
+## Remarkfeature
+
+### Implementation
+
+The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+
+**The `Remark` class**
+
+The class is used to represent different priority levels for each `Person`.
+By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+
+<puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+**The `RemarkCommandParser` class**
+
+The class is used to parse the arguments into two information: `index` and `priority`.
+It will then return a `PriorityCommand` should the arguments are valid.
+
+The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
+
+Taking `parse(2 he likes pizza)`as an example.
+
+<puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
+
+**The `RemarkCommand` class**
+
+The class is responsible in executing the task parsed by the `PriorityCommandParser`.
+It will update the `Priority` of a `Person`.
+
+### Design Consideration:
+
+The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
+The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+
+
 
 ## \[Proposed\] Undo/redo feature
 
