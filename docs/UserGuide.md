@@ -62,7 +62,7 @@ will be using these names to refer to the section specified in the following Use
 1. **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
 1. **Result Display Box:** Box that displays the result of executing the entered command.<br/>
 1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
-   - **Customer Card:** Card that displays information about each customer.<br/>
+1. **Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ Adds a new customer with the respective details to EzContact.
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
 * `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
-* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
 * A customer **must not have more than 10 tags** assigned to it.
@@ -205,7 +205,7 @@ Examples:
 
 **Format:**
 
-Format: `find <prefix [keyword]...> [<prefix [keywords]...>]...`
+Format: `find <prefix> [keyword]... [<prefix> [keywords]]...`
 
 **Description:**
 
@@ -264,6 +264,8 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Description:**
 
 * Updates the tags assigned to the customer at `<index>` in the displayed customer list.
+* Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
+* Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
 * Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
 
@@ -273,7 +275,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * **At least one** `<tag to add>` or `<tag to delete>` should be provided.
 * Adding and deleting the same tag is **not allowed**.
 * `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * The number of tags assigned to the customer after the update should **not exceed 10 tags**.
 * The targeted customer's tags should **not remain unchanged** after the update command.
 
@@ -502,7 +504,7 @@ command box.
 | **Delete**    | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**      | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**      | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**      | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
+| **Find**      | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                              |
 | **Tag**       | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance** | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**    | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |

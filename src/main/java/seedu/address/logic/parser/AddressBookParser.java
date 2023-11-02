@@ -51,18 +51,19 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord").toLowerCase();
+        final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        // Convert all Uppercase prefixes to lowercase
+        // Convert all Uppercase to lowercase
         final String processedArguments = ArgumentTokenizer.preprocessArgsString(arguments);
+        final String processedCommandWord = commandWord.toLowerCase();
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
+        switch (processedCommandWord) {
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(processedArguments);
@@ -80,7 +81,7 @@ public class AddressBookParser {
             return new FindCommandParser().parse(processedArguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommandParser().parse(processedArguments);
+            return new ListCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
