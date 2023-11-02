@@ -104,10 +104,10 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-<box type="info" seamless>
+<div markdown="block" class="alert alert-info">
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</box>
+**Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 How the `Logic` component works:
 
@@ -170,26 +170,49 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
-This feature allows user to assign / remove tags to / from customers in EZContact to make customer more recognizable for users.
+This feature allows users to assign tags to / remove tags from customers in EZContact, increasing the recognizability 
+of customers to users.
 
 ### Implementation
 
+###### **Implementing `Tag`**
+
 Before implementing the actual command execution of tag,
 tags first needs to be stored in a `Person` object accordingly.
-A `Person` is associated to any number of `Tag`s.
+Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
+
+###### **Integrating a command for handling tag features into the execution logic**
+
+In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
+we first update the `AddressBookParser` to recognise the `tag` [command word](#glossary) and will create a `TagCommandParser` subsequently.
+The `TagCommandParser` will then parse the [command arguments](#glossary) to create a `TagCommand` that can be executed. 
+
+The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
+taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
+
+<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
 
 
 ###### **Implementing `TagCommandParser`**
 
-`TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
-`tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
-Note that **duplicate tags will be ignored**.
+`TagCommandParser` plays the role of parsing [command arguments](#glossary) into two information:<br/>
+* `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
+* `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
+Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
+The parsing steps are as follows:
+1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`.
+1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
+1. Verify that there is at least one tag to add/delete.
+1. Construct and return the `TagCommand`.
+
+Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. Note that the 
+**reference frames have been omitted** as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
@@ -197,24 +220,32 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 ###### **Implementing `TagCommand`**
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution.
+reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
+is a common tag to add and delete), the command execution will fail.<br/>
+The execution steps are as follows:<br/>
+1. Verify that the `TagCommand` is executable(i.e. there is no conflicting tag in the `updatePersonDescriptor`).
+1. Retrieve `personToUpdate` from the model using `index`.
+1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
+1. Create the `updatedPerson` from the above information.
+1. Verify that the `updatedPerson` has a different tag set from `personToUpdate` (i.e. the command execution will change the person).
+1. Verify that the `updatedPerson` has a valid number of tags (i.e. not exceeding the maximum allowed tag count).
+1. Set the `personToUpdate` to `updatedPerson` in the `Model`.
+1. Returns the `CommandResult` of the execution.
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
-taking `execute(m)` call to the `TagCommand` as an example.
+taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
+as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
-###### **Integrating `TagCommandParser` and `TagCommand` into execution logic**
+###### **Wrapping up the tag feature**
 
-Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
-is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
-The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser`
-to parse the arguments.
+As reaching this point, we have completed the implementation of the tag feature, where users are allowed to add and delete
+tags of a person in the same command. The following section will discuss certain design considerations when implementing 
+this feature.
 
-The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
-taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
-
-<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+<br/>
+<br/>
 
 ### Design considerations:
 
@@ -227,8 +258,7 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
 
-**Reasoning :**
-
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
@@ -241,51 +271,93 @@ storing tags.
   * Pros: Easy to implement
   * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
 
-**Reasoning :**
-
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
 
 ###### **Aspect: Deletion of non-existing tags:**
-* **Alternative 1 (Current choice)** : Simply ignore such deletions.
+* **Alternative 1(current choice):** Simply ignore such deletions.
   * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
   * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
 * **Alternative 2** : Block users from such deletions.
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
-**Reasoning :**
-
+**Reasoning:**<br/>
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
 they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
+
+###### **Aspect: Addition of existing tags:**
+This aspect is similar to the above aspect regarding **Deletion of non-existing tags**, the current choice is to simply
+ignore such additions due to the same reason stated above.
+
+<br/>
+<br/>
+<br/>
 
 ## Find feature
 This find feature is designed to do partial search or prefix search on the customer list.
 
 ### Implementation
 
-###### **Implementing `NameContainsKeywordsPredicate`**
-This class determine how the `find` feature searches for the right customers.
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("find n/Song r/vegetarian")`
+
+<puml src="diagrams/find-feature/FindSequence.puml" />
+
+
+###### **Implementing `XYZContainsKeywordsPredicate`**
+`XYZContainsKeywordsPredicate` = `AddressContainsKeywordsPredicate`, `NameContainsKeywordsPredicate` etc
+
+<puml src="diagrams/find-feature/PredicateClassDiagram.puml"/>
+
+This class inherits from Predicate interface and determine how the `find` feature searches for the right customers.
 It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
-1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
-1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
+1. The `attribute(name/address/...)` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `attribute(name/address/...)` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
 
-   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
-   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
-   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - If `attribute` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `attribute` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
+   - If the `keyword` is **prefix** of the `attribute` _(e.g. searches "ja" in "james bond)_, it returns true
    - else returns false
+
+###### **Implementing `PersonContainsKeywordsPredicate`**
+
+This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
+'NameContainsKeywordsPredicate' to check if specific criteria are met.
+
+###### **Implementing `FindCommandParser`**
+`FindCommandParser` processes the input following the 'find' command, parsing it into distinct predicates based on the provided prefixes.
+These predicates are then combined to create a `PersonContainsKeywordsPredicate` which is used by `FincCommand`
+
+<puml src="diagrams/find-feature/ParseFindCommandSequenceDiagram.puml"/>
+
 
 ###### **Implementing `FindCommand`**
 `FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
 reflect the changes after the `FindCommand` completes its execution.
 
+<puml src="diagrams/find-feature/ExecuteFindCommandSequenceDiagram.puml"/>
+
 ### Design considerations:
 
-###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
+###### **Aspect: Overall design of predicate:**
+
+* **Alternative 1 (Current choice)** : Each attribute has their corresponding `Predicate`, `PersonContainsKeywordsPredicate` is responsible for testing them."
+  * Pros: Code base be more modular.
+  * Cons: Need to create quite amount of class.
+* **Alternative 2** : Create a single predicate `PersonContainsKeywordsPredicate` which contains different methods to test different attributes against keywords.
+  * Pros: Easier to implement, and the code is more straightforward to understand.
+  * Cons: Harder to maintain the code when extending the search to include new attributes, as modifications to this class are required.
+
+**Reasoning :**
+
+Due to the Open-Closed Principle, we have opted for Alternative 1 to maintain modularity in our codebase.
+
+###### **Aspect: Implementation of `XYZContainsKeywordsPredicate` regarding prefix:**
 
 * **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
     * Pros: Easy to implement, provides more flexibility to users for finding their customers.
@@ -319,6 +391,23 @@ In addition, Alternative 3 requires a more complicated algorithm.
 **Reasoning :**
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
+
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
+  * Pros: Simplifies user input for convenience.
+  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
+* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
+  * Pros: Provides improved differentiation and flexibility for users.
+  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
+
+**Reasoning :**
+
+In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
+and the use of a single prefix with multiple keywords serves this purpose effectively. 
+By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
+Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
+
 
 ## Insurance Feature
 This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
@@ -589,12 +678,16 @@ Target user : Insurance agent
 * needs to remember customer's information
 * busy
 * needs to maintain interactions with his/her customers over a long time span
+* often forgets details about his/her customers
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
+**Value proposition**: 
+
+Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
+alongside helping users increase the chance of sealing deals with customers.
 
 
 ## User stories
@@ -637,16 +730,20 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **Use Case: UC01 - add a customer**
 
-**MSS:**</br>
-&emsp;1. User enters the details of customer to be added.</br>
+**MSS:**<br/>
+&emsp;1. User enters the details of a customer to be added.</br>
 &emsp;2. System adds the customer.</br>
 &emsp;3. System displays the details of customer added by user.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;1a.  Details provided by user is incomplete or invalid.</br>
+&emsp;&emsp;1a1. System displays an error message to alert User.</br>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;1b.  Customer to be added is already in the System.<br/>
+&emsp;&emsp;1b1. System displays an error message to alert User.<br/>
 &emsp;&emsp;Use case ends.
+
 
 #### Filtering customers
 
@@ -737,7 +834,6 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
-
 #### Assigning insurance to customer
 
 **Use Case: UC07 - assign insurance to a customer**
@@ -773,6 +869,26 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;Use case ends.
 
 
+#### Updating tags of a customer
+
+**Use Case: UC09 - update tags of a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests to list out the customers.<br/>
+&emsp;2. System displays the requested list of customers to the user.<br/>
+&emsp;3. User enters index of targeted customer and information of tags to update.<br/>
+&emsp;4. System updates the tags of the specified customer accordingly.<br/>
+&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;3a. User provided invalid index or information.<br/>
+&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
 ## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -787,6 +903,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Command word:** The first word of a user command(e.g. `tag` is the command word of the command `tag 1 at/tall dt/short`)
+* **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
 
 --------------------------------------------------------------------------------------------------------------------
 # **Appendix: Planned Enhancements**

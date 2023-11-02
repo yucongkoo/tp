@@ -218,7 +218,7 @@ After:
 
 **Format:**
 
-Format: `find <prefix [keyword]...> [<prefix [keywords]...>]...`
+Format: `find <prefix> [keyword]... [<prefix> [keywords]]...`
 
 **Description:**
 
@@ -543,7 +543,7 @@ command box.
 | **Delete**    | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**      | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**      | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**      | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
+| **Find**      | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                              |
 | **Tag**       | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance** | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**    | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
