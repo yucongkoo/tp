@@ -39,11 +39,10 @@ public class FlowPaneLabel extends UiPart<Region> {
     private static final String insuranceTextColorInHexadecimal = "#000000";
     private static final String priorityTextColorInHexadecimal = "#FFFFFF";
 
-    @javafx.fxml.FXML
+    @FXML
     private HBox flowPaneLabel;
     @FXML
     private Label value;
-    private Level priorityLevel;
 
     private FlowPaneLabel(String text, String textColorInHexadecimal, Color backgroundColor) {
         super(FXML);
@@ -106,6 +105,9 @@ public class FlowPaneLabel extends UiPart<Region> {
             return mediumPriorityBackgroundColor;
         case LOW:
             return lowPriorityBackgroundColor;
+        case NONE:
+            // should not reach here
+            throw new IllegalArgumentException("Should not have a FlowPaneLabel for PrioritiyLevel.NONE.");
         default:
             // should not reach here
             throw new IllegalArgumentException("Switch case for enum Level reached default branch.");
