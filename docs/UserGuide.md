@@ -163,8 +163,14 @@ Examples:
 </box>
 
 **Examples:**
-* `list` followed by `delete 2` deletes the 2nd customer in the displayed list.
-* `find Betsy` followed by `delete 1` deletes the 1st customer appeared in the list displayed by the `find` command.
+* `delete 2` deletes the 2nd customer in the displayed list.
+
+
+Before:
+![deleteBefore](images/delete-command-example/delete-before.png)
+
+After:
+![deleteAfter](images/delete-command-example/delete-after.png)
 
 <br>
 
@@ -192,12 +198,19 @@ Examples:
 * Tags are not editable.
 * Priorities are not editable.
 * Remarks are not editable.
+* Editing a customer to have the same `<phone number>` or `<email>` to other existing customers in EzContact is **not allowed.**
+
 
 </box>
 
 **Examples:**
-*  `edit 1 p/91234567 e/fong@example.com` edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
-*  `edit 2 n/Betsy Crower` edits the name of the 2nd customer to be `Betsy Crower`.
+*  `edit 3 n/Betsy Crower p/91234567 e/fong@example.com` edits the name, phone number and email address of the 3rd customer to be `Betsy Crower`, `91234567` and `fong@example.com` respectively.
+
+Before:
+![editBefore](images/edit-command-example/edit-before.png)
+
+After:
+![editAfter](images/edit-command-example/edit-after.png)
 
 <br>
 
@@ -352,11 +365,37 @@ After:
 
 </box>
 
+<box type="info" seamless>
+
+**Note:**
+* The customer list is sorted by priority according to this order: `high` -> `medium` -> `low` </br>
+* Customers with no priority assigned to them will be displayed at the bottom of the list. </br>
+* Changing a customer's priority **might** change its position in the list because of the sorted property.
+</box>
+
 **Examples:**
 
-* `priority 1 high` updates the priority of the first customer to be `high`.
+* `priority 3 high` updates the priority of the third customer to be `high`. Note that the position of the customer is changed.
 
-* `priority 2 -` removes the priority assigned to the second customer.
+Before:
+
+![priorityBefore](images/priority-command-example/priority-before.png)
+
+After:
+
+![priorityAfter](images/priority-command-example/priority-after.png)
+
+<br>
+
+* `priority 3 -` removes the priority assigned to the third customer. Note that the customer remains at the bottom of the list.
+
+Before:
+
+![removePriorityBefore](images/priority-command-example/remove-priority-before.png)
+
+After:
+
+![removePriorityAfter](images/priority-command-example/remove-priority-after.png)
 
 <br>
 
