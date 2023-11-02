@@ -52,6 +52,7 @@ public class Appointment {
         checkArgument(isValidDateFormat(date), INVALID_DATE_INPUT);
         checkArgument(isValidTimeFormat(time), INVALID_TIME_INPUT);
         checkArgument(isValidVenueFormat(time), INVALID_VENUE_INPUT);
+        assert(!date.isEmpty());
         this.date = date;
         this.time = time;
         this.venue = venue;
