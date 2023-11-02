@@ -63,6 +63,8 @@ public class PersonCard extends UiPart<Region> {
     private VBox appointmentCardPlaceholder;
     @FXML
     private FlowPane flowPaneLabels;
+    @FXML
+    private HBox informationBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -85,6 +87,7 @@ public class PersonCard extends UiPart<Region> {
         loadTags();
         loadRemarkCard();
         loadAppointmentCard();
+        setInformationBox();
     }
 
     private void loadPriority() {
@@ -155,5 +158,15 @@ public class PersonCard extends UiPart<Region> {
          */
         appointmentCard = new AppointmentAttributeCard(person.getAppointment(), person.getAppointmentCount());
         appointmentCardPlaceholder.getChildren().add(appointmentCard.getRoot());
+    }
+
+    private void setInformationBox() {
+        String remarkString = person.getRemark().toString();
+
+        if (remarkString.isEmpty()) {
+            informationBox.setSpacing(5);
+        } else {
+            informationBox.setSpacing(10);
+        }
     }
 }

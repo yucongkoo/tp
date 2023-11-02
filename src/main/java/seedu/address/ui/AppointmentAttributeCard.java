@@ -38,8 +38,6 @@ public class AppointmentAttributeCard extends UiPart<Region> {
     private final Image venueImg = new Image("images/venue.png");
 
 
-
-
     /**
      * Creates an appointmentAttribute card for code
      * {@appointmentAttribute} with the given {@code bodyText}.
