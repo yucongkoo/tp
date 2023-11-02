@@ -267,21 +267,44 @@ This find feature is designed to do partial search or prefix search on the custo
 
 ### Implementation
 
-###### **Implementing `NameContainsKeywordsPredicate`**
-This class determine how the `find` feature searches for the right customers.
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("find n/Song r/vegetarian")`
+
+<puml src="diagrams/find-feature/FindSequence.puml" />
+
+
+###### **Implementing `XYZContainsKeywordsPredicate`**
+`XYZContainsKeywordsPredicate` = `AddressContainsKeywordsPredicate`, `NameContainsKeywordsPredicate` etc
+
+<puml src="diagrams/find-feature/PredicateClassDiagram.puml"/>
+
+This class inherits from Predicate interface and determine how the `find` feature searches for the right customers.
 It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
-1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
-1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
+1. The `attribute(name/address/...)` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `attribute(name/address/...)` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
 
-   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
-   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
-   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - If `attribute` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `attribute` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
+   - If the `keyword` is **prefix** of the `attribute` _(e.g. searches "ja" in "james bond)_, it returns true
    - else returns false
+
+###### **Implementing `PersonContainsKeywordsPredicate`**
+
+This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
+'NameContainsKeywordsPredicate' to check if specific criteria are met.
+
+###### **Implementing `FindCommandParser`**
+`FindCommandParser` processes the input following the 'find' command, parsing it into distinct predicates based on the provided prefixes.
+These predicates are then combined to create a `PersonContainsKeywordsPredicate` which is used by `FincCommand`
+
+<puml src="diagrams/find-feature/ParseFindCommandSequenceDiagram.puml"/>
+
 
 ###### **Implementing `FindCommand`**
 `FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
 reflect the changes after the `FindCommand` completes its execution.
+
+<puml src="diagrams/find-feature/ExecuteFindCommandSequenceDiagram.puml"/>
 
 ### Design considerations:
 
