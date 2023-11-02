@@ -267,25 +267,61 @@ This find feature is designed to do partial search or prefix search on the custo
 
 ### Implementation
 
-###### **Implementing `NameContainsKeywordsPredicate`**
-This class determine how the `find` feature searches for the right customers.
+Sequence diagram below shows the interactions between `Logic` components when executing `execute("find n/Song r/vegetarian")`
+
+<puml src="diagrams/find-feature/FindSequence.puml" />
+
+
+###### **Implementing `XYZContainsKeywordsPredicate`**
+`XYZContainsKeywordsPredicate` = `AddressContainsKeywordsPredicate`, `NameContainsKeywordsPredicate` etc
+
+<puml src="diagrams/find-feature/PredicateClassDiagram.puml"/>
+
+This class inherits from Predicate interface and determine how the `find` feature searches for the right customers.
 It tests each customer in the list with given `keywords`(search prompt given by users) in the following way:
 
-1. The `name` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
-1. The `name` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
+1. The `attribute(name/address/...)` will be tested over each `keyword` in the search prompt (e.g. "james bond" is broken down into "james" & "bond")
+1. The `attribute(name/address/...)` will also be tested **word by word** for every `keyword` in the prompt on these criteria:
 
-   - If `name` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
-   - If `name` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
-   - If the `keyword` is **prefix** of the `name` _(e.g. searches "ja" in "james bond)_, it returns true
+   - If `attribute` **fully matches** all the `keywords` _(e.g. "james bond" = "james bond")_, it returns true
+   - If `attribute` **contains all** the `keywords` _(e.g. searches "james" in "james bond")_, it returns true
+   - If the `keyword` is **prefix** of the `attribute` _(e.g. searches "ja" in "james bond)_, it returns true
    - else returns false
+
+###### **Implementing `PersonContainsKeywordsPredicate`**
+
+This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
+'NameContainsKeywordsPredicate' to check if specific criteria are met.
+
+###### **Implementing `FindCommandParser`**
+`FindCommandParser` processes the input following the 'find' command, parsing it into distinct predicates based on the provided prefixes.
+These predicates are then combined to create a `PersonContainsKeywordsPredicate` which is used by `FincCommand`
+
+<puml src="diagrams/find-feature/ParseFindCommandSequenceDiagram.puml"/>
+
 
 ###### **Implementing `FindCommand`**
 `FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
 reflect the changes after the `FindCommand` completes its execution.
 
+<puml src="diagrams/find-feature/ExecuteFindCommandSequenceDiagram.puml"/>
+
 ### Design considerations:
 
-###### **Aspect: Design of `NameContainsKeywordsPredicate` regarding prefix:**
+###### **Aspect: Overall design of predicate:**
+
+* **Alternative 1 (Current choice)** : Each attribute has their corresponding `Predicate`, `PersonContainsKeywordsPredicate` is responsible for testing them."
+  * Pros: Code base be more modular.
+  * Cons: Need to create quite amount of class.
+* **Alternative 2** : Create a single predicate `PersonContainsKeywordsPredicate` which contains different methods to test different attributes against keywords.
+  * Pros: Easier to implement, and the code is more straightforward to understand.
+  * Cons: Harder to maintain the code when extending the search to include new attributes, as modifications to this class are required.
+
+**Reasoning :**
+
+Due to the Open-Closed Principle, we have opted for Alternative 1 to maintain modularity in our codebase.
+
+###### **Aspect: Implementation of `XYZContainsKeywordsPredicate` regarding prefix:**
 
 * **Alternative 1** (Current choice): Return customer when all keywords can be found as prefix in customer's name in **arbitrary order**.
     * Pros: Easy to implement, provides more flexibility to users for finding their customers.
@@ -319,6 +355,23 @@ In addition, Alternative 3 requires a more complicated algorithm.
 **Reasoning :**
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
+
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
+  * Pros: Simplifies user input for convenience.
+  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
+* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
+  * Pros: Provides improved differentiation and flexibility for users.
+  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
+
+**Reasoning :**
+
+In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
+and the use of a single prefix with multiple keywords serves this purpose effectively. 
+By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
+Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
+
 
 ## Insurance Feature
 This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
