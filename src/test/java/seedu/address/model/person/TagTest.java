@@ -29,7 +29,7 @@ public class TagTest {
         assertTrue(Tag.isValidTagName("valid"));
         assertTrue(Tag.isValidTagName("valid1"));
         assertTrue(Tag.isValidTagName("valid1 tag2 name"));
-        assertTrue(Tag.isValidTagName("12345678901234567890")); // maximum length
+        assertTrue(Tag.isValidTagName("12345678901234567890")); // boundary value
     }
 
     @Test

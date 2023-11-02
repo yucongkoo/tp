@@ -13,7 +13,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.InsuranceCommand;
 import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescriptor;
-import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.insurance.Insurance;
 
@@ -43,7 +42,7 @@ public class InsuranceCommandParser implements Parser<InsuranceCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), e);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InsuranceCommand.MESSAGE_USAGE), e);
         }
 
         requireAllNonNull(index);

@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_CHANGED;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 
 import java.util.logging.Logger;
@@ -18,17 +18,13 @@ import seedu.address.model.priority.Priority;
 
 /** Assigns priority to a person. **/
 public class PriorityCommand extends Command {
-    public static final String COMMAND_WORD = "pr";
+    public static final String COMMAND_WORD = "priority";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assign priority to a person "
-            + "by the index number used in the displayed person list.\n"
-            + "Usage: "
-            + COMMAND_WORD + " <INDEX> (must be a positive integer) "
-            + "<PRIORITY_LEVEL>\n"
-            + Priority.MESSAGE_CONSTRAINTS;
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index> "
+            + "<priority>\n";
 
-    public static final String MESSAGE_NOT_ASSIGNED = "Priority given is the same as previous one.";
-    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of person: %1$s";
+    public static final String MESSAGE_ASSIGN_PRIORITY_SUCCESS = "Updated priority of customer: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(PriorityCommand.class);
 
@@ -55,13 +51,12 @@ public class PriorityCommand extends Command {
 
         logger.fine("PriorityCommand executing...");
 
-        Person personToUpdate = getPersonToUpdate(model, index);
+        Person personToUpdate = getPersonAtIndex(model, index);
         Person updatedPerson = createPersonWithUpdatedPriority(personToUpdate, priority);
 
         checkIsOldPriority(personToUpdate);
 
         model.setPerson(personToUpdate, updatedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_ASSIGN_PRIORITY_SUCCESS, Messages.format(updatedPerson)));
     }
@@ -69,7 +64,7 @@ public class PriorityCommand extends Command {
     private void checkIsOldPriority(Person personToUpdate) throws CommandException {
         if (personToUpdate.hasSamePriority(priority)) {
             logger.finer("Executing failed due to provided priority is the same as previously assigned priority");
-            throw new CommandException(MESSAGE_NOT_ASSIGNED);
+            throw new CommandException(MESSAGE_PERSON_NOT_CHANGED);
         }
     }
 

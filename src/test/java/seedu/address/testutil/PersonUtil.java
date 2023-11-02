@@ -1,7 +1,9 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
@@ -33,6 +35,8 @@ public class PersonUtil {
     public static String getAddCommand(Person person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
+
+
 
     /**
      * Returns the part of command string for the given {@code person}'s details.
@@ -78,15 +82,17 @@ public class PersonUtil {
 
     public static String getInsuranceCommand(Index index,
                                              UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor) {
+
         String insurancesToAddString = updatePersonInsuranceDescriptor.getInsurancesToAdd().stream()
-                .map(i -> " " + PREFIX_ADD_TAG + i.getInsuranceName())
+                .map(i -> " " + PREFIX_ADD_INSURANCE + i.getInsuranceName())
                 .collect(Collectors.joining());
+
         String insurancesToDeleteString = updatePersonInsuranceDescriptor.getInsurancesToDelete().stream()
-                .map(i -> " " + PREFIX_DELETE_TAG + i.getInsuranceName())
+                .map(i -> " " + PREFIX_DELETE_INSURANCE + i.getInsuranceName())
                 .collect(Collectors.joining());
 
         return InsuranceCommand.COMMAND_WORD + " " + index.getOneBased()
-                + insurancesToAddString + insurancesToAddString;
+                + insurancesToAddString + insurancesToDeleteString;
     }
 
     public static String getPriorityCommand(Index index, Priority priority) {

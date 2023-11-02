@@ -10,8 +10,7 @@
       "value" : "invalid@email!3e"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "tags": [ ],
     "priority" : {

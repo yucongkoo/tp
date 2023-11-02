@@ -30,6 +30,8 @@ public class Person {
     private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
     private final Priority priority;
+    private final Appointment appointment;
+    private AppointmentCount count;
 
     private final Set<Insurance> insurances = new HashSet<>();
 
@@ -38,9 +40,10 @@ public class Person {
      */
 
     public Person(Name name, Phone phone, Email email,
-                  Address address, Remark remark, Set<Tag> tags, Set<Insurance> insurances) {
+                  Address address, Remark remark, Set<Tag> tags,
+                  Set<Insurance> insurances, Appointment appointment, AppointmentCount count) {
 
-        requireAllNonNull(name, phone, email, address, tags, insurances, remark);
+        requireAllNonNull(name, phone, email, address, tags, insurances, remark, appointment, count);
 
         this.name = name;
         this.phone = phone;
@@ -50,6 +53,8 @@ public class Person {
         this.tags.addAll(tags);
         this.insurances.addAll(insurances);
         this.priority = new Priority(Priority.NONE_PRIORITY_KEYWORD);
+        this.appointment = appointment;
+        this.count = count;
     }
 
     /**
@@ -57,9 +62,10 @@ public class Person {
      */
 
     public Person(Name name, Phone phone, Email email, Address address, Remark remark,
-                  Set<Tag> tags, Set<Insurance> insurances, Priority priority) {
+                  Set<Tag> tags, Set<Insurance> insurances,
+                  Appointment appointment, AppointmentCount count, Priority priority) {
 
-        requireAllNonNull(name, phone, email, address, tags, priority, insurances, remark);
+        requireAllNonNull(name, phone, email, address, tags, priority, insurances, remark, appointment, count);
 
         this.name = name;
         this.phone = phone;
@@ -68,6 +74,8 @@ public class Person {
         this.remark = remark;
         this.tags.addAll(tags);
         this.insurances.addAll(insurances);
+        this.appointment = appointment;
+        this.count = count;
         this.priority = priority;
     }
 
@@ -122,6 +130,15 @@ public class Person {
     public int getInsurancesCount() {
         return insurances.size();
     }
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public AppointmentCount getAppointmentCount() {
+        return count;
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -131,8 +148,18 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return this.phone.equals(otherPerson.phone) || this.email.equals(otherPerson.email);
+    }
+
+    /**
+     * Returns true if the Person has a remarks.
+     */
+    public boolean hasRemark() {
+        return !this.remark.isEmptyRemark();
     }
 
     /**
@@ -149,7 +176,7 @@ public class Person {
         updatedTags.addAll(tagsToAdd);
 
         return new Person(source.name, source.phone, source.email, source.address, source.remark,
-                updatedTags, source.insurances, source.priority);
+                updatedTags, source.insurances, source.appointment, source.count, source.priority);
     }
 
     /**
@@ -165,7 +192,7 @@ public class Person {
         updatedInsurances.addAll(insurancesToAdd);
 
         return new Person(source.name, source.phone, source.email, source.address, source.remark,
-                source.tags, updatedInsurances, source.priority);
+                source.tags, updatedInsurances, source.appointment, source.count, source.priority);
     }
 
     /**
@@ -175,7 +202,8 @@ public class Person {
     public static Person createPersonWithUpdatedPriority(Person personToUpdate, Priority newPriority) {
         requireAllNonNull(personToUpdate, newPriority);
         return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
-                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances, newPriority);
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances,
+                personToUpdate.appointment, personToUpdate.count, newPriority);
     }
 
     /**
@@ -192,10 +220,54 @@ public class Person {
         Address newAddress = editPersonDescriptor.getAddress().orElse(personToEdit.address);
         Remark remark = personToEdit.remark;
         Set<Tag> tags = personToEdit.tags;
+        Appointment appointment = personToEdit.appointment;
+        AppointmentCount appointmentCount = personToEdit.count;
         Priority priority = personToEdit.priority;
 
-        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, personToEdit.insurances, priority);
+        return new Person(newName, newPhone, newEmail, newAddress, remark, tags, personToEdit.insurances,
+                appointment, appointmentCount, priority);
     }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code personToUpdate} edited with
+     * {@code newAppointment}.
+     */
+    public static Person createPersonWithEditedAppointment(Person personToUpdate, Appointment newAppointment) {
+        requireAllNonNull(personToUpdate, newAppointment);
+
+        return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances,
+                newAppointment, personToUpdate.count, personToUpdate.priority);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code personToUpdate}, {@code appointment}
+     * incremented appointment count with
+     * {@code count}.
+     */
+    public static Person createPersonWithIncreasedCount(Person personToUpdate,
+                                                        Appointment appointment, AppointmentCount count) {
+        requireAllNonNull(personToUpdate, appointment, count);
+
+        return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances,
+                appointment, count.incrementAppointmentCount(), personToUpdate.priority);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with details of {@code personToUpdate}, {@code appointment}
+     * decremented appointment count with
+     * {@code count}.
+     */
+    public static Person createPersonWithDecreasedCount(Person personToUpdate,
+                                                        Appointment appointment, AppointmentCount count) {
+        requireAllNonNull(personToUpdate, appointment, count);
+
+        return new Person(personToUpdate.name, personToUpdate.phone, personToUpdate.email, personToUpdate.address,
+                personToUpdate.remark, personToUpdate.tags, personToUpdate.insurances,
+                appointment, count.decrementAppointmentCount(), personToUpdate.priority);
+    }
+
 
     /**
      * Returns true is the Person has the same priority as {@code priority}.
@@ -227,13 +299,15 @@ public class Person {
                 && remark.equals(otherPerson.remark)
                 && tags.equals(otherPerson.tags)
                 && insurances.equals(otherPerson.insurances)
+                && appointment.equals(otherPerson.appointment)
+                && count.equals(otherPerson.count)
                 && priority.equals(otherPerson.priority);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, insurances, priority, remark);
+        return Objects.hash(name, phone, email, address, tags, insurances, priority, remark, appointment);
     }
 
     @Override
@@ -243,10 +317,11 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("remark", remark)
+                .add("priority", priority)
                 .add("tags", tags)
                 .add("insurances", insurances)
-                .add("priority", priority)
+                .add("remark", remark)
+                .add("appointment", appointment)
                 .toString();
     }
 }

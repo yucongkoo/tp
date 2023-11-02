@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.FlowPaneLabel.Type;
+import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
+
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -10,7 +13,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.Tag;
 import seedu.address.model.priority.Priority;
 
@@ -36,6 +38,10 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard phoneCard;
     private PersonAttributeCard emailCard;
     private PersonAttributeCard addressCard;
+    private RemarkCard remarkCard;
+
+    private AppointmentAttributeCard appointmentCard;
+
 
     @FXML
     private HBox cardPane;
@@ -52,11 +58,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox addressCardPlaceholder;
     @FXML
-    private FlowPane tags;
+    private VBox remarkCardPlaceholder;
     @FXML
-    private Label remark;
+    private VBox appointmentCardPlaceholder;
     @FXML
-    private Label remarkTitle;
+    private FlowPane flowPaneLabels;
+    @FXML
+    private HBox informationBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -78,12 +86,14 @@ public class PersonCard extends UiPart<Region> {
         loadInsurance();
         loadTags();
         loadRemarkCard();
+        loadAppointmentCard();
+        setInformationBox();
     }
 
     private void loadPriority() {
         if (person.getPriorityLevel() != Priority.Level.NONE) {
-            tags.getChildren().add(0, new FlowPaneLabel(person.getPriority().toString(),
-                    FlowPaneLabel.Type.PRIORITY).getRoot());
+            flowPaneLabels.getChildren().add(0,
+                    createFlowPaneLabel(Type.PRIORITY, person.getPriority().toString()).getRoot());
         }
     }
 
@@ -95,16 +105,15 @@ public class PersonCard extends UiPart<Region> {
     private void loadInsurance() {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
-                .forEach(insurance -> tags.getChildren()
-                        .add(new FlowPaneLabel(insurance.getInsuranceName(),
-                                FlowPaneLabel.Type.INSURANCE).getRoot()));
+                .forEach(insurance -> flowPaneLabels.getChildren()
+                        .add(createFlowPaneLabel(Type.INSURANCE, insurance.getInsuranceName()).getRoot()));
     }
 
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
-                .forEach(tag -> tags.getChildren().add(new FlowPaneLabel(tag.getTagName(),
-                        FlowPaneLabel.Type.TAG).getRoot()));
+                .forEach(tag -> flowPaneLabels.getChildren()
+                        .add(createFlowPaneLabel(Type.TAG, tag.getTagName()).getRoot()));
     }
 
     private void loadPhoneCard() {
@@ -129,11 +138,35 @@ public class PersonCard extends UiPart<Region> {
 
     private void loadRemarkCard() {
         String remarkString = person.getRemark().toString();
+
         if (remarkString.isEmpty()) {
-            remarkTitle.setText(Remark.REMARK_TITLE_NO_REMARK);
             return;
         }
-        remarkTitle.setText(Remark.REMARK_TITLE);
-        remark.setText(remarkString);
+
+        remarkCard = new RemarkCard(remarkString);
+        remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
+    }
+
+    private void loadAppointmentCard() {
+        /*
+        String appointmentDateString = person.getAppointment().getDate();
+
+        if (appointmentDateString.equals("-")) {
+            return;
+        } currently thinking of a way to do this, current method is not feasible
+        as it causes appointmentCard to disappear when it is unmarked/decremented.
+         */
+        appointmentCard = new AppointmentAttributeCard(person.getAppointment(), person.getAppointmentCount());
+        appointmentCardPlaceholder.getChildren().add(appointmentCard.getRoot());
+    }
+
+    private void setInformationBox() {
+        String remarkString = person.getRemark().toString();
+
+        if (remarkString.isEmpty()) {
+            informationBox.setSpacing(5);
+        } else {
+            informationBox.setSpacing(10);
+        }
     }
 }

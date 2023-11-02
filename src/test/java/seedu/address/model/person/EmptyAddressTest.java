@@ -26,6 +26,6 @@ public class EmptyAddressTest {
         assertFalse(emptyAddress.equals(new NonEmptyAddress("Other Valid Address")));
 
         // non-empty address with same value -> returns false
-        assertFalse(emptyAddress.equals(new NonEmptyAddress(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS)));
+        assertTrue(emptyAddress.equals(Address.createAddress(EmptyAddress.DUMMY_VALUE_FOR_EMPTY_ADDRESS)));
     }
 }

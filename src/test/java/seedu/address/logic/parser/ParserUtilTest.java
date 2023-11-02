@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,22 +20,36 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonTestUtil;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Tag;
+import seedu.address.model.person.predicate.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.InsuranceContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.PriorityContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.RemarkContainsKeywordsPredicate;
+import seedu.address.model.person.predicate.TagContainsKeywordsPredicate;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_ADDRESS = PersonTestUtil.generateStringOfLength(101);
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "12345678";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
+    private static final String VALID_EMPTY_ADDRESS = " ";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_FRIEND = "friend";
     private static final String VALID_TAG_NEIGHBOUR = "neighbour";
+    private static final String VALID_NAME_KEYWORDS_ONE = "Alice";
+    private static final String VALID_NAME_KEYWORDS_TWO = "Main";
+    private static final String VALID_NAME_KEYWORDS_THREE = "12345678";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -105,8 +120,9 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
+    public void parseAddress_emptyAddress_returnsEmptyAddress() throws Exception {
+        Address expectedAddress = EmptyAddress.getEmptyAddress();
+        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_EMPTY_ADDRESS));
     }
 
     @Test
@@ -123,9 +139,13 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_nullValue_returnsEmptyAddress() throws Exception {
-        Address expectedAddress = EmptyAddress.getEmptyAddress();
-        assertEquals(expectedAddress, ParserUtil.parseAddress(null));
+    public void parseAddress_nullValue_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress(null));
+    }
+
+    @Test
+    public void parseAddress_invalidAddress_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
     }
 
     @Test
@@ -193,7 +213,86 @@ public class ParserUtilTest {
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_FRIEND, VALID_TAG_NEIGHBOUR));
         Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_FRIEND), new Tag(VALID_TAG_NEIGHBOUR)));
-
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseNameKeywords_validKeywords_returnsNameContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseNameKeywords(VALID_NAME_KEYWORDS_ONE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new NameContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_ONE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parseAddressKeywords_validKeywords_returnsAddressContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseAddressKeywords(VALID_NAME_KEYWORDS_ONE
+                + " " + VALID_NAME_KEYWORDS_THREE);
+        Predicate<Person> expectedPredicate = new AddressContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_ONE, VALID_NAME_KEYWORDS_THREE));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parseEmailKeywords_validKeywords_returnsEmailContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseEmailKeywords(VALID_NAME_KEYWORDS_THREE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new EmailContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_THREE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parseInsuranceKeywords_validKeywords_returnsInsuranceContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseInsuranceKeywords(VALID_NAME_KEYWORDS_ONE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new InsuranceContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_ONE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parsePhoneKeywords_validKeywords_returnPhoneContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parsePhoneKeywords(VALID_NAME_KEYWORDS_ONE
+                + " " + VALID_NAME_KEYWORDS_THREE);
+        Predicate<Person> expectedPredicate = new PhoneContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_ONE, VALID_NAME_KEYWORDS_THREE));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parseTagKeywords_validKeywords_returnsPriorityContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parsePriorityKeywords(VALID_NAME_KEYWORDS_THREE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new PriorityContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_THREE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
+    @Test
+    public void parseRemarkKeywords_validKeywords_returnsRemarkContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseRemarkKeywords(VALID_NAME_KEYWORDS_THREE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new RemarkContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_THREE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+    @Test
+    public void parsePriorityKeywords_validKeywords_returnsTagContainsKeywordsPredicate() throws Exception {
+        Predicate<Person> actualPredicate = ParserUtil.parseTagKeywords(VALID_NAME_KEYWORDS_ONE
+                + " " + VALID_NAME_KEYWORDS_TWO);
+        Predicate<Person> expectedPredicate = new TagContainsKeywordsPredicate(Arrays.asList(
+                VALID_NAME_KEYWORDS_ONE, VALID_NAME_KEYWORDS_TWO));
+
+        assertEquals(expectedPredicate, actualPredicate);
+    }
+
 }

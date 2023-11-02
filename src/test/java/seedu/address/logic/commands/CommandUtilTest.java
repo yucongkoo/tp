@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.commands.CommandUtil.getPersonToUpdate;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -21,29 +21,29 @@ public class CommandUtilTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void getPersonToUpdate_nullInput_throwsNullPointerException() {
+    public void getPersonAtIndex_nullInput_throwsNullPointerException() {
         // model and index are null
-        assertThrows(NullPointerException.class, () -> getPersonToUpdate(null, null));
+        assertThrows(NullPointerException.class, () -> getPersonAtIndex(null, null));
 
         // model is null
-        assertThrows(NullPointerException.class, () -> getPersonToUpdate(null, INDEX_FIRST_PERSON));
+        assertThrows(NullPointerException.class, () -> getPersonAtIndex(null, INDEX_FIRST_PERSON));
 
         // index is null
-        assertThrows(NullPointerException.class, () -> getPersonToUpdate(model, null));
+        assertThrows(NullPointerException.class, () -> getPersonAtIndex(model, null));
     }
 
     @Test
-    public void getPersonToUpdate_invalidIndex_throwsCommandException() {
+    public void getPersonAtIndex_invalidIndex_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonListSize() + 1);
-        assertThrows(CommandException.class, () -> getPersonToUpdate(model, outOfBoundIndex));
+        assertThrows(CommandException.class, () -> getPersonAtIndex(model, outOfBoundIndex));
     }
 
     @Test
-    public void getPersonToUpdate_validInput_success() {
+    public void getPersonAtIndex_validInput_success() {
         Person expectedPerson = new PersonBuilder(model.getFilteredPersonList().get(0)).build();
 
         try {
-            assertEquals(expectedPerson, getPersonToUpdate(model, INDEX_FIRST_PERSON));
+            assertEquals(expectedPerson, getPersonAtIndex(model, INDEX_FIRST_PERSON));
         } catch (CommandException e) {
             fail();
         }

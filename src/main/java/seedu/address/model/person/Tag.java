@@ -9,11 +9,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Tags names should be alphanumeric and should not be longer than 20 characters.";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
     public static final int MAXIMUM_TAG_LENGTH = 20;
     public static final int MAXIMUM_TAGS_PER_PERSON = 10;
+
+    public static final String MESSAGE_CONSTRAINTS =
+            String.format("Tags names should be alphanumeric,"
+                    + "non-empty and not longer than %d characters.", MAXIMUM_TAG_LENGTH);
 
     private final String tagName;
 
@@ -68,4 +70,20 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    /**
+     * Checks if the tag name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the tag name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isTagContainsPrefix(Tag tag, String prefix) {
+        String lowerTagName = tag.tagName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerNamePart: lowerTagName.split("\\s+")) {
+            if (lowerNamePart.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

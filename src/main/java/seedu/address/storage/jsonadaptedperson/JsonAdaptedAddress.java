@@ -1,14 +1,13 @@
 package seedu.address.storage.jsonadaptedperson;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.EmptyAddress;
-import seedu.address.model.person.NonEmptyAddress;
 
 /**
  * Jackson-friendly version of {@link Address}.
@@ -16,16 +15,13 @@ import seedu.address.model.person.NonEmptyAddress;
 class JsonAdaptedAddress {
 
     private final String value;
-    private final boolean isEmptyAddress;
 
     /**
      * Constructs a {@code JsonAdaptedAddress} with the given {@code value} and {@code isEmptyAddress}.
      */
     @JsonCreator
-    public JsonAdaptedAddress(@JsonProperty("value") String value,
-            @JsonProperty("isEmptyAddress") boolean isEmptyAddress) {
+    public JsonAdaptedAddress(@JsonProperty("value") String value) {
         this.value = value;
-        this.isEmptyAddress = isEmptyAddress;
     }
 
     /**
@@ -35,7 +31,6 @@ class JsonAdaptedAddress {
         requireNonNull(address);
 
         value = address.getValue();
-        isEmptyAddress = address.isEmptyAddress();
     }
 
     /**
@@ -44,15 +39,14 @@ class JsonAdaptedAddress {
      * @throws IllegalValueException if there were any data constraints violated in the adapted address.
      */
     public Address toModelType() throws IllegalValueException {
-        if (isEmptyAddress) {
-            return EmptyAddress.getEmptyAddress();
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
 
-        if (!NonEmptyAddress.isValidAddress(value)) {
-            throw new IllegalValueException(NonEmptyAddress.MESSAGE_CONSTRAINTS);
+        if (!Address.isValidAddress(value)) {
+            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-
-        return new NonEmptyAddress(value);
+        return Address.createAddress(value);
     }
 
 }
