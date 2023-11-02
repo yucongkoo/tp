@@ -19,6 +19,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADD_INSURANCE = new Prefix("ai/");
     public static final Prefix PREFIX_DELETE_INSURANCE = new Prefix("di/");
     public static final Prefix PREFIX_PRIORITY = new Prefix("pr/");
+    public static final Prefix PREFIX_APPOINTMENT = new Prefix("d/");
+    public static final Prefix PREFIX_APPOINTMENT_TIME = new Prefix("t/");
+    public static final Prefix PREFIX_APPOINTMENT_VENUE = new Prefix("v/");
+
+    // Lower case prefixes
     public static final Prefix PREFIX_NAME_UPPER = new Prefix("N/");
     public static final Prefix PREFIX_PHONE_UPPER = new Prefix("P/");
     public static final Prefix PREFIX_EMAIL_UPPER = new Prefix("E/");
@@ -31,4 +36,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADD_INSURANCE_UPPER = new Prefix("AI/");
     public static final Prefix PREFIX_DELETE_INSURANCE_UPPER = new Prefix("DI/");
     public static final Prefix PREFIX_PRIORITY_UPPER = new Prefix("PR/");
+    public static final Prefix PREFIX_APPOINTMENT_UPPER = new Prefix("D/");
+    public static final Prefix PREFIX_APPOINTMENT_TIME_UPPER = new Prefix("T/");
+    public static final Prefix PREFIX_APPOINTMENT_VENUE_UPPER = new Prefix("V/");
 }

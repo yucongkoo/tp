@@ -64,6 +64,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -174,13 +175,15 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Person expectedPerson = new PersonBuilder(AMY).withTags()
+                .withAppointment(Appointment.getDefaultEmptyAppointment()).build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + REMARK_DESC_AMY + PRIORITY_DESC_HIGH, new AddCommand(expectedPerson));
 
 
         // missing address
-        Person expectedPersonWithoutAddress = new PersonBuilder(CALMEN).withInsurances(VALID_INSURANCE_CAR).build();
+        Person expectedPersonWithoutAddress = new PersonBuilder(CALMEN).withInsurances(VALID_INSURANCE_CAR)
+                .withAppointment(Appointment.getDefaultEmptyAppointment()).build();
         assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
                 + INSURANCE_DESC_CAR + REMARK_DESC_CALMEN + PRIORITY_DESC_HIGH,
                 new AddCommand(expectedPersonWithoutAddress));
@@ -188,13 +191,14 @@ public class AddCommandParserTest {
         // missing priority
         Person expectedPersonWithoutPriority = new PersonBuilder(BOB)
                 .withInsurances(VALID_INSURANCE_CAR).withPriority(Priority.NONE_PRIORITY_KEYWORD)
-                .build();
+                .withAppointment(Appointment.getDefaultEmptyAppointment()).build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + INSURANCE_DESC_CAR + REMARK_DESC_BOB,
                 new AddCommand(expectedPersonWithoutPriority));
 
         // missing insurance
-        Person expectedPersonWithoutInsurance = new PersonBuilder(CALMEN).build();
+        Person expectedPersonWithoutInsurance = new PersonBuilder(CALMEN)
+                .withAppointment(Appointment.getDefaultEmptyAppointment()).build();
         assertParseSuccess(parser, NAME_DESC_CALMEN + PHONE_DESC_CALMEN + EMAIL_DESC_CALMEN
                 + REMARK_DESC_CALMEN + PRIORITY_DESC_HIGH, new AddCommand(expectedPersonWithoutInsurance));
 

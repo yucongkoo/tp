@@ -6,11 +6,32 @@ pageNav: 3
 
 # EzContact
 
-EzContact is a
+## Introduction
 
-* Desktop app made for insurance agents to manage customer details, optimized for usage via Command Line Interface (CLI)
-while still having the benefits of a Graphical User Interface (GUI).
-* Contact management app that strives to get tasks done faster than traditional GUI apps.
+Welcome to the User Guide (UG) of **EZContact**
+
+&emsp;&emsp;In the dynamic and ever-evolving world of insurance, staying connected and organized is paramount.
+Meet EzContact, your go-to solution designed exclusively for insurance agents. Navigating the complex network of clients,
+policies, and leads has never been easier. EzContact empowers you to manage your contacts, streamline communication,
+and boost your productivity, all from the tips of your fingers.
+
+&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduces the
+hassle of having to remember everything. It is optimized for use via Command Line Interface (CLI), meaning that users would
+have to enter text command to execute them, while still having the benefits of Graphical User Interface (GUI) where users
+can view the information easily through the application.
+
+With EZContact, our users are able to :
+
+*  Seamlessly organize your clients' details, policy information, and communication history.
+*  Stay on top of their leads, and convert potential clients into loyal customers.
+*  Schedule appointments and follow-ups without missing a beat.
+
+&emsp;&emsp;If you are a fast typist, EzContact is the perfect tool for you to keep track of all your customer
+, it is faster than any other traditional GUI-based application available in the market! Remember, Time is Money ! The
+faster you approach your customer, the more deal you seal.
+
+&emsp;&emsp;If you are interested in EzContact, hop on over to our [Quick Start](#quick-start) to get started and
+embark on your journey of using EzContact.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -27,7 +48,7 @@ while still having the benefits of a Graphical User Interface (GUI).
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds.
 Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -38,10 +59,10 @@ Consider the following UI split into three parts:
 As illustrated above, the UI will be split into three sections, we will be providing a name for each section and
 will be using these names to refer to the section specified in the following User Guide.
 
-**Command Box:** Box for users to input the command to be executed by EzContact.<br/>
-**Result Display Box:** Box that displays the result of executing the entered command.<br/>
-**Customer List Panel:** Panel that displays whole list of Customer Cards.<br/>
-**Customer Card:** Card that displays information about each customer.<br/>
+1. **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
+1. **Result Display Box:** Box that displays the result of executing the entered command.<br/>
+1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
+1. **Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -78,7 +99,7 @@ will be using these names to refer to the section specified in the following Use
 
 **Description:**
 
-* Adds a new customer with the respective details to EzContact.
+Adds a new customer with the respective details to EzContact.
 
 <box type="warning" seamless>
 
@@ -98,12 +119,12 @@ will be using these names to refer to the section specified in the following Use
 
 **Examples:**
 
-`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.`
-* Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.` </br>
+Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
 ![AddEg1](images/add-command-examples/example1.png)
 
-`add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`
-* Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+* `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`</br>
+Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
 ![AddEg2](images/add-command-examples/example2.png)
 
 <br>
@@ -201,7 +222,7 @@ These keywords can be spread across different `tag`/`insurance` entries.
 <box type="warning" seamless>
 
 **Caution:**
-* **At least one** prefix should be provided. 
+* **At least one** prefix should be provided.
 * Available prefix:
   1. `address`: `a/`
   2. `email`: `e/`
@@ -260,14 +281,53 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 
 **Examples:**
 
-`tag 3 at/ tall at/male dt/short dt/skinny`
-* Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
+* `tag 3 at/ tall at/male dt/short dt/skinny`</br>
+Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
 ![TagEgBefore](images/tag-command-examples/before.png)
 
 After:
 ![TagEgAfter](images/tag-command-examples/after.png)
+
+<br>
+
+### Updating insurance of a customer: `insurance`
+
+**Format:**
+
+`insurance [ai/<insurance to add>]... [di/<insurance to delete>]...`
+
+**Description:**
+
+* Updated the insurance of the customer at `<index>` in the customer list
+* Duplicate insurances to add/delete is ignored
+* Adding existing insurance and deleting non-existing insurance from customer has no effect
+
+<box type="warning" seamless>
+
+**Caution:**
+* **At least one** `<insurance to add>` or `<insurance to delete>` should be present in the command
+* Adding and deleting the same tag in a single command is **not allowed**.
+* `<index>` should be a **positive integer** and **not exceed** the size of displayed customer list.
+* `<insurance to add>` and `<insurance to delete>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
+* The number of insurance of the customer after the update should **not exceed 8 insurances**.
+* The targeted customer's insurance should **not remain unchanged** after the update command.
+
+</box>
+
+**Example:**
+
+* `insurance 2 ai/AIA insurance di/Great Eastern Insurance`</br>
+Assign `AIA insurance` to and remove `Great Eastern Insurance` from the second customer in the displayed customer list
+
+Before:
+
+![insuranceBefore](images/InsuranceCommandExample/InsuranceBefore.png)
+
+After:
+
+![insuranceAfter](images/InsuranceCommandExample/InsuranceAfter.png)
 
 <br>
 
@@ -292,20 +352,20 @@ After:
 
 **Examples:**
 
-`priority 1 high` updates the priority of the first customer to be `high`.
+* `priority 1 high` updates the priority of the first customer to be `high`.
 
-`priority 2 -` removes the priority assigned to the second customer.
+* `priority 2 -` removes the priority assigned to the second customer.
 
 <br>
 
 ### Adding a remark to a customer: `remark`
 
-**You can add a remark to an existing customer, or update the current remark**.
+Format: `remark <index> <remark>`
 
-Format: `remark <index> [remark]`
+**Description:**
 
-* Updates the remark of the customer at `<index>` in the displayed customer list.
-* If you wish to delete the remark, update the remark without text after the command, e.g. `remark <index>`.
+* Add/updates the remark of the customer at `<index>` in the displayed customer list.
+* If you wish to delete the remark, update the remark without text after the command, i.e. `remark <index>`.
 
 <box type="warning" seamless>
 
@@ -317,9 +377,9 @@ Format: `remark <index> [remark]`
 
 Examples:
 
-`remark 1 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+* `remark 1 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
 
-`remark 2` Removes the remark from the second customer in the displayed list.
+* `remark 2` Removes the remark from the second customer in the displayed list.
 
 <br>
 
@@ -436,24 +496,28 @@ command box.
 
 ## Command summary
 
-| Action       | Format and Examples                                                                                                                                                                                                                              |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**      | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**   | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
-| **Edit**     | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
-| **List**     | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**     | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
-| **Tag**      | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                                                                 |
-| **Remark**   | `remark <index> [remark]` <hr>   `remark 2 some remarks`     
-| **Priority** | `priority <index> <priority>`  <hr>  `priority 1 medium` 
-| **Clear**    | `clear`                                                                                                                                                                                                                                          |
-| **Help**     | `help`                                                                                                                                                                                                                                           |
-| **Exit**     | `exit`                                                                                                                                                                                                                                           |
+| Action        | Format and Examples                                                                                                                                                                                                                              |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**       | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**    | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
+| **Edit**      | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
+| **List**      | `list`                                                                      <hr>                                                                                                                                                                 |
+| **Find**      | `find <prefix [keyword]...> [<prefix [keywords]...>]...`                  <hr>      `find n/song i/`                                                                                                                                             |
+| **Tag**       | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
+| **Insurance** | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
+| **Remark**    | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
+| **Priority**  | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
+| **Clear**     | `clear`                                                                                                                                                                                                                                          |
+| **Help**      | `help`                                                                                                                                                                                                                                           |
+| **Exit**      | `exit`                                                                                                                                                                                                                                           |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
 
-|Term | Meaning|
-| --------------|------------------------------------------------------------------------------------------------------------------------------------|
-| Alphanumeric | Alphanumeric characters include uppercase letters from ‘A’ to ‘Z’, lowercase letters from ‘a’ to ‘z’, and numbers from ‘0` to ‘9’. |
-| json file | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |
+| Term                           | Meaning                                                                                                                            |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Alphanumeric                   | Alphanumeric characters include uppercase letters from ‘A’ to ‘Z’, lowercase letters from ‘a’ to ‘z’, and numbers from ‘0` to ‘9’. |
+| json file                      | Acronym for JavaScript Object Notation file, a file format that stores data in a human-readable form.                              |
+| Command-line Interface (CLI)   | Text-based user interface that receives text commands to run the program                                                           |
+| Graphical User Interface (GUI) | Interface where user interact with graphical component, such as icons, buttons and menus to run the program                        |
+
