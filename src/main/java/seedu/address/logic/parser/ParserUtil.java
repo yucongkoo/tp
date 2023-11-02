@@ -149,6 +149,7 @@ public class ParserUtil {
         requireNonNull(insurance);
 
         String trimmed = insurance.trim();
+        trimmed = trimmed.replaceAll("\\s+", " ");
 
         if (!Insurance.isValidInsuranceName(trimmed)) {
             throw new ParseException(Insurance.MESSAGE_CONSTRAINTS);

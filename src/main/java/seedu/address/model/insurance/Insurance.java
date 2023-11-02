@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Insurance {
 
     public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
-    public static final int MAX_INSURANCE_COUNT = 5;
+    public static final int MAX_INSURANCE_COUNT = 8;
     private static final int MAX_LENGTH = 32;
 
     public static final String MESSAGE_CONSTRAINTS =
@@ -39,7 +39,7 @@ public class Insurance {
      */
     public static boolean isValidInsuranceName(String test) {
         requireNonNull(test);
-        return test.matches(VALIDATION_REGEX) && test.length() <= MAX_LENGTH;
+        return test.matches(VALIDATION_REGEX) && test.replaceAll("\\s", "").length() <= MAX_LENGTH;
     }
 
     @Override
