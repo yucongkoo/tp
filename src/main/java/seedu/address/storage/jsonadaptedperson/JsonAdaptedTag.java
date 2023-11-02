@@ -1,12 +1,14 @@
 package seedu.address.storage.jsonadaptedperson;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.storage.jsonadaptedperson.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Tag;
 
 /**
  * Jackson-friendly version of {@link Tag}.
@@ -42,6 +44,10 @@ class JsonAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted tag.
      */
     public Tag toModelType() throws IllegalValueException {
+        if (tagName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+
         if (!Tag.isValidTagName(tagName)) {
             throw new IllegalValueException(Tag.MESSAGE_CONSTRAINTS);
         }

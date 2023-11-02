@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_WITH_PREFIX_TAG;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -23,13 +23,14 @@ import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_HIGH;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_NONE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_WITH_PREFIX_TAG;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_PRIORITY;
-import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_TAG;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_PRIORITY_ERROR;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_TAG_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -47,7 +48,6 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Phone;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -82,7 +82,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 in/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -90,7 +90,6 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, NonEmptyAddress.MESSAGE_CONSTRAINTS); // invalid address
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
@@ -158,6 +157,12 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_WITH_PREFIX_TAG).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+
+        // empty address
+        userInput = targetIndex.getOneBased() + ADDRESS_DESC_EMPTY;
+        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_EMPTY).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
@@ -185,17 +190,17 @@ public class EditCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
 
         // multiple invalid values
-        userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
-                + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
+        userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_EMAIL_DESC
+                + INVALID_PHONE_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL));
     }
 
     @Test
     public void parse_editTag_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG + "\n";
+        String exceptionMessage = MESSAGE_EDIT_TAG_ERROR;
 
         // all fields specified with tag
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -218,7 +223,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editPriority_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_PRIORITY + "\n";
+        String exceptionMessage = MESSAGE_EDIT_PRIORITY_ERROR;
 
         // all fields specified with priority high
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
@@ -248,37 +253,38 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_bothTagAndPriority_failure() {
+        // error message for tag will be thrown since we check for tag first
         Index targetIndex = INDEX_FIRST_PERSON;
-        String exceptionMessage = MESSAGE_EDIT_TAG + "\n" + MESSAGE_EDIT_PRIORITY + "\n";
+        String exceptionMessageTag = MESSAGE_EDIT_TAG_ERROR;
 
         // both tags and priority are valid
         String userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
-                + TAG_DESC_FRIEND + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+                + PRIORITY_DESC_HIGH + TAG_DESC_FRIEND;
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // empty tag
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC2 + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // empty priority
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + TAG_DESC_FRIEND + INVALID_PRIORITY_DESC3;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // both tag and priority are empty
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC2 + INVALID_PRIORITY_DESC3;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // invalid tag
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + INVALID_TAG_DESC + PRIORITY_DESC_HIGH;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
 
         // invalid priority
         userInput = targetIndex.getOneBased() + NAME_DESC_DERRICK + EMAIL_DESC_AMY + PHONE_DESC_BOB
                 + TAG_DESC_FRIEND + INVALID_PRIORITY_DESC;
-        assertParseFailure(parser, userInput, exceptionMessage);
+        assertParseFailure(parser, userInput, exceptionMessageTag);
     }
 }

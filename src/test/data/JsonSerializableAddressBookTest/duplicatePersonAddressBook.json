@@ -10,15 +10,21 @@
       "value" : "alice@example.com"
     },
     "address" : {
-      "value" : "123, Jurong West Ave 6, #08-111",
-      "isEmptyAddress" : false
+      "value" : "123, Jurong West Ave 6, #08-111"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ "friends" ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "medium"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -31,15 +37,21 @@
       "value" : "pauline@example.com"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "medium"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   } ]
 }

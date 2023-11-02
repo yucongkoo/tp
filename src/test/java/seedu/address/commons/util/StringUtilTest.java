@@ -1,5 +1,6 @@
 package seedu.address.commons.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -140,4 +141,18 @@ public class StringUtilTest {
         assertThrows(NullPointerException.class, () -> StringUtil.getDetails(null));
     }
 
+    @Test
+    public void trimContiguousSpaces_leadingAndTrailingSpaces_success() {
+        String input = "     This    is    a   test.   ";
+        String expectedOutput = "This is a test.";
+        assertEquals(StringUtil.trimContiguousSpaces(input), expectedOutput);
+    }
+
+
+    @Test
+    public void countCharactersWithoutSpaces_leadingAndTrailingSpaces_success() {
+        String input = "     This    is    a   test.   ";
+        int expectedCount = 12;
+        assertEquals(StringUtil.countCharactersWithoutSpaces(input), expectedCount);
+    }
 }

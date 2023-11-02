@@ -9,22 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Email {
 
-
-
-    public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
-            + "and adhere to the following constraints:\n"
-            + "1.The email address should contain at least one character in the local part, "
-            + "consisting of letters (both uppercase and lowercase), digits, "
-            + "underscores, and certain special characters including +, &, *, and -.\n"
-            + "2. The \"@\" symbol is required to separate the local part from the domain part.\n"
-            + "3. The domain part of the email address should consist of at "
-            + "least one domain label (excluding top-level domain), consisting of alphanumeric characters and -. \n"
-            + "4. The top-level domain (TLD) of the email address should consist of letters (uppercase or lowercase) "
-            + "and have a length of between 2 and 7 characters.\n";
+    public static final String MESSAGE_CONSTRAINTS = "Email should be a valid email address(i.e. local-part@domain).";
     private static final String OWASP_EMAIL_VALIDATION = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
             + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}";
     public static final String VALIDATION_REGEX = OWASP_EMAIL_VALIDATION;
-
 
     public final String value;
 
@@ -76,12 +64,22 @@ public class Email {
         }
 
         Email otherEmail = (Email) other;
-        return value.equals(otherEmail.value);
+        return value.equalsIgnoreCase(otherEmail.value);
     }
 
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    /**
+     * Checks if the email starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the email starts with the specified prefix, false otherwise.
+     */
+    public static boolean isEmailContainsPrefix(Email email, String prefix) {
+        return email.value.startsWith(prefix.toLowerCase());
     }
 
 }

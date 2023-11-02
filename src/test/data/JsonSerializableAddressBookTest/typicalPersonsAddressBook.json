@@ -11,15 +11,22 @@
       "value" : "alice@example.com"
     },
     "address" : {
-      "value" : "123, Jurong West Ave 6, #08-111",
-      "isEmptyAddress" : false
+      "value" : "123, Jurong West Ave 6, #08-111"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ "friends" ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
+    "insurances": [ "car insurance" ],
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -32,15 +39,22 @@
       "value" : "johnd@example.com"
     },
     "address" : {
-      "value" : "311, Clementi Ave 2, #02-25",
-      "isEmptyAddress" : false
+      "value" : "311, Clementi Ave 2, #02-25"
     },
     "remark": {
       "value" : "Owned me 1M"
     },
     "tags": [ "owesMoney", "friends" ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
+    "insurances": [ "AIA insurance", "ABC insurance" ],
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -53,15 +67,22 @@
       "value" : "heinz@example.com"
     },
     "address" : {
-      "value" : "wall street",
-      "isEmptyAddress" : false
+      "value" : "wall street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
+    "insurances": [ "Great Eastern" ],
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -74,15 +95,21 @@
       "value" : "cornelia@example.com"
     },
     "address" : {
-      "value" : "10th street",
-      "isEmptyAddress" : false
+      "value" : "10th street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ "friends" ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -95,15 +122,22 @@
       "value" : "werner@example.com"
     },
     "address" : {
-      "value" : "michegan ave",
-      "isEmptyAddress" : false
+      "value" : "michegan ave"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
+    "insurances": [ "InsureIQ" ],
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -116,15 +150,21 @@
       "value" : "lydia@example.com"
     },
     "address" : {
-      "value" : "little tokyo",
-      "isEmptyAddress" : false
+      "value" : "little tokyo"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
-      "value" : "high"
+      "value" : "low"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -137,17 +177,24 @@
       "value" : "anna@example.com"
     },
     "address" : {
-      "value" : "4th street",
-      "isEmptyAddress" : false
+      "value" : "4th street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
+    "insurances": [ "GGO Insurance" ],
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
-  }, {
+  },{
     "name" : {
       "value" : "Calmen"
     },
@@ -158,15 +205,21 @@
       "value" : "calmen@example.com"
     },
     "address" : {
-      "value" : "-",
-      "isEmptyAddress" : true
+      "value" : " "
     },
     "remark": {
       "value" : "He like to eat apple"
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -179,15 +232,21 @@
       "value" : "jojo@example.com"
     },
     "address" : {
-      "value" : "100th street",
-      "isEmptyAddress" : false
+      "value" : "100th street"
     },
     "remark": {
-      "value" : ""
+      "value" : "Some remark"
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   }, {
     "name" : {
@@ -200,15 +259,21 @@
       "value" : "kaka@example.com"
     },
     "address" : {
-      "value" : "kaka street",
-      "isEmptyAddress" : false
+      "value" : "kaka street"
     },
     "remark": {
       "value" : ""
     },
     "tags": [ ],
+    "appointment" : {
+      "time" : "",
+      "venue" : "",
+      "date" : "-"
+    },
     "priority" : {
       "value" : "high"
+    },"appointmentCount" : {
+      "value" : "0"
     }
   } ]
 }

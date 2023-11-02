@@ -8,6 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
+import seedu.address.model.PersonComparator;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -46,6 +48,8 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);
+        SortedList<Person> sortedList = internalList.sorted(new PersonComparator());
+        internalList.setAll(sortedList);
     }
 
     /**
@@ -66,6 +70,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, editedPerson);
+        SortedList<Person> sortedList = internalList.sorted(new PersonComparator());
+        internalList.setAll(sortedList);
     }
 
     /**
@@ -77,11 +83,15 @@ public class UniquePersonList implements Iterable<Person> {
         if (!internalList.remove(toRemove)) {
             throw new PersonNotFoundException();
         }
+        SortedList<Person> sortedList = internalList.sorted(new PersonComparator());
+        internalList.setAll(sortedList);
     }
 
     public void setPersons(UniquePersonList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+        SortedList<Person> sortedList = internalList.sorted(new PersonComparator());
+        internalList.setAll(sortedList);
     }
 
     /**
@@ -95,6 +105,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+        SortedList<Person> sortedList = internalList.sorted(new PersonComparator());
+        internalList.setAll(sortedList);
     }
 
     /**

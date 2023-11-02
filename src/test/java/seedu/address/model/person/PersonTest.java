@@ -4,9 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_TIME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_VENUE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSURANCE_CAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DERRICK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_HIGH;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LOW;
@@ -19,19 +24,35 @@ import static seedu.address.model.person.Person.createPersonWithUpdatedPriority;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.DERRICK;
+import static seedu.address.testutil.TypicalPersons.INITIAL_COUNT;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
+    // dummy persons used for testing
+    private Person bobWithoutTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).build();
+    private Person bobWithFriendTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_FRIEND).build();
+    private Person bobWithHusbandTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_HUSBAND).build();
+    private Person bobWithHusbandAndFriendTag = new PersonBuilder(bobWithoutTags)
+            .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+
+    private Set<Tag> friendTagSet = Set.of(new Tag(VALID_TAG_FRIEND));
+    private Set<Tag> husbandTagSet = Set.of(new Tag(VALID_TAG_HUSBAND));
+    private Set<Tag> husbandAndFriendTagset = Set.of(new Tag(VALID_TAG_FRIEND), new Tag(VALID_TAG_HUSBAND));
+    private Set<Tag> emptyTagSet = new HashSet<>();
+
+
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -40,7 +61,7 @@ public class PersonTest {
     }
 
     @Test
-    public void constructor_oneNullField_throwsNullPointerException() {
+    public void constructor_oneNullFieldWithPriority_throwsNullPointerException() {
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -49,42 +70,73 @@ public class PersonTest {
         Set<Tag> validTags = new HashSet<>() {{
                 add(new Tag(VALID_TAG_FRIEND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_HIGH);
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
 
         // with priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags, validPriority));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags, validPriority));
+                null, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null, validPriority));
+                validRemark, null, validInsurances, validAppointment, validAppointmentCount, validPriority));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, validTags, null));
+                validRemark, validTags, null, validAppointment, validAppointmentCount, validPriority));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, null));
+    }
+
+    @Test
+    public void constructor_oneNullFieldWithoutPriority_throwsNullPointerException() {
+        Name validName = new Name(VALID_NAME_BOB);
+        Phone validPhone = new Phone(VALID_PHONE_BOB);
+        Email validEmail = new Email(VALID_EMAIL_BOB);
+        Address validAddress = new NonEmptyAddress(VALID_ADDRESS_BOB);
+        Remark validRemark = new Remark(VALID_REMARK_AMY);
+        Set<Tag> validTags = new HashSet<>() {
+            {
+                add(new Tag(VALID_TAG_FRIEND));
+            }
+        };
+        Set<Insurance> validInsurances = new HashSet<>() {
+            {
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }
+        };
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
 
         // without priority field
         assertThrows(NullPointerException.class, () -> new Person(null, validPhone, validEmail, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, null, validEmail, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, null, validAddress,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, null,
-                validRemark, validTags));
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                null, validTags));
+                null, validTags, validInsurances, validAppointment, validAppointmentCount));
         assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
-                validRemark, null));
+                validRemark, null, validInsurances, validAppointment, validAppointmentCount));
+        assertThrows(NullPointerException.class, () -> new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, null, validAppointment, validAppointmentCount));
     }
 
     @Test
     public void constructor_allFieldsValid_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withPriority("-").build();
         Name validName = new Name(VALID_NAME_BOB);
         Phone validPhone = new Phone(VALID_PHONE_BOB);
         Email validEmail = new Email(VALID_EMAIL_BOB);
@@ -94,15 +146,27 @@ public class PersonTest {
                 add(new Tag(VALID_TAG_FRIEND));
                 add(new Tag(VALID_TAG_HUSBAND));
             }};
+        Set<Insurance> validInsurances = new HashSet<>() {{
+                add(new Insurance(VALID_INSURANCE_CAR));
+            }};
         Priority validPriority = new Priority(VALID_PRIORITY_NONE);
+        Appointment validAppointment = new Appointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB);
+        AppointmentCount validAppointmentCount = new AppointmentCount(INITIAL_COUNT);
+
+        Person expectedPerson = new PersonBuilder(BOB).withInsurances(VALID_INSURANCE_CAR)
+                .withAppointment(validAppointment).withPriority("-").build();
 
         // with priority field
-        Person testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark,
-                validTags, validPriority);
+
+        Person testPerson = new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount, validPriority);
         assertEquals(expectedPerson, testPerson);
 
         // without priority field
-        testPerson = new Person(validName, validPhone, validEmail, validAddress, validRemark, validTags);
+        testPerson = new Person(validName, validPhone, validEmail, validAddress,
+                validRemark, validTags, validInsurances, validAppointment, validAppointmentCount);
+
         assertEquals(expectedPerson, testPerson);
 
     }
@@ -115,107 +179,71 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same name, all other attributes different -> returns true
-        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).withPriority(VALID_PRIORITY_HIGH)
-                .build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
+        // same phone number, all other attributes different -> returns true
+        Person newPhoneAmy = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).build();
+        assertTrue(BOB.isSamePerson(newPhoneAmy));
 
-        // different name, all other attributes same -> returns false
-        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSamePerson(editedAlice));
+        // same email, all other attributes different -> returns true
+        Person newEmailAmy = new PersonBuilder(AMY).withEmail(VALID_EMAIL_BOB).build();
+        assertTrue(BOB.isSamePerson(newEmailAmy));
 
-        // name differs in case, all other attributes same -> returns false
-        Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
+        // same phone number and email, all other attributes different -> returns true
+        Person editedAmy = new PersonBuilder(AMY).withEmail(VALID_EMAIL_BOB).withPhone(VALID_PHONE_BOB).build();
+        assertTrue(BOB.isSamePerson(editedAmy));
+
+        // different phone number and email, all other attributes same -> returns false
+        Person editedBob = new PersonBuilder(BOB).withEmail(VALID_EMAIL_AMY).withPhone(VALID_PHONE_AMY).build();
         assertFalse(BOB.isSamePerson(editedBob));
 
-        Person editedDerrick = new PersonBuilder(DERRICK).withName(VALID_NAME_DERRICK.toLowerCase()).build();
-        assertFalse(DERRICK.isSamePerson(editedDerrick));
-
-        // name has trailing spaces, all other attributes same -> returns false
-        String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
-        editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        assertFalse(BOB.isSamePerson(editedBob));
-
-        nameWithTrailingSpaces = VALID_NAME_DERRICK + " ";
-        editedDerrick = new PersonBuilder(DERRICK).withName(nameWithTrailingSpaces).build();
-        assertFalse(DERRICK.isSamePerson(editedDerrick));
+        // all attributes different -> returns false
+        assertFalse(ALICE.isSamePerson(BOB));
     }
 
     @Test
-    public void createPersonWithUpdatedTagsTest() {
-        Person bobWithoutTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).build();
-        Person bobWithHusbandTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_HUSBAND).build();
-        Person bobWithFriendTag = new PersonBuilder(bobWithoutTags).withTags(VALID_TAG_FRIEND).build();
-        Person bobWithHusbandAndFriendTag = new PersonBuilder(bobWithoutTags)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-
-        Tag friendTag = new Tag(VALID_TAG_FRIEND);
-        Tag husbandTag = new Tag(VALID_TAG_HUSBAND);
-        Set<Tag> emptyTagsSet = new HashSet<>();
-        Set<Tag> friendTagSet = new HashSet<>();
-        Set<Tag> husbandTagSet = new HashSet<>();
-        Set<Tag> husbandAndFriendTagSet = new HashSet<>();
-
-        friendTagSet.add(friendTag);
-        husbandTagSet.add(husbandTag);
-        husbandAndFriendTagSet.add(friendTag);
-        husbandAndFriendTagSet.add(husbandTag);
-
-        // do not update tag of person
-        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, emptyTagsSet));
-        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, emptyTagsSet));
+    public void createPersonWithUpdatedTagsTest_noUpdate_success() {
+        // both empty
         assertEquals(bobWithHusbandAndFriendTag,
-                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, emptyTagsSet));
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagSet, emptyTagSet));
 
-        // adding one tag to person that does not have that tag
-        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithoutTags, friendTagSet, emptyTagsSet));
+        // add existing tag
         assertEquals(bobWithHusbandAndFriendTag,
-                createPersonWithUpdatedTags(bobWithFriendTag, husbandTagSet, emptyTagsSet));
-
-        // adding one tag to person that has that tag
-        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, friendTagSet, emptyTagsSet));
-
-
-        // adding mutiple tags to person that does not have all tag
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, friendTagSet, emptyTagSet));
         assertEquals(bobWithHusbandAndFriendTag,
-                createPersonWithUpdatedTags(bobWithoutTags, husbandAndFriendTagSet, emptyTagsSet));
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, husbandAndFriendTagset, emptyTagSet));
 
-        // adding multiple tags to person that have some of the tags
+        // delete non-existing tag
+        assertEquals(bobWithHusbandAndFriendTag, createPersonWithUpdatedTags(bobWithHusbandAndFriendTag,
+                emptyTagSet, Set.of(new Tag("non existing tag"))));
+    }
+
+    @Test
+    public void createPersonWithUpdatedTagsTest_addTag_success() {
+        // adding all non-existing tags
         assertEquals(bobWithHusbandAndFriendTag,
-                createPersonWithUpdatedTags(bobWithFriendTag, husbandAndFriendTagSet, emptyTagsSet));
+                createPersonWithUpdatedTags(bobWithoutTags, husbandAndFriendTagset, emptyTagSet));
 
-        // adding multiple tags to person that have all of the tags
+        // adding tags with some already existing
         assertEquals(bobWithHusbandAndFriendTag,
-                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, husbandAndFriendTagSet, emptyTagsSet));
+                createPersonWithUpdatedTags(bobWithFriendTag, husbandAndFriendTagset, emptyTagSet));
+    }
 
-
-
-
-        // deleting one tag from person that does not have that tag
-        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, friendTagSet));
-        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, husbandTagSet));
-
-        // deleting one tag from person that has that tag
-        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, friendTagSet));
-        assertEquals(bobWithHusbandTag,
-                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, friendTagSet));
-
-        // deleting multiple tags from person that does not have that tag
-        assertEquals(bobWithoutTags, createPersonWithUpdatedTags(bobWithoutTags, emptyTagsSet, husbandAndFriendTagSet));
-
-        // deleting mutiple tags from person that has partial or all of the tags
+    @Test
+    public void createPersonWithUpdatedTagTest_deleteTag_success() {
+        // deleting only existing-tag
         assertEquals(bobWithoutTags,
-                createPersonWithUpdatedTags(bobWithFriendTag, emptyTagsSet, husbandAndFriendTagSet));
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagSet, husbandAndFriendTagset));
+
+        // deleting both existing and non-existing tag
+        Set<Tag> tagsToDelete = new HashSet<>(husbandAndFriendTagset);
+        tagsToDelete.add(new Tag("non existing tag"));
         assertEquals(bobWithoutTags,
-                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagsSet, husbandAndFriendTagSet));
+                createPersonWithUpdatedTags(bobWithHusbandAndFriendTag, emptyTagSet, tagsToDelete));
+    }
 
-
-
-
+    @Test
+    public void createPersonWithUpdatedTagTest_addAndDeleteTag_success() {
         // adding new tag and deleting existing tag of a person
-        assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithHusbandTag, friendTagSet, husbandTagSet));
+        assertEquals(bobWithHusbandTag, createPersonWithUpdatedTags(bobWithFriendTag, husbandTagSet, friendTagSet));
 
         // adding existing tag and deleting existing tag of a person
         assertEquals(bobWithFriendTag,
@@ -226,7 +254,6 @@ public class PersonTest {
 
         // adding existing tag and deleting non-existing tag of a person
         assertEquals(bobWithFriendTag, createPersonWithUpdatedTags(bobWithFriendTag, friendTagSet, husbandTagSet));
-
     }
 
     @Test
@@ -293,14 +320,20 @@ public class PersonTest {
         // different priority -> returns false
         editedAlice = new PersonBuilder(ALICE).withPriority(VALID_PRIORITY_LOW).build(); // default priority is high
         assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new PersonBuilder(ALICE).withAppointment(VALID_APPOINTMENT_BOB,
+                VALID_APPOINTMENT_TIME_BOB, VALID_APPOINTMENT_VENUE_BOB).build(); // default appointment is empty
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", remark=" + ALICE.getRemark()
-                + ", tags=" + ALICE.getTags()
-                + ", priority=" + ALICE.getPriority() + "}";
+                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
+                + ", priority=" + ALICE.getPriority() + ", tags=" + ALICE.getTags()
+                + ", insurances=" + ALICE.getInsurances() + ", remark=" + ALICE.getRemark()
+                + ", appointment=" + ALICE.getAppointment() + "}";
+
         assertEquals(expected, ALICE.toString());
     }
 }

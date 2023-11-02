@@ -8,13 +8,19 @@ import java.util.HashSet;
 
 /** Represents a Person's priority level. **/
 public class Priority {
-    /** Possible priorities level. **/
+    /**
+     * Possible priority levels.
+     **/
     public enum Level { HIGH, MEDIUM, LOW, NONE };
 
     public static final String HIGH_PRIORITY_KEYWORD = "high";
     public static final String MEDIUM_PRIORITY_KEYWORD = "medium";
     public static final String LOW_PRIORITY_KEYWORD = "low";
     public static final String NONE_PRIORITY_KEYWORD = "-";
+
+    /**
+     * Stores the valid priority keywords.
+     **/
     public static final HashSet<String> VALID_PRIORITY_KEYWORDS = new HashSet<>() {
         {
             add(HIGH_PRIORITY_KEYWORD);
@@ -24,6 +30,9 @@ public class Priority {
         }
     };
 
+    /**
+     * Stores the priority levels and their respective keywords as key-value pairs.
+     **/
     public static final HashMap<Level, String> LEVEL_STRING_MAP = new HashMap<>() {
         {
             put(Level.HIGH, HIGH_PRIORITY_KEYWORD);
@@ -34,7 +43,8 @@ public class Priority {
     };
 
     public static final String MESSAGE_CONSTRAINTS = "Priority levels should only be one of: { "
-        + HIGH_PRIORITY_KEYWORD + " " + MEDIUM_PRIORITY_KEYWORD + " " + LOW_PRIORITY_KEYWORD + " }";
+            + HIGH_PRIORITY_KEYWORD + ", " + MEDIUM_PRIORITY_KEYWORD + ", " + LOW_PRIORITY_KEYWORD + ", "
+            + NONE_PRIORITY_KEYWORD + " }";
 
     private Level level;
 
@@ -46,22 +56,25 @@ public class Priority {
     public Priority(String priority) {
         requireNonNull(priority);
         checkArgument(isValidPriority(priority), MESSAGE_CONSTRAINTS);
-        assignPriorityLevel(priority);
+        this.level = parsePriorityLevel(priority);
     }
 
-    private void assignPriorityLevel(String priority) {
+    /**
+     * Parses the {@code priority} and returns the responding {@code Level}.
+     */
+    public static Level parsePriorityLevel(String priority) {
+        requireNonNull(priority);
+        assert isValidPriority(priority);
+
         switch (priority) {
         case HIGH_PRIORITY_KEYWORD:
-            this.level = Level.HIGH;
-            break;
+            return Level.HIGH;
         case MEDIUM_PRIORITY_KEYWORD:
-            this.level = Level.MEDIUM;
-            break;
+            return Level.MEDIUM;
         case LOW_PRIORITY_KEYWORD:
-            this.level = Level.LOW;
-            break;
+            return Level.LOW;
         default:
-            this.level = Level.NONE;
+            return Level.NONE;
         }
     }
 
@@ -104,5 +117,19 @@ public class Priority {
     @Override
     public int hashCode() {
         return level.hashCode();
+    }
+
+    /**
+     * Checks if the priority level starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the priority level starts with the specified prefix, false otherwise.
+     */
+    public static boolean isPriorityContainsPrefix(Priority priority, String prefix) {
+        if (priority.level.equals(Level.NONE)) {
+            return false;
+        }
+        String lowerCasePriority = priority.toString().toLowerCase();
+        return lowerCasePriority.startsWith(prefix.toLowerCase());
     }
 }

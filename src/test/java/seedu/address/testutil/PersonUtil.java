@@ -1,9 +1,12 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
@@ -14,6 +17,8 @@ import java.util.stream.Collectors;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.InsuranceCommand;
+import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescriptor;
 import seedu.address.logic.commands.PriorityCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.model.person.Person;
@@ -31,6 +36,8 @@ public class PersonUtil {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
+
+
     /**
      * Returns the part of command string for the given {@code person}'s details.
      */
@@ -42,6 +49,9 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().getValue() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.getTagName() + " ")
+        );
+        person.getInsurances().stream().forEach(
+                i -> sb.append(PREFIX_INSURANCE + i.getInsuranceName() + " ")
         );
         sb.append(PREFIX_PRIORITY + person.getPriority().toString() + " ");
         return sb.toString();
@@ -68,6 +78,21 @@ public class PersonUtil {
                 .collect(Collectors.joining());
 
         return TagCommand.COMMAND_WORD + " " + index.getOneBased() + tagsToAddString + tagsToDeleteString;
+    }
+
+    public static String getInsuranceCommand(Index index,
+                                             UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor) {
+
+        String insurancesToAddString = updatePersonInsuranceDescriptor.getInsurancesToAdd().stream()
+                .map(i -> " " + PREFIX_ADD_INSURANCE + i.getInsuranceName())
+                .collect(Collectors.joining());
+
+        String insurancesToDeleteString = updatePersonInsuranceDescriptor.getInsurancesToDelete().stream()
+                .map(i -> " " + PREFIX_DELETE_INSURANCE + i.getInsuranceName())
+                .collect(Collectors.joining());
+
+        return InsuranceCommand.COMMAND_WORD + " " + index.getOneBased()
+                + insurancesToAddString + insurancesToDeleteString;
     }
 
     public static String getPriorityCommand(Index index, Priority priority) {
