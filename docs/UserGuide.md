@@ -260,6 +260,8 @@ they would be included in the search results because their names contain the key
 
 <box type="info" seamless>
 
+**Note**:
+
 Note that if you search using `find n/Song Song`, </br>
 it will match a customer named `Song Guo Xuan` because all the specified keywords are present in the customer's name.
 
