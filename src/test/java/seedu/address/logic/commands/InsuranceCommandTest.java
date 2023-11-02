@@ -210,6 +210,10 @@ public class InsuranceCommandTest {
         defaultDescriptor.setInsurancesToAdd(new Insurance(carInsurance));
         defaultDescriptor.setInsurancesToAdd(new Insurance(lifeInsurance));
         defaultDescriptor.setInsurancesToAdd(new Insurance("Great eastern insurance"));
+        defaultDescriptor.setInsurancesToAdd(new Insurance("Great western insurance"));
+        defaultDescriptor.setInsurancesToAdd(new Insurance("Great southern insurance"));
+        defaultDescriptor.setInsurancesToAdd(new Insurance("Great northern insurance"));
+        defaultDescriptor.setInsurancesToAdd(new Insurance("Great asian insurance"));
 
         InsuranceCommand command = new InsuranceCommand(secondIndex, defaultDescriptor);
 
