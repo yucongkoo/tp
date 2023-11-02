@@ -20,9 +20,8 @@ import seedu.address.model.person.Person;
 public class MarkAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "markappt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks a customer's appointment. \n"
-            + "Usage: "
-            + "INDEX (must be a positive integer)";
+    public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
+            + " <index>";
 
     public static final String MESSAGE_MARK_APPOINTMENT_SUCCESS = "Marked an appointment with "
             + "%1$s %2$s %3$s %4$s";

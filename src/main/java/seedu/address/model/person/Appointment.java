@@ -19,10 +19,10 @@ import seedu.address.commons.core.LogsCenter;
 public class Appointment {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "INDEX (must be a positive integer) \n"
-            + "DATE (must be dd/mm/yyyy), \n"
-            + "TIME (must be HHmm (24-hour format)), \n"
-            + "VENUE (maximum 30 characters long).";
+            "Index must be a positive integer \n"
+            + "Date must be in YYYY-MM-DD format and in the future \n"
+            + "Time must be in 24h HH:MM format \n"
+            + "Venue should not be longer than 30 characters";
     public static final String NO_APPOINTMENT = "-";
     public static final String NO_TIME = "";
     public static final String NO_VENUE = "";
