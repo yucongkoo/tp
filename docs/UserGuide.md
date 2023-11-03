@@ -84,6 +84,10 @@ will be using these names to refer to the section specified in the following Use
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
 
+* Prefixes (i.e. n/, p/, e/, etc) are designed to be short, however, we do still provide the functionality to detect 
+full-name prefixes and they can be used interchangeably(e.g. n/ and name/ are interchangeable),
+click [here](#prefix-to-full-name-prefix-translation-table) to see a full table of prefix to full-name prefix relation.
+
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command is `help 123`, it will be interpreted as `help`.
 
@@ -553,6 +557,28 @@ command box.
 | **Clear**     | `clear`                                                                                                                                                                                                                                          |
 | **Help**      | `help`                                                                                                                                                                                                                                           |
 | **Exit**      | `exit`                                                                                                                                                                                                                                           |
+
+
+#### Prefix to full-name prefix translation table
+
+**Note that prefixes are not case sensitive**
+| Prefix | Full-name prefix |
+|--------|------------------|
+| n/     | name/            |
+| p/     | phone/           |
+| e/     | email/           |
+|a/|address/|
+|pr/|priority/|
+|t/|tag/|
+|i/|insurance/|
+|r/|remark/|
+|at/|addtag/|
+|dt/|deletetag/|
+|ai/|addinsurance/|
+|di/|deleteinsurance/|
+|d/|date/|
+|t/|time/|
+|v/|venue/|
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
