@@ -487,6 +487,16 @@ After:
 
 * `addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall` adds an appointment on 12 Dec 2025, 1255hrs, Clementi Mall for the first customer in the displayed list
 
+Before:
+
+![addApptBefore](images/appointment-command-examples/DeleteApptAfter.png)
+
+After:
+
+![addApptAfter](images/appointment-command-examples/AddApptAfter.png)
+
+<br>
+
 ### Deleting a customer's appointment: `deleteappt`
 
 **Format:**
@@ -508,6 +518,14 @@ After:
 **Examples:**
 * `deleteappt 1` deletes the appointment of the first customer in the displayed list, if applicable
 
+Before:
+
+![deleteApptBefore](images/appointment-command-examples/DeleteApptBefore.png)
+
+After:
+
+![deleteApptAfter](images/appointment-command-examples/DeleteApptAfter.png)
+
 <br>
 
 ### Marking an appointment: `markappt`
@@ -528,6 +546,14 @@ After:
 *
 **Example:**
 * `markappt 1` increments the appointment counter of the first customer in the displayed list.
+
+Before:
+
+![markApptBefore](images/appointment-command-examples/AddApptAfter.png)
+
+After:
+
+![markApptAfter](images/appointment-command-examples/MarkApptAfter.png)
 
 <br>
 
