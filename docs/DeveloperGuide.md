@@ -558,39 +558,50 @@ The `Level` enum class is chosen because our system only allows four priority le
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
 
-## Remarkfeature
+## Remark feature
 
 ### Implementation
 
-The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+The action of assigning a remark is mainly facilitated by three classes: `Remark`, `RemarkCommandParser` and `RemarkCommand`.
 
 **The `Remark` class**
 
-The class is used to represent different priority levels for each `Person`.
-By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
 
-<puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+This class represents a person's attribute, including a remark string with a maximum length of 150 characters. 
+Every person created has this attribute, with the default value being an empty string, signifying no remark.
+
 
 **The `RemarkCommandParser` class**
 
-The class is used to parse the arguments into two information: `index` and `priority`.
-It will then return a `PriorityCommand` should the arguments are valid.
+The class is used to parse the arguments into two information: `index` and `remark` and
+returns a `RemarkCommand` if the arguments are valid.
 
-The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
+The sequence diagram below illustrates the interaction between `RemarkCommandParser`, `RemarkCommand` and `Remark`.
 
-Taking `parse(2 he likes pizza)`as an example.
+Taking `parse("2 he likes pizza")`as an example.
 
-<puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
+<puml src="diagrams/remark-feature/RemarkCommandParserSequenceDiagram.puml"/>
 
 **The `RemarkCommand` class**
 
-The class is responsible in executing the task parsed by the `PriorityCommandParser`.
-It will update the `Priority` of a `Person`.
+The class is responsible in executing the task parsed by the `RemarkCommandParser`.
+It will update the `Remark` of a `Person` and generate a `CommandResult` for the output.
 
 ### Design Consideration:
 
-The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
-The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+###### **Aspect: Delete `Remark`**
+
+* **Alternative 1 (Current choice)** : Using `remark <index>` without argument.
+  * Pros: User-friendly, no need to remember an extra command.
+  * Cons: User cannot store empty string as a remark
+* **Alternative 2** : Implement a separate delete remark command.
+  * Pros: Distinguishes between adding and deleting remarks.
+  * Cons: Requires users to remember an additional command.
+
+**Reasoning:**
+
+In real-life scenarios, storing empty strings as remark is unlikely, hence
+alternative 1 is preferred due to its user-friendliness.
 
 
 
