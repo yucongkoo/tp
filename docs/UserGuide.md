@@ -231,7 +231,7 @@ After:
 
 **Format:**
 
-Format: `find <prefix> [keywords]... [<prefix> [keywords8]]...`
+Format: `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
 
 **Description:**
 
