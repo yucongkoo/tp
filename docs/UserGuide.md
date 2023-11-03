@@ -47,7 +47,7 @@ embark on your journey of using EzContact.
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
 4. Open up command prompt `cmd` and move to the application's directory by using `cd <directory>`.
 5. After reaching the directory, execute the command `java -jar EzContact.jar`. The GUI similar to the below should appear in a few seconds.
-Note how the app contains some sample data.<br>![Ui](images/Ui.png)
+Note how the app contains some sample data.<br><br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -56,7 +56,9 @@ Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 ## UI Layout Description
 
 Consider the following UI split into three parts:
+
 ![UiWithDescription](images/UiWithDescription.png)
+
 As illustrated above, the UI will be split into three sections, we will be providing a name for each section and
 will be using these names to refer to the section specified in the following User Guide.
 
@@ -229,34 +231,34 @@ After:
 
 **Format:**
 
-Format: `find <prefix> [keyword]... [<prefix> [keywords]]...`
+Format: `find <prefix> [keywords]... [<prefix> [keywords8]]...`
 
 **Description:**
 
-Search for customers by specifying keywords for various attributes (except `appointment`).
+Search for customers with specified keywords of different attributes (except `appointment`).
 
-* Attributes match with keywords when:
-  1. Any word in the attribute contains the keyword as a prefix.
-  2. If there are multiple keywords, all must be present as prefixes.
-  3. Keywords are not case-sensitive and can be in any order.
-* For `tag` and `insurance`, only one of the customer's `tag`/`insurance` must contain keywords as a prefix. </br>
-These keywords can be spread across different `tag`/`insurance` entries.
-* When searching with multiple attributes, all customer attributes must match the keywords.
+* Attribute matches with the keywords when:
+  - Any word in the attribute contains the single keyword as a prefix.
+  - If there are multiple keywords, all keywords must be present in the attribute as prefix.
+* Keywords are not case-sensitive and can be in any order.
+* For `tag` and `insurance`, only one of the customer's `tags` / `insurances` has to contain the keywords as a prefix. </br>
+These keywords can be spread across different `tag` / `insurance` entries.
+* When searching with multiple attributes, the customer's attributes must match all the corresponding ones in `find`.
 
 <box type="warning" seamless>
 
 **Caution:**
 * **At least one** prefix should be provided.
 * Available prefix:
-  1. `address`: `a/`
-  2. `email`: `e/`
-  3. `insurance`: `i/`
-  4. `name`: `n/`
-  5. `phone`: `p/`
-  6. `priority`: `pr/`
-  7. `remark`: `r/`
-  8. `tag`: `t/`
-* A keyword is **NOT** mandatory.
+  - `address`: `a/`
+  - `email`: `e/`
+  - `insurance`: `i/`
+  - `name`: `n/`
+  - `phone`: `p/`
+  - `priority`: `pr/`
+  - `remark`: `r/`
+  - `tag`: `t/`
+* Keyword is **NOT** mandatory.
 
 </box>
 
@@ -587,24 +589,25 @@ command box.
 
 #### Prefix to full-name prefix translation table
 
-**Note that prefixes are not case sensitive**
+****Note that prefixes are not case-sensitive**
+
 | Prefix | Full-name prefix |
 |--------|------------------|
 | n/     | name/            |
 | p/     | phone/           |
 | e/     | email/           |
-|a/|address/|
-|pr/|priority/|
-|t/|tag/|
-|i/|insurance/|
-|r/|remark/|
-|at/|addtag/|
-|dt/|deletetag/|
-|ai/|addinsurance/|
-|di/|deleteinsurance/|
-|d/|date/|
-|t/|time/|
-|v/|venue/|
+| a/     | address/         |
+| pr/    | priority/        |
+| t/     | tag/             |
+| i/     | insurance/       |
+| r/     | remark/          |
+| at/    | addtag/          |
+| dt/    | deletetag/       |
+| ai/    | addinsurance/    |
+| di/    | deleteinsurance/ |
+| d/     | date/            |
+| t/     | time/            |
+| v/     | venue/           |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
