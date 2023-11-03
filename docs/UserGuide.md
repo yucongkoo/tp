@@ -84,6 +84,10 @@ will be using these names to refer to the section specified in the following Use
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
 
+* Prefixes (i.e. n/, p/, e/, etc) are designed to be short, however, we do still provide the functionality to detect 
+full-name prefixes and they can be used interchangeably(e.g. n/ and name/ are interchangeable),
+click [here](#prefix-to-full-name-prefix-translation-table) to see a full table of prefix to full-name prefix relation.
+
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command is `help 123`, it will be interpreted as `help`.
 
@@ -108,8 +112,8 @@ Adds a new customer with the respective details to EzContact.
 * `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
-* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
-* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-` (all case-insensitive).
+* `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
 * A customer **must not have more than 10 tags** assigned to it.
@@ -163,8 +167,14 @@ Examples:
 </box>
 
 **Examples:**
-* `list` followed by `delete 2` deletes the 2nd customer in the displayed list.
-* `find Betsy` followed by `delete 1` deletes the 1st customer appeared in the list displayed by the `find` command.
+* `delete 2` deletes the 2nd customer in the displayed list.
+
+
+Before:
+![deleteBefore](images/delete-command-example/delete-before.png)
+
+After:
+![deleteAfter](images/delete-command-example/delete-after.png)
 
 <br>
 
@@ -192,12 +202,19 @@ Examples:
 * Tags are not editable.
 * Priorities are not editable.
 * Remarks are not editable.
+* Editing a customer to have the same `<phone number>` or `<email>` to other existing customers in EzContact is **not allowed.**
+
 
 </box>
 
 **Examples:**
-*  `edit 1 p/91234567 e/fong@example.com` edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
-*  `edit 2 n/Betsy Crower` edits the name of the 2nd customer to be `Betsy Crower`.
+*  `edit 3 n/Betsy Crower p/91234567 e/fong@example.com` edits the name, phone number and email address of the 3rd customer to be `Betsy Crower`, `91234567` and `fong@example.com` respectively.
+
+Before:
+![editBefore](images/edit-command-example/edit-before.png)
+
+After:
+![editAfter](images/edit-command-example/edit-after.png)
 
 <br>
 
@@ -230,7 +247,7 @@ These keywords can be spread across different `tag`/`insurance` entries.
   4. `name`: `n/`
   5. `phone`: `p/`
   6. `priority`: `pr/`
-  7. `reamrk`: `r/`
+  7. `remark`: `r/`
   8. `tag`: `t/`
 * A keyword is **NOT** mandatory.
 
@@ -246,6 +263,8 @@ If there's a customer named `Song Wei` and another customer named `John Song`, a
 they would be included in the search results because their names contain the keyword `Song`, and they also have an insurance attribute.
 
 <box type="info" seamless>
+
+**Note**:
 
 Note that if you search using `find n/Song Song`, </br>
 it will match a customer named `Song Guo Xuan` because all the specified keywords are present in the customer's name.
@@ -264,6 +283,8 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Description:**
 
 * Updates the tags assigned to the customer at `<index>` in the displayed customer list.
+* Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
+* Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
 * Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
 
@@ -273,7 +294,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * **At least one** `<tag to add>` or `<tag to delete>` should be provided.
 * Adding and deleting the same tag is **not allowed**.
 * `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
-* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters**.
+* `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * The number of tags assigned to the customer after the update should **not exceed 10 tags**.
 * The targeted customer's tags should **not remain unchanged** after the update command.
 
@@ -346,21 +367,47 @@ After:
 
 **Caution:**
 * `<index>` should **only be one of** the indices shown in the displayed list.
-* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-`.
+* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-` (all case-insensitive).
 
+</box>
+
+<box type="info" seamless>
+
+**Note:**
+* The customer list is sorted by priority according to this order: `high` -> `medium` -> `low` </br>
+* Customers with no priority assigned to them will be displayed at the bottom of the list. </br>
+* Changing a customer's priority **might** change its position in the list because of the sorted property.
 </box>
 
 **Examples:**
 
-* `priority 1 high` updates the priority of the first customer to be `high`.
+* `priority 3 high` updates the priority of the third customer to be `high`. Note that the position of the customer is changed.
 
-* `priority 2 -` removes the priority assigned to the second customer.
+Before:
+
+![priorityBefore](images/priority-command-example/priority-before.png)
+
+After:
+
+![priorityAfter](images/priority-command-example/priority-after.png)
+
+<br>
+
+* `priority 3 -` removes the priority assigned to the third customer. Note that the customer remains at the bottom of the list.
+
+Before:
+
+![removePriorityBefore](images/priority-command-example/remove-priority-before.png)
+
+After:
+
+![removePriorityAfter](images/priority-command-example/remove-priority-after.png)
 
 <br>
 
 ### Adding a remark to a customer: `remark`
 
-Format: `remark <index> <remark>`
+Format: `remark <index> [remark]`
 
 **Description:**
 
@@ -510,6 +557,28 @@ command box.
 | **Clear**     | `clear`                                                                                                                                                                                                                                          |
 | **Help**      | `help`                                                                                                                                                                                                                                           |
 | **Exit**      | `exit`                                                                                                                                                                                                                                           |
+
+
+#### Prefix to full-name prefix translation table
+
+**Note that prefixes are not case sensitive**
+| Prefix | Full-name prefix |
+|--------|------------------|
+| n/     | name/            |
+| p/     | phone/           |
+| e/     | email/           |
+|a/|address/|
+|pr/|priority/|
+|t/|tag/|
+|i/|insurance/|
+|r/|remark/|
+|at/|addtag/|
+|dt/|deletetag/|
+|ai/|addinsurance/|
+|di/|deleteinsurance/|
+|d/|date/|
+|t/|time/|
+|v/|venue/|
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary

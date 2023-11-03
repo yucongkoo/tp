@@ -65,4 +65,33 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Trims the {@code input} and removes contiguous space between words.
+     */
+    public static String trimContiguousSpaces(String input) {
+        requireNonNull(input);
+        String trimmedInput = input.trim();
+
+        // Split the input string by spaces into an array of words
+        String[] words = trimmedInput.split("\\s+");
+
+        // Join the words back together with single spaces
+        String trimmed = String.join(" ", words);
+
+        return trimmed;
+    }
+
+    /**
+     * Counts the number of characters in {@code input} ignoring spaces.
+     */
+    public static int countCharactersWithoutSpaces(String input) {
+        // Remove spaces from the input string using regular expression
+        String stringWithoutSpaces = input.replaceAll("\\s", "");
+
+        // Count the number of characters in the modified string
+        int charCount = stringWithoutSpaces.length();
+
+        return charCount;
+    }
 }
