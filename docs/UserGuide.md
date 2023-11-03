@@ -112,7 +112,7 @@ Adds a new customer with the respective details to EzContact.
 * `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
-* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
+* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-` (all case-insensitive).
 * `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
@@ -367,7 +367,7 @@ After:
 
 **Caution:**
 * `<index>` should **only be one of** the indices shown in the displayed list.
-* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-`.
+* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-` (all case-insensitive).
 
 </box>
 
