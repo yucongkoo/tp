@@ -148,8 +148,6 @@ Adds the following [Customer Card](#ui-layout-description) to the [Customer List
 * Shows a list of all customers in EZContact and the size of the list.
 * You can return to viewing your full client list after executing a `find` command.
 
-<box type="warning" seamless>
-
 **Example**:
 * `list` shows a list of all existing customers and the size of the list.
 
