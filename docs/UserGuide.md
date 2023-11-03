@@ -42,12 +42,12 @@ embark on your journey of using EzContact.
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `ezcontact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
+2. Download the latest `EzContact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
-4. Open up command prompt (cmd) and move to the application's directory by using `cd <directory>`.
+4. Open up command prompt `cmd` and move to the application's directory by using `cd <directory>`.
 5. After reaching the directory, execute the command `java -jar EzContact.jar`. The GUI similar to the below should appear in a few seconds.
-Note how the app contains some sample data.<br>![Ui](images/Ui.png)
+Note how the app contains some sample data.<br><br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -56,14 +56,16 @@ Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 ## UI Layout Description
 
 Consider the following UI split into three parts:
+
 ![UiWithDescription](images/UiWithDescription.png)
+
 As illustrated above, the UI will be split into three sections, we will be providing a name for each section and
 will be using these names to refer to the section specified in the following User Guide.
 
 1. **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
 1. **Result Display Box:** Box that displays the result of executing the entered command.<br/>
 1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
-1. **Customer Card:** Card that displays information about each customer.<br/>
+   - **Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -85,8 +87,8 @@ will be using these names to refer to the section specified in the following Use
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
 
-* Prefixes (i.e. n/, p/, e/, etc) are designed to be short, however, we do still provide the functionality to detect 
-full-name prefixes and they can be used interchangeably(e.g. n/ and name/ are interchangeable),
+* Prefixes (e.g. `n/`, `p/`, `e/`) are designed to be short, however, we do still provide the functionality to detect 
+full-name prefixes ,and they can be used interchangeably(e.g. `n/` and `name/` are interchangeable),
 click [here](#prefix-to-full-name-prefix-translation-table) to see a full table of prefix to full-name prefix relation.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
@@ -126,10 +128,12 @@ Adds a new customer with the respective details to EzContact.
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.` </br>
 Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+
 ![AddEg1](images/add-command-examples/example1.png)
 
 * `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`</br>
 Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+
 ![AddEg2](images/add-command-examples/example2.png)
 
 <br>
@@ -172,9 +176,11 @@ Examples:
 
 
 Before:
+
 ![deleteBefore](images/delete-command-example/delete-before.png)
 
 After:
+
 ![deleteAfter](images/delete-command-example/delete-after.png)
 
 <br>
@@ -212,9 +218,11 @@ After:
 *  `edit 3 n/Betsy Crower p/91234567 e/fong@example.com` edits the name, phone number and email address of the 3rd customer to be `Betsy Crower`, `91234567` and `fong@example.com` respectively.
 
 Before:
+
 ![editBefore](images/edit-command-example/edit-before.png)
 
 After:
+
 ![editAfter](images/edit-command-example/edit-after.png)
 
 <br>
@@ -223,45 +231,46 @@ After:
 
 **Format:**
 
-Format: `find <prefix> [keyword]... [<prefix> [keywords]]...`
+`find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
 
 **Description:**
 
-Search for customers by specifying keywords for various attributes (except `appointment`).
+Search for customers with specified keywords of different attributes (except `appointment`).
 
-* Attributes match with keywords when:
-  1. Any word in the attribute contains the keyword as a prefix.
-  2. If there are multiple keywords, all must be present as prefixes.
-  3. Keywords are not case-sensitive and can be in any order.
-* For `tag` and `insurance`, only one of the customer's `tag`/`insurance` must contain keywords as a prefix. </br>
-These keywords can be spread across different `tag`/`insurance` entries.
-* When searching with multiple attributes, all customer attributes must match the keywords.
+* Attribute matches with the keywords when:
+  - Any word in the attribute contains the single keyword as a prefix.
+  - If there are multiple keywords, all keywords must be present in the attribute as prefix.
+* Keywords are not case-sensitive and can be in any order.
+* For `tag` and `insurance`, only one of the customer's `tags` / `insurances` has to contain the keywords as a prefix. </br>
+These keywords can be spread across different `tag` / `insurance` entries.
+* When searching with multiple attributes, the customer's attributes must match all the corresponding ones in `find`.
 
 <box type="warning" seamless>
 
 **Caution:**
 * **At least one** prefix should be provided.
 * Available prefix:
-  1. `address`: `a/`
-  2. `email`: `e/`
-  3. `insurance`: `i/`
-  4. `name`: `n/`
-  5. `phone`: `p/`
-  6. `priority`: `pr/`
-  7. `remark`: `r/`
-  8. `tag`: `t/`
-* A keyword is **NOT** mandatory.
+  - `address`: `a/`
+  - `email`: `e/`
+  - `insurance`: `i/`
+  - `name`: `n/`
+  - `phone`: `p/`
+  - `priority`: `pr/`
+  - `remark`: `r/`
+  - `tag`: `t/`
+* Keyword is **NOT** mandatory.
 
 </box>
 
 **Examples:**
 
-* `find t/rich pr/m` Finds all the customers whose tag matches keyword `rich`  and whose priority matches keyword `m`. </br>
-If there is a customer with the tag `Rich Client` and their priority is `medium`, this customer would be included in the search results.
+* `find t/tall pr/h` finds all the customers whose tag matches keyword `tall`  and whose priority matches keyword `h` from the [Customer List](#ui-layout-description).
 
-* `find n/Song i/` Finds all the customers whose name matches keyword `Song`  and have an insurance. </br>
-If there's a customer named `Song Wei` and another customer named `John Song`, and both of them have insurance,
-they would be included in the search results because their names contain the keyword `Song`, and they also have an insurance attribute.
+![findExample](images/find-command-examples/find%20example.png)
+
+* `find i/car insurance pr/` finds all the customers whose insurance matches keyword `car insurance` and have priority from the [Customer List](#ui-layout-description).
+
+![findExamplew](images/find-command-examples/find%20example%202.png)
 
 <box type="info" seamless>
 
@@ -307,9 +316,11 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
+
 ![TagEgBefore](images/tag-command-examples/before.png)
 
 After:
+
 ![TagEgAfter](images/tag-command-examples/after.png)
 
 <br>
@@ -377,7 +388,7 @@ After:
 **Note:**
 * The customer list is sorted by priority according to this order: `high` -> `medium` -> `low` </br>
 * Customers with no priority assigned to them will be displayed at the bottom of the list. </br>
-* Changing a customer's priority **might** change its position in the list because of the sorted property.
+* Changing a customer's priority **may** change its position in the list because of the sorted property.
 </box>
 
 **Examples:**
@@ -425,9 +436,25 @@ Format: `remark <index> [remark]`
 
 Examples:
 
-* `remark 1 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+* `remark 4 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
 
-* `remark 2` Removes the remark from the second customer in the displayed list.
+Before :
+
+![remarkBefore](images/remark-command-example/remarkBefore.png)
+
+After:
+
+![remarkAfter](images/remark-command-example/remarkAfter.png)
+
+* `remark 4` Removes the remark from the second customer in the displayed list.
+
+Before :
+
+![remarkAfter](images/remark-command-example/remarkAfter.png)
+
+After:
+
+![remarkBefore](images/remark-command-example/remarkBefore.png)
 
 <br>
 
@@ -562,24 +589,25 @@ command box.
 
 #### Prefix to full-name prefix translation table
 
-**Note that prefixes are not case sensitive**
+****Note that prefixes are not case-sensitive**
+
 | Prefix | Full-name prefix |
 |--------|------------------|
 | n/     | name/            |
 | p/     | phone/           |
 | e/     | email/           |
-|a/|address/|
-|pr/|priority/|
-|t/|tag/|
-|i/|insurance/|
-|r/|remark/|
-|at/|addtag/|
-|dt/|deletetag/|
-|ai/|addinsurance/|
-|di/|deleteinsurance/|
-|d/|date/|
-|t/|time/|
-|v/|venue/|
+| a/     | address/         |
+| pr/    | priority/        |
+| t/     | tag/             |
+| i/     | insurance/       |
+| r/     | remark/          |
+| at/    | addtag/          |
+| dt/    | deletetag/       |
+| ai/    | addinsurance/    |
+| di/    | deleteinsurance/ |
+| d/     | date/            |
+| t/     | time/            |
+| v/     | venue/           |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
