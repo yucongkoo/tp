@@ -15,20 +15,20 @@ Meet EzContact, your go-to solution designed exclusively for insurance agents. N
 policies, and leads has never been easier. EzContact empowers you to manage your contacts, streamline communication,
 and boost your productivity, all from the tips of your fingers.
 
-&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduces the
+&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduce the
 hassle of having to remember everything. It is optimized for use via Command Line Interface (CLI), meaning that users would
 have to enter text command to execute them, while still having the benefits of Graphical User Interface (GUI) where users
 can view the information easily through the application.
 
 With EZContact, our users are able to :
 
-*  Seamlessly organize your clients' details, policy information, and communication history.
+*  Seamlessly organize their clients' details, policy information, and communication history.
 *  Stay on top of their leads, and convert potential clients into loyal customers.
 *  Schedule appointments and follow-ups without missing a beat.
 
 &emsp;&emsp;If you are a fast typist, EzContact is the perfect tool for you to keep track of all your customer
 , it is faster than any other traditional GUI-based application available in the market! Remember, Time is Money ! The
-faster you approach your customer, the more deal you seal.
+faster you approach your customer, the more deals you seal.
 
 &emsp;&emsp;If you are interested in EzContact, hop on over to our [Quick Start](#quick-start) to get started and
 embark on your journey of using EzContact.
@@ -140,18 +140,18 @@ Adds the following [Customer Card](#ui-layout-description) to the [Customer List
 
 ### Listing all customers : `list`
 
-Shows a list of all existing customers in EZContact and the size of the list.
+**Format:**
 
-Format: `list`
+`list`
+
+**Description**
+* Shows a list of all customers in EZContact and the size of the list.
+* You can return to viewing your full client list after executing a `find` command.
 
 <box type="warning" seamless>
 
-**Caution:** A list command does not take in parameters e.g. `list 1`, `list first`, `list all` will be invalid.
-
-Examples:
+**Example**:
 * `list` shows a list of all existing customers and the size of the list.
-
-</box>
 
 <br>
 
@@ -458,6 +458,130 @@ After:
 
 <br>
 
+### Adding an appointment to a customer: `addappt`
+
+**Format:**
+`addappt <index> d/<date> [t/<time>] [v/<venue>]`
+
+**Description:**
+
+* Adds an appointment to the customer at `<index>` in the displayed customer list.
+* An appointment can includes a date, time and venue.
+* This allows you to keep track of all your customers' appointment dates all within the same app
+* If you wish to delete the customer's appointment, use the command `deleteappt`
+
+**Caution:**
+
+* The customer must not have a current appointment
+* `<index>` should **only be one of** the indices shown in the displayed list
+* `<date>` must be specified
+* `<date>` must be in YYYY-MM-DD format and not a past date
+* `<time>` format must be in 24h HH:MM format
+* `<venue>` cannot be longer than 30 characters
+
+**Examples:**
+
+* `addappt 1 d/2025-12-12` adds an appointment on 12 Dec 2025 for the first customer in the displayed list
+
+* `addappt 1 d/2025-12-12 t/12:55` adds an appointment on 12 Dec 2025, 1255hrs for the first customer in the displayed list
+
+* `addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall` adds an appointment on 12 Dec 2025, 1255hrs, Clementi Mall for the first customer in the displayed list
+
+Before:
+
+![addApptBefore](images/appointment-command-examples/DeleteApptAfter.png)
+
+After:
+
+![addApptAfter](images/appointment-command-examples/AddApptAfter.png)
+
+<br>
+
+### Deleting a customer's appointment: `deleteappt`
+
+**Format:**
+`deleteappt <index>`
+
+**Description:**
+
+* Deletes a customer's appointment at `<index>` in the displayed customer list.\
+* Used when the appointment has been cancelled.
+
+**Caution:**
+
+* The customer must have a current appointment
+* `<index>` should **only be one of** the indices shown in the displayed list
+* Cannot be undone
+
+</box>
+
+**Examples:**
+* `deleteappt 1` deletes the appointment of the first customer in the displayed list, if applicable
+
+Before:
+
+![deleteApptBefore](images/appointment-command-examples/DeleteApptBefore.png)
+
+After:
+
+![deleteApptAfter](images/appointment-command-examples/DeleteApptAfter.png)
+
+<br>
+
+### Marking an appointment: `markappt`
+
+**Format:**
+
+`markappt <index>`
+
+**Description:**
+* Marks the appointment of the customer at `<index>` in the displayed customer list.
+* Increments the customer's completed appointments count by 1.
+* Deletes the current appointment.
+* Use to keep track of the number of completed appointments with the customer
+
+**Caution:**
+* The customer at `<index>` must have a current appointment.
+* This cannot be undone.
+*
+**Example:**
+* `markappt 1` increments the appointment counter of the first customer in the displayed list.
+
+Before:
+
+![markApptBefore](images/appointment-command-examples/AddApptAfter.png)
+
+After:
+
+![markApptAfter](images/appointment-command-examples/MarkApptAfter.png)
+
+<br>
+
+### Unmarking an appointment: `unmarkappt`
+
+**Format:**
+
+`unmarkappt <index>`
+
+**Description:**
+
+* Decrements the customer's completed appointments count at `<index>` by 1.
+* Use to reduce the appointment count of customers as needed.
+
+**Caution:**
+* This cannot be undone.
+* The current appointment count must be greater than 0.
+
+*Examples:*
+* `unmarkappt 1` decrements the appointment counter of the first customer in the displayed list by 1.
+
+<br>
+
+
+
+
+
+
 ### Clearing the customer list : `clear`
 
 **Format:**
@@ -571,20 +695,24 @@ command box.
 
 ## Command summary
 
-| Action        | Format and Examples                                                                                                                                                                                                                              |
-|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**       | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**    | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
-| **Edit**      | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
-| **List**      | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**      | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                              |
-| **Tag**       | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
-| **Insurance** | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
-| **Remark**    | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
-| **Priority**  | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
-| **Clear**     | `clear`                                                                                                                                                                                                                                          |
-| **Help**      | `help`                                                                                                                                                                                                                                           |
-| **Exit**      | `exit`                                                                                                                                                                                                                                           |
+| Action         | Format and Examples                                                                                                                                                                                                                            |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**        | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                              |
+| **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                       |
+| **List**       | `list`                                                                      <hr>                                                                                                                                                               |
+| **Find**       | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                            |
+| **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                   |
+| **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                        |
+| **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                       |
+| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                       |
+| **Addappt**    | `addappt <index> d/<date> [t/<time>] [v/<venue>]` <hr> `addappt 3 d/2025-12-12 t/23:59 v/Starbucks`                                                                                                                                            |
+| **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                        |
+| **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                           |
+| **Unmarkappt** | `unmarkappt <index>` <hr> `unmarkappt 1`                                                                                                                                                                                                       |
+| **Clear**      | `clear`                                                                                                                                                                                                                                        |
+| **Help**       | `help`                                                                                                                                                                                                                                         |
+| **Exit**       | `exit`                                                                                                                                                                                                                                         |
 
 
 #### Prefix to full-name prefix translation table
