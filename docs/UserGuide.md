@@ -294,7 +294,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
 * Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
-* Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
+* **Adding an existing tag** or **deleting a non-existing tag** will be **ignored** by EzContact.
 
 <box type="warning" seamless>
 
@@ -311,7 +311,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Examples:**
 
 * `tag 3 at/ tall at/male dt/short dt/skinny`</br>
-Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
+Adds `tall`(existing tag) and `male` tags, delete `short`(non-existing tag) and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
 
@@ -717,23 +717,23 @@ command box.
 
 ****Note that prefixes are not case-sensitive**
 
-| Prefix | Full-name prefix |
-|--------|------------------|
-| n/     | name/            |
-| p/     | phone/           |
-| e/     | email/           |
-| a/     | address/         |
-| pr/    | priority/        |
-| t/     | tag/             |
-| i/     | insurance/       |
-| r/     | remark/          |
-| at/    | addtag/          |
-| dt/    | deletetag/       |
-| ai/    | addinsurance/    |
-| di/    | deleteinsurance/ |
-| d/     | date/            |
-| t/     | time/            |
-| v/     | venue/           |
+| Prefix | Full-name prefix | Remarks                                  |
+|--------|------------------|------------------------------------------|
+| n/     | name/            |                                          |
+| p/     | phone/           |                                          |
+| e/     | email/           |                                          |
+| a/     | address/         |                                          |
+| pr/    | priority/        |                                          |
+| t/     | tag/             | used in `add` command                     |
+| i/     | insurance/       |                                          |
+| r/     | remark/          |                                          |
+| at/    | addtag/          |                                          |
+| dt/    | deletetag/       |                                          |
+| ai/    | addinsurance/    |                                          |
+| di/    | deleteinsurance/ |                                          |
+| d/     | date/            |                                          |
+| t/     | time/            | used in **appointment** related commands |
+| v/     | venue/           |                                          |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
