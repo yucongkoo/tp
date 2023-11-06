@@ -1037,6 +1037,21 @@ _{ more test cases …​ }_
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
+## Updating tags of a customer
+
+**Updating the tags of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `tag 1 at/tall at/fat dt/short dt/skinny` <br/>
+   Expected :<br/> The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
+1. Test case : `tag 0 at/tall`
+   Expected: <br/> No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+1. Test case : `tag 1`
+   Expected: <br/> No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+1. Test case: `tag 1 at/tall dt/tall`
+   Expected: <br/> No customer is updated. Error details shown in the status message(conflicting tags).
+
 ## Feature to show
 
 **Scenario**
