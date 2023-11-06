@@ -104,10 +104,10 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-<div markdown="block" class="alert alert-info">
+<box type="info" seamless>
 
 **Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</div>
+</box>
 
 How the `Logic` component works:
 
@@ -170,7 +170,7 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
-This feature allows users to assign tags to / remove tags from customers in EZContact, increasing the recognizability 
+This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
 
 ### Implementation
@@ -186,26 +186,29 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 ###### **Integrating a command for handling tag features into the execution logic**
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
-we first update the `AddressBookParser` to recognise the `tag` [command word](#glossary) and will create a `TagCommandParser` subsequently.
-The `TagCommandParser` will then parse the [command arguments](#glossary) to create a `TagCommand` that can be executed. 
+we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
+The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
 
 <puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+<box type="info" seamless>
 
+**Note:**<br/>The lifeline for `TagCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</box>
 
 ###### **Implementing `TagCommandParser`**
 
-`TagCommandParser` plays the role of parsing [command arguments](#glossary) into two information:<br/>
+`TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
 * `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
 * `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
 Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
 The parsing steps are as follows:
-1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`.
+1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`(throws ParseException if there are format errors).
 1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
-1. Verify that there is at least one tag to add/delete.
+1. Verify that there is at least one tag to add/delete(throws ParseException if no tag to update is provided).
 1. Construct and return the `TagCommand`.
 
 Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
@@ -410,7 +413,7 @@ Alternative 1 outweigh the potential drawbacks of limited differentiation, becau
 
 
 ## Insurance Feature
-This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
+This feature allows users to assign / remove insurance package(s) to / from customers in EzContact to help users keep track of customers' insurances.
 
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
@@ -694,37 +697,37 @@ alongside helping users increase the chance of sealing deals with customers.
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
-|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
-| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
-| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
-| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
-| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
-| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
-| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
-| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
-| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
-| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
-| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
-| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
-| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
-| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
-| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
-| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
-| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
-| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
-| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
-| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
-| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
-| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
-| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
-
-
+| Priority | As a …​          | I want to …​                                                                       | So that I can…​                                                              |
+|----------|------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `* * *`  | user             | be able to add new contacts to EzContact                                           | keep track of my contacts using EzContact                                    |
+| `* * *`  | user             | be able to update my contacts' information easily                                  | easily maintain up-to-date information of my contacts                        |
+| `* * *`  | user             | be able to search for specific contacts using their names                          | quickly lookup a contact and get their information                           |
+| `* * *`  | user             | be able to delete contacts                                                         |                                                                              |
+| `* * *`  | user             | be able to list out my contacts in EzContact                                       | see all my saved contacts in one view                                        |
+| `* * *`  | insurance agent  | be able to add customers' contacts to EzContact                                    | reach out to existing and potential customers easily                         |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                      | prioritise customers that have a higher chance on sealing a deal             |
+| `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                  | check customers' insurance profile easily                                    |
+| `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan        | quickly know who to find when there are changes to a specific insurance plan |
+| `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                  | easily identify and remember my customers using these tag                    |
+| `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names) | be more flexible when searching for contacts                                 |
+| `* *`    | user             | be able to see my total numbers of contact entries in EzContact                    | know how many contacts I have in EzContact                                   |
+| `* *`    | forgetful person | be able to search for contacts using partial names                                 | find a contact without having to remember their full name                    |
+| `* *`    | forgetful person | have EzContact remind me of important task associated with certain contacts        | prevent myself from forgetting important tasks                               |
+| `* *`    | forgetful person | be able to add remarks to a certain contact                                        | be reminded of things to take note of when contacting a person               |
+| `* *`    | careless person  | be able to undo previous command                                                   | recover from unintentional commands                                          |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                           | avoid myself from adding redundant data                                      |
+| `* *`    | careless person  | be suggested by EzContact for similar names when I'm searching for a person        | avoid myself from typographical errors                                       |
+| `* *`    | first time user  | be able to know commands in EzContact                                              | play around with the features and get used to the application                |
+| `* *`    | fast typist      | have short commands                                                                | execute commands faster                                                      |
+| `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
+| `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
+| `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
+| `*`      | advanced user    | be able to manually edit my contacts' information                                  |                                                                              |
 
 
 ## Use cases
 
-(For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EzContact` and the **Actor** is the `user`, unless specified otherwise)
 
 #### Adding a customer
 
@@ -896,8 +899,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
-
-*{More to be added}*
+6. The application should be offered as a free service to the public.
+7. The application should be able to respond within one second.
 
 ## Glossary
 
