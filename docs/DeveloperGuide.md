@@ -935,6 +935,27 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
+
+#### Remark a customer
+
+**Use Case: UC10 - remark a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests to list out the customers.<br/>
+&emsp;2. System displays the requested list of customers to the user.<br/>
+&emsp;3. User enters index and remark of the target customer.<br/>
+&emsp;4. System updates the remark of specified customer accordingly.<br/>
+&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;3a. User provided invalid index or information.<br/>
+&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
 ## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
