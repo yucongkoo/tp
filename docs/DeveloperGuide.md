@@ -768,8 +768,6 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
 | `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
 | `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
-| `*`      | advanced user    | be able to manually edit my contacts' information                                  |                                                                              |
-
 
 ## Use cases
 
@@ -947,6 +945,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 6. The application should be offered as a free service to the public.
 7. The application should be able to respond within one second.
+8. The application should be able to handle and support manual edits to the data file.
 
 ## Glossary
 
