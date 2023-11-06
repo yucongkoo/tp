@@ -6,6 +6,7 @@ package seedu.address.model.person;
 public class EmptyAddress extends Address {
 
     public static final String DUMMY_VALUE_FOR_EMPTY_ADDRESS = " ";
+    private static final String VALUE_FOR_DISPLAY = "-";
 
     private static EmptyAddress emptyAddress;
 
@@ -42,7 +43,7 @@ public class EmptyAddress extends Address {
 
     @Override
     public String toString() {
-        return DUMMY_VALUE_FOR_EMPTY_ADDRESS;
+        return VALUE_FOR_DISPLAY;
     }
 
 }
