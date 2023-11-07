@@ -15,20 +15,20 @@ Meet EzContact, your go-to solution designed exclusively for insurance agents. N
 policies, and leads has never been easier. EzContact empowers you to manage your contacts, streamline communication,
 and boost your productivity, all from the tips of your fingers.
 
-&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduces the
+&emsp;&emsp;EzContact is a desktop application that can help you organize your customers' information and reduce the
 hassle of having to remember everything. It is optimized for use via Command Line Interface (CLI), meaning that users would
 have to enter text command to execute them, while still having the benefits of Graphical User Interface (GUI) where users
 can view the information easily through the application.
 
 With EZContact, our users are able to :
 
-*  Seamlessly organize your clients' details, policy information, and communication history.
+*  Seamlessly organize their clients' details, policy information, and communication history.
 *  Stay on top of their leads, and convert potential clients into loyal customers.
 *  Schedule appointments and follow-ups without missing a beat.
 
 &emsp;&emsp;If you are a fast typist, EzContact is the perfect tool for you to keep track of all your customer
 , it is faster than any other traditional GUI-based application available in the market! Remember, Time is Money ! The
-faster you approach your customer, the more deal you seal.
+faster you approach your customer, the more deals you seal.
 
 &emsp;&emsp;If you are interested in EzContact, hop on over to our [Quick Start](#quick-start) to get started and
 embark on your journey of using EzContact.
@@ -42,11 +42,12 @@ embark on your journey of using EzContact.
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `ezcontact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
+2. Download the latest `EzContact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds.
-Note how the app contains some sample data.<br>![Ui](images/Ui.png)
+4. Open up command prompt `cmd` and move to the application's directory by using `cd <directory>`.
+5. After reaching the directory, execute the command `java -jar EzContact.jar`. The GUI similar to the below should appear in a few seconds.
+Note how the app contains some sample data.<br><br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -55,14 +56,16 @@ Note how the app contains some sample data.<br>![Ui](images/Ui.png)
 ## UI Layout Description
 
 Consider the following UI split into three parts:
+
 ![UiWithDescription](images/UiWithDescription.png)
+
 As illustrated above, the UI will be split into three sections, we will be providing a name for each section and
 will be using these names to refer to the section specified in the following User Guide.
 
 1. **Command Box:** Box for users to input the command to be executed by EzContact.<br/>
 1. **Result Display Box:** Box that displays the result of executing the entered command.<br/>
 1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
-1. **Customer Card:** Card that displays information about each customer.<br/>
+   - **Customer Card:** Card that displays information about each customer.<br/>
 
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -83,6 +86,10 @@ will be using these names to refer to the section specified in the following Use
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
+
+* Prefixes (e.g. `n/`, `p/`, `e/`) are designed to be short, however, we do still provide the functionality to detect 
+full-name prefixes ,and they can be used interchangeably(e.g. `n/` and `name/` are interchangeable),
+click [here](#prefix-to-full-name-prefix-translation-table) to see a full table of prefix to full-name prefix relation.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command is `help 123`, it will be interpreted as `help`.
@@ -108,7 +115,7 @@ Adds a new customer with the respective details to EzContact.
 * `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
-* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-`
+* `<priority>` should **only be one of**: `high`, `medium`, `low`, `-` (all case-insensitive).
 * `<tag>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * `<insurance>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * `<remark>` should **not be longer than 150 characters**.
@@ -121,28 +128,28 @@ Adds a new customer with the respective details to EzContact.
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.` </br>
 Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+
 ![AddEg1](images/add-command-examples/example1.png)
 
 * `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`</br>
 Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+
 ![AddEg2](images/add-command-examples/example2.png)
 
 <br>
 
 ### Listing all customers : `list`
 
-Shows a list of all existing customers in EZContact and the size of the list.
+**Format:**
 
-Format: `list`
+`list`
 
-<box type="warning" seamless>
+**Description**
+* Shows a list of all customers in EZContact and the size of the list.
+* You can return to viewing your full client list after executing a `find` command.
 
-**Caution:** A list command does not take in parameters e.g. `list 1`, `list first`, `list all` will be invalid.
-
-Examples:
+**Example**:
 * `list` shows a list of all existing customers and the size of the list.
-
-</box>
 
 <br>
 
@@ -163,8 +170,16 @@ Examples:
 </box>
 
 **Examples:**
-* `list` followed by `delete 2` deletes the 2nd customer in the displayed list.
-* `find Betsy` followed by `delete 1` deletes the 1st customer appeared in the list displayed by the `find` command.
+* `delete 2` deletes the 2nd customer in the displayed list.
+
+
+Before:
+
+![deleteBefore](images/delete-command-example/delete-before.png)
+
+After:
+
+![deleteAfter](images/delete-command-example/delete-after.png)
 
 <br>
 
@@ -192,12 +207,21 @@ Examples:
 * Tags are not editable.
 * Priorities are not editable.
 * Remarks are not editable.
+* Editing a customer to have the same `<phone number>` or `<email>` to other existing customers in EzContact is **not allowed.**
+
 
 </box>
 
 **Examples:**
-*  `edit 1 p/91234567 e/fong@example.com` edits the phone number and email address of the 1st customer to be `91234567` and `jiufong@example.com` respectively.
-*  `edit 2 n/Betsy Crower` edits the name of the 2nd customer to be `Betsy Crower`.
+*  `edit 3 n/Betsy Crower p/91234567 e/fong@example.com` edits the name, phone number and email address of the 3rd customer to be `Betsy Crower`, `91234567` and `fong@example.com` respectively.
+
+Before:
+
+![editBefore](images/edit-command-example/edit-before.png)
+
+After:
+
+![editAfter](images/edit-command-example/edit-after.png)
 
 <br>
 
@@ -205,47 +229,50 @@ Examples:
 
 **Format:**
 
-Format: `find <prefix> [keyword]... [<prefix> [keywords]]...`
+`find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
 
 **Description:**
 
-Search for customers by specifying keywords for various attributes (except `appointment`).
+Search for customers with specified keywords of different attributes (except `appointment`).
 
-* Attributes match with keywords when:
-  1. Any word in the attribute contains the keyword as a prefix.
-  2. If there are multiple keywords, all must be present as prefixes.
-  3. Keywords are not case-sensitive and can be in any order.
-* For `tag` and `insurance`, only one of the customer's `tag`/`insurance` must contain keywords as a prefix. </br>
-These keywords can be spread across different `tag`/`insurance` entries.
-* When searching with multiple attributes, all customer attributes must match the keywords.
+* Attribute matches with the keywords when:
+  - Any word in the attribute contains the single keyword as a prefix.
+  - If there are multiple keywords, all keywords must be present in the attribute as prefix.
+* Keywords are not case-sensitive and can be in any order.
+* For `tag` and `insurance`, only one of the customer's `tags` / `insurances` has to contain the keywords as a prefix. </br>
+These keywords can be spread across different `tag` / `insurance` entries.
+* When searching with multiple attributes, the customer's attributes must match all the corresponding ones in `find`.
 
 <box type="warning" seamless>
 
 **Caution:**
 * **At least one** prefix should be provided.
 * Available prefix:
-  1. `address`: `a/`
-  2. `email`: `e/`
-  3. `insurance`: `i/`
-  4. `name`: `n/`
-  5. `phone`: `p/`
-  6. `priority`: `pr/`
-  7. `reamrk`: `r/`
-  8. `tag`: `t/`
-* A keyword is **NOT** mandatory.
+  - `address`: `a/`
+  - `email`: `e/`
+  - `insurance`: `i/`
+  - `name`: `n/`
+  - `phone`: `p/`
+  - `priority`: `pr/`
+  - `remark`: `r/`
+  - `tag`: `t/`
+* Keyword is **NOT** mandatory.
 
 </box>
 
 **Examples:**
 
-* `find t/rich pr/m` Finds all the customers whose tag matches keyword `rich`  and whose priority matches keyword `m`. </br>
-If there is a customer with the tag `Rich Client` and their priority is `medium`, this customer would be included in the search results.
+* `find t/tall pr/h` finds all the customers whose tag matches keyword `tall`  and whose priority matches keyword `h` from the [Customer List](#ui-layout-description).
 
-* `find n/Song i/` Finds all the customers whose name matches keyword `Song`  and have an insurance. </br>
-If there's a customer named `Song Wei` and another customer named `John Song`, and both of them have insurance,
-they would be included in the search results because their names contain the keyword `Song`, and they also have an insurance attribute.
+![findExample](images/find-command-examples/find%20example.png)
+
+* `find i/car insurance pr/` finds all the customers whose insurance matches keyword `car insurance` and have priority from the [Customer List](#ui-layout-description).
+
+![findExamplew](images/find-command-examples/find%20example%202.png)
 
 <box type="info" seamless>
+
+**Note**:
 
 Note that if you search using `find n/Song Song`, </br>
 it will match a customer named `Song Guo Xuan` because all the specified keywords are present in the customer's name.
@@ -267,7 +294,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
 * Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
-* Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
+* **Adding an existing tag** or **deleting a non-existing tag** will be **ignored** by EzContact.
 
 <box type="warning" seamless>
 
@@ -284,12 +311,14 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Examples:**
 
 * `tag 3 at/ tall at/male dt/short dt/skinny`</br>
-Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
+Adds `tall`(existing tag) and `male` tags, delete `short`(non-existing tag) and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
+
 ![TagEgBefore](images/tag-command-examples/before.png)
 
 After:
+
 ![TagEgAfter](images/tag-command-examples/after.png)
 
 <br>
@@ -298,7 +327,7 @@ After:
 
 **Format:**
 
-`insurance [ai/<insurance to add>]... [di/<insurance to delete>]...`
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`
 
 **Description:**
 
@@ -348,21 +377,47 @@ After:
 
 **Caution:**
 * `<index>` should **only be one of** the indices shown in the displayed list.
-* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-`.
+* `<priority>` should **only be one of：** `high`, `medium`, `low`, `-` (all case-insensitive).
 
+</box>
+
+<box type="info" seamless>
+
+**Note:**
+* The customer list is sorted by priority according to this order: `high` -> `medium` -> `low` </br>
+* Customers with no priority assigned to them will be displayed at the bottom of the list. </br>
+* Changing a customer's priority **may** change its position in the list because of the sorted property.
 </box>
 
 **Examples:**
 
-* `priority 1 high` updates the priority of the first customer to be `high`.
+* `priority 3 high` updates the priority of the third customer to be `high`. Note that the position of the customer is changed.
 
-* `priority 2 -` removes the priority assigned to the second customer.
+Before:
+
+![priorityBefore](images/priority-command-example/priority-before.png)
+
+After:
+
+![priorityAfter](images/priority-command-example/priority-after.png)
+
+<br>
+
+* `priority 3 -` removes the priority assigned to the third customer. Note that the customer remains at the bottom of the list.
+
+Before:
+
+![removePriorityBefore](images/priority-command-example/remove-priority-before.png)
+
+After:
+
+![removePriorityAfter](images/priority-command-example/remove-priority-after.png)
 
 <br>
 
 ### Adding a remark to a customer: `remark`
 
-Format: `remark <index> <remark>`
+Format: `remark <index> [remark]`
 
 **Description:**
 
@@ -379,11 +434,151 @@ Format: `remark <index> <remark>`
 
 Examples:
 
-* `remark 1 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
+* `remark 4 he likes pizza` Updates the remark of the first customer in the displayed list to `he likes pizza`.
 
-* `remark 2` Removes the remark from the second customer in the displayed list.
+Before :
+
+![remarkBefore](images/remark-command-example/remarkBefore.png)
+
+After:
+
+![remarkAfter](images/remark-command-example/remarkAfter.png)
+
+* `remark 4` Removes the remark from the second customer in the displayed list.
+
+Before :
+
+![remarkAfter](images/remark-command-example/remarkAfter.png)
+
+After:
+
+![remarkBefore](images/remark-command-example/remarkBefore.png)
 
 <br>
+
+### Adding an appointment to a customer: `addappt`
+
+**Format:**
+`addappt <index> d/<date> [t/<time>] [v/<venue>]`
+
+**Description:**
+
+* Adds an appointment to the customer at `<index>` in the displayed customer list.
+* An appointment can includes a date, time and venue.
+* This allows you to keep track of all your customers' appointment dates all within the same app
+* If you wish to delete the customer's appointment, use the command `deleteappt`
+
+**Caution:**
+
+* The customer must not have a current appointment
+* `<index>` should **only be one of** the indices shown in the displayed list
+* `<date>` must be specified
+* `<date>` must be in YYYY-MM-DD format and not a past date
+* `<time>` format must be in 24h HH:MM format
+* `<venue>` cannot be longer than 30 characters
+
+**Examples:**
+
+* `addappt 1 d/2025-12-12` adds an appointment on 12 Dec 2025 for the first customer in the displayed list
+
+* `addappt 1 d/2025-12-12 t/12:55` adds an appointment on 12 Dec 2025, 1255hrs for the first customer in the displayed list
+
+* `addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall` adds an appointment on 12 Dec 2025, 1255hrs, Clementi Mall for the first customer in the displayed list
+
+Before:
+
+![addApptBefore](images/appointment-command-examples/DeleteApptAfter.png)
+
+After:
+
+![addApptAfter](images/appointment-command-examples/AddApptAfter.png)
+
+<br>
+
+### Deleting a customer's appointment: `deleteappt`
+
+**Format:**
+`deleteappt <index>`
+
+**Description:**
+
+* Deletes a customer's appointment at `<index>` in the displayed customer list.\
+* Used when the appointment has been cancelled.
+
+**Caution:**
+
+* The customer must have a current appointment
+* `<index>` should **only be one of** the indices shown in the displayed list
+* Cannot be undone
+
+</box>
+
+**Examples:**
+* `deleteappt 1` deletes the appointment of the first customer in the displayed list, if applicable
+
+Before:
+
+![deleteApptBefore](images/appointment-command-examples/DeleteApptBefore.png)
+
+After:
+
+![deleteApptAfter](images/appointment-command-examples/DeleteApptAfter.png)
+
+<br>
+
+### Marking an appointment: `markappt`
+
+**Format:**
+
+`markappt <index>`
+
+**Description:**
+* Marks the appointment of the customer at `<index>` in the displayed customer list.
+* Increments the customer's completed appointments count by 1.
+* Deletes the current appointment.
+* Use to keep track of the number of completed appointments with the customer
+
+**Caution:**
+* The customer at `<index>` must have a current appointment.
+* This cannot be undone.
+*
+**Example:**
+* `markappt 1` increments the appointment counter of the first customer in the displayed list.
+
+Before:
+
+![markApptBefore](images/appointment-command-examples/AddApptAfter.png)
+
+After:
+
+![markApptAfter](images/appointment-command-examples/MarkApptAfter.png)
+
+<br>
+
+### Unmarking an appointment: `unmarkappt`
+
+**Format:**
+
+`unmarkappt <index>`
+
+**Description:**
+
+* Decrements the customer's completed appointments count at `<index>` by 1.
+* Use to reduce the appointment count of customers as needed.
+
+**Caution:**
+* This cannot be undone.
+* The current appointment count must be greater than 0.
+
+*Examples:*
+* `unmarkappt 1` decrements the appointment counter of the first customer in the displayed list by 1.
+
+<br>
+
+
+
+
+
 
 ### Clearing the customer list : `clear`
 
@@ -498,20 +693,47 @@ command box.
 
 ## Command summary
 
-| Action        | Format and Examples                                                                                                                                                                                                                              |
-|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**       | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**    | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
-| **Edit**      | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
-| **List**      | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**      | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                              |
-| **Tag**       | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
-| **Insurance** | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
-| **Remark**    | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
-| **Priority**  | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
-| **Clear**     | `clear`                                                                                                                                                                                                                                          |
-| **Help**      | `help`                                                                                                                                                                                                                                           |
-| **Exit**      | `exit`                                                                                                                                                                                                                                           |
+| Action         | Format and Examples                                                                                                                                                                                                                              |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**        | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
+| **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
+| **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
+| **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
+| **Find**       | `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`                    <hr>      `find n/song i/abc`                                                                   |
+| **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
+| **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
+| **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
+| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
+| **Addappt**    | `addappt <index> d/<date> [t/<time>] [v/<venue>]` <hr> `addappt 3 d/2025-12-12 t/23:59 v/Starbucks`                                                                                                                                              |
+| **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                         |
+| **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                             |
+| **Unmarkappt** | `unmarkappt <index>` <hr> `unmarkappt 1`                                                                                                                                                                                                         |
+| **Clear**      | `clear`                                                                                                                                                                                                                                          |
+| **Help**       | `help`                                                                                                                                                                                                                                           |
+| **Exit**       | `exit`                                                                                                                                                                                                                                           |
+
+
+#### Prefix to full-name prefix translation table
+
+****Note that prefixes are not case-sensitive**
+
+| Prefix | Full-name prefix | Remarks                                  |
+|--------|------------------|------------------------------------------|
+| n/     | name/            |                                          |
+| p/     | phone/           |                                          |
+| e/     | email/           |                                          |
+| a/     | address/         |                                          |
+| pr/    | priority/        |                                          |
+| t/     | tag/             | used in `add` command                     |
+| i/     | insurance/       |                                          |
+| r/     | remark/          |                                          |
+| at/    | addtag/          |                                          |
+| dt/    | deletetag/       |                                          |
+| ai/    | addinsurance/    |                                          |
+| di/    | deleteinsurance/ |                                          |
+| d/     | date/            |                                          |
+| t/     | time/            | used in **appointment** related commands |
+| v/     | venue/           |                                          |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary

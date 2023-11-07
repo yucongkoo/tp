@@ -4,17 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.ArgumentTokenizer.preprocessArgsString;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 public class ArgumentTokenizerTest {
 
-    private final Prefix unknownPrefix = new Prefix("--u");
-    private final Prefix pSlash = new Prefix("p/");
-    private final Prefix dashT = new Prefix("-t");
-    private final Prefix hatQ = new Prefix("^Q");
+    private final Prefix unknownPrefix = new Prefix("--u", "--u");
+    private final Prefix pSlash = new Prefix("p/", "ppp/");
+    private final Prefix dashT = new Prefix("-t", "-ttt");
+    private final Prefix hatQ = new Prefix("^Q", "^QQQ");
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -73,12 +71,21 @@ public class ArgumentTokenizerTest {
         assertPreamblePresent(argMultimap, "Some preamble string");
         assertArgumentPresent(argMultimap, pSlash, "Argument value");
 
+        argsString = "  Some preamble string ppp/ Argument value ";
+        argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        assertPreamblePresent(argMultimap, "Some preamble string");
+        assertArgumentPresent(argMultimap, pSlash, "Argument value");
+
         // No preamble
         argsString = " p/   Argument value ";
         argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
         assertPreambleEmpty(argMultimap);
         assertArgumentPresent(argMultimap, pSlash, "Argument value");
 
+        argsString = " ppp/   Argument value ";
+        argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        assertPreambleEmpty(argMultimap);
+        assertArgumentPresent(argMultimap, pSlash, "Argument value");
     }
 
     @Test
@@ -139,41 +146,25 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void preprocessArgsString_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> preprocessArgsString(null));
+    public void tokenize_multipleArgumentsWithSecondaryPrefix_success() {
+        String argsString = "Some Preamble String ppp/value 1 pPp/value2 p/value3 P/value4 PPP/value5 -tdashvalue -ttt";
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
+        assertPreamblePresent(argumentMultimap, "Some Preamble String");
+        assertArgumentPresent(argumentMultimap, pSlash, "value 1", "value2", "value3", "value4", "value5");
+        assertArgumentPresent(argumentMultimap, dashT, "dashvalue", "");
+        assertArgumentAbsent(argumentMultimap, hatQ);
     }
 
-    @Test
-    public void preprocessArgsString_validArgument_success() {
-        String addCommand = "add n/james p/12345678 e/abcde@gmail.com "
-                + "i/ABC insurance pr/high t/killer r/he dumb a/1a kent ridge road";
-
-        String upperAddCommand = "add N/james P/12345678 E/abcde@gmail.com "
-                + "I/ABC insurance PR/high T/killer R/he dumb A/1a kent ridge road";
-
-        String tagCommand = "tag 1 at/tall dt/fat";
-        String upperTagCommand = "tag 1 AT/tall DT/fat";
-
-        String insuraceCommand = "insurance 1 ai/AIA insurance di/Great Eastern";
-        String upperInsuranceCommand = "insurance 1 AI/AIA insurance DI/Great Eastern";
-
-        assertTrue(addCommand.equals(preprocessArgsString(upperAddCommand)));
-
-        assertTrue(tagCommand.equals(preprocessArgsString(upperTagCommand)));
-
-        assertTrue(insuraceCommand.equals(preprocessArgsString(upperInsuranceCommand)));
-
-    }
 
     @Test
     public void equalsMethod() {
-        Prefix aaa = new Prefix("aaa");
+        Prefix aaa = new Prefix("aaa", "aaa");
 
         assertEquals(aaa, aaa);
-        assertEquals(aaa, new Prefix("aaa"));
+        assertEquals(aaa, new Prefix("aaa", "aaa"));
 
         assertNotEquals(aaa, "aaa");
-        assertNotEquals(aaa, new Prefix("aab"));
+        assertNotEquals(aaa, new Prefix("aab", "aab"));
     }
 
 }

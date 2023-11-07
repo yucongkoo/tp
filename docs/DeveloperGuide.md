@@ -106,7 +106,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 How the `Logic` component works:
@@ -170,26 +170,52 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
-This feature allows user to assign / remove tags to / from customers in EZContact to make customer more recognizable for users.
+This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
+of customers to users.
 
 ### Implementation
 
+###### **Implementing `Tag`**
+
 Before implementing the actual command execution of tag,
 tags first needs to be stored in a `Person` object accordingly.
-A `Person` is associated to any number of `Tag`s.
+Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
+###### **Integrating a command for handling tag features into the execution logic**
+
+In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
+we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
+The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
+
+The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
+taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
+
+<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+<box type="info" seamless>
+
+**Note:**<br/>The lifeline for `TagCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</box>
 
 ###### **Implementing `TagCommandParser`**
 
-`TagCommandParser` plays the role of parsing arguments into three information: `index`, `tagsToAdd` and `tagsToDelete`.
-`tagsToAdd` and `tagsToDelete` are then used to create an `UpdatePersonTagsDescriptor` which encapsulates these information.
-Note that **duplicate tags will be ignored**.
+`TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
+* `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
+* `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
+Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
+The parsing steps are as follows:
+1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`(throws ParseException if there are format errors).
+1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
+1. Verify that there is at least one tag to add/delete(throws ParseException if no tag to update is provided).
+1. Construct and return the `TagCommand`.
+
+Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. Note that the 
+**reference frames have been omitted** as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
@@ -197,24 +223,32 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 ###### **Implementing `TagCommand`**
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution.
+reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
+is a common tag to add and delete), the command execution will fail.<br/>
+The execution steps are as follows:<br/>
+1. Verify that the `TagCommand` is executable(i.e. there is no conflicting tag in the `updatePersonDescriptor`).
+1. Retrieve `personToUpdate` from the model using `index`.
+1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
+1. Create the `updatedPerson` from the above information.
+1. Verify that the `updatedPerson` has a different tag set from `personToUpdate` (i.e. the command execution will change the person).
+1. Verify that the `updatedPerson` has a valid number of tags (i.e. not exceeding the maximum allowed tag count).
+1. Set the `personToUpdate` to `updatedPerson` in the `Model`.
+1. Returns the `CommandResult` of the execution.
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
-taking `execute(m)` call to the `TagCommand` as an example.
+taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
+as the operations performed are trivial.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
-###### **Integrating `TagCommandParser` and `TagCommand` into execution logic**
+###### **Wrapping up the tag feature**
 
-Since both `TagCommandParser` and `TagCommand` are implemented accordingly, all that is left
-is to integrate them into the execution logic as described in [LogicComponent](#logic-component).
-The `AddressBookParser` is updated to recognise the `tag` command word, and will create a `TagCommandParser`
-to parse the arguments.
+As reaching this point, we have completed the implementation of the tag feature, where users are allowed to add and delete
+tags of a person in the same command. The following section will discuss certain design considerations when implementing 
+this feature.
 
-The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
-taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
-
-<puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+<br/>
+<br/>
 
 ### Design considerations:
 
@@ -227,8 +261,7 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call as an example.
   * Pros: Tags are ordered according to the time it is added.
   * Cons: Hard to implement, handling of duplicate `Tag` is more complicated.
 
-**Reasoning :**
-
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 as the ordering of tags is considered not that important in the case of
 storing tags.
 
@@ -241,26 +274,32 @@ storing tags.
   * Pros: Easy to implement
   * Cons: Users might be blocked from their action because they forgot that they already entered such a tag.
 
-**Reasoning :**
-
+**Reasoning :**<br/>
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
 
 ###### **Aspect: Deletion of non-existing tags:**
-* **Alternative 1 (Current choice)** : Simply ignore such deletions.
+* **Alternative 1(current choice):** Simply ignore such deletions.
   * Pros: Users will not be blocked from their action(other tags will still be added/deleted) even though the command consists of such deletions.
   * Cons: Users will not be aware that the tag they are deleting from the customer does not exist, this may lead to certain misconceptions.
 * **Alternative 2** : Block users from such deletions.
   * Pros: Easy to implement, users will be aware that the customer does not have the tag they are trying to delete.
   * Cons: User might be blocked from their action because they thought that the targeted customer does have the tag.
 
-**Reasoning :**
-
+**Reasoning:**<br/>
 Alternative 1 was selected over alternative 2 because the primary reason for users deleting a specific tag is that
 they wish to prevent the tagged customer from having that tag. Therefore, whether the targeted customer
 initially possesses the tag is of lesser importance in this context.
+
+###### **Aspect: Addition of existing tags:**
+This aspect is similar to the above aspect regarding **Deletion of non-existing tags**, the current choice is to simply
+ignore such additions due to the same reason stated above.
+
+<br/>
+<br/>
+<br/>
 
 ## Find feature
 This find feature is designed to do partial search or prefix search on the customer list.
@@ -374,7 +413,7 @@ Alternative 1 outweigh the potential drawbacks of limited differentiation, becau
 
 
 ## Insurance Feature
-This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
+This feature allows users to assign / remove insurance package(s) to / from customers in EzContact to help users keep track of customers' insurances.
 
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
@@ -522,6 +561,52 @@ The `Level` enum class is chosen because our system only allows four priority le
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
 
+## Remark feature
+
+### Implementation
+
+The action of assigning a remark is mainly facilitated by three classes: `Remark`, `RemarkCommandParser` and `RemarkCommand`.
+
+**The `Remark` class**
+
+
+This class represents a person's attribute, including a remark string with a maximum length of 150 characters. 
+Every person created has this attribute, with the default value being an empty string, signifying no remark.
+
+
+**The `RemarkCommandParser` class**
+
+The class is used to parse the arguments into two information: `index` and `remark` and
+returns a `RemarkCommand` if the arguments are valid.
+
+The sequence diagram below illustrates the interaction between `RemarkCommandParser`, `RemarkCommand` and `Remark`.
+
+Taking `parse("2 he likes pizza")`as an example.
+
+<puml src="diagrams/remark-feature/RemarkCommandParserSequenceDiagram.puml"/>
+
+**The `RemarkCommand` class**
+
+The class is responsible in executing the task parsed by the `RemarkCommandParser`.
+It will update the `Remark` of a `Person` and generate a `CommandResult` for the output.
+
+### Design Consideration:
+
+###### **Aspect: Delete `Remark`**
+
+* **Alternative 1 (Current choice)** : Using `remark <index>` without argument.
+  * Pros: User-friendly, no need to remember an extra command.
+  * Cons: User cannot store empty string as a remark
+* **Alternative 2** : Implement a separate delete remark command.
+  * Pros: Distinguishes between adding and deleting remarks.
+  * Cons: Requires users to remember an additional command.
+
+**Reasoning:**
+
+In real-life scenarios, storing empty strings as remark is unlikely, hence
+alternative 1 is preferred due to its user-friendliness.
+
+
 
 ## \[Proposed\] Undo/redo feature
 
@@ -642,64 +727,70 @@ Target user : Insurance agent
 * needs to remember customer's information
 * busy
 * needs to maintain interactions with his/her customers over a long time span
+* often forgets details about his/her customers
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**:  manage customers' contact for existing/potential insurance contracts faster than GUI driven apps
+**Value proposition**: 
+
+Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
+alongside helping users increase the chance of sealing deals with customers.
 
 
 ## User stories
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
-|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
-| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
-| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
-| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
-| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
-| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
-| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
-| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
-| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
-| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
-| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
-| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
-| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
-| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
-| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
-| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
-| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
-| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
-| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
-| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
-| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
-| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
-| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
-
-
-
+| Priority | As a …​          | I want to …​                                                                       | So that I can…​                                                              |
+|----------|------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `* * *`  | user             | be able to add new contacts to EzContact                                           | keep track of my contacts using EzContact                                    |
+| `* * *`  | user             | be able to update my contacts' information easily                                  | easily maintain up-to-date information of my contacts                        |
+| `* * *`  | user             | be able to search for specific contacts using their names                          | quickly lookup a contact and get their information                           |
+| `* * *`  | user             | be able to delete contacts                                                         |                                                                              |
+| `* * *`  | user             | be able to list out my contacts in EzContact                                       | see all my saved contacts in one view                                        |
+| `* * *`  | insurance agent  | be able to add customers' contacts to EzContact                                    | reach out to existing and potential customers easily                         |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                      | prioritise customers that have a higher chance on sealing a deal             |
+| `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                  | check customers' insurance profile easily                                    |
+| `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan        | quickly know who to find when there are changes to a specific insurance plan |
+| `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                  | easily identify and remember my customers using these tag                    |
+| `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names) | be more flexible when searching for contacts                                 |
+| `* *`    | user             | be able to see my total numbers of contact entries in EzContact                    | know how many contacts I have in EzContact                                   |
+| `* *`    | forgetful person | be able to search for contacts using partial names                                 | find a contact without having to remember their full name                    |
+| `* *`    | forgetful person | have EzContact remind me of important task associated with certain contacts        | prevent myself from forgetting important tasks                               |
+| `* *`    | forgetful person | be able to add remarks to a certain contact                                        | be reminded of things to take note of when contacting a person               |
+| `* *`    | careless person  | be able to undo previous command                                                   | recover from unintentional commands                                          |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                           | avoid myself from adding redundant data                                      |
+| `* *`    | careless person  | be suggested by EzContact for similar names when I'm searching for a person        | avoid myself from typographical errors                                       |
+| `* *`    | first time user  | be able to know commands in EzContact                                              | play around with the features and get used to the application                |
+| `* *`    | fast typist      | have short commands                                                                | execute commands faster                                                      |
+| `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
+| `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
+| `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
 
 ## Use cases
 
-(For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EzContact` and the **Actor** is the `user`, unless specified otherwise)
 
 #### Adding a customer
 
 **Use Case: UC01 - add a customer**
 
-**MSS:**</br>
-&emsp;1. User enters the details of customer to be added.</br>
+**MSS:**<br/>
+&emsp;1. User enters the details of a customer to be added.</br>
 &emsp;2. System adds the customer.</br>
 &emsp;3. System displays the details of customer added by user.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;2a.  Details provided by user is incomplete or invalid.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;1a.  Details provided by user is incomplete or invalid.</br>
+&emsp;&emsp;1a1. System displays an error message to alert User.</br>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;1b.  Customer to be added is already in the System.<br/>
+&emsp;&emsp;1b1. System displays an error message to alert User.<br/>
 &emsp;&emsp;Use case ends.
+
 
 #### Filtering customers
 
@@ -790,7 +881,6 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
-
 #### Assigning insurance to customer
 
 **Use Case: UC07 - assign insurance to a customer**
@@ -826,6 +916,47 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;Use case ends.
 
 
+#### Updating tags of a customer
+
+**Use Case: UC09 - update tags of a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests to list out the customers.<br/>
+&emsp;2. System displays the requested list of customers to the user.<br/>
+&emsp;3. User enters index of targeted customer and information of tags to update.<br/>
+&emsp;4. System updates the tags of the specified customer accordingly.<br/>
+&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;3a. User provided invalid index or information.<br/>
+&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+
+#### Updating remark of a customer
+
+**Use Case: UC10 - update remark of a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests to list out the customers.<br/>
+&emsp;2. System displays the requested list of customers to the user.<br/>
+&emsp;3. User enters index and remark of the target customer.<br/>
+&emsp;4. System updates the remark of specified customer accordingly.<br/>
+&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;3a. User provided invalid index or information.<br/>
+&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided remark that will not update the specified customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
 ## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -833,13 +964,16 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
-
-*{More to be added}*
+6. The application should be offered as a free service to the public.
+7. The application should be able to respond within one second.
+8. The application should be able to handle and support manual edits to the data file.
 
 ## Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Command word:** The first word of a user command(e.g. `tag` is the command word of the command `tag 1 at/tall dt/short`)
+* **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
 
 --------------------------------------------------------------------------------------------------------------------
 # **Appendix: Planned Enhancements**
@@ -923,6 +1057,21 @@ _{ more test cases …​ }_
 **Dealing with missing/corrupted data files**
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+
+## Updating tags of a customer
+
+**Updating the tags of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `tag 1 at/tall at/fat dt/short dt/skinny` <br/>
+   Expected :<br/> The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
+1. Test case : `tag 0 at/tall`
+   Expected: <br/> No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+1. Test case : `tag 1`
+   Expected: <br/> No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+1. Test case: `tag 1 at/tall dt/tall`
+   Expected: <br/> No customer is updated. Error details shown in the status message(conflicting tags).
 
 ## Feature to show
 
