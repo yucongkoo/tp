@@ -936,9 +936,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;Use case ends.<br/>
 
 
-#### Remark a customer
+#### Updating remark of a customer
 
-**Use Case: UC10 - remark a customer**
+**Use Case: UC10 - update remark of a customer**
 
 **Mss:**<br/>
 &emsp;1. User requests to list out the customers.<br/>
@@ -952,7 +952,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;3a. User provided invalid index or information.<br/>
 &emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;3b. User provided remark that will not update the specified customer.<br/>
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
