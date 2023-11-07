@@ -327,7 +327,7 @@ After:
 
 **Format:**
 
-`insurance [ai/<insurance to add>]... [di/<insurance to delete>]...`
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`
 
 **Description:**
 
