@@ -32,8 +32,9 @@ Given below are my contributions to the project.
     * Managed the issue tracker and ensured team members' timely delivery of deliverables and team tasks
     * Distributed team tasks on a weekly basis. Hosted the features brainstorming session (Issues [#101](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/101), [141](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/141))
     * Managed bugs reported in PE-D, identified and filtered out duplicate bugs, while assigning each bug to the responsible developer.
-<br/>
-<br/>
+
+<div style="page-break-after: always;"></div>
+
 * **Enhancements to existing features**:
     * Made the address field of a customer optional (PRs [#68](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/68), [#83](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/83),[#102](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/102), [#197](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/197))
     * Refactored the `JsonAdaptedPerson` structure, introduced JsonAdaptedAttributes(`JsonAdaptedName`, `JsonAdaptedPhone` etc.) to facilitate
