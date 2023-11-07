@@ -294,7 +294,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 * Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
 * Contiguous spaces will be treated as 1 single space.
 * Duplicate tags to add/delete will be ignored by EzContact.
-* Adding an existing tag or deleting a non-existing tag will be ignored by EzContact.
+* **Adding an existing tag** or **deleting a non-existing tag** will be **ignored** by EzContact.
 
 <box type="warning" seamless>
 
@@ -311,7 +311,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Examples:**
 
 * `tag 3 at/ tall at/male dt/short dt/skinny`</br>
-Adds `tall` and `male` tags, delete `short` and `skinny` tags from the third customer in the displayed customer list.
+Adds `tall`(existing tag) and `male` tags, delete `short`(non-existing tag) and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
 
@@ -327,7 +327,7 @@ After:
 
 **Format:**
 
-`insurance [ai/<insurance to add>]... [di/<insurance to delete>]...`
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`
 
 **Description:**
 
@@ -693,47 +693,47 @@ command box.
 
 ## Command summary
 
-| Action         | Format and Examples                                                                                                                                                                                                                            |
-|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Action         | Format and Examples                                                                                                                                                                                                                              |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**        | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
-| **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                              |
-| **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                       |
-| **List**       | `list`                                                                      <hr>                                                                                                                                                               |
-| **Find**       | `find <prefix> [keyword]... [<prefix> [keywords]]...`                    <hr>      `find n/song i/`                                                                                                                                            |
-| **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                   |
-| **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                        |
-| **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                       |
-| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                       |
-| **Addappt**    | `addappt <index> d/<date> [t/<time>] [v/<venue>]` <hr> `addappt 3 d/2025-12-12 t/23:59 v/Starbucks`                                                                                                                                            |
-| **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                        |
-| **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                           |
-| **Unmarkappt** | `unmarkappt <index>` <hr> `unmarkappt 1`                                                                                                                                                                                                       |
-| **Clear**      | `clear`                                                                                                                                                                                                                                        |
-| **Help**       | `help`                                                                                                                                                                                                                                         |
-| **Exit**       | `exit`                                                                                                                                                                                                                                         |
+| **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
+| **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
+| **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
+| **Find**       | `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`                    <hr>      `find n/song i/abc`                                                                   |
+| **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
+| **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
+| **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
+| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
+| **Addappt**    | `addappt <index> d/<date> [t/<time>] [v/<venue>]` <hr> `addappt 3 d/2025-12-12 t/23:59 v/Starbucks`                                                                                                                                              |
+| **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                         |
+| **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                             |
+| **Unmarkappt** | `unmarkappt <index>` <hr> `unmarkappt 1`                                                                                                                                                                                                         |
+| **Clear**      | `clear`                                                                                                                                                                                                                                          |
+| **Help**       | `help`                                                                                                                                                                                                                                           |
+| **Exit**       | `exit`                                                                                                                                                                                                                                           |
 
 
 #### Prefix to full-name prefix translation table
 
 ****Note that prefixes are not case-sensitive**
 
-| Prefix | Full-name prefix |
-|--------|------------------|
-| n/     | name/            |
-| p/     | phone/           |
-| e/     | email/           |
-| a/     | address/         |
-| pr/    | priority/        |
-| t/     | tag/             |
-| i/     | insurance/       |
-| r/     | remark/          |
-| at/    | addtag/          |
-| dt/    | deletetag/       |
-| ai/    | addinsurance/    |
-| di/    | deleteinsurance/ |
-| d/     | date/            |
-| t/     | time/            |
-| v/     | venue/           |
+| Prefix | Full-name prefix | Remarks                                  |
+|--------|------------------|------------------------------------------|
+| n/     | name/            |                                          |
+| p/     | phone/           |                                          |
+| e/     | email/           |                                          |
+| a/     | address/         |                                          |
+| pr/    | priority/        |                                          |
+| t/     | tag/             | used in `add` command                     |
+| i/     | insurance/       |                                          |
+| r/     | remark/          |                                          |
+| at/    | addtag/          |                                          |
+| dt/    | deletetag/       |                                          |
+| ai/    | addinsurance/    |                                          |
+| di/    | deleteinsurance/ |                                          |
+| d/     | date/            |                                          |
+| t/     | time/            | used in **appointment** related commands |
+| v/     | venue/           |                                          |
 
 -----------------------------------------------------------------------------------------------------------------------
 ## Glossary
