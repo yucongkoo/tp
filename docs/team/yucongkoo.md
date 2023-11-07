@@ -49,6 +49,7 @@ Given below are my contributions to the project.
       * Added documentation for the features `add`, `tag` and also the `Advanced Features` section.
       * Drafted the overall structure and formatting for features section to be used across team members.
       * Added the `Prefix to full-name prefix translation table` section.
+      * Tweaked the UG to make it pdf-version friendly.
     * Developer Guide: 
       * Added the implementation details of the `tag` feature (including all the UML diagrams used in the explanation).
       * Added the manual testing instructions for the `tag` feature.
