@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,32 +49,55 @@ public class ArgumentTokenizer {
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
         List<PrefixPosition> positions = new ArrayList<>();
 
-        int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
-        while (prefixPosition != -1) {
-            PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
-            positions.add(extendedPrefix);
-            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+        PrefixPosition prefixPosition = findPrefixPosition(argsString, prefix, 0);
+        while (prefixPosition != null) {
+            positions.add(prefixPosition);
+            prefixPosition = findPrefixPosition(argsString, prefix, prefixPosition.getEndPosition());
         }
 
         return positions;
     }
 
     /**
-     * Returns the index of the first occurrence of {@code prefix} in
+     * Returns the {@code PrefixPosition} of the first occurrence of {@code prefix} in
      * {@code argsString} starting from index {@code fromIndex}. An occurrence
-     * is valid if there is a whitespace before {@code prefix}. Returns -1 if no
+     * is valid if there is a whitespace before {@code prefix}. Returns null if no
      * such occurrence can be found.
      *
      * E.g if {@code argsString} = "e/hip/900", {@code prefix} = "p/" and
-     * {@code fromIndex} = 0, this method returns -1 as there are no valid
+     * {@code fromIndex} = 0, this method returns null as there are no valid
      * occurrences of "p/" with whitespace before it. However, if
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
-    private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+    private static PrefixPosition findPrefixPosition(String argsString, Prefix prefix, int fromIndex) {
+        String convertedArgsString = argsString.toLowerCase();
+
+        int prefixIndex = convertedArgsString.indexOf(" " + prefix.getPrefix(), fromIndex);
+        int secondaryPrefixIndex = convertedArgsString.indexOf(" " + prefix.getSecondaryPrefix(), fromIndex);
+
+        if (prefixIndex == -1 && secondaryPrefixIndex == -1) {
+            return null;
+        }
+
+        if (prefixIndex == -1) {
+            return new PrefixPosition(prefix, secondaryPrefixIndex + 1,
+                    secondaryPrefixIndex + 1 + prefix.getSecondaryPrefixLength());
+        }
+
+        if (secondaryPrefixIndex == -1) {
+            return new PrefixPosition(prefix, prefixIndex + 1,
+                    prefixIndex + 1 + prefix.getPrefixLength());
+        }
+
+        // both indexes are present
+        if (prefixIndex < secondaryPrefixIndex) {
+            return new PrefixPosition(prefix, prefixIndex + 1,
+                    prefixIndex + 1 + prefix.getPrefixLength());
+        } else {
+            return new PrefixPosition(prefix, secondaryPrefixIndex + 1,
+                    secondaryPrefixIndex + 1 + prefix.getSecondaryPrefixLength());
+        }
     }
 
     /**
@@ -90,11 +115,11 @@ public class ArgumentTokenizer {
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
         // Insert a PrefixPosition to represent the preamble
-        PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
+        PrefixPosition preambleMarker = new PrefixPosition(PREFIX_EMPTY, 0, 0);
         prefixPositions.add(0, preambleMarker);
 
         // Add a dummy PrefixPosition to represent the end of the string
-        PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());
+        PrefixPosition endPositionMarker = new PrefixPosition(PREFIX_EMPTY, argsString.length(), argsString.length());
         prefixPositions.add(endPositionMarker);
 
         // Map prefixes to their argument values (if any)
@@ -116,10 +141,9 @@ public class ArgumentTokenizer {
     private static String extractArgumentValue(String argsString,
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
-        Prefix prefix = currentPrefixPosition.getPrefix();
-
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
-        String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
+        int valueStartPos = currentPrefixPosition.getEndPosition();
+        int valueEndPos = nextPrefixPosition.getStartPosition();
+        String value = argsString.substring(valueStartPos, valueEndPos);
 
         return value.trim();
     }
@@ -129,11 +153,13 @@ public class ArgumentTokenizer {
      */
     private static class PrefixPosition {
         private int startPosition;
+        private int endPosition;
         private final Prefix prefix;
 
-        PrefixPosition(Prefix prefix, int startPosition) {
+        PrefixPosition(Prefix prefix, int startPosition, int endPosition) {
             this.prefix = prefix;
             this.startPosition = startPosition;
+            this.endPosition = endPosition;
         }
 
         int getStartPosition() {
@@ -142,6 +168,14 @@ public class ArgumentTokenizer {
 
         Prefix getPrefix() {
             return prefix;
+        }
+
+
+        /**
+         * Returns the end position of the prefix.
+         */
+        int getEndPosition() {
+            return endPosition;
         }
     }
 

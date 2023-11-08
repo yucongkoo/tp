@@ -2,7 +2,7 @@
   "baseUrl": "",
   "titlePrefix": "EzContact",
   "titleSuffix": "AddressBook Level-3",
-  "faviconPath": "images/SeEduLogo.png",
+  "faviconPath": "images/address_book.png",
   "style": {
     "codeTheme": "light"
   },

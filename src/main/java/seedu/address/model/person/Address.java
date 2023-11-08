@@ -1,65 +1,72 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public abstract class Address {
 
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
+    public static final int MAX_LENGTH = 100;
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
-
-    public final String value;
+    public static final String MESSAGE_CONSTRAINTS =
+            "Address should not be longer than 100 characters.";
 
     /**
-     * Constructs an {@code Address}.
-     *
-     * @param address A valid address.
+     * Creates and returns the {@code Address} object with value {@code address}.
      */
-    public Address(String address) {
+    public static Address createAddress(String address) {
         requireNonNull(address);
-        checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
-        value = address;
+
+        String trimmedAddress = address.trim();
+        if (trimmedAddress.isEmpty()) {
+            return EmptyAddress.getEmptyAddress();
+        }
+
+        return new NonEmptyAddress(trimmedAddress);
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if a given string is a valid address.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(VALIDATION_REGEX);
+        requireNonNull(test);
+
+        int addressLen = test.trim().length();
+        return addressLen <= MAX_LENGTH;
     }
 
-    @Override
-    public String toString() {
-        return value;
-    }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
+    /**
+     * Returns true if this instance is an empty address.
+     */
+    public abstract boolean isEmptyAddress();
 
-        // instanceof handles nulls
-        if (!(other instanceof Address)) {
+    /**
+     * Returns the address value.
+     */
+    public abstract String getValue();
+
+    /**
+     * Checks if the full address contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return False if there is an empty address,
+     *     True if any word in the full address starts with the specified prefix,
+     *     false otherwise.
+     */
+    public static boolean isAddressContainsPrefix(Address address, String prefix) {
+        if (address.isEmptyAddress()) {
             return false;
         }
-
-        Address otherAddress = (Address) other;
-        return value.equals(otherAddress.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
+        String lowerFullAddress = address.getValue().toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerAddress: lowerFullAddress.split("\\s+")) {
+            if (lowerAddress.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

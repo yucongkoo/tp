@@ -1,5 +1,8 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +62,7 @@ public class ArgumentMultimap {
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
     public String getPreamble() {
-        return getValue(new Prefix("")).orElse("");
+        return getValue(PREFIX_EMPTY).orElse("");
     }
 
     /**
@@ -74,5 +77,20 @@ public class ArgumentMultimap {
         if (duplicatedPrefixes.length > 0) {
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
+    }
+
+    /**
+     * Returns true if all the prefixes given in {@code prefixes} appeared among the arguments.
+     */
+    public boolean areAllPrefixesPresent(Prefix... prefixes) {
+        requireAllNonNull((Object) prefixes);
+        return Stream.of(prefixes).distinct().allMatch(prefix -> getValue(prefix).isPresent());
+    }
+
+    /**
+     * Returns true if the preamble is empty.
+     */
+    public boolean isPreambleEmpty() {
+        return getPreamble().isEmpty();
     }
 }

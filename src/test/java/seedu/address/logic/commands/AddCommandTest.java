@@ -50,7 +50,57 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(validPerson);
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        assertThrows(CommandException.class, Messages.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_tagExceedLimit_throwsCommandException() {
+        Person person = new PersonBuilder().withTags("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11").build();
+        Command command = new AddCommand(person);
+        assertThrows(CommandException.class, Messages.MESSAGE_TAG_COUNT_EXCEED, () -> command.execute(new ModelStub()));
+    }
+
+    @Test
+    public void execute_tagAtLimit_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().withTags("1", "2", "3", "4", "5", "6", "7", "8", "9", "10").build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_insuranceNone_throwsCommandException() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_insuranceAtLimit_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5").build();
+
+        CommandResult commandResult = new AddCommand(person).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_insuranceExceedLimit_success() throws Exception {
+        Person person = new PersonBuilder().withInsurances("1", "2", "3", "4", "5", "6", "7", "8", "9").build();
+
+        AddCommand command = new AddCommand(person);
+
+        assertThrows(CommandException.class, Messages.MESSAGE_INSURANCE_COUNT_EXCEED, () ->
+                command.execute(new ModelStub()));
     }
 
     @Test
@@ -155,6 +205,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public int getFilteredPersonListSize() {
             throw new AssertionError("This method should not be called.");
         }
     }
