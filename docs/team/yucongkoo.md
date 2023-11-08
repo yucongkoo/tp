@@ -31,7 +31,7 @@ Given below are my contributions to the project.
     * Managed releases `v1.2` - `v1.3b` (4 releases) on GitHub
     * Managed the issue tracker and ensured team members' timely delivery of deliverables and team tasks
     * Distributed team tasks on a weekly basis. Hosted the features brainstorming session (Issues [#101](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/101), [141](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/141))
-    * Managed bugs reported in PE-D, identified and filtered out duplicate bugs, while assigning each bug to the responsible developer.
+    * Managed bugs reported in PE-D, identified and filtered out duplicate bugs, while assigning each bug to the responsible developer (Issue [#289](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/289)).
 
 <div style="page-break-after: always;"></div>
 
