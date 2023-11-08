@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -57,6 +59,8 @@ public class FlowPaneLabel extends UiPart<Region> {
      * Creates and returns a {@code FlowPaneLabel} styled according to the {@code Type} and {@code text}.
      */
     public static FlowPaneLabel createFlowPaneLabel(Type type, String text) {
+        requireAllNonNull(type, text);
+
         switch (type) {
         case TAG:
             return new FlowPaneLabel(getTextToDisplayForType(text, type),
@@ -74,14 +78,20 @@ public class FlowPaneLabel extends UiPart<Region> {
     }
 
     private static Background getBackgroundWithColor(Color color) {
+        requireNonNull(color);
+
         return new Background(new BackgroundFill(color, radius, padding));
     }
 
     private static String getTextStylingWithColor(String colorInHexadecimal) {
+        requireNonNull(colorInHexadecimal);
+
         return String.format("-fx-text-fill: %s; -fx-background-color: transparent", colorInHexadecimal);
     }
 
     private static String getTextToDisplayForType(String text, Type type) {
+        requireAllNonNull(text, type);
+
         switch (type) {
         case TAG:
             return "[ t ] " + text;
@@ -96,6 +106,8 @@ public class FlowPaneLabel extends UiPart<Region> {
     }
 
     private static Color getPriorityBackgroundColor(String priority) {
+        requireNonNull(priority);
+
         Level priorityLevel = Priority.parsePriorityLevel(priority);
 
         switch (priorityLevel) {
