@@ -10,6 +10,7 @@ import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -47,11 +48,13 @@ public class CommandUtil {
     /**
      * Throws a {@code CommandException} if {@code updatedPerson} is equal to {@code personToUpdate}.
      */
-    public static void verifyPersonChanged(Person personToUpdate, Person updatedPerson) throws CommandException {
-        requireAllNonNull(personToUpdate, updatedPerson);
+    public static void verifyPersonChanged(Person personToUpdate, Person updatedPerson,
+                                           Optional<String> potentialReasons) throws CommandException {
+        requireAllNonNull(personToUpdate, updatedPerson, potentialReasons);
         if (personToUpdate.equals(updatedPerson)) {
-            logger.finer("Command execution failed due to no changes in person.");
-            throw new CommandException(MESSAGE_PERSON_NOT_CHANGED);
+            String reasons = potentialReasons.isPresent() ? "\n" + potentialReasons.get() : "";
+            logger.finer("Command execution failed due to no changes in person." + reasons);
+            throw new CommandException(MESSAGE_PERSON_NOT_CHANGED + reasons);
         }
     }
 
