@@ -8,7 +8,9 @@ import java.util.HashSet;
 
 /** Represents a Person's priority level. **/
 public class Priority {
-    /** Possible priority levels. **/
+    /**
+     * Possible priority levels.
+     **/
     public enum Level { HIGH, MEDIUM, LOW, NONE };
 
     public static final String HIGH_PRIORITY_KEYWORD = "high";
@@ -16,7 +18,9 @@ public class Priority {
     public static final String LOW_PRIORITY_KEYWORD = "low";
     public static final String NONE_PRIORITY_KEYWORD = "-";
 
-    /** Stores the valid priority keywords. **/
+    /**
+     * Stores the valid priority keywords.
+     **/
     public static final HashSet<String> VALID_PRIORITY_KEYWORDS = new HashSet<>() {
         {
             add(HIGH_PRIORITY_KEYWORD);
@@ -26,7 +30,9 @@ public class Priority {
         }
     };
 
-    /** Stores the priority levels and their respective keywords as key-value pairs. **/
+    /**
+     * Stores the priority levels and their respective keywords as key-value pairs.
+     **/
     public static final HashMap<Level, String> LEVEL_STRING_MAP = new HashMap<>() {
         {
             put(Level.HIGH, HIGH_PRIORITY_KEYWORD);
@@ -111,5 +117,19 @@ public class Priority {
     @Override
     public int hashCode() {
         return level.hashCode();
+    }
+
+    /**
+     * Checks if the priority level starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the priority level starts with the specified prefix, false otherwise.
+     */
+    public static boolean isPriorityContainsPrefix(Priority priority, String prefix) {
+        if (priority.level.equals(Level.NONE)) {
+            return false;
+        }
+        String lowerCasePriority = priority.toString().toLowerCase();
+        return lowerCasePriority.startsWith(prefix.toLowerCase());
     }
 }

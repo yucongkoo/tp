@@ -33,7 +33,7 @@ public class InsuranceCommand extends Command {
             + "[" + PREFIX_ADD_INSURANCE + "<insurance_to_add>]... "
             + "[" + PREFIX_DELETE_INSURANCE + "<insurance_to_delete>]...\n";
 
-    public static final String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of person: %s";
+    public static final String MESSAGE_INSURANCE_PERSON_SUCCESS = "Update insurance of customer: %s";
 
     public static final String MESSAGE_INSURANCE_NO_UPDATE = "There has to be at least one insurance updated/deleted.";
 

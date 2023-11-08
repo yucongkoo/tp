@@ -40,6 +40,9 @@ public class PersonCard extends UiPart<Region> {
     private PersonAttributeCard addressCard;
     private RemarkCard remarkCard;
 
+    private AppointmentAttributeCard appointmentCard;
+
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -57,7 +60,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox remarkCardPlaceholder;
     @FXML
+    private VBox appointmentCardPlaceholder;
+    @FXML
     private FlowPane flowPaneLabels;
+    @FXML
+    private HBox informationBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -79,6 +86,8 @@ public class PersonCard extends UiPart<Region> {
         loadInsurance();
         loadTags();
         loadRemarkCard();
+        loadAppointmentCard();
+        setInformationBox();
     }
 
     private void loadPriority() {
@@ -136,5 +145,28 @@ public class PersonCard extends UiPart<Region> {
 
         remarkCard = new RemarkCard(remarkString);
         remarkCardPlaceholder.getChildren().add(remarkCard.getRoot());
+    }
+
+    private void loadAppointmentCard() {
+        /*
+        String appointmentDateString = person.getAppointment().getDate();
+
+        if (appointmentDateString.equals("-")) {
+            return;
+        } currently thinking of a way to do this, current method is not feasible
+        as it causes appointmentCard to disappear when it is unmarked/decremented.
+         */
+        appointmentCard = new AppointmentAttributeCard(person.getAppointment(), person.getAppointmentCount());
+        appointmentCardPlaceholder.getChildren().add(appointmentCard.getRoot());
+    }
+
+    private void setInformationBox() {
+        String remarkString = person.getRemark().toString();
+
+        if (remarkString.isEmpty()) {
+            informationBox.setSpacing(5);
+        } else {
+            informationBox.setSpacing(10);
+        }
     }
 }

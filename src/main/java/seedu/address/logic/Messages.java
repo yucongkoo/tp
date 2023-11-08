@@ -17,11 +17,11 @@ public class Messages {
 
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
-    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
-    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The customer index provided is invalid";
+    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d customers listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
-    public static final String MESSAGE_NO_PERSON_FOUND = "No person found!";
+    public static final String MESSAGE_NO_PERSON_FOUND = "No customer found!";
 
     public static final String MESSAGE_TAG_COUNT_EXCEED =
             String.format("Command will cause number of tags to exceed the limit of %d.", MAXIMUM_TAGS_PER_PERSON);
@@ -30,9 +30,9 @@ public class Messages {
             String.format("Command will cause number of insurance to exceed the limit of %d.", MAX_INSURANCE_COUNT);
 
     public static final String MESSAGE_PERSON_NOT_CHANGED =
-            "Information provided in the command does not change the targeted person.";
+            "Information provided in the command does not change the targeted customer.";
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This customer already exists in the address book";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -41,7 +41,7 @@ public class Messages {
         assert duplicatePrefixes.length > 0;
 
         Set<String> duplicateFields =
-                Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
+                Stream.of(duplicatePrefixes).map(Prefix::getDisplayMessage).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
     }
@@ -53,9 +53,9 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append("\nName: ")
                 .append(person.getName())
-                .append(" Phone: ")
+                .append("    |    Phone: ")
                 .append(person.getPhone())
-                .append(" Email: ")
+                .append("    |    Email: ")
                 .append(person.getEmail())
                 .append("\nAddress: ")
                 .append(person.getAddress())
@@ -65,6 +65,8 @@ public class Messages {
         addTagString(builder, person);
         addInsuranceString(builder, person);
         addRemarkString(builder, person);
+        builder.append("\nAppointment: ")
+                .append(person.getAppointment());
 
         return builder.toString();
     }

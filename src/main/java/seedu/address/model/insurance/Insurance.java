@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Insurance {
 
     public static final String VALIDATION_REGEX = "\\p{Alnum}+(\\s+\\p{Alnum}+)*";
-    public static final int MAX_INSURANCE_COUNT = 5;
+    public static final int MAX_INSURANCE_COUNT = 8;
     private static final int MAX_LENGTH = 32;
 
     public static final String MESSAGE_CONSTRAINTS =
@@ -39,7 +39,7 @@ public class Insurance {
      */
     public static boolean isValidInsuranceName(String test) {
         requireNonNull(test);
-        return test.matches(VALIDATION_REGEX) && test.length() <= MAX_LENGTH;
+        return test.matches(VALIDATION_REGEX) && test.replaceAll("\\s", "").length() <= MAX_LENGTH;
     }
 
     @Override
@@ -66,5 +66,22 @@ public class Insurance {
 
     public String getInsuranceName() {
         return insuranceName;
+    }
+
+    /**
+     * Checks if the insurance name contains a word that starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if any word in the insurance name starts with the specified prefix, false otherwise.
+     */
+    public static boolean isInsuranceContainsPrefix(Insurance insurance, String prefix) {
+        String lowerInsuranceName = insurance.insuranceName.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase();
+        for (String lowerNamePart: lowerInsuranceName.split("\\s+")) {
+            if (lowerNamePart.startsWith(lowerPrefix)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

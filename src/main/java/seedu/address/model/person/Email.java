@@ -9,13 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Email {
 
-
-
     public static final String MESSAGE_CONSTRAINTS = "Email should be a valid email address(i.e. local-part@domain).";
     private static final String OWASP_EMAIL_VALIDATION = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
             + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}";
     public static final String VALIDATION_REGEX = OWASP_EMAIL_VALIDATION;
-
 
     public final String value;
 
@@ -67,12 +64,22 @@ public class Email {
         }
 
         Email otherEmail = (Email) other;
-        return value.equals(otherEmail.value);
+        return value.equalsIgnoreCase(otherEmail.value);
     }
 
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    /**
+     * Checks if the email starts with the given prefix, ignoring case.
+     *
+     * @param prefix The prefix to search for.
+     * @return True if the email starts with the specified prefix, false otherwise.
+     */
+    public static boolean isEmailContainsPrefix(Email email, String prefix) {
+        return email.value.startsWith(prefix.toLowerCase());
     }
 
 }

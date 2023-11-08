@@ -37,7 +37,7 @@ public class AddCommand extends Command {
             + "[" + PREFIX_REMARK + "<remarks>]\n";
 
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New customer added: %1$s";
     private final Person toAdd;
 
     /**

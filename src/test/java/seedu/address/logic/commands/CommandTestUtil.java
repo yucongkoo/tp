@@ -25,9 +25,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonTestUtil;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -66,6 +66,18 @@ public class CommandTestUtil {
     public static final String VALID_PRIORITY_HIGH = "high";
     public static final String VALID_PRIORITY_LOW = "low";
     public static final String VALID_PRIORITY_NONE = "-";
+    public static final String VALID_APPOINTMENT_AMY = "10 Oct 2025";
+    public static final String VALID_APPOINTMENT_TIME_AMY = "0530";
+    public static final String VALID_APPOINTMENT_VENUE_AMY = "Suntec City";
+    public static final String VALID_APPOINTMENT_BOB = "10 Oct 2025";
+    public static final String VALID_APPOINTMENT_TIME_BOB = "0530";
+    public static final String VALID_APPOINTMENT_VENUE_BOB = "Suntec City";
+    public static final String VALID_APPOINTMENT_CALMEN = "10 Oct 2025";
+    public static final String VALID_APPOINTMENT_TIME_CALMEN = "0530";
+    public static final String VALID_APPOINTMENT_VENUE_CALMEN = "Suntec City";
+    public static final String VALID_APPOINTMENT_DERRICK = "10 Oct 2025";
+    public static final String VALID_APPOINTMENT_TIME_DERRICK = "0530";
+    public static final String VALID_APPOINTMENT_VENUE_DERRICK = "Suntec City";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
