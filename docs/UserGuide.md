@@ -206,7 +206,7 @@ After:
 
 **Format:**
 
-`find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
+`find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`
 
 **Description:**
 
@@ -693,7 +693,7 @@ command box.
 | **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**       | `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`                    <hr>      `find n/song i/abc`                                                                   |
+| **Find**       | `find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`                      <hr>      `find n/song i/abc`                                                               |
 | **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |

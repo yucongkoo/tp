@@ -25,7 +25,7 @@ public class RemarkCommand extends Command {
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from customer: %1$s";
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "<remarks>\n";
+            + "[remarks]\n";
 
     private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
     private final Index index;
