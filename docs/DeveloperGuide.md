@@ -30,6 +30,7 @@ pageNav: 3
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 # **Design**
 
@@ -58,11 +59,15 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
+<div style="page-break-after: always;"></div>
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
-<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
+<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="600" />
+
+<div style="page-break-after: always;"></div>
 
 Each of the four main components (also shown in the diagram above),
 
@@ -72,6 +77,8 @@ Each of the four main components (also shown in the diagram above),
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
 <puml src="diagrams/ComponentManagers.puml" width="300" />
+
+<div style="page-break-after: always;"></div>
 
 The sections below give more details of each component.
 
@@ -92,6 +99,8 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
+<div style="page-break-after: always;"></div>
+
 ## Logic component <a id="logic-component"/>
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
@@ -99,6 +108,8 @@ The `UI` component,
 Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
+
+<div style="page-break-after: always;"></div>
 
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
@@ -116,6 +127,8 @@ How the `Logic` component works:
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
+<div style="page-break-after: always;"></div>
+
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
 <puml src="diagrams/ParserClasses.puml" width="600"/>
@@ -123,6 +136,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+<div style="page-break-after: always;"></div>
 
 ## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -138,6 +153,8 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+<div style="page-break-after: always;"></div>
+
 <box type="info" seamless>
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
@@ -146,6 +163,7 @@ The `Model` component,
 
 </box>
 
+<div style="page-break-after: always;"></div>
 
 ## Storage component
 
@@ -188,6 +206,8 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
 we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
 The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
+
+<div style="page-break-after: always;"></div>
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
@@ -250,6 +270,8 @@ this feature.
 <br/>
 <br/>
 
+<div style="page-break-after: always;"></div>
+
 ### Design considerations:
 
 ###### **Aspect: Data structure to store tags in a Person object:**
@@ -279,6 +301,7 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
+<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
@@ -301,6 +324,8 @@ ignore such additions due to the same reason stated above.
 <br/>
 <br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Find feature
 This find feature is designed to do partial search or prefix search on the customer list.
 
@@ -310,6 +335,7 @@ Sequence diagram below shows the interactions between `Logic` components when ex
 
 <puml src="diagrams/find-feature/FindSequence.puml" />
 
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `XYZContainsKeywordsPredicate`**
 `XYZContainsKeywordsPredicate` = `AddressContainsKeywordsPredicate`, `NameContainsKeywordsPredicate` etc
@@ -332,18 +358,23 @@ It tests each customer in the list with given `keywords`(search prompt given by 
 This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
 'NameContainsKeywordsPredicate' to check if specific criteria are met.
 
+<div style="page-break-after: always;"></div>
+
 ###### **Implementing `FindCommandParser`**
 `FindCommandParser` processes the input following the 'find' command, parsing it into distinct predicates based on the provided prefixes.
 These predicates are then combined to create a `PersonContainsKeywordsPredicate` which is used by `FincCommand`
 
 <puml src="diagrams/find-feature/ParseFindCommandSequenceDiagram.puml"/>
 
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `FindCommand`**
 `FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
 reflect the changes after the `FindCommand` completes its execution.
 
 <puml src="diagrams/find-feature/ExecuteFindCommandSequenceDiagram.puml"/>
+
+<div style="page-break-after: always;"></div>
 
 ### Design considerations:
 
@@ -371,6 +402,8 @@ Due to the Open-Closed Principle, we have opted for Alternative 1 to maintain mo
 * **Alternative 3** : Returns customer when all keywords can be found as prefix in customer's name, where each prefix corresponds to a different word in name, i.e. name `song` cannot match with keywords `song song`.
     * Pros: More intuitive design.
     * Cons: Harder to implement, required a long algorithm to do so.
+
+<div style="page-break-after: always;"></div>
 
 **Reasoning :**
 
@@ -411,6 +444,7 @@ and the use of a single prefix with multiple keywords serves this purpose effect
 By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
 Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
+<div style="page-break-after: always;"></div>
 
 ## Insurance Feature
 This feature allows users to assign / remove insurance package(s) to / from customers in EzContact to help users keep track of customers' insurances.
@@ -428,6 +462,7 @@ The implementation of the Insurance feature consists of few parts, distributed a
 
 <puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
 
+<div style="page-break-after: always;"></div>
 
 **Implementing `InsuranceCommand`**
 
@@ -437,6 +472,7 @@ Sequence diagram below shows the execution of `InsuranceCommand`.
 
 <puml src="diagrams/insurance-feature/ExecuteInsuranceSequenceDiagram.puml" />
 
+<div style="page-break-after: always;"></div>
 
 **Implementing `InsuranceCommandParser`**
 
@@ -450,6 +486,8 @@ Sequence diagram below shows the execution of `InsuranceCommandParser#parse(Stri
 
 <puml src="diagrams/insurance-feature/ParseInsuranceSequenceDiagram.puml" />
 
+<div style="page-break-after: always;"></div>
+
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
 
 In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
@@ -461,6 +499,7 @@ Sequence diagram below shows the interactions between `Logic` components when ex
 
 <puml src="diagrams/insurance-feature/InsuranceSequence.puml" />
 
+<div style="page-break-after: always;"></div>
 
 ### Design Considerations:
 
@@ -497,6 +536,8 @@ entering duplicate `Insurance`, the users' goal is still achieved, thus we think
 for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
 it will not cause any error.
 
+<div style="page-break-after: always;"></div>
+
 ###### **Aspect: Deleting non-existing `Insurance`**
 
 * **Alternative 1 (Current choice)** : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
@@ -513,6 +554,7 @@ The reasoning comes from the users' intention of deleting an `Insurance`, that i
 a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
 for such action.
 
+<div style="page-break-after: always;"></div>
 
 ## \[Proposed\] Appointment feature
 
@@ -526,6 +568,8 @@ The appointment feature supports 5 different type of command:
 4. `mark appointment`
 5. `unmark appointment`
 
+<div style="page-break-after: always;"></div>
+
 ## Priority feature
 
 ### Implementation
@@ -538,6 +582,8 @@ The class is used to represent different priority levels for each `Person`.
 By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+<div style="page-break-after: always;"></div>
 
 **The `PriorityCommandParser` class**
 
@@ -560,6 +606,7 @@ It will update the `Priority` of a `Person`.
 The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
+<div style="page-break-after: always;"></div>
 
 ## Remark feature
 
@@ -606,7 +653,7 @@ It will update the `Remark` of a `Person` and generate a `CommandResult` for the
 In real-life scenarios, storing empty strings as remark is unlikely, hence
 alternative 1 is preferred due to its user-friendliness.
 
-
+<div style="page-break-after: always;"></div>
 
 ## \[Proposed\] Undo/redo feature
 
@@ -651,6 +698,8 @@ Step 4. The user now decides that adding the person was a mistake, and decides t
 than attempting to perform the undo.
 
 </box>
+
+<div style="page-break-after: always;"></div>
 
 The following sequence diagram shows how the undo operation works:
 
@@ -738,6 +787,7 @@ Target user : Insurance agent
 Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
 alongside helping users increase the chance of sealing deals with customers.
 
+<div style="page-break-after: always;"></div>
 
 ## User stories
 
@@ -768,6 +818,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
 | `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
 | `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
+
+<div style="page-break-after: always;"></div>
 
 ## Use cases
 
@@ -812,6 +864,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 #### Deleting a customer
 
 **Use Case: UC03 - delete a customer**
@@ -843,6 +897,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;3a. User provides invalid index or information.</br>
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
+
+<div style="page-break-after: always;"></div>
 
 #### Searching for a customer
 
@@ -881,6 +937,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 #### Assigning insurance to customer
 
 **Use Case: UC07 - assign insurance to a customer**
@@ -915,6 +973,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
 
 #### Updating tags of a customer
 
@@ -957,6 +1016,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -975,6 +1036,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 * **Command word:** The first word of a user command(e.g. `tag` is the command word of the command `tag 1 at/tall dt/short`)
 * **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
 
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 # **Appendix: Planned Enhancements**
 
@@ -988,6 +1051,8 @@ This section covers the enhancements we plan to implement in the future.
 (explain how enhancement fixes the flaws... )
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 # **Appendix: Effort**
 
 This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
@@ -1005,6 +1070,7 @@ This section gives an overview of the challenges, we as a team faced and the eff
 (results achieved with this implementation... )
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 # **Appendix: Instructions for manual testing**
 
@@ -1065,13 +1131,43 @@ _{ more test cases …​ }_
 Prerequisite : -
 
 1. Test case : `tag 1 at/tall at/fat dt/short dt/skinny` <br/>
-   Expected :<br/> The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
-1. Test case : `tag 0 at/tall`
-   Expected: <br/> No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
-1. Test case : `tag 1`
-   Expected: <br/> No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
-1. Test case: `tag 1 at/tall dt/tall`
-   Expected: <br/> No customer is updated. Error details shown in the status message(conflicting tags).
+   Expected : The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
+
+1. Test case : `tag 0 at/tall`<br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `tag 1`<br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+
+1. Test case: `tag 1 at/tall dt/tall`<br/>
+   Expected : No customer is updated. Error details shown in the status message(conflicting tags).
+
+<br/>
+
+<div style="page-break-after: always;"></div>
+
+## Update insurance of a customer
+
+**Updating the insurances of a customer**
+
+Prerequisite : -
+
+1. Test case : `insurance 2 ai/AIA ai/cars di/health di/ABC` <br/>
+   Expected : Customer is updated, `health` and `ABC` insurance are removed and `AIA` and `cars` insurance are added
+
+1. Test case : `insurance 0 ai/AIA ai/cars di/health di/ABC` `` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (format error since the index is not a positive integer).
+
+1. Test case : `insur 3 ai/EFG ai/JFK` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (Incorrect command word).
+
+1. Test case : `insurance 4 ai/ABC di/ABC` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (conflicting changes).
+
+1. Test case : `insurance 1 ` <br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
+
+<br/>
 
 ## Feature to show
 
