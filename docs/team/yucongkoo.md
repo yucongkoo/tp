@@ -59,7 +59,9 @@ Given below are my contributions to the project.
     * Tweaked the UG to make it pdf-version friendly.
   * Developer Guide: 
     * Added the implementation details of the `tag` feature (including all the UML diagrams used in the explanation).
+    * Added use case for adding a customer(UC01) and updating tags of a customer(UC09).
     * Added the manual testing instructions for the `tag` feature.
+    * Added the Planned Enhancement 1: Deletion of all tags(and insurances) in one command.
     * Identified and fixed a bug of UML diagram in the `Design - Model Component` section.
   <br/>
   <br/>
@@ -69,4 +71,4 @@ Given below are my contributions to the project.
   [#120-1](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d), [#120-2](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d),
   [#119](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/119/files/737161d463230bae517c56e3e339fc9594c1565e),
   [#148](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/148/files/140747789d7932a9f5f9382bd39d56577f6c1bd7)
-      * Reported bugs and suggestions for other teams in the class (examples can be found [here](https://github.com/yucongkoo/ped/issues))
+  * Reported bugs and suggestions for other teams in the class (examples can be found [here](https://github.com/yucongkoo/ped/issues))
