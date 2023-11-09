@@ -117,7 +117,8 @@ public class TagCommandTest {
     public void execute_addDuplicateTag_failure() {
         UpdatePersonTagsDescriptor descriptor = new UpdatePersonTagsDescriptorBuilder().withTagsToAdd(aliceTag).build();
         Command command = new TagCommand(aliceIndex, descriptor);
-        assertCommandFailure(command, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
+        assertCommandFailure(command, model,
+                Messages.MESSAGE_PERSON_NOT_CHANGED + "\n" + TagCommand.MESSAGE_TAG_UNCHANGED_REASONS);
     }
 
 
@@ -171,7 +172,8 @@ public class TagCommandTest {
         UpdatePersonTagsDescriptor descriptor = new UpdatePersonTagsDescriptorBuilder()
                 .withTagsToDelete("nonExistingTag").build();
         Command command = new TagCommand(aliceIndex, descriptor);
-        assertCommandFailure(command, model, Messages.MESSAGE_PERSON_NOT_CHANGED);
+        assertCommandFailure(command, model,
+                Messages.MESSAGE_PERSON_NOT_CHANGED + "\n" + TagCommand.MESSAGE_TAG_UNCHANGED_REASONS);
     }
 
     @Test
