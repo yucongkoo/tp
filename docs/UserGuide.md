@@ -6,6 +6,11 @@ pageNav: 3
 
 # EzContact
 
+<!-- * Table of Contents -->
+<page-nav-print />
+
+<div style="page-break-after: always;"></div>
+
 ## Introduction
 
 Welcome to the User Guide (UG) of **EZContact**
@@ -33,10 +38,7 @@ faster you approach your customer, the more deals you seal.
 &emsp;&emsp;If you are interested in EzContact, hop on over to our [Quick Start](#quick-start) to get started and
 embark on your journey of using EzContact.
 
-<!-- * Table of Contents -->
-<page-nav-print />
-
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -51,7 +53,7 @@ Note how the app contains some sample data.<br><br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 6. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## UI Layout Description
 
@@ -67,7 +69,7 @@ will be using these names to refer to the section specified in the following Use
 1. **Customer List Panel:** Panel that displays the list of Customer Cards.<br/>
    - **Customer Card:** Card that displays information about each customer.<br/>
 
------------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -97,6 +99,7 @@ click [here](#prefix-to-full-name-prefix-translation-table) to see a full table 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ### Adding a customer: `add`
 
@@ -126,37 +129,16 @@ Adds a new customer with the respective details to EzContact.
 
 **Examples:**
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/He is a coffee lover.` </br>
-Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
-
-![AddEg1](images/add-command-examples/example1.png)
-
 * `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`</br>
 Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
 
 ![AddEg2](images/add-command-examples/example2.png)
 
-<br>
-
-### Listing all customers : `list`
-
-**Format:**
-
-`list`
-
-**Description**
-* Shows a list of all customers in EZContact and the size of the list.
-* You can return to viewing your full client list after executing a `find` command.
-
-**Example**:
-* `list` shows a list of all existing customers and the size of the list.
-
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Deleting a customer : `delete`
 
 **Format:**
-
 `delete <index>`
 
 **Description:**
@@ -166,7 +148,7 @@ Adds the following [Customer Card](#ui-layout-description) to the [Customer List
 <box type="warning" seamless>
 
 **Caution:**
-* `<index>` should only be one of the indices shown in the displayed list.
+* `<index>` should **only be one of** the indices shown in the displayed list.
 </box>
 
 **Examples:**
@@ -181,13 +163,11 @@ After:
 
 ![deleteAfter](images/delete-command-example/delete-after.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Editing a customer : `edit`
 
-**Format:**
-
-`edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>]`
+**Format:** `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>]`
 
 **Description:**
 * Edits the customer at the specified `<index>`.
@@ -204,11 +184,8 @@ After:
 * `<phone number>` should be an **8-digit number**(i.e. a Singapore number).
 * `<email>` should be a **valid email address**(i.e. `local-part@domain`).
 * `<address>` should **not be longer than 100 characters**.
-* Tags are not editable.
-* Priorities are not editable.
-* Remarks are not editable.
+* Tags, Priorities, and Remarks are not editable.
 * Editing a customer to have the same `<phone number>` or `<email>` to other existing customers in EzContact is **not allowed.**
-
 
 </box>
 
@@ -223,13 +200,13 @@ After:
 
 ![editAfter](images/edit-command-example/edit-after.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Finding customers : `find`
 
 **Format:**
 
-`find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
+`find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`
 
 **Description:**
 
@@ -279,14 +256,11 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 
 </box>
 
-
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Tagging a customer: `tag`
 
-**Format:**
-
-`tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`
+**Format:** `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`
 
 **Description:**
 
@@ -301,7 +275,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Caution:**
 * **At least one** `<tag to add>` or `<tag to delete>` should be provided.
 * Adding and deleting the same tag is **not allowed**.
-* `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `<index>` should **only be one of** the indices shown in the displayed list.
 * `<tag to add>` and `<tag to delete>` should be **alphanumeric**, **non-empty** and **not longer than 20 characters(excluding spaces)**.
 * The number of tags assigned to the customer after the update should **not exceed 10 tags**.
 * The targeted customer's tags should **not remain unchanged** after the update command.
@@ -310,7 +284,7 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 
 **Examples:**
 
-* `tag 3 at/ tall at/male dt/short dt/skinny`</br>
+* `tag 3 at/tall at/male dt/short dt/skinny`</br>
 Adds `tall`(existing tag) and `male` tags, delete `short`(non-existing tag) and `skinny` tags from the third customer in the displayed customer list.
 
 Before:
@@ -321,7 +295,6 @@ After:
 
 ![TagEgAfter](images/tag-command-examples/after.png)
 
-<br>
 
 ### Updating insurance of a customer: `insurance`
 
@@ -340,7 +313,7 @@ After:
 **Caution:**
 * **At least one** `<insurance to add>` or `<insurance to delete>` should be present in the command
 * Adding and deleting the same tag in a single command is **not allowed**.
-* `<index>` should be a **positive integer** and **not exceed** the size of displayed customer list.
+* `<index>` should **only be one of** the indices shown in the displayed list.
 * `<insurance to add>` and `<insurance to delete>` should be **alphanumeric**, **non-empty** and **not longer than 32 characters**.
 * The number of insurance of the customer after the update should **not exceed 8 insurances**.
 * The targeted customer's insurance should **not remain unchanged** after the update command.
@@ -349,8 +322,8 @@ After:
 
 **Example:**
 
-* `insurance 2 ai/AIA insurance di/Great Eastern Insurance`</br>
-Assign `AIA insurance` to and remove `Great Eastern Insurance` from the second customer in the displayed customer list
+* `insurance 2 ai/AIA Insurance di/Great Eastern Insurance`</br>
+Assign `AIA Insurance` to and remove `Great Eastern Insurance` from the second customer in the displayed customer list
 
 Before:
 
@@ -360,7 +333,7 @@ After:
 
 ![insuranceAfter](images/InsuranceCommandExample/InsuranceAfter.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Updating priority of a customer: `priority`
 
@@ -413,7 +386,7 @@ After:
 
 ![removePriorityAfter](images/priority-command-example/remove-priority-after.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Adding a remark to a customer: `remark`
 
@@ -427,7 +400,7 @@ Format: `remark <index> [remark]`
 <box type="warning" seamless>
 
 **Caution:**
-* `<index>` should be a **positive integer** and **not exceed** the index of the last person in the displayed customer list.
+* `<index>`should **only be one of** the indices shown in the displayed list.
 * `Remark` cannot be longer than 150 characters.
 
 </box>
@@ -454,7 +427,7 @@ After:
 
 ![remarkBefore](images/remark-command-example/remarkBefore.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Adding an appointment to a customer: `addappt`
 
@@ -493,7 +466,7 @@ After:
 
 ![addApptAfter](images/appointment-command-examples/AddApptAfter.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Deleting a customer's appointment: `deleteappt`
 
@@ -524,12 +497,11 @@ After:
 
 ![deleteApptAfter](images/appointment-command-examples/DeleteApptAfter.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Marking an appointment: `markappt`
 
 **Format:**
-
 `markappt <index>`
 
 **Description:**
@@ -539,6 +511,7 @@ After:
 * Use to keep track of the number of completed appointments with the customer
 
 **Caution:**
+* `<index>` should **only be one of** the indices shown in the displayed list
 * The customer at `<index>` must have a current appointment.
 * This cannot be undone.
 *
@@ -553,7 +526,7 @@ After:
 
 ![markApptAfter](images/appointment-command-examples/MarkApptAfter.png)
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Unmarking an appointment: `unmarkappt`
 
@@ -567,23 +540,38 @@ After:
 * Use to reduce the appointment count of customers as needed.
 
 **Caution:**
+* `<index>` should **only be one of** the indices shown in the displayed list
 * This cannot be undone.
 * The current appointment count must be greater than 0.
 
 *Examples:*
 * `unmarkappt 1` decrements the appointment counter of the first customer in the displayed list by 1.
 
-<br>
+<div style="page-break-after: always;"></div>
 
+### Listing all customers : `list`
 
+**Format:**
+`list`
 
+**Description**
+* Shows a list of all customers in EZContact and the size of the list.
+* You can return to viewing your full client list after executing a `find` command.
 
+**Caution:**
+* No parameter is needed for this command, all parameter provided will be ignored.
 
+**Example**:
+* `list` shows a list of all existing customers and the size of the list.
+
+<br/>
+
+----------------------------------------------------------------------------------------------------------------
+<br/>
 
 ### Clearing the customer list : `clear`
 
 **Format:**
-
 `clear`
 
 **Description:**
@@ -601,12 +589,11 @@ After:
 * `clear` clears the customer list in EzContact.
 * `clear 123` will be interpreted as `clear`.
 
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Requesting for help : `help`
 
 **Format:**
-
 `help`
 
 **Description:**
@@ -624,7 +611,10 @@ After:
 * `help` opens the help window.
 * `help 123` will be interpreted as `help`.
 
-<br>
+<br/>
+
+----------------------------------------------------------------------------------------------------------------
+<br/>
 
 ### Exiting the program : `exit`
 
@@ -647,7 +637,8 @@ After:
 * `exit` exits EzContact.
 * `exit 123` will be interpreted as `exit`.
 
-----------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Advanced Features
 
 ### Managing data
@@ -678,7 +669,10 @@ Users can store a backup of the current data file by simply creating a copy of t
 To restore a previously backed-up file, simply place the json file in the `<JAR file directory>/data` directory
 and rename the file to `addressbook.json`.
 
---------------------------------------------------------------------------------------------------------------------
+<br/>
+
+----------------------------------------------------------------------------------------------------------------
+<br/>
 
 ## FAQ
 
@@ -689,7 +683,7 @@ with the `addressbook.js` file from your previous computer. <br> <br>
 **A:** The sample customers are for new users to try out various commands in EzContact. To get rid of them, simply type `clear` in the
 command box.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
@@ -699,7 +693,7 @@ command box.
 | **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
 | **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**       | `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/keywords] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`                    <hr>      `find n/song i/abc`                                                                   |
+| **Find**       | `find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`                      <hr>      `find n/song i/abc`                                                               |
 | **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
@@ -712,6 +706,8 @@ command box.
 | **Help**       | `help`                                                                                                                                                                                                                                           |
 | **Exit**       | `exit`                                                                                                                                                                                                                                           |
 
+
+<div style="page-break-after: always;"></div>
 
 #### Prefix to full-name prefix translation table
 
@@ -735,7 +731,8 @@ command box.
 | t/     | time/            | used in **appointment** related commands |
 | v/     | venue/           |                                          |
 
------------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Glossary
 
 | Term                           | Meaning                                                                                                                            |
