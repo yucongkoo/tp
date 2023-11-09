@@ -945,7 +945,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
+#### Enhancement 1 : Deletion of all tags in a single command
 
 **Feature flaw:** <br/>
 As a customer might have many tags, and they could potentially want to remove all the 
@@ -977,12 +977,6 @@ Expected: Error, an error message showing the usage of tag command is shown to t
 * `tag 1 dat/delete`<br/>
 Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
 is shown to the user.
-
-**Additional notes:**<br/>
-As the behaviour of the `insurance` command is nearly identical to `tag` command, this planned enhancement applies to
-the `insurance` command too, the proposed enhancements and behaviours will be identical. The following is the updated
-command format for `insurance` command:<br/>
-`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
