@@ -320,6 +320,8 @@ After:
 
 </box>
 
+<div style="page-break-after: always;"></div>
+
 **Example:**
 
 * `insurance 2 ai/AIA Insurance di/Great Eastern Insurance`</br>
@@ -370,6 +372,8 @@ Before:
 
 ![priorityBefore](images/priority-command-example/priority-before.png)
 
+<div style="page-break-after: always;"></div>
+
 After:
 
 ![priorityAfter](images/priority-command-example/priority-after.png)
@@ -416,6 +420,8 @@ Before :
 After:
 
 ![remarkAfter](images/remark-command-example/remarkAfter.png)
+
+<div style="page-break-after: always;"></div>
 
 * `remark 4` Removes the remark from the second customer in the displayed list.
 
