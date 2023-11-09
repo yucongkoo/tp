@@ -45,5 +45,6 @@ Given below are my contributions to the project.
   * Includes a section on design considerations, highlighting the principles and best practices that guided the development of these features. 
     This section promotes code extensibility, maintainability, and adherence to SOLID principles, enhancing the overall quality of the codebase.
   * Adds use cases for remark feature and delete feature.
+  * Added the manual testing instructions for the `find` and `remark` feature.
 
 
