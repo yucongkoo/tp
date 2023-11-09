@@ -95,7 +95,7 @@ public class EditCommand extends Command {
         Person personToEdit = getPersonAtIndex(model, index);
         Person editedPerson = createPersonWithEditedInformation(personToEdit, editPersonDescriptor);
 
-        verifyPersonChanged(personToEdit, editedPerson);
+        verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
         checkIsDuplicatePerson(model, personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
