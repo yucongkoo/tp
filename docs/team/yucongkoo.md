@@ -71,4 +71,5 @@ Given below are my contributions to the project.
   [#120-1](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d), [#120-2](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d),
   [#119](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/119/files/737161d463230bae517c56e3e339fc9594c1565e),
   [#148](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/148/files/140747789d7932a9f5f9382bd39d56577f6c1bd7)
+  * Contributed to forum discussions (examples: [1](https://github.com/nus-cs2103-AY2324S1/forum/issues/368#issuecomment-1801798119))
   * Reported bugs and suggestions for other teams in the class (examples can be found [here](https://github.com/yucongkoo/ped/issues))
