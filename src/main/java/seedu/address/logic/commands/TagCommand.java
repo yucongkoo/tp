@@ -37,7 +37,7 @@ public class TagCommand extends Command {
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
     public static final String MESSAGE_TAG_UNCHANGED_REASONS =
-            "(Possible reasons: tag to add already exist or tag to delete does not exist)";
+            "(Possible reason: only adding tags that already exist and/or deleting tags that do not exist)";
 
     private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
 

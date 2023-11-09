@@ -41,7 +41,7 @@ public class InsuranceCommand extends Command {
     public static final String MESSAGE_INSURANCE_CONFLICT = "Should not assign and remove the same insurance.";
 
     public static final String MESSAGE_INSURANCE_UNCHANGED_REASONS =
-            "(Possible reasons: insurance to add already exist or insurance to delete does not exist)";
+            "(Possible reason: only adding insurances that already exist and/or deleting insurances that do not exist)";
 
     private static final Logger logger = LogsCenter.getLogger(InsuranceCommand.class);
 

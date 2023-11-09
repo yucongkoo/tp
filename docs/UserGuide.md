@@ -47,8 +47,8 @@ embark on your journey of using EzContact.
 2. Download the latest `EzContact.jar` from [here](https://github.com/AY2324S1-CS2103T-W16-2/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your EzContact.
-4. Open up command prompt `cmd` and move to the application's directory by using `cd <directory>`.
-5. After reaching the directory, execute the command `java -jar EzContact.jar`. The GUI similar to the below should appear in a few seconds.
+4. Open a command terminal, `cd` into the folder you put the jar file in
+5. After reaching the folder, execute the command `java -jar EzContact.jar`. The GUI similar to the below should appear in a few seconds.
 Note how the app contains some sample data.<br><br>![Ui](images/Ui.png)
 5. Type the command in the [Command Box](#ui-layout-description) and press Enter to execute it.
 6. Refer to the [Features](#features) below for details of each command.
@@ -96,6 +96,9 @@ click [here](#prefix-to-full-name-prefix-translation-table) to see a full table 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command is `help 123`, it will be interpreted as `help`.
 
+* Unless otherwise stated, when specifying restrictions on number of characters, spaces in between words 
+are included in the count, while leading and trailing spaces are excluded.
+
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
@@ -130,7 +133,8 @@ Adds a new customer with the respective details to EzContact.
 **Examples:**
 
 * `add n/Ryan Ong p/64238876 e/ryanong@gmail.com t/tall t/skinny t/wears spectacles pr/medium i/car insurance`</br>
-Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description)
+Adds the following [Customer Card](#ui-layout-description) to the [Customer List Panel](#ui-layout-description). Note how omission of optional parameters
+are allowed.
 
 ![AddEg2](images/add-command-examples/example2.png)
 
@@ -265,9 +269,9 @@ it will match a customer named `Song Guo Xuan` because all the specified keyword
 **Description:**
 
 * Updates the tags assigned to the customer at `<index>` in the displayed customer list.
-* Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the UI will display tags in lower case.
-* Contiguous spaces will be treated as 1 single space.
-* Duplicate tags to add/delete will be ignored by EzContact.
+* Tags are not case-sensitive (i.e. `friends` is equivalent to `FriEnds`), the GUI will display tags in lower case.
+* Contiguous spaces in between words will be treated as 1 single space.
+* **Duplicate tags** to add/delete will be **ignored** by EzContact.
 * **Adding an existing tag** or **deleting a non-existing tag** will be **ignored** by EzContact.
 
 <box type="warning" seamless>
@@ -447,6 +451,8 @@ After:
 * This allows you to keep track of all your customers' appointment dates all within the same app
 * If you wish to delete the customer's appointment, use the command `deleteappt`
 
+<box type="warning" seamless>
+
 **Caution:**
 
 * The customer must not have a current appointment
@@ -455,6 +461,9 @@ After:
 * `<date>` must be in YYYY-MM-DD format and not a past date
 * `<time>` format must be in 24h HH:MM format
 * `<venue>` cannot be longer than 30 characters
+
+
+</box>
 
 **Examples:**
 
@@ -483,6 +492,8 @@ After:
 
 * Deletes a customer's appointment at `<index>` in the displayed customer list.\
 * Used when the appointment has been cancelled.
+
+<box type="warning" seamless>
 
 **Caution:**
 
@@ -516,11 +527,15 @@ After:
 * Deletes the current appointment.
 * Use to keep track of the number of completed appointments with the customer
 
+<box type="warning" seamless>
+
 **Caution:**
 * `<index>` should **only be one of** the indices shown in the displayed list
 * The customer at `<index>` must have a current appointment.
 * This cannot be undone.
-*
+
+</box>
+
 **Example:**
 * `markappt 1` increments the appointment counter of the first customer in the displayed list.
 
@@ -545,10 +560,14 @@ After:
 * Decrements the customer's completed appointments count at `<index>` by 1.
 * Use to reduce the appointment count of customers as needed.
 
+<box type="warning" seamless>
+
 **Caution:**
 * `<index>` should **only be one of** the indices shown in the displayed list
 * This cannot be undone.
 * The current appointment count must be greater than 0.
+
+</box>
 
 *Examples:*
 * `unmarkappt 1` decrements the appointment counter of the first customer in the displayed list by 1.
@@ -563,12 +582,11 @@ After:
 **Description**
 * Shows a list of all customers in EZContact and the size of the list.
 * You can return to viewing your full client list after executing a `find` command.
-
-**Caution:**
 * No parameter is needed for this command, all parameter provided will be ignored.
 
 **Example**:
 * `list` shows a list of all existing customers and the size of the list.
+* `list 123` will be interpreted as `list`.
 
 <br/>
 
@@ -582,13 +600,7 @@ After:
 
 **Description:**
 * Clears the customer list.
-
-<box type="warning" seamless>
-
-**Caution:**
 * No parameter is needed for this command, all parameter provided will be ignored.
-
-</box>
 
 **Examples:**
 
@@ -604,13 +616,7 @@ After:
 
 **Description:**
 * Opens the help window.
-
-<box type="warning" seamless>
-
-**Caution:**
 * No parameter is needed for this command, all parameter provided will be ignored.
-
-</box>
 
 **Examples:**
 
@@ -630,13 +636,7 @@ After:
 
 **Description:**
 * Exits the program.
-
-<box type="warning" seamless>
-
-**Caution:**
 * No parameter is needed for this command, all parameter provided will be ignored.
-
-</box>
 
 **Examples:**
 
