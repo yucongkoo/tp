@@ -30,6 +30,7 @@ pageNav: 3
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 # **Design**
 
@@ -58,11 +59,15 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
+<div style="page-break-after: always;"></div>
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
-<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
+<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="600" />
+
+<div style="page-break-after: always;"></div>
 
 Each of the four main components (also shown in the diagram above),
 
@@ -72,6 +77,8 @@ Each of the four main components (also shown in the diagram above),
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
 <puml src="diagrams/ComponentManagers.puml" width="300" />
+
+<div style="page-break-after: always;"></div>
 
 The sections below give more details of each component.
 
@@ -92,6 +99,8 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
+<div style="page-break-after: always;"></div>
+
 ## Logic component <a id="logic-component"/>
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
@@ -100,14 +109,16 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
+<div style="page-break-after: always;"></div>
+
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-<div markdown="block" class="alert alert-info">
+<box type="info" seamless>
 
 **Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</div>
+</box>
 
 How the `Logic` component works:
 
@@ -116,6 +127,8 @@ How the `Logic` component works:
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
+<div style="page-break-after: always;"></div>
+
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
 <puml src="diagrams/ParserClasses.puml" width="600"/>
@@ -123,6 +136,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+<div style="page-break-after: always;"></div>
 
 ## Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -138,6 +153,8 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+<div style="page-break-after: always;"></div>
+
 <box type="info" seamless>
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
@@ -146,6 +163,7 @@ The `Model` component,
 
 </box>
 
+<div style="page-break-after: always;"></div>
 
 ## Storage component
 
@@ -170,7 +188,7 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
-This feature allows users to assign tags to / remove tags from customers in EZContact, increasing the recognizability 
+This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
 
 ### Implementation
@@ -186,26 +204,31 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 ###### **Integrating a command for handling tag features into the execution logic**
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
-we first update the `AddressBookParser` to recognise the `tag` [command word](#glossary) and will create a `TagCommandParser` subsequently.
-The `TagCommandParser` will then parse the [command arguments](#glossary) to create a `TagCommand` that can be executed. 
+we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
+The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
+
+<div style="page-break-after: always;"></div>
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
 
 <puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
+<box type="info" seamless>
 
+**Note:**<br/>The lifeline for `TagCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</box>
 
 ###### **Implementing `TagCommandParser`**
 
-`TagCommandParser` plays the role of parsing [command arguments](#glossary) into two information:<br/>
+`TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
 * `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
 * `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
 
 Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
 The parsing steps are as follows:
-1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`.
+1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`(throws ParseException if there are format errors).
 1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
-1. Verify that there is at least one tag to add/delete.
+1. Verify that there is at least one tag to add/delete(throws ParseException if no tag to update is provided).
 1. Construct and return the `TagCommand`.
 
 Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
@@ -247,6 +270,8 @@ this feature.
 <br/>
 <br/>
 
+<div style="page-break-after: always;"></div>
+
 ### Design considerations:
 
 ###### **Aspect: Data structure to store tags in a Person object:**
@@ -276,6 +301,7 @@ Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
 
+<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
@@ -298,6 +324,8 @@ ignore such additions due to the same reason stated above.
 <br/>
 <br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Find feature
 This find feature is designed to do partial search or prefix search on the customer list.
 
@@ -307,6 +335,7 @@ Sequence diagram below shows the interactions between `Logic` components when ex
 
 <puml src="diagrams/find-feature/FindSequence.puml" />
 
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `XYZContainsKeywordsPredicate`**
 `XYZContainsKeywordsPredicate` = `AddressContainsKeywordsPredicate`, `NameContainsKeywordsPredicate` etc
@@ -329,18 +358,23 @@ It tests each customer in the list with given `keywords`(search prompt given by 
 This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
 'NameContainsKeywordsPredicate' to check if specific criteria are met.
 
+<div style="page-break-after: always;"></div>
+
 ###### **Implementing `FindCommandParser`**
 `FindCommandParser` processes the input following the 'find' command, parsing it into distinct predicates based on the provided prefixes.
 These predicates are then combined to create a `PersonContainsKeywordsPredicate` which is used by `FincCommand`
 
 <puml src="diagrams/find-feature/ParseFindCommandSequenceDiagram.puml"/>
 
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `FindCommand`**
 `FindCommand` is executed on the `Model`, it will update the `Model` accordingly to
 reflect the changes after the `FindCommand` completes its execution.
 
 <puml src="diagrams/find-feature/ExecuteFindCommandSequenceDiagram.puml"/>
+
+<div style="page-break-after: always;"></div>
 
 ### Design considerations:
 
@@ -368,6 +402,8 @@ Due to the Open-Closed Principle, we have opted for Alternative 1 to maintain mo
 * **Alternative 3** : Returns customer when all keywords can be found as prefix in customer's name, where each prefix corresponds to a different word in name, i.e. name `song` cannot match with keywords `song song`.
     * Pros: More intuitive design.
     * Cons: Harder to implement, required a long algorithm to do so.
+
+<div style="page-break-after: always;"></div>
 
 **Reasoning :**
 
@@ -408,9 +444,10 @@ and the use of a single prefix with multiple keywords serves this purpose effect
 By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
 Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
+<div style="page-break-after: always;"></div>
 
 ## Insurance Feature
-This feature allows users to assign / remove insurance package(s) to / from customers in EZContact to help users keep track of customers' insurances.
+This feature allows users to assign / remove insurance package(s) to / from customers in EzContact to help users keep track of customers' insurances.
 
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
@@ -425,6 +462,7 @@ The implementation of the Insurance feature consists of few parts, distributed a
 
 <puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
 
+<div style="page-break-after: always;"></div>
 
 **Implementing `InsuranceCommand`**
 
@@ -434,6 +472,7 @@ Sequence diagram below shows the execution of `InsuranceCommand`.
 
 <puml src="diagrams/insurance-feature/ExecuteInsuranceSequenceDiagram.puml" />
 
+<div style="page-break-after: always;"></div>
 
 **Implementing `InsuranceCommandParser`**
 
@@ -447,6 +486,8 @@ Sequence diagram below shows the execution of `InsuranceCommandParser#parse(Stri
 
 <puml src="diagrams/insurance-feature/ParseInsuranceSequenceDiagram.puml" />
 
+<div style="page-break-after: always;"></div>
+
 **Integrating `InsuranceCommand` and `InsuranceCommandParser`**
 
 In order to integrate them into current logic component, `AddressBookParser` has to be updated to recognise the command
@@ -458,6 +499,7 @@ Sequence diagram below shows the interactions between `Logic` components when ex
 
 <puml src="diagrams/insurance-feature/InsuranceSequence.puml" />
 
+<div style="page-break-after: always;"></div>
 
 ### Design Considerations:
 
@@ -494,6 +536,8 @@ entering duplicate `Insurance`, the users' goal is still achieved, thus we think
 for such action. With our handling of duplicate `Insurance`, no duplicate values will be added into the model with duplicate `Insurance` entries, and thus
 it will not cause any error.
 
+<div style="page-break-after: always;"></div>
+
 ###### **Aspect: Deleting non-existing `Insurance`**
 
 * **Alternative 1 (Current choice)** : Allows the users to delete non-existing `Insurance` as long as no conflict exists (i.e. adding and deleting the same `Insurance`)
@@ -510,6 +554,7 @@ The reasoning comes from the users' intention of deleting an `Insurance`, that i
 a non-existing `Insurance` does not defeat the purpose, thus we think that there is no need to purposely block the users
 for such action.
 
+<div style="page-break-after: always;"></div>
 
 ## \[Proposed\] Appointment feature
 
@@ -523,6 +568,8 @@ The appointment feature supports 5 different type of command:
 4. `mark appointment`
 5. `unmark appointment`
 
+<div style="page-break-after: always;"></div>
+
 ## Priority feature
 
 ### Implementation
@@ -535,6 +582,8 @@ The class is used to represent different priority levels for each `Person`.
 By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
+
+<div style="page-break-after: always;"></div>
 
 **The `PriorityCommandParser` class**
 
@@ -557,6 +606,7 @@ It will update the `Priority` of a `Person`.
 The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
 The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
 
+<div style="page-break-after: always;"></div>
 
 ## Remark feature
 
@@ -603,7 +653,7 @@ It will update the `Remark` of a `Person` and generate a `CommandResult` for the
 In real-life scenarios, storing empty strings as remark is unlikely, hence
 alternative 1 is preferred due to its user-friendliness.
 
-
+<div style="page-break-after: always;"></div>
 
 ## \[Proposed\] Undo/redo feature
 
@@ -648,6 +698,8 @@ Step 4. The user now decides that adding the person was a mistake, and decides t
 than attempting to perform the undo.
 
 </box>
+
+<div style="page-break-after: always;"></div>
 
 The following sequence diagram shows how the undo operation works:
 
@@ -735,42 +787,43 @@ Target user : Insurance agent
 Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
 alongside helping users increase the chance of sealing deals with customers.
 
+<div style="page-break-after: always;"></div>
 
 ## User stories
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​          | I want to …​                                                                      | So that I can…​                                                  |
-|----------|------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------|
-| `* * *`  | insurance agent  | to be able to add customers' contacts to EZContact                                | reach out to existing and potential customers easily             |
-| `* * *`  | user             | to add new contacts to EZContact                                                  |                                                                  |
-| `* * *`  | user             | update my contacts/information easily                                             |                                                                  |
-| `* * *`  | insurance agent  | be able to assign priorities to each customer                                     | prioritise customers that have a higher chance on sealing a deal |
-| `* * *`  | insurance agent  | view the type of insurance my customer currently holds                            | to check customers' profile                                      |
-| `* * *`  | user             | be able to search for specific contacts                                           | quickly lookup a customer and get their contact                  |
-| `* * *`  | user             | be able to delete contacts                                                        |                                                                  |
-| `* * *`  | user             | to list out all my contacts                                                       | to see all the person in my list                                 |
-| `* * *`  | user             | be able to see my total numbers of entries in EZContact                           | know how many contacts are in EZContact now                      |
-| `* *`    | first time user  | be able to know commands in EZContact                                             | play around with the features and get used to the application    |
-| `* *`    | fast typist      | have short commands                                                               | execute command faster                                           |
-| `* *`    | forgetful person | apply tags to my contacts                                                         | identify the person quickly                                      |
-| `* *`    | forgetful person | search for contacts using partial keyword                                         | find the contact without remembering their full name             |
-| `* *`    | careless person  | be able to undo previous command                                                  | recover from unintentional commands                              |
-| `* *`    | careless person  | be stopped from adding duplicate entries                                          | avoid adding redundant data                                      |
-| `* *`    | careless person  | want the address book to suggest similar names when im searching for a person     | avoid typographical errors                                       |
-| `* *`    | forgetful person | have the application remind me of important task associated with certain contacts |                                                                  |
-| `* *`    | user             | search for a contact by its other particulars(not necessarily names)              | be more flexible when searching for contacts                     |
-| `*`      | user             | import my data from external sources into EZContact                               | avoid copying my data manually                                   |
-| `*`      | advanced user    | have multiple contact books                                                       | neatly organize my contacts based on contexts                    |
-| `*`      | user             | be able to export my data                                                         | have a backup when data loss happens                             |
-| `*`      | forgetful person | be able to add remarks to a certain contact                                       | be reminded of things to take note of when contacting a person   |
+| Priority | As a …​          | I want to …​                                                                       | So that I can…​                                                              |
+|----------|------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `* * *`  | user             | be able to add new contacts to EzContact                                           | keep track of my contacts using EzContact                                    |
+| `* * *`  | user             | be able to update my contacts' information easily                                  | easily maintain up-to-date information of my contacts                        |
+| `* * *`  | user             | be able to search for specific contacts using their names                          | quickly lookup a contact and get their information                           |
+| `* * *`  | user             | be able to delete contacts                                                         |                                                                              |
+| `* * *`  | user             | be able to list out my contacts in EzContact                                       | see all my saved contacts in one view                                        |
+| `* * *`  | insurance agent  | be able to add customers' contacts to EzContact                                    | reach out to existing and potential customers easily                         |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                      | prioritise customers that have a higher chance on sealing a deal             |
+| `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                  | check customers' insurance profile easily                                    |
+| `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan        | quickly know who to find when there are changes to a specific insurance plan |
+| `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                  | easily identify and remember my customers using these tag                    |
+| `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names) | be more flexible when searching for contacts                                 |
+| `* *`    | user             | be able to see my total numbers of contact entries in EzContact                    | know how many contacts I have in EzContact                                   |
+| `* *`    | forgetful person | be able to search for contacts using partial names                                 | find a contact without having to remember their full name                    |
+| `* *`    | forgetful person | have EzContact remind me of important task associated with certain contacts        | prevent myself from forgetting important tasks                               |
+| `* *`    | forgetful person | be able to add remarks to a certain contact                                        | be reminded of things to take note of when contacting a person               |
+| `* *`    | careless person  | be able to undo previous command                                                   | recover from unintentional commands                                          |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                           | avoid myself from adding redundant data                                      |
+| `* *`    | careless person  | be suggested by EzContact for similar names when I'm searching for a person        | avoid myself from typographical errors                                       |
+| `* *`    | first time user  | be able to know commands in EzContact                                              | play around with the features and get used to the application                |
+| `* *`    | fast typist      | have short commands                                                                | execute commands faster                                                      |
+| `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
+| `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
+| `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
 
-
-
+<div style="page-break-after: always;"></div>
 
 ## Use cases
 
-(For all use cases below, the **System** is the `EZContact` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EzContact` and the **Actor** is the `user`, unless specified otherwise)
 
 #### Adding a customer
 
@@ -811,6 +864,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 #### Deleting a customer
 
 **Use Case: UC03 - delete a customer**
@@ -842,6 +897,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;3a. User provides invalid index or information.</br>
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
+
+<div style="page-break-after: always;"></div>
 
 #### Searching for a customer
 
@@ -880,6 +937,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 #### Assigning insurance to customer
 
 **Use Case: UC07 - assign insurance to a customer**
@@ -914,6 +973,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
 
 #### Updating tags of a customer
 
@@ -956,6 +1016,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -963,8 +1025,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  The user interface should be intuitive, easy to navigate and understand (i.e. concise and simple)
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
-
-*{More to be added}*
+6. The application should be offered as a free service to the public.
+7. The application should be able to respond within one second.
+8. The application should be able to handle and support manual edits to the data file.
 
 ## Glossary
 
@@ -972,6 +1035,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Command word:** The first word of a user command(e.g. `tag` is the command word of the command `tag 1 at/tall dt/short`)
 * **Command arguments:** The remaining input of a user command(e.g. `1 at/tall dt/short` is the command arguments of the command `tag 1 at/tall dt/short`)
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 # **Appendix: Planned Enhancements**
@@ -986,6 +1051,8 @@ This section covers the enhancements we plan to implement in the future.
 (explain how enhancement fixes the flaws... )
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 # **Appendix: Effort**
 
 This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
@@ -1003,6 +1070,7 @@ This section gives an overview of the challenges, we as a team faced and the eff
 (results achieved with this implementation... )
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 # **Appendix: Instructions for manual testing**
 
@@ -1055,6 +1123,51 @@ _{ more test cases …​ }_
 **Dealing with missing/corrupted data files**
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+
+## Updating tags of a customer
+
+**Updating the tags of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `tag 1 at/tall at/fat dt/short dt/skinny` <br/>
+   Expected : The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
+
+1. Test case : `tag 0 at/tall`<br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `tag 1`<br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+
+1. Test case: `tag 1 at/tall dt/tall`<br/>
+   Expected : No customer is updated. Error details shown in the status message(conflicting tags).
+
+<br/>
+
+<div style="page-break-after: always;"></div>
+
+## Update insurance of a customer
+
+**Updating the insurances of a customer**
+
+Prerequisite : -
+
+1. Test case : `insurance 2 ai/AIA ai/cars di/health di/ABC` <br/>
+   Expected : Customer is updated, `health` and `ABC` insurance are removed and `AIA` and `cars` insurance are added
+
+1. Test case : `insurance 0 ai/AIA ai/cars di/health di/ABC` `` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (format error since the index is not a positive integer).
+
+1. Test case : `insur 3 ai/EFG ai/JFK` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (Incorrect command word).
+
+1. Test case : `insurance 4 ai/ABC di/ABC` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (conflicting changes).
+
+1. Test case : `insurance 1 ` <br/>
+   Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
+
+<br/>
 
 ## Feature to show
 

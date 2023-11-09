@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -26,9 +27,9 @@ public class AppointmentCommand extends Command {
     public static final String COMMAND_WORD = "addappt";
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "[" + PREFIX_APPOINTMENT + "<date>]..."
-            + "[" + PREFIX_APPOINTMENT_TIME + "<time>]... "
-            + "[" + PREFIX_APPOINTMENT_VENUE + "<venue>]...\n";
+            + PREFIX_APPOINTMENT + "<date>"
+            + "[" + PREFIX_APPOINTMENT_TIME + "<time>]"
+            + "[" + PREFIX_APPOINTMENT_VENUE + "<venue>]\n";
 
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "Added appointment with customer: %1$s %2$s %3$s %4$s";
     public static final String MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST = "Appointment already exists!";
@@ -62,7 +63,7 @@ public class AppointmentCommand extends Command {
             throw new CommandException(MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST);
         }
         Person editedPerson = Person.createPersonWithEditedAppointment(personToEdit, appointment);
-        verifyPersonChanged(personToEdit, editedPerson);
+        verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Add Appointment Command: Appointment added successfully-----");
