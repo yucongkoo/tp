@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -35,6 +36,8 @@ public class TagCommand extends Command {
     public static final String MESSAGE_TAG_PERSON_SUCCESS = "Updated tag of customer: %s";
     public static final String MESSAGE_NOT_UPDATED = "At least one tag to add or delete must be provided.";
     public static final String MESSAGE_COMMON_TAG_FAILURE = "Should not add and delete the same tag.";
+    public static final String MESSAGE_TAG_UNCHANGED_REASONS =
+            "(Possible reasons: tag to add already exist or tag to delete does not exist)";
 
     private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
 
@@ -70,7 +73,7 @@ public class TagCommand extends Command {
                 updatePersonTagsDescriptor.getTagsToDelete());
         requireAllNonNull(personToUpdate, updatedPerson);
 
-        verifyPersonChanged(personToUpdate, updatedPerson);
+        verifyPersonChanged(personToUpdate, updatedPerson, Optional.of(MESSAGE_TAG_UNCHANGED_REASONS));
         verifyPersonTagCountIsValid(updatedPerson);
 
         model.setPerson(personToUpdate, updatedPerson);
