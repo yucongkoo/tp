@@ -35,7 +35,6 @@ efficiency and increase their conversion rate of closing customer deals.
 * Have weekly meetings and brainstorm sessions to decide direction of the project.
 * Have some commits and merged some pull requests in every milestone.
 * Have some reviews and comments on teammates' pull requests.
-
 * Discussed project ideation, use cases, target audience revamp
 
 
@@ -48,6 +47,7 @@ efficiency and increase their conversion rate of closing customer deals.
     * Deleteappt feature
     * Markappt feature
     * Unmarkappt feature
+    * List feature
 * Developer Guide:
   * Offers in-depth insights into the implementation details of the Appointment feature,
     providing developers with a clear understanding of its structure and functionality
