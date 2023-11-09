@@ -20,7 +20,7 @@ Given below are my contributions to the project.
   helpful in identifying their customers.
     * **Highlights:** This enhancement required an in-depth analysis of design alternatives, from choice of data structure to hold the 
   tags, to handling of certain user behaviours such as handling of duplicate tags provided, conflicting tags provided and
-  addition(deletion) of existing(non-existing).
+  addition(deletion) of existing(non-existing). The decisions made were mainly driven by ensuring the best user experience.
     * **Credits:** The association between the `Tag` class and `Person` class was originally implemented in AB-3, 
   there was not much modification done to this association
 <br/>
@@ -44,7 +44,8 @@ Given below are my contributions to the project.
   conversion between json format and model type(PR [#103](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/103)). Throughout the process of refactoring,discovered and solved a bug in original AB-3 conversion[PR [#204](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/204)]. 
   * Created UI componenet `FlowPaneLabel` used to display priority, tags and insurances associated to a customer (PRs [#162](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/162), [#208](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/208)).
   * Updated the GUI color scheme and overall design (PR [#189](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/189))
-  * Added the functionality of secondary prefix, that is every prefix now has a shorthand representation and a full name representation (PR [#238](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/238))
+  * Added the functionality of secondary prefix, that is every prefix now has a shorthand representation and a full name representation,
+  while also making the prefixes not case-sensitive (PR [#238](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/238))
   <br/>
   <br/>
 
@@ -54,6 +55,7 @@ Given below are my contributions to the project.
     * Added documentation for the features `add`, `tag` and also the `Advanced Features` section.
     * Drafted the overall structure and formatting for features section to be used across team members.
     * Added the `Prefix to full-name prefix translation table` section.
+    * Checked the degree of standardization between different sections of the UG.
     * Tweaked the UG to make it pdf-version friendly.
   * Developer Guide: 
     * Added the implementation details of the `tag` feature (including all the UML diagrams used in the explanation).

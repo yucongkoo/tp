@@ -191,6 +191,10 @@ This section describes some noteworthy details on how certain features are imple
 This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
 
+The activity diagram below shows the action sequence of updating the tags of a customer.
+
+<puml src="diagrams/tag-feature/ExecuteActivityDiagram.puml"/>
+
 ### Implementation
 
 ###### **Implementing `Tag`**
@@ -241,6 +245,10 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 
 
 ###### **Implementing `TagCommand`**
+
+The following class diagram illustrates how a `TagCommand` hold information required for its execution.
+
+<puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
 reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
@@ -982,7 +990,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests to list out the customers.<br/>
 &emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index of targeted customer and information of tags to update.<br/>
+&emsp;3. User enters index of targeted customer and information of tags to add or delete.<br/>
 &emsp;4. System updates the tags of the specified customer accordingly.<br/>
 &emsp;5. System displays the details of the updated customer.<br/>
 &emsp;Use case ends.<br/>
@@ -1043,12 +1051,44 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement
-(details of the enhancement...)
+#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
 
-**Feature flaw:** (feature flaw it fixes...)
+**Feature flaw:** <br/>
+As a customer might have many tags, and they could potentially want to remove all the 
+tags in one command, they would have to type out all the tags separately in order to achieve that.
 
-(explain how enhancement fixes the flaws... )
+**Proposed enhancement:**<br/>
+We provide a convenient way for users to delete all the tags in one command by adding an optional parameter
+to the command. The updated command format would be as follows: <br/>
+`tag <index> [at/<tags to add>]... [dt/<tags to add>]... [dat/deleteall]`.
+
+Justifications:
+* As deleting all the tags is a destructive action, we require users to specify the `dat/` prefix to indicate
+their interest in deleting all tags, and `deleteall` value to the prefix to serve as a confirmation of this 
+destructive command.
+
+Updated behaviours (original behaviours of tag still hold):
+* When a `dat/` prefix is supplied, there should not be any `at/` or `dt/` prefix supplied in the same command, if there
+is, a format error message will be shown to the user.
+* If the value provided to parameter `dat/` is not `deleteall`, show an error message to users, indicating that
+they should supply the `deleteall` value to `dat/` in order to confirm the deletion.
+
+**Examples:**<br/>
+* `tag 1 dat/deleteall`<br/>
+Expected: All the tags of customer at index 1 is deleted, a `successfully deleted all tags` message is shown to user.
+
+* `tag 1 at/tall dat/deleteall`<br/>
+Expected: Error, an error message showing the usage of tag command is shown to the user.
+
+* `tag 1 dat/delete`<br/>
+Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
+is shown to the user.
+
+**Additional notes:**<br/>
+As the behaviour of the `insurance` command is nearly identical to `tag` command, this planned enhancement applies to
+the `insurance` command too, the proposed enhancements and behaviours will be identical. The following is the updated
+command format for `insurance` command:<br/>
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1134,13 +1174,16 @@ Prerequisite : -
    Expected : The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
 
 1. Test case : `tag 0 at/tall`<br/>
-   Expected : No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
 
 1. Test case : `tag 1`<br/>
-   Expected : No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+   Expected : Error, details shown in the status message(format error since no tag to update is provided).
 
 1. Test case: `tag 1 at/tall dt/tall`<br/>
-   Expected : No customer is updated. Error details shown in the status message(conflicting tags).
+   Expected : Error, details shown in the status message(conflicting tags).
+
+1. Test case: `tag 1 dt/dsajdkl`, the tag to delete does not exist in cutomer 1<br/>
+   Expected: Error, details shown in the status message(customer not updated).
 
 <br/>
 
