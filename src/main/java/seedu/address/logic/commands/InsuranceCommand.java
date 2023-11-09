@@ -9,6 +9,7 @@ import static seedu.address.model.person.Person.createPersonWithUpdatedInsurance
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -38,6 +39,9 @@ public class InsuranceCommand extends Command {
     public static final String MESSAGE_INSURANCE_NO_UPDATE = "There has to be at least one insurance updated/deleted.";
 
     public static final String MESSAGE_INSURANCE_CONFLICT = "Should not assign and remove the same insurance.";
+
+    public static final String MESSAGE_INSURANCE_UNCHANGED_REASONS =
+            "(Possible reason: only adding insurances that already exist and/or deleting insurances that do not exist)";
 
     private static final Logger logger = LogsCenter.getLogger(InsuranceCommand.class);
 
@@ -91,7 +95,8 @@ public class InsuranceCommand extends Command {
         }
 
         requireAllNonNull(personToUpdate, updatedPerson);
-        CommandUtil.verifyPersonChanged(personToUpdate, updatedPerson);
+        CommandUtil.verifyPersonChanged(personToUpdate, updatedPerson,
+                Optional.of(MESSAGE_INSURANCE_UNCHANGED_REASONS));
 
         m.setPerson(personToUpdate, updatedPerson);
 

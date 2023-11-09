@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.ui.FlowPaneLabel.Type;
 import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
 
@@ -71,6 +72,9 @@ public class PersonCard extends UiPart<Region> {
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
+
+        requireNonNull(person);
+
         this.person = person;
         this.displayedIndex = displayedIndex;
 

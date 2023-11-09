@@ -141,8 +141,8 @@ public class ArgumentTokenizer {
     private static String extractArgumentValue(String argsString,
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
-        int valueStartPos = currentPrefixPosition.getEndPosition();
-        int valueEndPos = nextPrefixPosition.getStartPosition();
+        int valueStartPos = currentPrefixPosition.getEndPosition(); // value starts at the end of the current prefix
+        int valueEndPos = nextPrefixPosition.getStartPosition(); // value ends at the start of the next prefix
         String value = argsString.substring(valueStartPos, valueEndPos);
 
         return value.trim();
