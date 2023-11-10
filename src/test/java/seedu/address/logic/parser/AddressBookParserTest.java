@@ -34,7 +34,7 @@ import seedu.address.logic.commands.PriorityCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.UpdatePersonTagsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Tag;

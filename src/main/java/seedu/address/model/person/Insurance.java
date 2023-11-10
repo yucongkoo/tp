@@ -1,4 +1,4 @@
-package seedu.address.model.insurance;
+package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -17,7 +17,7 @@ public class Insurance {
     public static final String MESSAGE_CONSTRAINTS =
             String.format("Insurance name should be alphanumeric,"
                     + "non-empty and not longer than %d characters", MAX_LENGTH);
-    private String insuranceName;
+    private final String insuranceName;
 
     /**
      * Constructs an {@code Insurance}.

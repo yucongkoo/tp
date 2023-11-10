@@ -14,7 +14,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.InsuranceCommand;
 import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 
 
 /**
@@ -22,6 +22,8 @@ import seedu.address.model.insurance.Insurance;
  *
  */
 public class InsuranceCommandParser implements Parser<InsuranceCommand> {
+
+    private ArgumentMultimap argMultimap;
 
     /**
      * Parse the given arguments and extract out the useful information for InsuranceCommand
@@ -32,21 +34,37 @@ public class InsuranceCommandParser implements Parser<InsuranceCommand> {
      */
     @Override
     public InsuranceCommand parse(String args) throws ParseException {
-        Index index = null;
-
         requireAllNonNull(args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_ADD_INSURANCE, PREFIX_DELETE_INSURANCE);
+        argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ADD_INSURANCE, PREFIX_DELETE_INSURANCE);
 
+        Index index = obtainIndex();
+        UpdatePersonInsuranceDescriptor changes = obtainChanges();
+
+        return new InsuranceCommand(index, changes);
+    }
+
+    /**
+     * Check the parsed arguments for the {@code Index}
+     *
+     * @return {@code Index} indicated by the command if valid
+     * @throws ParseException when {@code Index} is out of bound or invalid values is passed in
+     */
+    private Index obtainIndex() throws ParseException {
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            return ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InsuranceCommand.MESSAGE_USAGE), e);
         }
+    }
 
-        requireAllNonNull(index);
-
+    /**
+     * Check the parsed arguments for {@code Insurance} to update
+     *
+     * @return {@code UpdatePersonInsuranceDescriptor} that holds the {@code Insurance} to update on {@code Person}
+     * @throws ParseException when there is invalid or conflicting {@code Insurance}
+     */
+    private UpdatePersonInsuranceDescriptor obtainChanges() throws ParseException {
         Set<Insurance> insurancesToAdd =
                 parseInsurances(argMultimap.getAllValues(PREFIX_ADD_INSURANCE)).orElse(new HashSet<>());
 
@@ -62,7 +80,7 @@ public class InsuranceCommandParser implements Parser<InsuranceCommand> {
             throw new ParseException(InsuranceCommand.MESSAGE_INSURANCE_NO_UPDATE);
         }
 
-        return new InsuranceCommand(index, changes);
+        return changes;
     }
 
     /**
