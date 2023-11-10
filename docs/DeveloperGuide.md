@@ -984,6 +984,45 @@ the `insurance` command too, the proposed enhancements and behaviours will be id
 command format for `insurance` command:<br/>
 `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
+#### Enhancement 2: Edit appointment details
+
+**Feature flaw:** <br/>
+Users will not be able to easily update or modify appointment details if there are any changes or mistakes. If the appointment meeting location changes, or the scheduled time needs adjustment—without the ability to edit, users would have to delete and create a new appointment, potentially leading to confusion and decreased efficiency.
+
+**Proposed enhancement:**<br/>
+We provide a convenient way for users to edit the appointment details, date, time and venue, in a edit appointment command.The updated command format would be as follows: <br/>
+`editappt <index> [d/<date>] [t/time] [v/venue]`
+
+Justifications:
+* As we need the details of the new appointment to be changed, at least one of the optional fields must be present.
+
+Updated behaviours (original behaviours of appointment still hold):
+* If the proposed appointment details entered in `editappt` are the same as the current appointment, there will be a error message to the user that there is no change.
+
+**Examples:**<br/>
+* `editappt 1 d/2026-12-16`<br/>
+Expected: Edits the date of the first customer's appointment in the displayed list to be 16 Dec 2026, if it is different at first.
+
+* `editappt 1`<br/>
+Expected: Error, an error message informing the user to provide at least 1 appointment detail field to be changed.
+
+#### Enhancement 3: Unmark appointment recovers appointment details
+
+**Feature flaw:** <br/>
+After marking an appointment, the appointment details gets removed. However, after unmarking the appointment, the appointment details do not come back. This might cause the user to need to manually create the appointment meeting again, which can be a hassle, decreasing efficiency.
+
+
+**Proposed enhancement:**<br/>
+The unmark appointment `unmarkappt` will not only decrement the appointments completed counter by 1, but also restore the "marked" appointment details.
+
+Updated behaviours (original behaviours of appointment still hold):
+* Can be undone by marking the appointment again.
+
+**Examples:**<br/>
+* `unmarkappt 1`<br/>
+Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
+
+
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
 
