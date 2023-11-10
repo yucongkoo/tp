@@ -11,8 +11,8 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.insurance.Insurance;
+import seedu.address.model.priority.Level;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.priority.Priority.Level;
 
 /**
  * Represents a Person in the address book.

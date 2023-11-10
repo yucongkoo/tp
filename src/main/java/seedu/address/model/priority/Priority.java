@@ -2,16 +2,16 @@ package seedu.address.model.priority;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.priority.Level.HIGH;
+import static seedu.address.model.priority.Level.LOW;
+import static seedu.address.model.priority.Level.MEDIUM;
+import static seedu.address.model.priority.Level.NONE;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
 /** Represents a Person's priority level. **/
 public class Priority {
-    /**
-     * Possible priority levels.
-     **/
-    public enum Level { HIGH, MEDIUM, LOW, NONE };
 
     public static final String HIGH_PRIORITY_KEYWORD = "high";
     public static final String MEDIUM_PRIORITY_KEYWORD = "medium";
@@ -35,10 +35,10 @@ public class Priority {
      **/
     public static final HashMap<Level, String> LEVEL_STRING_MAP = new HashMap<>() {
         {
-            put(Level.HIGH, HIGH_PRIORITY_KEYWORD);
-            put(Level.MEDIUM, MEDIUM_PRIORITY_KEYWORD);
-            put(Level.LOW, LOW_PRIORITY_KEYWORD);
-            put(Level.NONE, NONE_PRIORITY_KEYWORD);
+            put(HIGH, HIGH_PRIORITY_KEYWORD);
+            put(MEDIUM, MEDIUM_PRIORITY_KEYWORD);
+            put(LOW, LOW_PRIORITY_KEYWORD);
+            put(NONE, NONE_PRIORITY_KEYWORD);
         }
     };
 
@@ -68,13 +68,13 @@ public class Priority {
 
         switch (priority) {
         case HIGH_PRIORITY_KEYWORD:
-            return Level.HIGH;
+            return HIGH;
         case MEDIUM_PRIORITY_KEYWORD:
-            return Level.MEDIUM;
+            return MEDIUM;
         case LOW_PRIORITY_KEYWORD:
-            return Level.LOW;
+            return LOW;
         default:
-            return Level.NONE;
+            return NONE;
         }
     }
 
@@ -126,7 +126,7 @@ public class Priority {
      * @return True if the priority level starts with the specified prefix, false otherwise.
      */
     public static boolean isPriorityContainsPrefix(Priority priority, String prefix) {
-        if (priority.level.equals(Level.NONE)) {
+        if (priority.level.equals(NONE)) {
             return false;
         }
         String lowerCasePriority = priority.toString().toLowerCase();
