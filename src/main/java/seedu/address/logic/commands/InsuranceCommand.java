@@ -1,14 +1,14 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
+import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
+import static seedu.address.logic.commands.CommandUtil.verifyPersonInsuranceCountIsValid;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
-import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Person.createPersonWithUpdatedInsurances;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -18,7 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Person;
 
 /**
@@ -45,12 +45,12 @@ public class InsuranceCommand extends Command {
 
     private static final Logger logger = LogsCenter.getLogger(InsuranceCommand.class);
 
-    private Index index;
+    private final Index index;
 
-    private UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor;
+    private final UpdatePersonInsuranceDescriptor updatePersonInsuranceDescriptor;
 
     /**
-     * Instantiate {@code InsuranceCommmand}
+     * Instantiate {@code InsuranceCommand}
      */
     public InsuranceCommand(Index i, UpdatePersonInsuranceDescriptor u) {
         requireAllNonNull(i, u);
@@ -70,33 +70,37 @@ public class InsuranceCommand extends Command {
     @Override
     public CommandResult execute(Model m) throws CommandException {
         requireAllNonNull(m);
-        List<Person> personList = m.getFilteredPersonList();
+        verifyNoConflictingInsurance();
 
-        if (index.getZeroBased() >= personList.size()) {
-            logger.finer(String.format("InsuranceCommand execution failed due to index %d out of bound",
-                    index.getOneBased()));
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        return updatePerson(m);
+    }
 
-        assert index.getZeroBased() < personList.size() : "index < listSize";
-
+    /**
+     * Check for conflicting {@code Insurance} for the given command
+     *
+     * @throws CommandException when command add and delete the same {@code Insurance} at the same time
+     */
+    private void verifyNoConflictingInsurance() throws CommandException {
         if (updatePersonInsuranceDescriptor.hasCommonInsurance()) {
             throw new CommandException(MESSAGE_INSURANCE_CONFLICT);
         }
+    }
 
-        Person personToUpdate = personList.get(index.getZeroBased());
+    /**
+     * Update the customer details in the contact book
+     *
+     * @param m {@code Model}
+     * @return {@code CommandResult} result message of the command execution
+     * @throws CommandException when the execution of command is not allowed
+     */
+    private CommandResult updatePerson(Model m) throws CommandException {
+        Person personToUpdate = getPersonAtIndex(m, index);
         Person updatedPerson = createPersonWithUpdatedInsurances(personToUpdate,
                 updatePersonInsuranceDescriptor.insurancesToAdd,
                 updatePersonInsuranceDescriptor.insurancesToDelete);
 
-        if (updatedPerson.getInsurancesCount() > MAX_INSURANCE_COUNT) {
-            logger.finer("InsuranceCommand execution failed due to exceeding maximum insurance counts allowed");
-            throw new CommandException(MESSAGE_INSURANCE_COUNT_EXCEED);
-        }
-
-        requireAllNonNull(personToUpdate, updatedPerson);
-        CommandUtil.verifyPersonChanged(personToUpdate, updatedPerson,
-                Optional.of(MESSAGE_INSURANCE_UNCHANGED_REASONS));
+        verifyPersonInsuranceCountIsValid(updatedPerson);
+        verifyPersonChanged(personToUpdate, updatedPerson, Optional.of(MESSAGE_INSURANCE_UNCHANGED_REASONS));
 
         m.setPerson(personToUpdate, updatedPerson);
 

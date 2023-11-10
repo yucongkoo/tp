@@ -16,10 +16,10 @@ import java.util.function.Predicate;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -142,7 +142,7 @@ public class ParserUtil {
 
     /**
      * Parse a {@code String insurance} into a {@code Insurance}
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading, trailing and contiguous whitespaces between words will be trimmed.
      *
      */
     private static Insurance parseInsurance(String insurance) throws ParseException {
