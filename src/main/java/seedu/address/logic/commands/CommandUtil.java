@@ -6,7 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.Messages.MESSAGE_INSURANCE_COUNT_EXCEED;
 import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_CHANGED;
 import static seedu.address.logic.Messages.MESSAGE_TAG_COUNT_EXCEED;
-import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
+import static seedu.address.model.person.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.List;

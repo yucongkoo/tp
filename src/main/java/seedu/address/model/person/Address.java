@@ -32,8 +32,8 @@ public abstract class Address {
     public static boolean isValidAddress(String test) {
         requireNonNull(test);
 
-        int addressLen = test.trim().length();
-        return addressLen <= MAX_LENGTH;
+        int addressLength = test.trim().length();
+        return addressLength <= MAX_LENGTH;
     }
 
 

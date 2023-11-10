@@ -23,7 +23,7 @@ import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescri
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -183,7 +183,6 @@ public class InsuranceCommandTest {
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
     }
-
 
     @Test
     public void execute_conflictingAddDelete_throwsCommandException() {

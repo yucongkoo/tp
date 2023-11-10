@@ -3,12 +3,12 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.AppointmentCount;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmptyAddress;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NonEmptyAddress;
 import seedu.address.model.person.Person;
