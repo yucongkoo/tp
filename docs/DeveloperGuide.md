@@ -428,21 +428,6 @@ In addition, Alternative 3 requires a more complicated algorithm.
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
-  * Pros: Simplifies user input for convenience.
-  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
-* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
-  * Pros: Provides improved differentiation and flexibility for users.
-  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
-
-**Reasoning :**
-
-In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
-and the use of a single prefix with multiple keywords serves this purpose effectively. 
-By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
-Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
 <div style="page-break-after: always;"></div>
 
@@ -1043,10 +1028,21 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement
-(details of the enhancement...)
+#### Enhancement on find feature
 
-**Feature flaw:** (feature flaw it fixes...)
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
+  * Pros: Simplifies user input for convenience.
+  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
+* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
+  * Pros: Provides improved differentiation and flexibility for users.
+  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
+
+**Feature flaw:**
+Use a single prefix for multiple keywords, like `find i/Health Auto`.
+Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, 
+causing potential ambiguity.
 
 (explain how enhancement fixes the flaws... )
 
@@ -1167,6 +1163,43 @@ Prerequisite : -
 1. Test case : `insurance 1 ` <br/>
    Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
 
+<br/>
+
+## Find customers
+
+**Find customers**
+
+Prerequisite : -
+
+1. Test case : `find n/` <br/>
+   Expected : Show all customers in the list, because every customer must has a name.
+
+1. Test case : `find n/a`  <br/>
+   Expected : Show all customers has a as a prefix in their name.
+
+1. Test case : `find i/ABC t/male` <br/>
+   Expected : Show all customers has ABC matches with their insurances and has male matches with their tags.
+
+1. Test case : `find 123` <br/>
+   Expected : Customer list not updated. Error details shown in the status message (format error, one prefix must be provided).
+
+<br/>
+
+
+## Update remark of a customer
+
+**Updating the remark of a customer**
+
+Prerequisite : -
+
+1. Test case : `remark 2 he don't like pizza` <br/>
+   Expected : Customer is updated. Customer's remark update to `he don't like pizza`.
+
+1. Test case : `remark 2` `` <br/>
+   Expected : Customer is updated. Customer's remark is deleted.
+
+1. Test case : `remark` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (No index provided).
 <br/>
 
 ## Feature to show
