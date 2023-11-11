@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
@@ -27,6 +28,10 @@ public class TagCommandParser implements Parser<TagCommand> {
 
     private static final Prefix[] validPrefixes = new Prefix[] { PREFIX_ADD_TAG, PREFIX_DELETE_TAG };
 
+    private Index index;
+    private Set<Tag> tagsToAdd;
+    private Set<Tag> tagsToDelete;
+
     /**
      * Parses the given {@code String} of arguments in the context of the TagCommand
      * and returns a TagCommand object for execution.
@@ -36,14 +41,28 @@ public class TagCommandParser implements Parser<TagCommand> {
         requireNonNull(args);
         logger.fine("TagCommandParser parsing: " + args);
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, validPrefixes);
+        parseArguments(args);
+        requireAllNonNull(index, tagsToAdd, tagsToDelete); // defensive, to ensure that parsing succeeded
 
-        Index index = extractIndex(argMultimap);
-        UpdatePersonTagsDescriptor updatePersonTagsDescriptor = extractUpdatePersonTagsDescriptor(argMultimap);
+        UpdatePersonTagsDescriptor descriptor = new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
+        verifyHasTagsToUpdate(descriptor); // defensive, verifies that at least one tag is provided
 
-        verifyHasTagsToUpdate(updatePersonTagsDescriptor);
+        return new TagCommand(index, descriptor);
+    }
 
-        return new TagCommand(index, updatePersonTagsDescriptor);
+    /**
+     * Parses a {@code String index} into a {@code Index}.
+     * @throws ParseException if {@code index} could not be successfully parsed.
+     */
+    private Index parseIndex(String index) throws ParseException {
+        requireNonNull(index);
+
+        try {
+            return ParserUtil.parseIndex(index);
+        } catch (ParseException pe) {
+            logger.finer("TagCommandParser parse failed due to invalid index: " + index);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), pe);
+        }
     }
 
     /**
@@ -60,33 +79,14 @@ public class TagCommandParser implements Parser<TagCommand> {
         return Optional.of(ParserUtil.parseTags(tags));
     }
 
-    /**
-     * Extracts and returns the index from the {@code argMultimap}.
-     * @throws ParseException if the index is not an unsigned positive integer.
-     */
-    private Index extractIndex(ArgumentMultimap argMultimap) throws ParseException {
-        requireNonNull(argMultimap);
+    private void parseArguments(String args) throws ParseException {
+        requireNonNull(args);
 
-        try {
-            return ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            logger.finer("TagCommandParser parse failed due to invalid index: " + argMultimap);
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE), pe);
-        }
-    }
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, validPrefixes);
 
-    /**
-     * Extracts the tags to add and delete from the {@code argMultimap},
-     * and returns a {@code UpdatePersonTagsDescriptor}.
-     * @throws ParseException if there are tags that are invalid.
-     */
-    private UpdatePersonTagsDescriptor extractUpdatePersonTagsDescriptor(ArgumentMultimap argMultimap)
-            throws ParseException {
-        requireNonNull(argMultimap);
-        Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
-        Set<Tag> tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
-        return new UpdatePersonTagsDescriptor(tagsToAdd, tagsToDelete);
-
+        index = parseIndex(argMultimap.getPreamble());
+        tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_ADD_TAG)).orElse(new HashSet<>());
+        tagsToDelete = parseTags(argMultimap.getAllValues(PREFIX_DELETE_TAG)).orElse(new HashSet<>());
     }
 
     /**
