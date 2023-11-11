@@ -555,39 +555,94 @@ The appointment feature supports 5 different type of command:
 
 ## Priority feature
 
-### Implementation
+This feature allows users to assign priority to a `Person`. 
+The default priority of each `Person` is `NONE`, unless a priority is explicitly assigned to the `Person`.
 
-The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+The activity diagram below shows the sequence of actions when users assign a priority to a `Person`.
+
+<puml src="diagrams/priority-feature/UpdatePriorityActivityDiagram.puml"/>
+
+### Implementation
 
 **The `Priority` class**
 
-The class is used to represent different priority levels for each `Person`.
-By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+The class is used to store the priority level of a `Person`.
+The priority level can only be one of the values in the `Level` enumeration.
+
+Each `Person` now has an additional attribute called priority.
+The `Person` class now has a reference to the `Priority` class.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
 
-<div style="page-break-after: always;"></div>
+<br>
+
+**Adding a new command keyword `priority`**
+
+To allow users to assign priorities, we added a new command keyword `priority`.
+The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
+
+<puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
+
+<br>
 
 **The `PriorityCommandParser` class**
 
-The class is used to parse the arguments into two information: `index` and `priority`.
-It will then return a `PriorityCommand` should the arguments are valid.
+The class is used to parse the string provided.
+It will return a `PriorityCommand` if the index and argument are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
-Taking `parse(1 high)`as an example.
+Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
+The sequence diagram below illustrates how the index and arguments are parsed.
+
+<puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
+
+<br>
+
 **The `PriorityCommand` class**
 
-The class is responsible in executing the task parsed by the `PriorityCommandParser`.
-It will update the `Priority` of a `Person`.
+The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`. 
+
+<puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
+
+<br>
+
+The sequence diagram illustrates the execution of the `PriorityCommand` and how the `Person` is updated.
+
+<puml src="diagrams/priority-feature/PriorityCommandSequenceDiagram.puml"/>
+
+<br>
 
 ### Design Consideration:
 
-The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
-The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+###### **Aspect: `Person` without an explicitly assigned `Priority`.**
+* **Alternative 1 (Current Choice):** Give each `Person` a default priority `NONE`.
+  * Pros: 
+    * Enhances code readability.
+    * Do not need to handle null cases which happens when `Person` has `null` priority.
+  * Cons:
+    * More complexity during testing, have to make sure that the default value does not affect the outcome of test cases.
+* **Alternative 2:** Keep the priority as `null`.
+  * Pros:
+    * Do not need to worry about the effect of default values on test cases.
+  * Cons:
+    * More `null` cases to handle.
+
+###### **Aspect: Choices of priority levels.**
+* **Alternative 1 (Current Choice):** Fix the choices of priority level, namely `HIGH`, `MEDIUM`, `LOW` and `NONE`. (`NONE` is chosen when user removes or does not assign a priority).
+  * Pros:
+    * Simplicity, users do not have to create an extensive list of options for priority levels.
+    * Ease of implementation.
+  * Cons:
+    * Reduced flexibility, users are now confined to limited choices of priority levels.
+* **Alternative 2:** Allow users to define their own priority levels.
+  * Pros:
+    * Flexibility, users can customise the product according to their needs.
+  * Cons:
+    * Hard to implement, need to handle dynamic or custom priority levels.
 
 <div style="page-break-after: always;"></div>
 
@@ -1010,8 +1065,15 @@ Updated behaviours (original behaviours of appointment still hold):
 * `unmarkappt 1`<br/>
 Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
 
+#### Enhancement 4: Inserting `clear` pops out a confirmation window
 
-#### Enhancement 4: find multiple tags and insurances
+**Feature flaw:** <br/>
+After the user inputs the `clear` command, the customer list is cleared immediately. In some situations where the user just type `clear` in accident, the consequence is undesirable.
+
+**Proposed enhancement:**<br/>
+Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
+
+#### Enhancement 5: find multiple tags and insurances
 **Feature flaw:** <br/>
 The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
 This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
@@ -1193,6 +1255,31 @@ Prerequisite : -
 1. Test case : `remark` <br/>
    Expected : Customer is not updated. Error details shown in the status message (No index provided).
 <br/>
+
+## Updating priority of a customer
+
+**Updating the priority of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `priority 1 low` <br/>
+   Expected : Priority of customer at index 1 is updated to `low`.
+
+1. Test case : `priority 1 low`, old priority of customer at index 1 is also `low` <br/>
+   Expected : Error, details shown in the status message(person is not changed).
+
+1. Test case : `priority 0`<br/>
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `priority 1`<br/>
+   Expected : Error, details shown in the status message(format error since no priority is provided).
+
+1. Test case: `priority 1 -` <br/>
+   Expected : Priority of customer at index 1 is removed (and set to `NONE`), no priority label is shown in the Ui.
+
+<br/>
+
+<div style="page-break-after: always;"></div>
 
 ## Feature to show
 
