@@ -1011,18 +1011,28 @@ Updated behaviours (original behaviours of appointment still hold):
 Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
 
 
-#### Enhancement 4: find feature
-* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
-* Pros: Simplifies user input for convenience.
-* Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
-* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
-  * Pros: Provides improved differentiation and flexibility for users.
-  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
+#### Enhancement 4: find multiple tags and insurances
+**Feature flaw:** <br/>
+The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
+This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
+For instance, it becomes challenging to differentiate whether the keywords correspond to a combination like `Health Auto` or separate entities like `Health Insurance` and `Auto Coverage`.
 
-**Feature flaw:**
-Use a single prefix for multiple keywords, like `find i/Health Auto`.
-Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`,
-causing potential ambiguity.
+**Proposed enhancement:**<br/>
+To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`. 
+This modification allows the find feature to accommodate duplicate prefixes for both find and tag operations, thereby providing a more precise and unambiguous search capability.
+
+**Justifications:**<br/>
+* The problem we've spotted isn't just about insurance searches; it also affects tag searches.
+* This problem only arises with tags and insurances since these are only two attribute allowed multiple instances.
+
+**Examples:**<br/>
+* `find i/abc i/apple`<br/>
+  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively. 
+  For instance, if there are customer with insurances named `abc insurance` and `apple insurance`, they would be included in the results.
+* `find i/abc apple` <br/>
+  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
+  
+The enhanced feature ensures accurate and targeted search results.
 
 
 --------------------------------------------------------------------------------------------------------------------
