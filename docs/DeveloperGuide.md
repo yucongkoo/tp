@@ -562,9 +562,9 @@ The `Person` class now has a reference to the `Priority` class.
 
 <br>
 
-**Adding a new command keyword `priority`**
+**Adding a new command word `priority`**
 
-To allow users to assign priorities, we added a new command keyword `priority`.
+To allow users to assign priorities, we added a new command word `priority`.
 The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
 
 <puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
@@ -574,7 +574,7 @@ The sequence diagram shows a series of actions in EzContact when a user inputs t
 **The `PriorityCommandParser` class**
 
 The class is used to parse the string provided.
-It will return a `PriorityCommand` if the index and argument are valid.
+It will return a `PriorityCommand` if the index and priority are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
@@ -582,7 +582,7 @@ Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
-The sequence diagram below illustrates how the index and arguments are parsed.
+The sequence diagram below illustrates how the index and priority are parsed.
 
 <puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
 
@@ -798,15 +798,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC03 - delete a customer**
 
 **MSS:**</br>
-&emsp;1. User lists out the customers.</br>
-&emsp;2. System shows the list of customers to user.</br>
-&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
-&emsp;4. System displays the details of the removed customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides the index of customer to be deleted.</br>
+&emsp;3. System displays the details of the removed customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;4a. Invalid delete command or invalid index.</br>
-&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 #### Editing a customer
@@ -814,15 +813,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**</br>
-&emsp;1. User requests to list out the customers.</br>
-&emsp;2. System shows the list of customers.</br>
-&emsp;3. User edits the details of customer with its respective index.</br>
-&emsp;4. System displays the details of the edited customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides information to the customer with its respective index.</br>
+&emsp;3. System displays the details of the edited customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or information.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -853,15 +851,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers.</br>
-&emsp;2.  System lists out the customers.</br>
-&emsp;3.  User assigns priority to the customer with its respective index.</br>
-&emsp;4.  System displays the new priority of customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2.  User provides priority to the customer with its respective index.</br>
+&emsp;3.  System displays the new priority of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or priority.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
