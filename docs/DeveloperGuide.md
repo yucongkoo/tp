@@ -985,14 +985,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-<<<<<<< HEAD
 #### Enhancement 1 : Deletion of all tags in a single command
-=======
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-
-#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
->>>>>>> master
 
 **Feature flaw:** <br/>
 As a customer might have many tags, and they could potentially want to remove all the 
