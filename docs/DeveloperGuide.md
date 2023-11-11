@@ -907,24 +907,23 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC09 - update tags of a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests to see a list of customers.<br/>
-&emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User provides index of the targeted customer to update tags.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides index of the targeted customer in the displayed list.<br/>
 &emsp;3. User provides information of tags to add to and/or delete from the targeted customer.<br/>
-&emsp;4. System displays the details of the updated customer.<br/>
+&emsp;4. System displays the details of the updated customer to the User.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
 &emsp;1a. Requested list is empty.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3a. User provided invalid index.<br/>
-&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;4a. User provided invalid information of tags.<br/>
-&emsp;&emsp;4a1. Systems displays an error message to alert the User.<br/>
+&emsp;3a. User provided invalid information of tags.<br/>
+&emsp;&emsp;3a1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;4b. User provided information of tags that will not update the targeted customer.<br/>
-&emsp;&emsp;4b1. Systems displays an error message to alert the User.<br/>
+&emsp;3b. User provided information of tags that will not update the targeted customer.<br/>
+&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
 
