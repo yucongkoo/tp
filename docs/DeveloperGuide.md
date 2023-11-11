@@ -426,21 +426,6 @@ In addition, Alternative 3 requires a more complicated algorithm.
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
-  * Pros: Simplifies user input for convenience.
-  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
-* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
-  * Pros: Provides improved differentiation and flexibility for users.
-  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
-
-**Reasoning :**
-
-In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
-and the use of a single prefix with multiple keywords serves this purpose effectively. 
-By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
-Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
 <div style="page-break-after: always;"></div>
 
@@ -1000,6 +985,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+
 #### Enhancement 1 : Deletion of all tags(and insurances) in a single command
 
 **Feature flaw:** <br/>
@@ -1084,6 +1072,30 @@ After the user inputs the `clear` command, the customer list is cleared immediat
 
 **Proposed enhancement:**<br/>
 Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
+
+#### Enhancement 5: find multiple tags and insurances
+**Feature flaw:** <br/>
+The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
+This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
+For instance, it becomes challenging to differentiate whether the keywords correspond to a combination like `Health Auto` or separate entities like `Health Insurance` and `Auto Coverage`.
+
+**Proposed enhancement:**<br/>
+To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`. 
+This modification allows the find feature to accommodate duplicate prefixes for both find and tag operations, thereby providing a more precise and unambiguous search capability.
+
+**Justifications:**<br/>
+* The problem we've spotted isn't just about insurance searches; it also affects tag searches.
+* This problem only arises with tags and insurances since these are only two attribute allowed multiple instances.
+
+**Examples:**<br/>
+* `find i/abc i/apple`<br/>
+  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively. 
+  For instance, if there are customer with insurances named `abc insurance` and `apple insurance`, they would be included in the results.
+* `find i/abc apple` <br/>
+  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
+  
+The enhanced feature ensures accurate and targeted search results.
+
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1205,6 +1217,43 @@ Prerequisite : -
 1. Test case : `insurance 1 ` <br/>
    Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
 
+<br/>
+
+## Find customers
+
+**Find customers**
+
+Prerequisite : -
+
+1. Test case : `find n/` <br/>
+   Expected : Show all customers in the list, because every customer must has a name.
+
+1. Test case : `find n/a`  <br/>
+   Expected : Show all customers has a as a prefix in their name.
+
+1. Test case : `find i/ABC t/male` <br/>
+   Expected : Show all customers has ABC matches with their insurances and has male matches with their tags.
+
+1. Test case : `find 123` <br/>
+   Expected : Customer list not updated. Error details shown in the status message (format error, one prefix must be provided).
+
+<br/>
+
+
+## Update remark of a customer
+
+**Updating the remark of a customer**
+
+Prerequisite : -
+
+1. Test case : `remark 2 he don't like pizza` <br/>
+   Expected : Customer is updated. Customer's remark update to `he don't like pizza`.
+
+1. Test case : `remark 2` `` <br/>
+   Expected : Customer is updated. Customer's remark is deleted.
+
+1. Test case : `remark` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (No index provided).
 <br/>
 
 ## Updating priority of a customer
