@@ -155,16 +155,6 @@ The `Model` component,
 
 <div style="page-break-after: always;"></div>
 
-<box type="info" seamless>
-
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
-
-</box>
-
-<div style="page-break-after: always;"></div>
-
 ## Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -190,6 +180,10 @@ This section describes some noteworthy details on how certain features are imple
 
 This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
+
+The activity diagram below shows the action sequence of updating the tags of a customer.
+
+<puml src="diagrams/tag-feature/ExecuteActivityDiagram.puml"/>
 
 ### Implementation
 
@@ -241,6 +235,10 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 
 
 ###### **Implementing `TagCommand`**
+
+The following class diagram illustrates how a `TagCommand` hold information required for its execution.
+
+<puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
 
 `TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
 reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
@@ -572,39 +570,94 @@ The appointment feature supports 5 different type of command:
 
 ## Priority feature
 
-### Implementation
+This feature allows users to assign priority to a `Person`. 
+The default priority of each `Person` is `NONE`, unless a priority is explicitly assigned to the `Person`.
 
-The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+The activity diagram below shows the sequence of actions when users assign a priority to a `Person`.
+
+<puml src="diagrams/priority-feature/UpdatePriorityActivityDiagram.puml"/>
+
+### Implementation
 
 **The `Priority` class**
 
-The class is used to represent different priority levels for each `Person`.
-By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+The class is used to store the priority level of a `Person`.
+The priority level can only be one of the values in the `Level` enumeration.
+
+Each `Person` now has an additional attribute called priority.
+The `Person` class now has a reference to the `Priority` class.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
 
-<div style="page-break-after: always;"></div>
+<br>
+
+**Adding a new command keyword `priority`**
+
+To allow users to assign priorities, we added a new command keyword `priority`.
+The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
+
+<puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
+
+<br>
 
 **The `PriorityCommandParser` class**
 
-The class is used to parse the arguments into two information: `index` and `priority`.
-It will then return a `PriorityCommand` should the arguments are valid.
+The class is used to parse the string provided.
+It will return a `PriorityCommand` if the index and argument are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
-Taking `parse(1 high)`as an example.
+Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
+The sequence diagram below illustrates how the index and arguments are parsed.
+
+<puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
+
+<br>
+
 **The `PriorityCommand` class**
 
-The class is responsible in executing the task parsed by the `PriorityCommandParser`.
-It will update the `Priority` of a `Person`.
+The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`. 
+
+<puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
+
+<br>
+
+The sequence diagram illustrates the execution of the `PriorityCommand` and how the `Person` is updated.
+
+<puml src="diagrams/priority-feature/PriorityCommandSequenceDiagram.puml"/>
+
+<br>
 
 ### Design Consideration:
 
-The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
-The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+###### **Aspect: `Person` without an explicitly assigned `Priority`.**
+* **Alternative 1 (Current Choice):** Give each `Person` a default priority `NONE`.
+  * Pros: 
+    * Enhances code readability.
+    * Do not need to handle null cases which happens when `Person` has `null` priority.
+  * Cons:
+    * More complexity during testing, have to make sure that the default value does not affect the outcome of test cases.
+* **Alternative 2:** Keep the priority as `null`.
+  * Pros:
+    * Do not need to worry about the effect of default values on test cases.
+  * Cons:
+    * More `null` cases to handle.
+
+###### **Aspect: Choices of priority levels.**
+* **Alternative 1 (Current Choice):** Fix the choices of priority level, namely `HIGH`, `MEDIUM`, `LOW` and `NONE`. (`NONE` is chosen when user removes or does not assign a priority).
+  * Pros:
+    * Simplicity, users do not have to create an extensive list of options for priority levels.
+    * Ease of implementation.
+  * Cons:
+    * Reduced flexibility, users are now confined to limited choices of priority levels.
+* **Alternative 2:** Allow users to define their own priority levels.
+  * Pros:
+    * Flexibility, users can customise the product according to their needs.
+  * Cons:
+    * Hard to implement, need to handle dynamic or custom priority levels.
 
 <div style="page-break-after: always;"></div>
 
@@ -654,102 +707,6 @@ In real-life scenarios, storing empty strings as remark is unlikely, hence
 alternative 1 is preferred due to its user-friendliness.
 
 <div style="page-break-after: always;"></div>
-
-## \[Proposed\] Undo/redo feature
-
-### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-<div style="page-break-after: always;"></div>
-
-The following sequence diagram shows how the undo operation works:
-
-<puml src="diagrams/UndoSequenceDiagram.puml" alt="UndoSequenceDiagram" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-## \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -982,7 +939,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests to list out the customers.<br/>
 &emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index of targeted customer and information of tags to update.<br/>
+&emsp;3. User enters index of targeted customer and information of tags to add or delete.<br/>
 &emsp;4. System updates the tags of the specified customer accordingly.<br/>
 &emsp;5. System displays the details of the updated customer.<br/>
 &emsp;Use case ends.<br/>
@@ -1043,12 +1000,90 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement
-(details of the enhancement...)
+#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
 
-**Feature flaw:** (feature flaw it fixes...)
+**Feature flaw:** <br/>
+As a customer might have many tags, and they could potentially want to remove all the 
+tags in one command, they would have to type out all the tags separately in order to achieve that.
 
-(explain how enhancement fixes the flaws... )
+**Proposed enhancement:**<br/>
+We provide a convenient way for users to delete all the tags in one command by adding an optional parameter
+to the command. The updated command format would be as follows: <br/>
+`tag <index> [at/<tags to add>]... [dt/<tags to add>]... [dat/deleteall]`.
+
+Justifications:
+* As deleting all the tags is a destructive action, we require users to specify the `dat/` prefix to indicate
+their interest in deleting all tags, and `deleteall` value to the prefix to serve as a confirmation of this 
+destructive command.
+
+Updated behaviours (original behaviours of tag still hold):
+* When a `dat/` prefix is supplied, there should not be any `at/` or `dt/` prefix supplied in the same command, if there
+is, a format error message will be shown to the user.
+* If the value provided to parameter `dat/` is not `deleteall`, show an error message to users, indicating that
+they should supply the `deleteall` value to `dat/` in order to confirm the deletion.
+
+**Examples:**<br/>
+* `tag 1 dat/deleteall`<br/>
+Expected: All the tags of customer at index 1 is deleted, a `successfully deleted all tags` message is shown to user.
+
+* `tag 1 at/tall dat/deleteall`<br/>
+Expected: Error, an error message showing the usage of tag command is shown to the user.
+
+* `tag 1 dat/delete`<br/>
+Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
+is shown to the user.
+
+**Additional notes:**<br/>
+As the behaviour of the `insurance` command is nearly identical to `tag` command, this planned enhancement applies to
+the `insurance` command too, the proposed enhancements and behaviours will be identical. The following is the updated
+command format for `insurance` command:<br/>
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
+
+#### Enhancement 2: Edit appointment details
+
+**Feature flaw:** <br/>
+Users will not be able to easily update or modify appointment details if there are any changes or mistakes. If the appointment meeting location changes, or the scheduled time needs adjustment—without the ability to edit, users would have to delete and create a new appointment, potentially leading to confusion and decreased efficiency.
+
+**Proposed enhancement:**<br/>
+We provide a convenient way for users to edit the appointment details, date, time and venue, in a edit appointment command.The updated command format would be as follows: <br/>
+`editappt <index> [d/<date>] [t/time] [v/venue]`
+
+Justifications:
+* As we need the details of the new appointment to be changed, at least one of the optional fields must be present.
+
+Updated behaviours (original behaviours of appointment still hold):
+* If the proposed appointment details entered in `editappt` are the same as the current appointment, there will be a error message to the user that there is no change.
+
+**Examples:**<br/>
+* `editappt 1 d/2026-12-16`<br/>
+Expected: Edits the date of the first customer's appointment in the displayed list to be 16 Dec 2026, if it is different at first.
+
+* `editappt 1`<br/>
+Expected: Error, an error message informing the user to provide at least 1 appointment detail field to be changed.
+
+#### Enhancement 3: Unmark appointment recovers appointment details
+
+**Feature flaw:** <br/>
+After marking an appointment, the appointment details gets removed. However, after unmarking the appointment, the appointment details do not come back. This might cause the user to need to manually create the appointment meeting again, which can be a hassle, decreasing efficiency.
+
+
+**Proposed enhancement:**<br/>
+The unmark appointment `unmarkappt` will not only decrement the appointments completed counter by 1, but also restore the "marked" appointment details.
+
+Updated behaviours (original behaviours of appointment still hold):
+* Can be undone by marking the appointment again.
+
+**Examples:**<br/>
+* `unmarkappt 1`<br/>
+Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
+
+#### Enhancement 4: Inserting `clear` pops out a confirmation window
+
+**Feature flaw:** <br/>
+After the user inputs the `clear` command, the customer list is cleared immediately. In some situations where the user just type `clear` in accident, the consequence is undesirable.
+
+**Proposed enhancement:**<br/>
+Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1134,13 +1169,16 @@ Prerequisite : -
    Expected : The tags assigned to the customer at index 1 will be updated accordingly(adds `tall` and `fat` tag, deletes `short` and `skinny` tag).
 
 1. Test case : `tag 0 at/tall`<br/>
-   Expected : No customer is updated. Error details shown in the status message(format error since the index is not a positive integer).
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
 
 1. Test case : `tag 1`<br/>
-   Expected : No customer is updated. Error details shown in the status message(format error since no tag to update is provided).
+   Expected : Error, details shown in the status message(format error since no tag to update is provided).
 
 1. Test case: `tag 1 at/tall dt/tall`<br/>
-   Expected : No customer is updated. Error details shown in the status message(conflicting tags).
+   Expected : Error, details shown in the status message(conflicting tags).
+
+1. Test case: `tag 1 dt/dsajdkl`, the tag to delete does not exist in cutomer 1<br/>
+   Expected: Error, details shown in the status message(customer not updated).
 
 <br/>
 
@@ -1168,6 +1206,31 @@ Prerequisite : -
    Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
 
 <br/>
+
+## Updating priority of a customer
+
+**Updating the priority of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `priority 1 low` <br/>
+   Expected : Priority of customer at index 1 is updated to `low`.
+
+1. Test case : `priority 1 low`, old priority of customer at index 1 is also `low` <br/>
+   Expected : Error, details shown in the status message(person is not changed).
+
+1. Test case : `priority 0`<br/>
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `priority 1`<br/>
+   Expected : Error, details shown in the status message(format error since no priority is provided).
+
+1. Test case: `priority 1 -` <br/>
+   Expected : Priority of customer at index 1 is removed (and set to `NONE`), no priority label is shown in the Ui.
+
+<br/>
+
+<div style="page-break-after: always;"></div>
 
 ## Feature to show
 
