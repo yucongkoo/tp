@@ -458,7 +458,8 @@ After:
 * The customer must not have a current appointment
 * `<index>` should **only be one of** the indices shown in the displayed list
 * `<date>` must be specified
-* `<date>` must be in YYYY-MM-DD format and not a past date
+* `<date>` must be in YYYY-MM-DD format, not a past date and a valid date
+(eg. 30 Feb 2025 is invalid).
 * `<time>` format must be in 24h HH:MM format
 * `<venue>` cannot be longer than 30 characters
 

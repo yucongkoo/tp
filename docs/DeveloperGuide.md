@@ -426,21 +426,6 @@ In addition, Alternative 3 requires a more complicated algorithm.
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
-  * Pros: Simplifies user input for convenience.
-  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
-* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
-  * Pros: Provides improved differentiation and flexibility for users.
-  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
-
-**Reasoning :**
-
-In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
-and the use of a single prefix with multiple keywords serves this purpose effectively. 
-By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
-Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
 <div style="page-break-after: always;"></div>
 
@@ -570,39 +555,94 @@ The appointment feature supports 5 different type of command:
 
 ## Priority feature
 
-### Implementation
+This feature allows users to assign priority to a `Person`. 
+The default priority of each `Person` is `NONE`, unless a priority is explicitly assigned to the `Person`.
 
-The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+The activity diagram below shows the sequence of actions when users assign a priority to a `Person`.
+
+<puml src="diagrams/priority-feature/UpdatePriorityActivityDiagram.puml"/>
+
+### Implementation
 
 **The `Priority` class**
 
-The class is used to represent different priority levels for each `Person`.
-By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+The class is used to store the priority level of a `Person`.
+The priority level can only be one of the values in the `Level` enumeration.
+
+Each `Person` now has an additional attribute called priority.
+The `Person` class now has a reference to the `Priority` class.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
 
-<div style="page-break-after: always;"></div>
+<br>
+
+**Adding a new command keyword `priority`**
+
+To allow users to assign priorities, we added a new command keyword `priority`.
+The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
+
+<puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
+
+<br>
 
 **The `PriorityCommandParser` class**
 
-The class is used to parse the arguments into two information: `index` and `priority`.
-It will then return a `PriorityCommand` should the arguments are valid.
+The class is used to parse the string provided.
+It will return a `PriorityCommand` if the index and argument are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
-Taking `parse(1 high)`as an example.
+Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
+The sequence diagram below illustrates how the index and arguments are parsed.
+
+<puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
+
+<br>
+
 **The `PriorityCommand` class**
 
-The class is responsible in executing the task parsed by the `PriorityCommandParser`.
-It will update the `Priority` of a `Person`.
+The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`. 
+
+<puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
+
+<br>
+
+The sequence diagram illustrates the execution of the `PriorityCommand` and how the `Person` is updated.
+
+<puml src="diagrams/priority-feature/PriorityCommandSequenceDiagram.puml"/>
+
+<br>
 
 ### Design Consideration:
 
-The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
-The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+###### **Aspect: `Person` without an explicitly assigned `Priority`.**
+* **Alternative 1 (Current Choice):** Give each `Person` a default priority `NONE`.
+  * Pros: 
+    * Enhances code readability.
+    * Do not need to handle null cases which happens when `Person` has `null` priority.
+  * Cons:
+    * More complexity during testing, have to make sure that the default value does not affect the outcome of test cases.
+* **Alternative 2:** Keep the priority as `null`.
+  * Pros:
+    * Do not need to worry about the effect of default values on test cases.
+  * Cons:
+    * More `null` cases to handle.
+
+###### **Aspect: Choices of priority levels.**
+* **Alternative 1 (Current Choice):** Fix the choices of priority level, namely `HIGH`, `MEDIUM`, `LOW` and `NONE`. (`NONE` is chosen when user removes or does not assign a priority).
+  * Pros:
+    * Simplicity, users do not have to create an extensive list of options for priority levels.
+    * Ease of implementation.
+  * Cons:
+    * Reduced flexibility, users are now confined to limited choices of priority levels.
+* **Alternative 2:** Allow users to define their own priority levels.
+  * Pros:
+    * Flexibility, users can customise the product according to their needs.
+  * Cons:
+    * Hard to implement, need to handle dynamic or custom priority levels.
 
 <div style="page-break-after: always;"></div>
 
@@ -945,7 +985,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
+<<<<<<< HEAD
 #### Enhancement 1 : Deletion of all tags in a single command
+=======
+###### **Aspect: Searching for Multiple Insurances or Tags:**
+
+
+#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
+>>>>>>> master
 
 **Feature flaw:** <br/>
 As a customer might have many tags, and they could potentially want to remove all the 
@@ -977,6 +1024,75 @@ Expected: Error, an error message showing the usage of tag command is shown to t
 * `tag 1 dat/delete`<br/>
 Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
 is shown to the user.
+
+#### Enhancement 2: Edit appointment details
+
+**Feature flaw:** <br/>
+Users will not be able to easily update or modify appointment details if there are any changes or mistakes. If the appointment meeting location changes, or the scheduled time needs adjustment—without the ability to edit, users would have to delete and create a new appointment, potentially leading to confusion and decreased efficiency.
+
+**Proposed enhancement:**<br/>
+We provide a convenient way for users to edit the appointment details, date, time and venue, in a edit appointment command.The updated command format would be as follows: <br/>
+`editappt <index> [d/<date>] [t/time] [v/venue]`
+
+Justifications:
+* As we need the details of the new appointment to be changed, at least one of the optional fields must be present.
+
+Updated behaviours (original behaviours of appointment still hold):
+* If the proposed appointment details entered in `editappt` are the same as the current appointment, there will be a error message to the user that there is no change.
+
+**Examples:**<br/>
+* `editappt 1 d/2026-12-16`<br/>
+Expected: Edits the date of the first customer's appointment in the displayed list to be 16 Dec 2026, if it is different at first.
+
+* `editappt 1`<br/>
+Expected: Error, an error message informing the user to provide at least 1 appointment detail field to be changed.
+
+#### Enhancement 3: Unmark appointment recovers appointment details
+
+**Feature flaw:** <br/>
+After marking an appointment, the appointment details gets removed. However, after unmarking the appointment, the appointment details do not come back. This might cause the user to need to manually create the appointment meeting again, which can be a hassle, decreasing efficiency.
+
+
+**Proposed enhancement:**<br/>
+The unmark appointment `unmarkappt` will not only decrement the appointments completed counter by 1, but also restore the "marked" appointment details.
+
+Updated behaviours (original behaviours of appointment still hold):
+* Can be undone by marking the appointment again.
+
+**Examples:**<br/>
+* `unmarkappt 1`<br/>
+Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
+
+#### Enhancement 4: Inserting `clear` pops out a confirmation window
+
+**Feature flaw:** <br/>
+After the user inputs the `clear` command, the customer list is cleared immediately. In some situations where the user just type `clear` in accident, the consequence is undesirable.
+
+**Proposed enhancement:**<br/>
+Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
+
+#### Enhancement 5: find multiple tags and insurances
+**Feature flaw:** <br/>
+The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
+This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
+For instance, it becomes challenging to differentiate whether the keywords correspond to a combination like `Health Auto` or separate entities like `Health Insurance` and `Auto Coverage`.
+
+**Proposed enhancement:**<br/>
+To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`. 
+This modification allows the find feature to accommodate duplicate prefixes for both find and tag operations, thereby providing a more precise and unambiguous search capability.
+
+**Justifications:**<br/>
+* The problem we've spotted isn't just about insurance searches; it also affects tag searches.
+* This problem only arises with tags and insurances since these are only two attribute allowed multiple instances.
+
+**Examples:**<br/>
+* `find i/abc i/apple`<br/>
+  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively. 
+  For instance, if there are customer with insurances named `abc insurance` and `apple insurance`, they would be included in the results.
+* `find i/abc apple` <br/>
+  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
+  
+The enhanced feature ensures accurate and targeted search results.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1099,6 +1215,68 @@ Prerequisite : -
    Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
 
 <br/>
+
+## Find customers
+
+**Find customers**
+
+Prerequisite : -
+
+1. Test case : `find n/` <br/>
+   Expected : Show all customers in the list, because every customer must has a name.
+
+1. Test case : `find n/a`  <br/>
+   Expected : Show all customers has a as a prefix in their name.
+
+1. Test case : `find i/ABC t/male` <br/>
+   Expected : Show all customers has ABC matches with their insurances and has male matches with their tags.
+
+1. Test case : `find 123` <br/>
+   Expected : Customer list not updated. Error details shown in the status message (format error, one prefix must be provided).
+
+<br/>
+
+
+## Update remark of a customer
+
+**Updating the remark of a customer**
+
+Prerequisite : -
+
+1. Test case : `remark 2 he don't like pizza` <br/>
+   Expected : Customer is updated. Customer's remark update to `he don't like pizza`.
+
+1. Test case : `remark 2` `` <br/>
+   Expected : Customer is updated. Customer's remark is deleted.
+
+1. Test case : `remark` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (No index provided).
+<br/>
+
+## Updating priority of a customer
+
+**Updating the priority of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `priority 1 low` <br/>
+   Expected : Priority of customer at index 1 is updated to `low`.
+
+1. Test case : `priority 1 low`, old priority of customer at index 1 is also `low` <br/>
+   Expected : Error, details shown in the status message(person is not changed).
+
+1. Test case : `priority 0`<br/>
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `priority 1`<br/>
+   Expected : Error, details shown in the status message(format error since no priority is provided).
+
+1. Test case: `priority 1 -` <br/>
+   Expected : Priority of customer at index 1 is removed (and set to `NONE`), no priority label is shown in the Ui.
+
+<br/>
+
+<div style="page-break-after: always;"></div>
 
 ## Feature to show
 

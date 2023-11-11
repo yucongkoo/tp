@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.priority.Level.NONE;
 import static seedu.address.ui.FlowPaneLabel.Type;
 import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
 
@@ -12,10 +13,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Tag;
-import seedu.address.model.priority.Priority;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -95,7 +95,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void loadPriority() {
-        if (person.getPriorityLevel() != Priority.Level.NONE) {
+        if (person.getPriorityLevel() != NONE) {
             flowPaneLabels.getChildren().add(0,
                     createFlowPaneLabel(Type.PRIORITY, person.getPriority().toString()).getRoot());
         }

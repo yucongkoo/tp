@@ -1,19 +1,24 @@
 package seedu.address.model;
 
+import static seedu.address.model.priority.Level.HIGH;
+import static seedu.address.model.priority.Level.LOW;
+import static seedu.address.model.priority.Level.MEDIUM;
+import static seedu.address.model.priority.Level.NONE;
+
 import java.util.Comparator;
 import java.util.HashMap;
 
 import seedu.address.model.person.Person;
-import seedu.address.model.priority.Priority.Level;
+import seedu.address.model.priority.Level;
 
 /** Compares two Persons according to their priority level. **/
 public class PersonComparator implements Comparator<Person> {
     public static final HashMap<Level, Integer> LEVEL_TO_INT_MAP = new HashMap<>() {
         {
-            put(Level.HIGH, 3);
-            put(Level.MEDIUM, 2);
-            put(Level.LOW, 1);
-            put(Level.NONE, 0);
+            put(HIGH, 3);
+            put(MEDIUM, 2);
+            put(LOW, 1);
+            put(NONE, 0);
         }
     };
 
