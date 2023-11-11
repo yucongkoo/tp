@@ -958,7 +958,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 6. The application should be offered as a free service to the public.
 7. The application should be able to respond within one second.
-8. The application should be able to handle and support manual edits to the data file.
+8. The application should be able to handle and support manual edits to the data file, erroneous data files should not crash the application.
 
 ## Glossary
 
