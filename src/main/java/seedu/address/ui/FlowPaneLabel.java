@@ -12,8 +12,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.model.priority.Level;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.priority.Priority.Level;
 
 /**
  * A UI component that displays the label within the FlowPane.

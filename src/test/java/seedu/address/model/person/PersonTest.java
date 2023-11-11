@@ -34,7 +34,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.priority.Priority;
 import seedu.address.testutil.PersonBuilder;
 
