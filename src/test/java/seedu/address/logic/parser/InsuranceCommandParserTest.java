@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.InsuranceCommand;
 import seedu.address.logic.commands.InsuranceCommand.UpdatePersonInsuranceDescriptor;
-import seedu.address.model.insurance.Insurance;
+import seedu.address.model.person.Insurance;
 
 public class InsuranceCommandParserTest {
 
@@ -33,7 +33,7 @@ public class InsuranceCommandParserTest {
     }
 
     @Test
-    public void parse_addOneInsurnance_success() {
+    public void parse_addOneInsurance_success() {
         descriptor.setInsurancesToAdd(new Insurance("car insurance"));
 
         String argument = "1 ai/car insurance";

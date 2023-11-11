@@ -1,6 +1,6 @@
 package seedu.address.logic;
 
-import static seedu.address.model.insurance.Insurance.MAX_INSURANCE_COUNT;
+import static seedu.address.model.person.Insurance.MAX_INSURANCE_COUNT;
 import static seedu.address.model.person.Tag.MAXIMUM_TAGS_PER_PERSON;
 
 import java.util.Set;

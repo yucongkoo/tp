@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.insurance.Insurance;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Insurance;
 
 /**
  * Jackson-friendly version of {@code Insurance}

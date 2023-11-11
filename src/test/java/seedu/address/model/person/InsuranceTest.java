@@ -2,12 +2,10 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.model.insurance.Insurance.isValidInsuranceName;
+import static seedu.address.model.person.Insurance.isValidInsuranceName;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import seedu.address.model.insurance.Insurance;
 
 public class InsuranceTest {
 
