@@ -521,17 +521,114 @@ for such action.
 
 <div style="page-break-after: always;"></div>
 
-## \[Proposed\] Appointment feature
+##  Appointment feature
 
 ### Implementation
 
-The appointment feature supports 5 different type of command:
+The appointment feature supports 4 different types of commands:
+1. `addappt`
+2. `deleteappt`
+3. `markappt`
+4. `unmarkappt`
 
-1. `add appointment`
-2. `edit appointment`
-3. `delete appointment`
-4. `mark appointment`
-5. `unmark appointment`
+All 4 features extends from the `abstract` `Command` class, managing the details of an apppointment
+with a customer by editing the details of the `Appointment` and `AppointmentCount` class.
+
+**Implementing `Appointment`**
+
+This class is used to represent the appointment that each `Person` has, containing data:
+* `date` of the appointment in `dd-MMM-yyyy` format as a `String`
+* `time` of the appointment in `HHmm` format as a `String`
+* `venue` of the appointment as a `String` lesser than or equals to 30 characters 
+By default, each `Person` has an empty default appointment with an empty `Date`.
+
+<puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Implementing `AppointmentCommand`**
+`AppointmentCommand` executes its command on the Model, updating the Model accordingly to reflect the changes made by the command on the Model. Note that an `AppointmentCommand` is **non-executable** if the index is not in range or the person has an existing appointment.
+
+The sequence diagram below illustrates the interactions of `AppointmentCommand#execute(Model model)`, taking `execute(m)` call to the `AppointmentCommand` as an example. Note that the **reference frames have been omitted** as the operations performed are trivial.
+
+<puml src="diagrams/appointment-feature/ExecuteAppointmentSequenceDiagram.puml" />
+
+**Implementing `AppointmentCommandParser`**
+
+`AppointmentCommandParser` plays the role of parsing *command arguments* into two or more fields:
+
+* **index** indicating the index of the targeted customer in the displayed customer list
+* **date** the date of the appointment
+* **time** the time of the appointment(optional)
+* **venue** the venue of the appointment(optional)
+
+Both **index** and **date** minimally, will then be used to construct an AppointmentCommand.
+
+The sequence diagram below illustrates the interactions of `AppointmentCommandParser#parse(String arguments)`, taking `parse(1 d/2025-12-12 t/12:55 v/Clementi Mall)` call to the `AppointmentCommandParser` as an example.
+
+<puml src="diagrams/appointment-feature/AppointmentParserSequenceDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Integrating `AppointmentCommand` and `AppointmentCommandParser`**
+
+`AddressBookParser` recognises the command `addappt` and calls `parse(arguements)` from `AppointmentCommandParser`.
+
+`AppointmentCommandParser` will extract out the relevant information and create the corresponding `AppointmentCommand`
+which will be executed by other `Logic` components.
+
+The sequence diagram below shows the interactions between `Logic` components when the user inputs the command 
+`addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall`.
+
+<puml src="diagrams/appointment-feature/AddedAppointmentSequenceDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Implementing `Addappt`**
+
+`AppointmentCommandParser::parse()` uses `ParserUtil::parseDateString()`, `ParserUtil::parseTimeString()`
+to check if `date`, `time`, `venue` follows the required formatting and the new `Appointment` object created by `AppointmentCommandParser:parse()`.
+
+`AppointmentCommand::execute()` checks if the current `Appointment` is an `empty` appointment and if `true`, executes the `AppointmentCommand`.
+
+**Implementing `Deleteappt`**
+
+Using a similar logic flow as `addappt`, it creates a new `Appointment` object with empty `date`, `time` and `venue` to replace the existing `Appointment` object. The new `Appointment` object is created in `DeleteAppointmentCommandParser::parse()`.
+
+`Deleteappt` prevents the deletion of an appointment if there is no existing appointment by checking if the current `Appointment` is different from the `empty` appointment and if `true`, executes the `DeleteAppointmentCommand`.
+
+**Implementing `AppointmentCount`**
+
+This class contains the number of marked appointments with a customer, stored as `count`, the
+number of completed appointments as an `int`.
+
+**Implementing `Mark Appointment`**
+
+Using a similar logic flow as `addappt`, it checks if the current `Appointment` is different from the `empty` appointment and if `true`, `MarkAppointmentCommand::execute()` will use `AppointmentCount::incrementAppointmentCount()` to increase the count by 1.
+The existing `Appointment` object will be replaced by a new empty `Appointment` object, created in `MarkAppointmentCommandParser::parse()`.
+
+**Implementing `Unmarkappt`**
+
+Using a similar logic flow as `addappt`, it prevents the user from unmarking an appointment if there is an existing
+appointment by checking if the current `Appointment` is the same as the `empty` appointment and if `true`,
+`UnmarkAppointmentCommand::execute()` will use `AppointmentCount::DecrementAppointmentCount()` to decrease the count by 1.
+
+<div style="page-break-after: always;"></div>
+
+### Design Considerations:
+
+###### **Aspect: Implementation of Appointment feature**
+
+* **Alternative 1 (Current choice)** : Have the appointment features split into 4 sub-features.
+  * Pros: Isolation of a single sub-feature to a specific command is more intuitive
+  * Pros: Reduces coupling
+  * Cons: More checks and testcases are needed
+  * Cons: More classes added, resulting in a larger codebase
+* **Alternative 2**: Combine all sub-features into one appointment command.
+  * Pros: Reduce the number of commands in the application making lesser to manage
+  * Cons: There will be less abstraction, more coupling and more bug-prone: The same command
+    class and parser class will handle all the four different features
+
 
 <div style="page-break-after: always;"></div>
 
@@ -720,31 +817,34 @@ alongside helping users increase the chance of sealing deals with customers.
 
 Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
-| Priority | As a …​          | I want to …​                                                                       | So that I can…​                                                              |
-|----------|------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| `* * *`  | user             | be able to add new contacts to EzContact                                           | keep track of my contacts using EzContact                                    |
-| `* * *`  | user             | be able to update my contacts' information easily                                  | easily maintain up-to-date information of my contacts                        |
-| `* * *`  | user             | be able to search for specific contacts using their names                          | quickly lookup a contact and get their information                           |
-| `* * *`  | user             | be able to delete contacts                                                         |                                                                              |
-| `* * *`  | user             | be able to list out my contacts in EzContact                                       | see all my saved contacts in one view                                        |
-| `* * *`  | insurance agent  | be able to add customers' contacts to EzContact                                    | reach out to existing and potential customers easily                         |
-| `* * *`  | insurance agent  | be able to assign priorities to each customer                                      | prioritise customers that have a higher chance on sealing a deal             |
-| `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                  | check customers' insurance profile easily                                    |
-| `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan        | quickly know who to find when there are changes to a specific insurance plan |
-| `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                  | easily identify and remember my customers using these tag                    |
-| `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names) | be more flexible when searching for contacts                                 |
-| `* *`    | user             | be able to see my total numbers of contact entries in EzContact                    | know how many contacts I have in EzContact                                   |
-| `* *`    | forgetful person | be able to search for contacts using partial names                                 | find a contact without having to remember their full name                    |
-| `* *`    | forgetful person | have EzContact remind me of important task associated with certain contacts        | prevent myself from forgetting important tasks                               |
-| `* *`    | forgetful person | be able to add remarks to a certain contact                                        | be reminded of things to take note of when contacting a person               |
-| `* *`    | careless person  | be able to undo previous command                                                   | recover from unintentional commands                                          |
-| `* *`    | careless person  | be stopped from adding duplicate entries                                           | avoid myself from adding redundant data                                      |
-| `* *`    | careless person  | be suggested by EzContact for similar names when I'm searching for a person        | avoid myself from typographical errors                                       |
-| `* *`    | first time user  | be able to know commands in EzContact                                              | play around with the features and get used to the application                |
-| `* *`    | fast typist      | have short commands                                                                | execute commands faster                                                      |
-| `*`      | user             | be able to import my data from external sources into EzContact                     | avoid myself from having to copy my data manually                            |
-| `*`      | user             | be able to export my data                                                          | have a backup of data in case of data loss                                   |
-| `*`      | advanced user    | have multiple contact books                                                        | neatly organize my contacts based on contexts                                |
+| Priority | As a …​          | I want to …​                                                                           | So that I can…​                                                                            |
+|----------|------------------|----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| `* * *`  | user             | be able to add new contacts to EzContact                                               | keep track of my contacts using EzContact                                                  |
+| `* * *`  | user             | be able to update my contacts' information easily                                      | easily maintain up-to-date information of my contacts                                      |
+| `* * *`  | user             | be able to search for specific contacts using their names                              | quickly lookup a contact and get their information                                         |
+| `* * *`  | user             | be able to delete contacts                                                             |                                                                                            |
+| `* * *`  | user             | be able to list out my contacts in EzContact                                           | see all my saved contacts in one view                                                      |
+| `* * *`  | insurance agent  | be able to add customers' contacts to EzContact                                        | reach out to existing and potential customers easily                                       |
+| `* * *`  | insurance agent  | be able to assign priorities to each customer                                          | prioritise customers that have a higher chance on sealing a deal                           |
+| `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                      | check customers' insurance profile easily                                                  |
+| `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan            | quickly know who to find when there are changes to a specific insurance plan               |
+| `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                      | easily identify and remember my customers using these tag                                  |
+| `* * *`  | insurance agent  | be able to add details of appointments with customers                                  | keep track of appointments with customers                                                  | 
+| `* * *`  | insurance agent  | be able to delete cancelled appointments with customers                                | prevent confusion when arranging my schedule                                               |              
+| `* * *`  | insurance agent  | be able to mark completed appointments with customers                                  | keep track of appointments completed with the customer to guage their potential interest   |
+| `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names)     | be more flexible when searching for contacts                                               |
+| `* *`    | user             | be able to see my total numbers of contact entries in EzContact                        | know how many contacts I have in EzContact                                                 |
+| `* *`    | forgetful person | be able to search for contacts using partial names                                     | find a contact without having to remember their full name                                  |
+| `* *`    | forgetful person | have EzContact remind me of important task associated with certain contacts            | prevent myself from forgetting important tasks                                             |
+| `* *`    | forgetful person | be able to add remarks to a certain contact                                            | be reminded of things to take note of when contacting a person                             |
+| `* *`    | careless person  | be able to undo previous command                                                       | recover from unintentional commands                                                        |
+| `* *`    | careless person  | be stopped from adding duplicate entries                                               | avoid myself from adding redundant data                                                    |
+| `* *`    | careless person  | be suggested by EzContact for similar names when I'm searching for a person            | avoid myself from typographical errors                                                     |
+| `* *`    | first time user  | be able to know commands in EzContact                                                  | play around with the features and get used to the application                              |
+| `* *`    | fast typist      | have short commands                                                                    | execute commands faster                                                                    |
+| `*`      | user             | be able to import my data from external sources into EzContact                         | avoid myself from having to copy my data manually                                          |
+| `*`      | user             | be able to export my data                                                              | have a backup of data in case of data loss                                                 |
+| `*`      | advanced user    | have multiple contact books                                                            | neatly organize my contacts based on contexts                                              |
 
 <div style="page-break-after: always;"></div>
 
@@ -940,6 +1040,82 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2b. User provided remark that will not update the specified customer.<br/>
 &emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
+
+#### Updating appointment of a customer
+
+**Use Case: UC11 - add an appointment to a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index and appointment details(date, time, venue) of the target customer.<br/>
+&emsp;3. System adds the appointment to the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. User provided invalid appointment input parameters.<br/>
+&emsp;&emsp;2b1. System shows an error message of the input constraints.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2c. An appointment has already been scheduled.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+#### Updating appointment of a customer
+
+**Use Case: UC12 - delete a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System deletes the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated empty appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is no existing appointment to delete.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+**Use Case: UC13 - mark a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System marks the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is no existing appointment to mark.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+**Use Case: UC14 - unmark a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System unmarks the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is an existing appointment.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
 
 <div style="page-break-after: always;"></div>
 
@@ -1251,6 +1427,18 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
+## Feature to show
+
+**Scenario**
+
+Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
+
+1. Test case : `value` <br/>
+   Expected : `result`
+1. ...
+
+_{ more test cases …​ }_
+
 **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
 
@@ -1403,4 +1591,38 @@ Prerequisite : -
 
 <br/>
 
+## Updating appointment of a customer
+
+**Updating the appointment of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `addappt 1 d/2025-12-12` <br/>
+   Expected : Appointment of customer at index 1 is updated to 12 Dec 2025 with empty time and venue.
+
+1. Test case : `addappt 1 d/2025-12-12`, customer at index 1 has existing appointment <br/>
+   Expected : Error, details shown in the status message(appointment is not added).
+
+1. Test case : `deleteappt 1`, customer at index 1 has existing appointment <br/>
+   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment.
+
+1. Test case : `deleteappt 1`, customer at index 1 does not have an existing appointment <br/>
+   Expected : Error, details shown in the status message(no appointment).
+
+1. Test case : `markappt 1`, customer at index 1 has an existing appointment <br/>
+   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment, and the appointments 
+completed counter is incremented by 1.
+
+1. Test case : `markappt 1`, customer at index 1 does not have an existing appointment <br/>
+   Expected : Error, details shown in the status message(No appointment exists to be marked).
+
+1. Test case : `markappt 1`, customer at index 1 does not have existing appointment <br/>
+   Expected : Appointments completed counter of customer at index 1 is deceremented by 1.
+
+1. Test case : `umarkappt 1`, customer at index 1 has an existing appointment <br/>
+   Expected : Error, details shown in the status message(cannot be undone if no completed appointment).
+
+<br/>
+
 <div style="page-break-after: always;"></div>
+
