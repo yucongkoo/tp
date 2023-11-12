@@ -1,0 +1,29 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User provides index of the targeted
+customer in the displayed list;
+
+if () then
+    :User provides tags to add to and/or \ndelete from the targeted customer;
+
+    'Since the beta syntax does not support placing the condition outside the
+    'diamond we place it as the true branch instead.
+    if () then
+        :System update tags of targeted customer;
+        if () then
+        :System saves updated customer to Model;
+        else ([updated customer's tag set is not valid])
+            stop
+        endif
+        stop
+    else ([tags provided is not valid])
+        stop
+    endif
+else ([index provided is not valid])
+    stop
+endif
+
+@enduml

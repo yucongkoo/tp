@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -10,8 +12,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.model.priority.Level;
 import seedu.address.model.priority.Priority;
-import seedu.address.model.priority.Priority.Level;
 
 /**
  * A UI component that displays the label within the FlowPane.
@@ -39,11 +41,10 @@ public class FlowPaneLabel extends UiPart<Region> {
     private static final String insuranceTextColorInHexadecimal = "#000000";
     private static final String priorityTextColorInHexadecimal = "#FFFFFF";
 
-    @javafx.fxml.FXML
+    @FXML
     private HBox flowPaneLabel;
     @FXML
     private Label value;
-    private Level priorityLevel;
 
     private FlowPaneLabel(String text, String textColorInHexadecimal, Color backgroundColor) {
         super(FXML);
@@ -58,6 +59,8 @@ public class FlowPaneLabel extends UiPart<Region> {
      * Creates and returns a {@code FlowPaneLabel} styled according to the {@code Type} and {@code text}.
      */
     public static FlowPaneLabel createFlowPaneLabel(Type type, String text) {
+        requireAllNonNull(type, text);
+
         switch (type) {
         case TAG:
             return new FlowPaneLabel(getTextToDisplayForType(text, type),
@@ -75,14 +78,20 @@ public class FlowPaneLabel extends UiPart<Region> {
     }
 
     private static Background getBackgroundWithColor(Color color) {
+        requireNonNull(color);
+
         return new Background(new BackgroundFill(color, radius, padding));
     }
 
     private static String getTextStylingWithColor(String colorInHexadecimal) {
+        requireNonNull(colorInHexadecimal);
+
         return String.format("-fx-text-fill: %s; -fx-background-color: transparent", colorInHexadecimal);
     }
 
     private static String getTextToDisplayForType(String text, Type type) {
+        requireAllNonNull(text, type);
+
         switch (type) {
         case TAG:
             return "[ t ] " + text;
@@ -97,6 +106,8 @@ public class FlowPaneLabel extends UiPart<Region> {
     }
 
     private static Color getPriorityBackgroundColor(String priority) {
+        requireNonNull(priority);
+
         Level priorityLevel = Priority.parsePriorityLevel(priority);
 
         switch (priorityLevel) {
@@ -106,6 +117,9 @@ public class FlowPaneLabel extends UiPart<Region> {
             return mediumPriorityBackgroundColor;
         case LOW:
             return lowPriorityBackgroundColor;
+        case NONE:
+            // should not reach here
+            throw new IllegalArgumentException("Should not have a FlowPaneLabel for PrioritiyLevel.NONE.");
         default:
             // should not reach here
             throw new IllegalArgumentException("Switch case for enum Level reached default branch.");

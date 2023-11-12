@@ -58,6 +58,8 @@ public class NonEmptyAddress extends Address {
     }
 
     private static boolean isValidNonEmptyAddress(String address) {
+        requireNonNull(address);
+
         return isValidAddress(address) && !address.isEmpty();
     }
 }

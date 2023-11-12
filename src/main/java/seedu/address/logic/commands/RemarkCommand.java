@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -25,7 +26,7 @@ public class RemarkCommand extends Command {
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from customer: %1$s";
     public static final String MESSAGE_USAGE = "Usage: \n" + COMMAND_WORD
             + " <index> "
-            + "<remarks>\n";
+            + "[remarks]\n";
 
     private static final Logger logger = LogsCenter.getLogger(RemarkCommand.class);
     private final Index index;
@@ -60,7 +61,7 @@ public class RemarkCommand extends Command {
                 personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getInsurances(),
                 personToEdit.getAppointment(), personToEdit.getAppointmentCount(), personToEdit.getPriority());
 
-        CommandUtil.verifyPersonChanged(personToEdit, editedPerson);
+        CommandUtil.verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
 
         model.setPerson(personToEdit, editedPerson);
 

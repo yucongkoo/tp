@@ -20,7 +20,8 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE =
             "Usage: \n"
-            + COMMAND_WORD + " <prefix> [keywords]... [<prefix> [keywords]]...\n";
+            + COMMAND_WORD + " [n/[keywords]] [p/[keywords]] [e/[keywords]] "
+            + "[a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]\n";
     private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
     private final PersonContainsKeywordsPredicate predicate;
 
