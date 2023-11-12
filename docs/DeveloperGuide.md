@@ -340,7 +340,7 @@ It tests each customer in the list with given `keywords`(search prompt given by 
 ###### **Implementing `PersonContainsKeywordsPredicate`**
 
 This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
-'NameContainsKeywordsPredicate' to check if specific criteria are met.
+`NameContainsKeywordsPredicate` to check if specific criteria are met.
 
 <div style="page-break-after: always;"></div>
 
@@ -660,6 +660,9 @@ Taking `parse("2 he likes pizza")`as an example.
 
 The class is responsible in executing the task parsed by the `RemarkCommandParser`.
 It will update the `Remark` of a `Person` and generate a `CommandResult` for the output.
+Below is the class diagram of the `RemarkCommand` class.
+
+<puml src="diagrams/remark-feature/RemarkClass.puml"/>
 
 ### Design Consideration:
 
