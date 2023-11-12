@@ -1272,7 +1272,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-_{ more test cases …​ }_
 
 ## Deleting a person
 
@@ -1289,7 +1288,6 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-_{ more test cases …​ }_
 
 ## Saving data
 
@@ -1406,15 +1404,3 @@ Prerequisite : -
 <br/>
 
 <div style="page-break-after: always;"></div>
-
-## Feature to show
-
-**Scenario**
-
-Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
-
-1. Test case : `value` <br/>
-    Expected : `result`
-1. ...
-
-_{ more test cases …​ }_
