@@ -554,17 +554,113 @@ for such action.
 
 <div style="page-break-after: always;"></div>
 
-## \[Proposed\] Appointment feature
+##  Appointment feature
 
 ### Implementation
 
-The appointment feature supports 5 different type of command:
+The appointment feature supports 4 different types of commands:
+1. `addappt`
+2. `deleteappt`
+3. `markappt`
+4. `unmarkappt`
 
-1. `add appointment`
-2. `edit appointment`
-3. `delete appointment`
-4. `mark appointment`
-5. `unmark appointment`
+All 4 features extends from the `abstract` `Command` class, managing the details of an apppointment
+with a customer by editing the details of the `Appointment` and `AppointmentCount` class.
+
+**Implementing `Appointment`**
+
+This class is used to represent the appointment that each `Person` has, containing data:
+* `date` of the appointment in `dd-MMM-yyyy` format as a `String`
+* `time` of the appointment in `HHmm` format as a `String`
+* `venue` of the appointment as a `String` lesser than or equals to 30 characters 
+By default, each `Person` has an empty default appointment with an empty `Date`.
+
+<puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Implementing `AppointmentCommand`**
+`AppointmentCommand` executes its command on the Model, updating the Model accordingly to reflect the changes made by the command on the Model. Note that an `AppointmentCommand` is **non-executable** if the index is not in range or the person has an existing appointment.
+
+The sequence diagram below illustrates the interactions of `AppointmentCommand#execute(Model model)`, taking `execute(m)` call to the `AppointmentCommand` as an example. Note that the **reference frames have been omitted** as the operations performed are trivial.
+
+<puml src="diagrams/appointment-feature/ExecuteAppointmentSequenceDiagram.puml" />
+
+**Implementing `AppointmentCommandParser`**
+
+`AppointmentCommandParser` plays the role of parsing *command arguments* into two or more fields:
+
+* **index** indicating the index of the targeted customer in the displayed customer list
+* **date** the date of the appointment
+* **time** the time of the appointment(optional)
+* **venue** the venue of the appointment(optional)
+
+Both **index** and **date** minimally, will then be used to construct an AppointmentCommand.
+
+The sequence diagram below illustrates the interactions of `AppointmentCommandParser#parse(String arguments)`, taking `parse(1 d/2025-12-12 t/12:55 v/Clementi Mall)` call to the `AppointmentCommandParser` as an example.
+
+<puml src="diagrams/appointment-feature/AppointmentParserSequenceDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Integrating `AppointmentCommand` and `AppointmentCommandParser`**
+
+`AddressBookParser` recognises the command `addappt` and calls `parse(arguements)` from `AppointmentCommandParser`.
+
+`AppointmentCommandParser` will extract out the relevant information and create the corresponding `AppointmentCommand`
+which will be executed by other `Logic` components.
+
+The sequence diagram below shows the interactions between `Logic` components when the user inputs the command 
+`addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall`.
+
+<puml src="diagrams/appointment-feature/AddedAppointmentSequenceDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
+
+**Implementing `Addappt`**
+
+`AppointmentCommandParser::parse()` uses `ParserUtil::parseDateString()`, `ParserUtil::parseTimeString()`
+to check if `date`, `time`, `venue` follows the required formatting and the new `Appointment` object created by `AppointmentCommandParser:parse()`.
+
+`AppointmentCommand::execute()` checks if the current `Appointment` is an `empty` appointment and if `true`, executes the `AppointmentCommand`.
+
+**Implementing `Deleteappt`**
+
+Creates a new `Appointment` object with empty `date`, `time` and `venue` to replace the existing `Appointment` object. The new `Appointment` object is created in `DeleteAppointmentCommandParser::parse()`.
+
+`Deleteappt` prevents the deletion of an appointment if there is no existing appointment by checking if the current `Appointment` is different from the `empty` appointment and if `true`, executes the `DeleteAppointmentCommand`.
+
+**Implementing `AppointmentCount`**
+
+This class contains the number of marked appointments with a customer, stored as `count`, the
+number of completed appointments as an `int`.
+
+**Implementing `Mark Appointment`**
+
+Checks if the current `Appointment` is different from the `empty` appointment and if `true`, `MarkAppointmentCommand::execute()` will use `AppointmentCount::incrementAppointmentCount()` to increase the count by 1.
+The existing `Appointment` object will be replaced by a new empty `Appointment` object, created in `MarkAppointmentCommandParser::parse()`.
+
+**Implementing `Unmarkappt`**
+
+It prevents the user from unmarking an appointment if there is an existing
+appointment by checking if the current `Appointment` is the same as the `empty` appointment and if `true`,
+`UnmarkAppointmentCommand::execute()` will use `AppointmentCount::DecrementAppointmentCount()` to decrease the count by 1.
+
+
+### Design Considerations:
+
+###### **Aspect: Implementation of Appointment feature**
+
+* **Alternative 1 (Current choice)** : Have the appointment features split into 4 sub-features.
+  * Pros: Isolation of a single sub-feature to a specific command is more intuitive
+  * Pros: Reduces coupling
+  * Cons: More checks and testcases are needed
+  * Cons: More classes added, resulting in a larger codebase
+* **Alternative 2**: Combine all sub-features into one appointment command.
+  * Pros: Reduce the number of commands in the application making lesser to manage
+  * Cons: There will be less abstraction, more coupling and more bug-prone: The same command
+    class and parser class will handle all the four different features
+
 
 <div style="page-break-after: always;"></div>
 
