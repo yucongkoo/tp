@@ -597,7 +597,7 @@ to check if `date`, `time`, `venue` follows the required formatting and the new 
 
 **Implementing `Deleteappt`**
 
-Creates a new `Appointment` object with empty `date`, `time` and `venue` to replace the existing `Appointment` object. The new `Appointment` object is created in `DeleteAppointmentCommandParser::parse()`.
+Using a similar logic flow as `addappt`, it creates a new `Appointment` object with empty `date`, `time` and `venue` to replace the existing `Appointment` object. The new `Appointment` object is created in `DeleteAppointmentCommandParser::parse()`.
 
 `Deleteappt` prevents the deletion of an appointment if there is no existing appointment by checking if the current `Appointment` is different from the `empty` appointment and if `true`, executes the `DeleteAppointmentCommand`.
 
@@ -608,15 +608,16 @@ number of completed appointments as an `int`.
 
 **Implementing `Mark Appointment`**
 
-Checks if the current `Appointment` is different from the `empty` appointment and if `true`, `MarkAppointmentCommand::execute()` will use `AppointmentCount::incrementAppointmentCount()` to increase the count by 1.
+Using a similar logic flow as `addappt`, it checks if the current `Appointment` is different from the `empty` appointment and if `true`, `MarkAppointmentCommand::execute()` will use `AppointmentCount::incrementAppointmentCount()` to increase the count by 1.
 The existing `Appointment` object will be replaced by a new empty `Appointment` object, created in `MarkAppointmentCommandParser::parse()`.
 
 **Implementing `Unmarkappt`**
 
-It prevents the user from unmarking an appointment if there is an existing
+Using a similar logic flow as `addappt`, it prevents the user from unmarking an appointment if there is an existing
 appointment by checking if the current `Appointment` is the same as the `empty` appointment and if `true`,
 `UnmarkAppointmentCommand::execute()` will use `AppointmentCount::DecrementAppointmentCount()` to decrease the count by 1.
 
+<div style="page-break-after: always;"></div>
 
 ### Design Considerations:
 
@@ -832,6 +833,9 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                  | check customers' insurance profile easily                                    |
 | `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan        | quickly know who to find when there are changes to a specific insurance plan |
 | `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                  | easily identify and remember my customers using these tag                    |
+| `* * *`  | insurance agent  | be able to add details of appointments with customers                                  |  keep track of appointments with customers
+| `* * *`  | insurance agent  | be able to delete cancelled appointments with customers                                  |  prevent confusion when arranging my schedule
+| `* * *`  | insurance agent  | be able to mark completed appointments with customers                                  |  keep track of appointments completed with the customer to guage their potential interest
 | `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names) | be more flexible when searching for contacts                                 |
 | `* *`    | user             | be able to see my total numbers of contact entries in EzContact                    | know how many contacts I have in EzContact                                   |
 | `* *`    | forgetful person | be able to search for contacts using partial names                                 | find a contact without having to remember their full name                    |
@@ -1042,6 +1046,82 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
+#### Updating appointment of a customer
+
+**Use Case: UC11 - add an appointment to a customer**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index and appointment details(date, time, venue) of the target customer.<br/>
+&emsp;3. System adds the appointment to the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. User provided invalid appointment input parameters.<br/>
+&emsp;&emsp;2b1. System shows an error message of the input constraints.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2c. An appointment has already been scheduled.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+#### Updating appointment of a customer
+
+**Use Case: UC12 - delete a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System deletes the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated empty appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is no existing appointment to delete.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+**Use Case: UC13 - mark a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System marks the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is no existing appointment to mark.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+**Use Case: UC14 - unmark a customer's appointment**
+
+**Mss:**<br/>
+&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;2. User enters index of the target customer.<br/>
+&emsp;3. System unmarks the appointment of the specified customer accordingly.<br/>
+&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;Use case ends.<br/>
+
+**Extensions:**<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;2b. There is an existing appointment.<br/>
+&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+
+
 <div style="page-break-after: always;"></div>
 
 ## Non-Functional Requirements
@@ -1199,6 +1279,18 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
+## Feature to show
+
+**Scenario**
+
+Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
+
+1. Test case : `value` <br/>
+   Expected : `result`
+1. ...
+
+_{ more test cases …​ }_
+
 **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
 
@@ -1353,16 +1445,39 @@ Prerequisite : -
 
 <br/>
 
+## Updating appointment of a customer
+
+**Updating the appointment of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `addappt 1 d/2025-12-12` <br/>
+   Expected : Appointment of customer at index 1 is updated to 12 Dec 2025 with empty time and venue.
+
+1. Test case : `addappt 1 d/2025-12-12`, customer at index 1 has existing appointment <br/>
+   Expected : Error, details shown in the status message(appointment is not added).
+
+1. Test case : `deleteappt 1`, customer at index 1 has existing appointment <br/>
+   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment.
+
+1. Test case : `deleteappt 1`, customer at index 1 does not have an existing appointment <br/>
+   Expected : Error, details shown in the status message(no appointment).
+
+1. Test case : `markappt 1`, customer at index 1 has an existing appointment <br/>
+   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment, and the appointments 
+completed counter is incremented by 1.
+
+1. Test case : `markappt 1`, customer at index 1 does not have an existing appointment <br/>
+   Expected : Error, details shown in the status message(No appointment exists to be marked).
+
+1. Test case : `markappt 1`, customer at index 1 does not have existing appointment <br/>
+   Expected : Appointments completed counter of customer at index 1 is deceremented by 1.
+
+1. Test case : `umarkappt 1`, customer at index 1 has an existing appointment <br/>
+   Expected : Error, details shown in the status message(cannot be undone if no completed appointment).
+
+<br/>
+
 <div style="page-break-after: always;"></div>
 
-## Feature to show
 
-**Scenario**
-
-Prerequisite : [condition needed to be fulfilled to perform the action if applicable]
-
-1. Test case : `value` <br/>
-    Expected : `result`
-1. ...
-
-_{ more test cases …​ }_
