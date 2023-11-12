@@ -929,19 +929,18 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC10 - update remark of a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests to list out the customers.<br/>
-&emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index and remark of the target customer.<br/>
-&emsp;4. System updates the remark of specified customer accordingly.<br/>
-&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User enters index and remark of the target customer.<br/>
+&emsp;3. System updates the remark of specified customer accordingly.<br/>
+&emsp;4. System displays the details of the updated customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
-&emsp;3a. User provided invalid index or information.<br/>
-&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;2a. User provided invalid index or information.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3b. User provided remark that will not update the specified customer.<br/>
-&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;2b. User provided remark that will not update the specified customer.<br/>
+&emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
 <div style="page-break-after: always;"></div>
