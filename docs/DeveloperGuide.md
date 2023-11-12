@@ -163,6 +163,7 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 # **Implementation**
 
@@ -199,6 +200,8 @@ there are 3 main steps we need to implement:
 2. Implement a `TagCommandParser` class that will parse the _command arguments_ and construct a `TagCommand` accordingly.
 3. Implement a `TagCommand` class that will handle the main execution logic of the tag features and return a `CommandResult` accordingly.
 
+<div style="page-break-after: always;"></div>
+
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
 
@@ -207,6 +210,8 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager
 
 **Note:**<br/>The lifeline for `TagCommandParser` and `TagCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
+
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `TagCommandParser`**
 
@@ -229,6 +234,8 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 The following class diagram illustrates how a `TagCommand` holds information required for its execution.
 
 <puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
+
+<div style="page-break-after: always;"></div>
 
 `TagCommand` plays the role of executing the main logic of the tag feature, it will:
 * Use information encapsulated in it to create the updated `Person` object accordingly.
@@ -278,6 +285,8 @@ storing tags.
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
+
+<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
@@ -421,13 +430,13 @@ The implementation of the Insurance feature consists of few parts, distributed a
 1. `InsuranceCommand` : executes the action to assign/remove insurance
 1. `InsuranceCommandParser` : parses the command to obtain required information
 
+<div style="page-break-after: always;"></div>
+
 **Implementing `Insurance`**
 
 `Insurance` plays the role of storing information about an insurance and to be displayed on the product, as a single unit. It holds only one information, `insuranceName`.
 
 <puml src="diagrams/insurance-feature/PersonInsuranceClassDiagram.puml"/>
-
-<div style="page-break-after: always;"></div>
 
 **Implementing `InsuranceCommand`**
 
@@ -542,7 +551,7 @@ This class is used to represent the appointment that each `Person` has, containi
 * `venue` of the appointment as a `String` lesser than or equals to 30 characters 
 By default, each `Person` has an empty default appointment with an empty `Date`.
 
-<puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml" />
+<puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml"/>
 
 <div style="page-break-after: always;"></div>
 
@@ -551,7 +560,9 @@ By default, each `Person` has an empty default appointment with an empty `Date`.
 
 The sequence diagram below illustrates the interactions of `AppointmentCommand#execute(Model model)`, taking `execute(m)` call to the `AppointmentCommand` as an example. Note that the **reference frames have been omitted** as the operations performed are trivial.
 
-<puml src="diagrams/appointment-feature/ExecuteAppointmentSequenceDiagram.puml" />
+<puml src="diagrams/appointment-feature/ExecutedAppointmentSequenceDiagram.puml"/>
+
+<div style="page-break-after: always;"></div>
 
 **Implementing `AppointmentCommandParser`**
 
@@ -582,8 +593,6 @@ The sequence diagram below shows the interactions between `Logic` components whe
 
 <puml src="diagrams/appointment-feature/AddedAppointmentSequenceDiagram.puml" />
 
-<div style="page-break-after: always;"></div>
-
 **Implementing `Addappt`**
 
 `AppointmentCommandParser::parse()` uses `ParserUtil::parseDateString()`, `ParserUtil::parseTimeString()`
@@ -591,21 +600,29 @@ to check if `date`, `time`, `venue` follows the required formatting and the new 
 
 `AppointmentCommand::execute()` checks if the current `Appointment` is an `empty` appointment and if `true`, executes the `AppointmentCommand`.
 
+<br/>
+
 **Implementing `Deleteappt`**
 
 Using a similar logic flow as `addappt`, it creates a new `Appointment` object with empty `date`, `time` and `venue` to replace the existing `Appointment` object. The new `Appointment` object is created in `DeleteAppointmentCommandParser::parse()`.
 
 `Deleteappt` prevents the deletion of an appointment if there is no existing appointment by checking if the current `Appointment` is different from the `empty` appointment and if `true`, executes the `DeleteAppointmentCommand`.
 
+<div style="page-break-after: always;"></div>
+
 **Implementing `AppointmentCount`**
 
 This class contains the number of marked appointments with a customer, stored as `count`, the
 number of completed appointments as an `int`.
 
+<br/>
+
 **Implementing `Mark Appointment`**
 
 Using a similar logic flow as `addappt`, it checks if the current `Appointment` is different from the `empty` appointment and if `true`, `MarkAppointmentCommand::execute()` will use `AppointmentCount::incrementAppointmentCount()` to increase the count by 1.
 The existing `Appointment` object will be replaced by a new empty `Appointment` object, created in `MarkAppointmentCommandParser::parse()`.
+
+<br/>
 
 **Implementing `Unmarkappt`**
 
@@ -655,6 +672,8 @@ The `Person` class now has a reference to the `Priority` class.
 
 <br>
 
+<div style="page-break-after: always;"></div>
+
 **Adding a new command word `priority`**
 
 To allow users to assign priorities, we added a new command word `priority`.
@@ -675,6 +694,8 @@ Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
+<div style="page-break-after: always;"></div>
+
 The sequence diagram below illustrates how the index and priority are parsed.
 
 <puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
@@ -688,6 +709,8 @@ The class diagram below shows the main attributes and methods involved when assi
 <puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
 
 <br>
+
+<div style="page-break-after: always;"></div>
 
 The sequence diagram illustrates the execution of the `PriorityCommand` and how the `Person` is updated.
 
@@ -709,6 +732,8 @@ The sequence diagram illustrates the execution of the `PriorityCommand` and how 
     * Do not need to worry about the effect of default values on test cases.
   * Cons:
     * More `null` cases to handle.
+
+<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Choices of priority levels.**
 * **Alternative 1 (Current Choice):** Fix the choices of priority level, namely `HIGH`, `MEDIUM`, `LOW` and `NONE`. (`NONE` is chosen when user removes or does not assign a priority).
@@ -1041,6 +1066,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
+<div style="page-break-after: always;"></div>
+
 #### Updating appointment of a customer
 
 **Use Case: UC11 - add an appointment to a customer**
@@ -1081,6 +1108,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2b. There is no existing appointment to delete.<br/>
 &emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
+
+<div style="page-break-after: always;"></div>
 
 **Use Case: UC13 - mark a customer's appointment**
 
@@ -1177,6 +1206,8 @@ Expected: Error, an error message showing the usage of tag command is shown to t
 Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
 is shown to the user.
 
+<div style="page-break-after: always;"></div>
+
 #### Enhancement 2: Edit appointment details
 
 **Feature flaw:** <br/>
@@ -1198,6 +1229,8 @@ Expected: Edits the date of the first customer's appointment in the displayed li
 
 * `editappt 1`<br/>
 Expected: Error, an error message informing the user to provide at least 1 appointment detail field to be changed.
+
+<div style="page-break-after: always;"></div>
 
 #### Enhancement 3: Unmark appointment recovers appointment details
 
@@ -1222,6 +1255,8 @@ After the user inputs the `clear` command, the customer list is cleared immediat
 
 **Proposed enhancement:**<br/>
 Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
+
+<div style="page-break-after: always;"></div>
 
 #### Enhancement 5: find multiple tags and insurances
 **Feature flaw:** <br/>
@@ -1265,6 +1300,7 @@ Allow `<phone number>` with format of `1234 5678` and `1234-5678`
 * `edit 1 p/1234 5678`
     Expected: Update the `<phone number>` of customer at index 1 to `1234 5678`
 
+<div style="page-break-after: always;"></div>
 
 #### Enhancement 7: Improve criteria for duplicate customer
 
@@ -1295,6 +1331,7 @@ identical name. These restrictions give the users maximum flexibility and functi
 * `add n/joshua p/12345678 e/abc@gmail.com`, `add n/james p/12345678 /defg@gmail.com`
     Expected : Error message is thrown indicating that the `12345678` already exist in the contact book
 
+<div style="page-break-after: always;"></div>
 
 #### Enhancement 8: Delete all insurances with one command
 
