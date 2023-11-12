@@ -117,7 +117,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:**<br/>The lifeline for `DeleteCommandParser` and `DeleteCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 How the `Logic` component works:
@@ -181,11 +181,14 @@ This section describes some noteworthy details on how certain features are imple
 This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
 
-The activity diagram below shows the action sequence of updating the tags of a customer.
+###### **Overview**
+
+The activity diagram below shows the action sequence of updating the tags of a customer. Note that definition of not
+valid indexes/tags/tag set will be defined later in following sections.
 
 <puml src="diagrams/tag-feature/ExecuteActivityDiagram.puml"/>
 
-### Implementation
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `Tag`**
 
@@ -195,13 +198,14 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
-###### **Integrating a command for handling tag features into the execution logic**
+###### **Integrating a command for handling tag features into the overall execution logic**
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
-we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
-The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
-
-<div style="page-break-after: always;"></div>
+there are 3 main steps we need to implement:
+1. Modify `AddressBookParser` to recognise the **tag** _command word_ and will create a `TagCommandParser` subsequently. 
+(Modification required is trivial and hence not described in detail)
+2. Implement a `TagCommandParser` class that will parse the _command arguments_ and construct a `TagCommand` accordingly.
+3. Implement a `TagCommand` class that will handle the main execution logic of the tag features and return a `CommandResult` accordingly.
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
@@ -209,49 +213,36 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager
 <puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
 <box type="info" seamless>
 
-**Note:**<br/>The lifeline for `TagCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:**<br/>The lifeline for `TagCommandParser` and `TagCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 ###### **Implementing `TagCommandParser`**
 
 `TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
-* `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
-* `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
+* **index** indicating the index of the targeted customer in the displayed customer list, and<br/>
+* **descriptor** encapsulating tags to add to and/or delete from the targeted customer.<br/>
 
-Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
-The parsing steps are as follows:
-1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`(throws ParseException if there are format errors).
-1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
-1. Verify that there is at least one tag to add/delete(throws ParseException if no tag to update is provided).
-1. Construct and return the `TagCommand`.
+Both **index** and **descriptor** will then be used to construct a `TagCommand`.<br/>
 
 Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. Note that the 
-**reference frames have been omitted** as the operations performed are trivial.
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. 
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
 
 ###### **Implementing `TagCommand`**
 
-The following class diagram illustrates how a `TagCommand` hold information required for its execution.
+The following class diagram illustrates how a `TagCommand` holds information required for its execution.
 
 <puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
 
-`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
-is a common tag to add and delete), the command execution will fail.<br/>
-The execution steps are as follows:<br/>
-1. Verify that the `TagCommand` is executable(i.e. there is no conflicting tag in the `updatePersonDescriptor`).
-1. Retrieve `personToUpdate` from the model using `index`.
-1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
-1. Create the `updatedPerson` from the above information.
-1. Verify that the `updatedPerson` has a different tag set from `personToUpdate` (i.e. the command execution will change the person).
-1. Verify that the `updatedPerson` has a valid number of tags (i.e. not exceeding the maximum allowed tag count).
-1. Set the `personToUpdate` to `updatedPerson` in the `Model`.
-1. Returns the `CommandResult` of the execution.
+`TagCommand` plays the role of executing the main logic of the tag feature, it will:
+* Use information encapsulated in it to create the updated `Person` object accordingly.
+* Update the `Model` accordingly to reflect the changes.
+
+Note that a `TagCommand` is **non-executable** if there are **conflicting tags** (i.e. there are common tags to add and delete).
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
 taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
@@ -261,14 +252,11 @@ as the operations performed are trivial.
 
 ###### **Wrapping up the tag feature**
 
-As reaching this point, we have completed the implementation of the tag feature, where users are allowed to add and delete
-tags of a person in the same command. The following section will discuss certain design considerations when implementing 
-this feature.
+As reaching this point, we have completed the implementation of the tag feature.
+The following section will discuss certain design considerations when implementing this feature.
 
 <br/>
 <br/>
-
-<div style="page-break-after: always;"></div>
 
 ### Design considerations:
 
@@ -298,8 +286,6 @@ storing tags.
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
-
-<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
@@ -576,9 +562,9 @@ The `Person` class now has a reference to the `Priority` class.
 
 <br>
 
-**Adding a new command keyword `priority`**
+**Adding a new command word `priority`**
 
-To allow users to assign priorities, we added a new command keyword `priority`.
+To allow users to assign priorities, we added a new command word `priority`.
 The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
 
 <puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
@@ -588,7 +574,7 @@ The sequence diagram shows a series of actions in EzContact when a user inputs t
 **The `PriorityCommandParser` class**
 
 The class is used to parse the string provided.
-It will return a `PriorityCommand` if the index and argument are valid.
+It will return a `PriorityCommand` if the index and priority are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
@@ -596,7 +582,7 @@ Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
-The sequence diagram below illustrates how the index and arguments are parsed.
+The sequence diagram below illustrates how the index and priority are parsed.
 
 <puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
 
@@ -772,9 +758,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC01 - add a customer**
 
 **MSS:**<br/>
-&emsp;1. User enters the details of a customer to be added.</br>
-&emsp;2. System adds the customer.</br>
-&emsp;3. System displays the details of customer added by user.</br>
+&emsp;1. User provides the details of a customer to be added.</br>
+&emsp;2. System displays the details of the customer added by user.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
@@ -813,15 +798,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC03 - delete a customer**
 
 **MSS:**</br>
-&emsp;1. User lists out the customers.</br>
-&emsp;2. System shows the list of customers to user.</br>
-&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
-&emsp;4. System displays the details of the removed customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides the index of customer to be deleted.</br>
+&emsp;3. System displays the details of the removed customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;4a. Invalid delete command or invalid index.</br>
-&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 #### Editing a customer
@@ -829,15 +813,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**</br>
-&emsp;1. User requests to list out the customers.</br>
-&emsp;2. System shows the list of customers.</br>
-&emsp;3. User edits the details of customer with its respective index.</br>
-&emsp;4. System displays the details of the edited customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides information to the customer with its respective index.</br>
+&emsp;3. System displays the details of the edited customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or information.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -868,15 +851,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers.</br>
-&emsp;2.  System lists out the customers.</br>
-&emsp;3.  User assigns priority to the customer with its respective index.</br>
-&emsp;4.  System displays the new priority of customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2.  User provides priority to the customer with its respective index.</br>
+&emsp;3.  System displays the new priority of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or priority.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -922,18 +904,22 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC09 - update tags of a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests to list out the customers.<br/>
-&emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index of targeted customer and information of tags to add or delete.<br/>
-&emsp;4. System updates the tags of the specified customer accordingly.<br/>
-&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides index of the targeted customer in the displayed list.<br/>
+&emsp;3. User provides information of tags to add to and/or delete from the targeted customer.<br/>
+&emsp;4. System displays the details of the updated customer to the User.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
-&emsp;3a. User provided invalid index or information.<br/>
-&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;1a. Requested list is empty.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3a. User provided invalid information of tags.<br/>
+&emsp;&emsp;3a1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information of tags that will not update the targeted customer.<br/>
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
@@ -969,7 +955,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 6. The application should be offered as a free service to the public.
 7. The application should be able to respond within one second.
-8. The application should be able to handle and support manual edits to the data file.
+8. The application should be able to handle and support manual edits to the data file, erroneous data files should not crash the application.
 
 ## Glossary
 
@@ -985,10 +971,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-
-#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
+#### Enhancement 1 : Deletion of all tags in a single command
 
 **Feature flaw:** <br/>
 As a customer might have many tags, and they could potentially want to remove all the 
@@ -1020,12 +1003,6 @@ Expected: Error, an error message showing the usage of tag command is shown to t
 * `tag 1 dat/delete`<br/>
 Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
 is shown to the user.
-
-**Additional notes:**<br/>
-As the behaviour of the `insurance` command is nearly identical to `tag` command, this planned enhancement applies to
-the `insurance` command too, the proposed enhancements and behaviours will be identical. The following is the updated
-command format for `insurance` command:<br/>
-`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
 #### Enhancement 2: Edit appointment details
 
@@ -1095,7 +1072,6 @@ This modification allows the find feature to accommodate duplicate prefixes for 
   Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
   
 The enhanced feature ensures accurate and targeted search results.
-
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
