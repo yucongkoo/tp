@@ -54,6 +54,7 @@ efficiency and increase their conversion rate of closing customer deals.
   * Includes a section on design considerations, highlighting the principles and best practices that guided the development of these features.
     This section promotes code extensibility, maintainability, and adherence to SOLID principles, enhancing the overall quality of the codebase.
   * Adds use cases for Appointment feature and list feature.
+  * Added user stories for Appointment feature and list feature.
   * Added the manual testing instructions for the Appointment-related features.
 
 
