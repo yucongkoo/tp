@@ -89,7 +89,7 @@ will be using these names to refer to the section specified in the following Use
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/<name> p/<phone number>`, `p/12341234 n/John` is also acceptable.
 
-* Prefixes (e.g. `n/`, `p/`, `e/`) are designed to be short, however, we do still provide the functionality to detect 
+* Prefixes (e.g. `n/`, `p/`, `e/`) are designed to be short, however, we do still provide the functionality to detect
 full-name prefixes ,and they can be used interchangeably(e.g. `n/` and `name/` are interchangeable),
 click [here](#prefix-to-full-name-prefix-translation-table) to see a full table of prefix to full-name prefix relation.
 
@@ -98,17 +98,17 @@ click [here](#prefix-to-full-name-prefix-translation-table) to see a full table 
 
 * Duplicate customer is defined as 2 person who have identical `<phone number>` or `<email>`.
 
-* `Index` must be value of between (1 -> 2147483647), any value out of this range will be considered as incorrect format; 
-whereas value in range but not in customer list is considered out of bound. 
+* `Index` must be value of between (1 -> 2147483647), any value out of this range will be considered as incorrect format;
+whereas value in range but not in customer list is considered out of bound.
 
-* Unless otherwise stated, when specifying restrictions on number of characters, spaces in between words 
+* Unless otherwise stated, when specifying restrictions on number of characters, spaces in between words
 are included in the count, while leading and trailing spaces are excluded.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
 <div style="page-break-after: always;"></div>
-  
+
 ### Adding a customer: `add`
 
 **Format:**

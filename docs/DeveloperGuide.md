@@ -171,8 +171,8 @@ This section describes some noteworthy details on how certain features are imple
 
 ## Tag feature
 
-This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
-of customers to users.
+This feature allows users to assign tags to / remove tags from customers in EzContact, making customers more recognizable to the users.
+
 
 ###### **Overview**
 
@@ -195,7 +195,7 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
 there are 3 main steps we need to implement:
-1. Modify `AddressBookParser` to recognise the **tag** _command word_ and will create a `TagCommandParser` subsequently. 
+1. Modify `AddressBookParser` to recognise the **tag** _command word_ and will create a `TagCommandParser` subsequently.
 (Modification required is trivial and hence not described in detail)
 2. Implement a `TagCommandParser` class that will parse the _command arguments_ and construct a `TagCommand` accordingly.
 3. Implement a `TagCommand` class that will handle the main execution logic of the tag features and return a `CommandResult` accordingly.
@@ -224,7 +224,7 @@ Both **index** and **descriptor** will then be used to construct a `TagCommand`.
 Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. 
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example.
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
@@ -548,7 +548,7 @@ with a customer by editing the details of the `Appointment` and `AppointmentCoun
 This class is used to represent the appointment that each `Person` has, containing data:
 * `date` of the appointment in `dd-MMM-yyyy` format as a `String`
 * `time` of the appointment in `HHmm` format as a `String`
-* `venue` of the appointment as a `String` lesser than or equals to 30 characters 
+* `venue` of the appointment as a `String` lesser than or equals to 30 characters
 By default, each `Person` has an empty default appointment with an empty `Date`.
 
 <puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml"/>
@@ -588,7 +588,7 @@ The sequence diagram below illustrates the interactions of `AppointmentCommandPa
 `AppointmentCommandParser` will extract out the relevant information and create the corresponding `AppointmentCommand`
 which will be executed by other `Logic` components.
 
-The sequence diagram below shows the interactions between `Logic` components when the user inputs the command 
+The sequence diagram below shows the interactions between `Logic` components when the user inputs the command
 `addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall`.
 
 <puml src="diagrams/appointment-feature/AddedAppointmentSequenceDiagram.puml" />
@@ -651,7 +651,7 @@ appointment by checking if the current `Appointment` is the same as the `empty` 
 
 ## Priority feature
 
-This feature allows users to assign priority to a `Person`. 
+This feature allows users to assign priority to a `Person`.
 The default priority of each `Person` is `NONE`, unless a priority is explicitly assigned to the `Person`.
 
 The activity diagram below shows the sequence of actions when users assign a priority to a `Person`.
@@ -704,7 +704,7 @@ The sequence diagram below illustrates how the index and priority are parsed.
 
 **The `PriorityCommand` class**
 
-The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`. 
+The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`.
 
 <puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
 
@@ -722,7 +722,7 @@ The sequence diagram illustrates the execution of the `PriorityCommand` and how 
 
 ###### **Aspect: `Person` without an explicitly assigned `Priority`.**
 * **Alternative 1 (Current Choice):** Give each `Person` a default priority `NONE`.
-  * Pros: 
+  * Pros:
     * Enhances code readability.
     * Do not need to handle null cases which happens when `Person` has `null` priority.
   * Cons:
@@ -759,7 +759,7 @@ The action of assigning a remark is mainly facilitated by three classes: `Remark
 **The `Remark` class**
 
 
-This class represents a person's attribute, including a remark string with a maximum length of 150 characters. 
+This class represents a person's attribute, including a remark string with a maximum length of 150 characters.
 Every person created has this attribute, with the default value being an empty string, signifying no remark.
 
 
@@ -831,9 +831,9 @@ Target user : Insurance agent
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
-Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps, 
+Manage customers' contact for existing/potential insurance contracts faster than GUI driven apps,
 alongside helping users increase the chance of sealing deals with customers.
 
 <div style="page-break-after: always;"></div>
@@ -854,8 +854,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 | `* * *`  | insurance agent  | be able to view the type of insurance my customer currently holds                      | check customers' insurance profile easily                                                  |
 | `* * *`  | insurance agent  | be able to easily know customers subscribed under a specific insurance plan            | quickly know who to find when there are changes to a specific insurance plan               |
 | `* * *`  | insurance agent  | be able to apply descriptive tags to my customers                                      | easily identify and remember my customers using these tag                                  |
-| `* * *`  | insurance agent  | be able to add details of appointments with customers                                  | keep track of appointments with customers                                                  | 
-| `* * *`  | insurance agent  | be able to delete cancelled appointments with customers                                | prevent confusion when arranging my schedule                                               |              
+| `* * *`  | insurance agent  | be able to add details of appointments with customers                                  | keep track of appointments with customers                                                  |
+| `* * *`  | insurance agent  | be able to delete cancelled appointments with customers                                | prevent confusion when arranging my schedule                                               |     
 | `* * *`  | insurance agent  | be able to mark completed appointments with customers                                  | keep track of appointments completed with the customer to guage their potential interest   |
 | `* *`    | user             | be able to search for a contact using its other particulars(not necessarily names)     | be more flexible when searching for contacts                                               |
 | `* *`    | user             | be able to see my total numbers of contact entries in EzContact                        | know how many contacts I have in EzContact                                                 |
@@ -1176,7 +1176,7 @@ This section covers the enhancements we plan to implement in the future.
 #### Enhancement 1 : Deletion of all tags in a single command
 
 **Feature flaw:** <br/>
-As a customer might have many tags, and they could potentially want to remove all the 
+As a customer might have many tags, and they could potentially want to remove all the
 tags in one command, they would have to type out all the tags separately in order to achieve that.
 
 **Proposed enhancement:**<br/>
@@ -1186,7 +1186,7 @@ to the command. The updated command format would be as follows: <br/>
 
 Justifications:
 * As deleting all the tags is a destructive action, we require users to specify the `dat/` prefix to indicate
-their interest in deleting all tags, and `deleteall` value to the prefix to serve as a confirmation of this 
+their interest in deleting all tags, and `deleteall` value to the prefix to serve as a confirmation of this
 destructive command.
 
 Updated behaviours (original behaviours of tag still hold):
@@ -1260,12 +1260,12 @@ Pop a confirmation window for users to confirm once again if the user indeed wan
 
 #### Enhancement 5: find multiple tags and insurances
 **Feature flaw:** <br/>
-The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
-This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
+The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.`
+This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity.
 For instance, it becomes challenging to differentiate whether the keywords correspond to a combination like `Health Auto` or separate entities like `Health Insurance` and `Auto Coverage`.
 
 **Proposed enhancement:**<br/>
-To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`. 
+To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`.
 This modification allows the find feature to accommodate duplicate prefixes for both find and tag operations, thereby providing a more precise and unambiguous search capability.
 
 **Justifications:**<br/>
@@ -1274,18 +1274,18 @@ This modification allows the find feature to accommodate duplicate prefixes for 
 
 **Examples:**<br/>
 * `find i/abc i/apple`<br/>
-  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively. 
+  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively.
   For instance, if there are customer with insurances named `abc insurance` and `apple insurance`, they would be included in the results.
 * `find i/abc apple` <br/>
-  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
+  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`.
   
 The enhanced feature ensures accurate and targeted search results.
 
-#### Enhancement 6: Increase flexibility of value input for phone number 
+#### Enhancement 6: Increase flexibility of value input for phone number
 
 **Feature flaw:** <br/>
 In `add` and `edit` command, when entering `<phone number>` under `p/`, it takes in the 8 digits (Singaporean number) with no spaces or `-` (e.g. `12345678`).
-However, it does not allow other common formats for Singaporean number that includes space and `-` (e.g. `1234-5678`, `1234 5678`), which can be a hassle to 
+However, it does not allow other common formats for Singaporean number that includes space and `-` (e.g. `1234-5678`, `1234 5678`), which can be a hassle to
 users for not being allowed to so.
 
 **Proposed enhancement:**<br/>
@@ -1310,15 +1310,15 @@ should have their respective contact details. However, this does not take into c
 and would have others to handle their incoming emails.
 
 **Proposed enhancement:**<br/>
-Modify the implementation on checking for duplicate customer such that it accepts identical `<email>` exist in EzContact, and update the 
-error message to `This phone number already exists in the contact book` instead of the original duplicate customer message to give users 
+Modify the implementation on checking for duplicate customer such that it accepts identical `<email>` exist in EzContact, and update the
+error message to `This phone number already exists in the contact book` instead of the original duplicate customer message to give users
 more accurate feedback on what went wrong.
 
 **Justification:**<br/>
 The purpose of EzContact is to help our users (i.e. insurance agent) to manage contacts of customers that he needs to approach / interact with
-thus the most important value our product has to offer, is to keep track of and contact customers effectively. Thus, we need to make sure that 
-each customer is contactable, leading to us enforcing the uniqueness of `<phone number>`. `<email>` is allowed to have duplicates because it is 
-possible and common for people to share `<email>`(especially elderly who have no email). `<name>` is also allowed because it is common to have 
+thus the most important value our product has to offer, is to keep track of and contact customers effectively. Thus, we need to make sure that
+each customer is contactable, leading to us enforcing the uniqueness of `<phone number>`. `<email>` is allowed to have duplicates because it is
+possible and common for people to share `<email>`(especially elderly who have no email). `<name>` is also allowed because it is common to have
 identical name. These restrictions give the users maximum flexibility and functionality while still ensuring that each customer is contactable.
 
 **Updated behaviours**:<br/>
@@ -1340,7 +1340,7 @@ With current implementation, when a customer has multiple insurances assigned to
 all the insurances with `di/` prefix in our `insurance` command, which is inconvenient
 
 **Proposed enhancement:**<br/>
-Add a new optional prefix `dai/` and parameter `deleteall` for `insurance` command to indicate deleting all insurances, 
+Add a new optional prefix `dai/` and parameter `deleteall` for `insurance` command to indicate deleting all insurances,
 the new command takes the format of <br/>
 `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
@@ -1369,16 +1369,16 @@ has to be supplied to confirm the deletion
 
 This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
 
-####  Enhanced Logic Component  `* * *` 
+####  Enhanced Logic Component  `* * *`
 
-With the implementation of various new features in EzContact, the `logic` component who’s responsible for the parsing and 
-handling of our `commands` have to go through various modifications and enhancements to fulfill the needs of these features. 
-The new `logic` component needs to be more flexible regarding its constraint on the user input and also need to accommodate 
+With the implementation of various new features in EzContact, the `logic` component who’s responsible for the parsing and
+handling of our `commands` have to go through various modifications and enhancements to fulfill the needs of these features.
+The new `logic` component needs to be more flexible regarding its constraint on the user input and also need to accommodate
 the newly defined `commands` by us for the new features
 
 **Effort:**
 
-The enhancement can be broken down into a few parts: 
+The enhancement can be broken down into a few parts:
 
 * `ArgumentTokenizer`
 * `CommandParser` & `AddressBookParser`
@@ -1387,10 +1387,10 @@ The enhancement can be broken down into a few parts:
 
 1. Implementation and logics of `ArgumentTokenizer` has to be understood thoroughly before putting our hands on the codebase.
 Along the way, we have had multiple discussions on the choice of prefixes and restriction to put on the prefix input. Upon finalizing
-the prefixes and constraints, work is split among members and each take up some part to work on. 
+the prefixes and constraints, work is split among members and each take up some part to work on.
 2. For `CommandParser` and `AddressBookParser`, we each implement the parser associated with the features we are implementing. We also
 integrate our parsers with `AddressBookParser` as it parses the command word and determines the `CommandParser` to use for remaining of
-the command. 
+the command.
 3. `Commands` are also implemented separately according to the features we are assigned to implement. We ensure that our implementation
 does not break the Liskov Substitution Principle since all `commands` we implemented inherited the  `Commmand` class. We also ensure that
 our implementation integrates well with each other and does not break others' functionality.
@@ -1401,18 +1401,18 @@ the rigorous testing as we found some feature flaws that can be further improved
 
 **Result :**
 
-Our new `logic` component now accommodates multiple new features that drastically improve users experience and previous features are also 
+Our new `logic` component now accommodates multiple new features that drastically improve users experience and previous features are also
 refined to provide users more flexibility and functionality.
 
 
-####  Enhanced UI `* *` 
+####  Enhanced UI `* *`
 
 The `UI` first has to be redesigned from the perspective of the purpose it serves. We have to ensure that all usages have to be accounted
 in the new `UI` to ensure that users will always have a clear view of what's going on.
 
 **Effort:**
 
-We first redesign the structure of our `UI` to fit the new features in a sensible and user-friendly way. We tried out different layouts 
+We first redesign the structure of our `UI` to fit the new features in a sensible and user-friendly way. We tried out different layouts
 and ways to present our data, and finalize on the current design, where the customer's information are displayed in cards. After ensuring
 the functionality is covered by `UI`, we move on to changing the colour scheme of our product. After many trial and error, and requesting feedbacks
 from our friends, we have decided to use the current pastel green colour scheme.
@@ -1422,14 +1422,14 @@ from our friends, we have decided to use the current pastel green colour scheme.
 A newly designed `UI` for EzContact and improved UI component with increased usability.
 
 
-####  Enhanced Storage `* * *` 
+####  Enhanced Storage `* * *`
 
-Given the newly introduced `attributes` in EzContact, the `storage` component is required to accommodate these new data when creating 
+Given the newly introduced `attributes` in EzContact, the `storage` component is required to accommodate these new data when creating
 the save file.
 
 **Effort:**
 
-Given that our saving system is implemented using `Jackson (JSON package)`, we first have to understand how the package works and how 
+Given that our saving system is implemented using `Jackson (JSON package)`, we first have to understand how the package works and how
 it is integrated into our system. For each new `attribute`, we have created the corresponding `JSON-friendly data class` to handle these
 data during saving. These classes handle the conversion between application-used and Json-compatible data during loading and saving.
 These classes are integrated to the existing `storage` component carefully to ensure that we do not break the existing system. The original
@@ -1440,7 +1440,7 @@ These classes are integrated to the existing `storage` component carefully to en
 A refined `storage` component that is able to handle all new `attributes` safely and correctly.
 
 
-####  Enhanced Model `* *` 
+####  Enhanced Model `* *`
 
 To accommodate the new features and `attributes`, the `model` component now has to handle these new `commands` and process these new `attributes`.
 
@@ -1449,11 +1449,11 @@ To accommodate the new features and `attributes`, the `model` component now has 
 New classes are created to represent and abstract these data to a higher level for easy manipulation. These classes are then integrated into
 the `Person` class as it is the over-arching class represents the customer. New methods are also added to `model` component to perform the execution
 specified by the different `commands`. We are implementing the respective classes corresponding to the features we are responsible for. The implementations
-are done in small increment and are tested along the way. 
+are done in small increment and are tested along the way.
 
 **Result :**
 
-A comprehensive model that holds and operates on our customer data according to the command given by logic component.  
+A comprehensive model that holds and operates on our customer data according to the command given by logic component.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1647,7 +1647,7 @@ Prerequisite : -
    Expected : Error, details shown in the status message(no appointment).
 
 1. Test case : `markappt 1`, customer at index 1 has an existing appointment <br/>
-   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment, and the appointments 
+   Expected : Appointment of customer at index 1 is deleted, updated to become an empty appointment, and the appointments
 completed counter is incremented by 1.
 
 1. Test case : `markappt 1`, customer at index 1 does not have an existing appointment <br/>
