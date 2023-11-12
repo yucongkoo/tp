@@ -15,14 +15,6 @@ pageNav: 3
 
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
 
-#### feature / implementation involved
-
-**Sources used** :
-1. (sources with hyperlink)
-1. ...
-
-(describe how it is used in the mentioned part...)
-
 --------------------------------------------------------------------------------------------------------------------
 
 # **Setting up, getting started**
@@ -418,6 +410,10 @@ Alternative 1 is chosen over Alternative 2, because we want a slightly simpler d
 ## Insurance Feature
 This feature allows users to assign / remove insurance package(s) to / from customers in EzContact to help users keep track of customers' insurances.
 
+The activity diagram below shows the action sequence of updating insurances of a customer.
+
+<puml src="diagrams/insurance-feature/ExecuteInsuranceActivityDiagram.puml"/>
+
 ### Implementation
 The implementation of the Insurance feature consists of few parts, distributed across different components :
 
@@ -780,18 +776,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 &emsp;1. User chooses to filter customers.</br>
-&emsp;2. User enters filter command and selectively adds one/multiple category parameters to filter the customers for.</br>
-&emsp;3. System filters the customers list.</br>
-&emsp;4. System displays the list of customers that meet the criteria.</br>
+&emsp;2. User selectively adds one/multiple category parameters to filter the customers for.</br>
+&emsp;3. System displays the list of customers that meet the criteria.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;2b.  User doesn't select any categories to filter for.</br>
-&emsp;&emsp;2b1. System shows an error message to alert User about the invalid command.</br>
+&emsp;1a.  User doesn't select any categories to filter for.</br>
+&emsp;&emsp;1a1. System displays the entire list of customers.</br>
 &emsp;&emsp;Use case ends.
 
-&emsp;3a.  None of the contacts meet the filter criteria.</br>
-&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;2a.  None of the contacts meet the filter criteria.</br>
+&emsp;&emsp;2a1. System shows an empty list with a warning message.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -872,7 +867,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers.</br>
+&emsp;1.  User requests to list out the customers by <u>filtering customers(UCO2)</u>.</br>
 &emsp;2.  System lists out the customers.</br>
 &emsp;3.  User assigns insurance to the customer with its respective index.</br>
 &emsp;4.  System displays the new insurance of customer.</br>
@@ -889,7 +884,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers.</br>
+&emsp;1.  User requests to list out the customers by <u>filtering customers(UCO2)</u>.</br>
 &emsp;2.  System lists out the customers.</br>
 &emsp;3.  User removes insurance from the customer with its respective index.</br>
 &emsp;4.  System displays the new insurance of customer.</br>
@@ -1075,6 +1070,85 @@ This modification allows the find feature to accommodate duplicate prefixes for 
   
 The enhanced feature ensures accurate and targeted search results.
 
+#### Enhancement 6: Increase flexibility of value input for phone number 
+
+**Feature flaw:** <br/>
+In `add` and `edit` command, when entering `<phone number>` under `p/`, it takes in the 8 digits (Singaporean number) with no spaces or `-` (e.g. `12345678`).
+However, it does not allow other common formats for Singaporean number that includes space and `-` (e.g. `1234-5678`, `1234 5678`), which can be a hassle to 
+users for not being allowed to so.
+
+**Proposed enhancement:**<br/>
+Allow `<phone number>` with format of `1234 5678` and `1234-5678`
+
+**Updated behaviours** (original behaviour of `/p` still holds):
+* `<phone number>` can now take the format of `1234-5678` and `1234 5678` and display the information in EzContact
+
+**Examples:**<br/>
+* `edit 1 p/1234-5678`
+  Expected: Update the `<phone number>` of customer at index 1 to `1234-5678`
+* `edit 1 p/1234 5678`
+    Expected: Update the `<phone number>` of customer at index 1 to `1234 5678`
+
+
+#### Enhancement 7: Improve criteria for duplicate customer
+
+**Feature flaw:** <br/>
+Currently, duplicated customer is defined as customers that have either identical `<email>` or `<phone number>`, given that each customer
+should have their respective contact details. However, this does not take into consideration that some customers might not have email (e.g. elderly)
+and would have others to handle their incoming emails.
+
+**Proposed enhancement:**<br/>
+Modify the implementation on checking for duplicate customer such that it accepts identical `<email>` exist in EzContact, and update the 
+error message to `This phone number already exists in the contact book` instead of the original duplicate customer message to give users 
+more accurate feedback on what went wrong.
+
+**Justification:**<br/>
+The purpose of EzContact is to help our users (i.e. insurance agent) to manage contacts of customers that he needs to approach / interact with
+thus the most important value our product has to offer, is to keep track of and contact customers effectively. Thus, we need to make sure that 
+each customer is contactable, leading to us enforcing the uniqueness of `<phone number>`. `<email>` is allowed to have duplicates because it is 
+possible and common for people to share `<email>`(especially elderly who have no email). `<name>` is also allowed because it is common to have 
+identical name. These restrictions give the users maximum flexibility and functionality while still ensuring that each customer is contactable.
+
+**Updated behaviours**:<br/>
+*  Adding customers with existing `<phone number>` are not allowed, error will be thrown indicating that the `<phone number>` already exists
+*  Adding customers where values of their fields (except `p/`) already exist in the contact book are allowed.
+
+**Examples:**<br/>
+* `add n/joshua p/12345678 e/abc@gmail.com`, `add n/james p/78945612 /abc@gmail.com`
+  Expected : Add `james` successfully into the contact book with no error
+* `add n/joshua p/12345678 e/abc@gmail.com`, `add n/james p/12345678 /defg@gmail.com`
+    Expected : Error message is thrown indicating that the `12345678` already exist in the contact book
+
+
+#### Enhancement 8: Delete all insurances with one command
+
+**Feature flaw:** <br/>
+With current implementation, when a customer has multiple insurances assigned to he/she, deleting all insurances requires the user to list out
+all the insurances with `di/` prefix in our `insurance` command, which is inconvenient
+
+**Proposed enhancement:**<br/>
+Add a new optional prefix `dai/` and parameter `deleteall` for `insurance` command to indicate deleting all insurances, 
+the new command takes the format of <br/>
+`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
+
+**Justification:**<br/>
+Given that `dai/` will remove all the insurances of the customer at once, we require users to do a confirmation by specifying `deleteall`
+for `dai/` to ensure that the user execute this command intentionally.
+
+**Updated behaviours** (Original behaviour of `insurance` still holds) :
+* When `dai/` is supplied, `ai/` and `di/` are not allowed. Format error will appear if either prefixes are used
+* When `dai/` is supplied, if the value supplied to it is not `deleteall`, an error message will be thrown, indicating that `deleteall`
+has to be supplied to confirm the deletion
+
+**Examples:**<br/>
+* `insurance 2 dai/deleteall`
+  Expected : All insurances of customer at index 2 are removed
+* `insurance 2 dai/deleteall ai/AIA di/cars`
+  Expected : Error message is thrown, showing the usage of insurance
+* `insurance 2 dai/dvsdv`
+  Expected : Error message is thrown, telling users that `deleteall` has to be supplied to confirm deletion.
+
+
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
 
@@ -1082,17 +1156,91 @@ The enhanced feature ensures accurate and targeted search results.
 
 This section gives an overview of the challenges, we as a team faced and the effort we have put in to make this project work.
 
-####  Challenges faced / Achievement accomplished `* * *` <- indicates the significance
+####  Enhanced Logic Component  `* * *` 
 
-(details... )
+With the implementation of various new features in EzContact, the `logic` component who’s responsible for the parsing and 
+handling of our `commands` have to go through various modifications and enhancements to fulfill the needs of these features. 
+The new `logic` component needs to be more flexible regarding its constraint on the user input and also need to accommodate 
+the newly defined `commands` by us for the new features
 
 **Effort:**
 
-(effort put in for this to be done... )
+The enhancement can be broken down into a few parts: 
+
+* `ArgumentTokenizer`
+* `CommandParser` & `AddressBookParser`
+* `Command`
+
+
+1. Implementation and logics of `ArgumentTokenizer` has to be understood thoroughly before putting our hands on the codebase.
+Along the way, we have had multiple discussions on the choice of prefixes and restriction to put on the prefix input. Upon finalizing
+the prefixes and constraints, work is split among members and each take up some part to work on. 
+2. For `CommandParser` and `AddressBookParser`, we each implement the parser associated with the features we are implementing. We also
+integrate our parsers with `AddressBookParser` as it parses the command word and determines the `CommandParser` to use for remaining of
+the command. 
+3. `Commands` are also implemented separately according to the features we are assigned to implement. We ensure that our implementation
+does not break the Liskov Substitution Principle since all `commands` we implemented inherited the  `Commmand` class. We also ensure that
+our implementation integrates well with each other and does not break others' functionality.
+<br/>
+All changes were done in small increments, in addition with testing using the newly written test cases. After finishing respective parts,
+we also perform cross-checking on each other's implementation to ensure no bugs or flaws exist in our product. Some changes were made after
+the rigorous testing as we found some feature flaws that can be further improved.
 
 **Result :**
 
-(results achieved with this implementation... )
+Our new `logic` component now accommodates multiple new features that drastically improve users experience and previous features are also 
+refined to provide users more flexibility and functionality.
+
+
+####  Enhanced UI `* *` 
+
+The `UI` first has to be redesigned from the perspective of the purpose it serves. We have to ensure that all usages have to be accounted
+in the new `UI` to ensure that users will always have a clear view of what's going on.
+
+**Effort:**
+
+We first redesign the structure of our `UI` to fit the new features in a sensible and user-friendly way. We tried out different layouts 
+and ways to present our data, and finalize on the current design, where the customer's information are displayed in cards. After ensuring
+the functionality is covered by `UI`, we move on to changing the colour scheme of our product. After many trial and error, and requesting feedbacks
+from our friends, we have decided to use the current pastel green colour scheme.
+
+**Result :**
+
+A newly designed `UI` for EzContact and improved UI component with increased usability.
+
+
+####  Enhanced Storage `* * *` 
+
+Given the newly introduced `attributes` in EzContact, the `storage` component is required to accommodate these new data when creating 
+the save file.
+
+**Effort:**
+
+Given that our saving system is implemented using `Jackson (JSON package)`, we first have to understand how the package works and how 
+it is integrated into our system. For each new `attribute`, we have created the corresponding `JSON-friendly data class` to handle these
+data during saving. These classes handle the conversion between application-used and Json-compatible data during loading and saving.
+These classes are integrated to the existing `storage` component carefully to ensure that we do not break the existing system. The original
+`storage` component is also refined and fixed of all discovered bugs.
+
+**Result :**
+
+A refined `storage` component that is able to handle all new `attributes` safely and correctly.
+
+
+####  Enhanced Model `* *` 
+
+To accommodate the new features and `attributes`, the `model` component now has to handle these new `commands` and process these new `attributes`.
+
+**Effort:**
+
+New classes are created to represent and abstract these data to a higher level for easy manipulation. These classes are then integrated into
+the `Person` class as it is the over-arching class represents the customer. New methods are also added to `model` component to perform the execution
+specified by the different `commands`. We are implementing the respective classes corresponding to the features we are responsible for. The implementations
+are done in small increment and are tested along the way. 
+
+**Result :**
+
+A comprehensive model that holds and operates on our customer data according to the command given by logic component.  
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
