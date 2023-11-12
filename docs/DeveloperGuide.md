@@ -117,7 +117,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:**<br/>The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:**<br/>The lifeline for `DeleteCommandParser` and `DeleteCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 How the `Logic` component works:
@@ -181,11 +181,14 @@ This section describes some noteworthy details on how certain features are imple
 This feature allows users to assign tags to / remove tags from customers in EzContact, increasing the recognizability 
 of customers to users.
 
-The activity diagram below shows the action sequence of updating the tags of a customer.
+###### **Overview**
+
+The activity diagram below shows the action sequence of updating the tags of a customer. Note that definition of not
+valid indexes/tags/tag set will be defined later in following sections.
 
 <puml src="diagrams/tag-feature/ExecuteActivityDiagram.puml"/>
 
-### Implementation
+<div style="page-break-after: always;"></div>
 
 ###### **Implementing `Tag`**
 
@@ -195,13 +198,14 @@ Hence, a `Person` will now also be associated to any number of `Tag`s.
 
 <puml src="diagrams/tag-feature/PersonClassDiagram.puml"/>
 
-###### **Integrating a command for handling tag features into the execution logic**
+###### **Integrating a command for handling tag features into the overall execution logic**
 
 In order to integrate the command for handling tag features into the execution logic as described in [LogicComponent](#logic-component),
-we first update the `AddressBookParser` to recognise the `tag` _command word_ and will create a `TagCommandParser` subsequently.
-The `TagCommandParser` will then parse the _command arguments_ to create a `TagCommand` that can be executed. 
-
-<div style="page-break-after: always;"></div>
+there are 3 main steps we need to implement:
+1. Modify `AddressBookParser` to recognise the **tag** _command word_ and will create a `TagCommandParser` subsequently. 
+(Modification required is trivial and hence not described in detail)
+2. Implement a `TagCommandParser` class that will parse the _command arguments_ and construct a `TagCommand` accordingly.
+3. Implement a `TagCommand` class that will handle the main execution logic of the tag features and return a `CommandResult` accordingly.
 
 The sequence diagram below illustrates the interactions within the `Logic` component when executing a tag command,
 taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager` as an example.
@@ -209,49 +213,36 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager
 <puml src="diagrams/tag-feature/TagSequenceDiagram.puml" />
 <box type="info" seamless>
 
-**Note:**<br/>The lifeline for `TagCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:**<br/>The lifeline for `TagCommandParser` and `TagCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 ###### **Implementing `TagCommandParser`**
 
 `TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
-* `index` indicating the index of the targeted customer in the displayed customer list, and<br/>
-* `descriptor` encapsulating tags to add to/delete from the targeted customer.<br/>
+* **index** indicating the index of the targeted customer in the displayed customer list, and<br/>
+* **descriptor** encapsulating tags to add to and/or delete from the targeted customer.<br/>
 
-Both `index` and `updatePersonTagsDescriptor` will be used to create the `TagCommand` to be executed.<br/>
-The parsing steps are as follows:
-1. Parse the command arguments into `index`, `tagsToAdd` and `tagsToDelete`(throws ParseException if there are format errors).
-1. Create the `UpdatePersonTagsDescriptor` using `tagsToAdd` and `tagsToDelete`.
-1. Verify that there is at least one tag to add/delete(throws ParseException if no tag to update is provided).
-1. Construct and return the `TagCommand`.
+Both **index** and **descriptor** will then be used to construct a `TagCommand`.<br/>
 
 Note that **duplicate tags will be ignored** (see [Design Considerations](#design-considerations) for more information).
 
 The sequence diagram below illustrates the interactions of `TagCommandParser#parse(String arguments)`,
-taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. Note that the 
-**reference frames have been omitted** as the operations performed are trivial.
+taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as an example. 
 
 <puml src="diagrams/tag-feature/ParseSequenceDiagram.puml"/>
 
 
 ###### **Implementing `TagCommand`**
 
-The following class diagram illustrates how a `TagCommand` hold information required for its execution.
+The following class diagram illustrates how a `TagCommand` holds information required for its execution.
 
 <puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
 
-`TagCommand` plays the role of executing the tag command on a `Model`, it will update the `Model` accordingly to
-reflect the changes after the tag command completes its execution. Note that if there are conflicting tags(i.e. there 
-is a common tag to add and delete), the command execution will fail.<br/>
-The execution steps are as follows:<br/>
-1. Verify that the `TagCommand` is executable(i.e. there is no conflicting tag in the `updatePersonDescriptor`).
-1. Retrieve `personToUpdate` from the model using `index`.
-1. Retrieve `tagsToAdd` and `tagsToDelete` from `updatePersonTagsDescriptor`.
-1. Create the `updatedPerson` from the above information.
-1. Verify that the `updatedPerson` has a different tag set from `personToUpdate` (i.e. the command execution will change the person).
-1. Verify that the `updatedPerson` has a valid number of tags (i.e. not exceeding the maximum allowed tag count).
-1. Set the `personToUpdate` to `updatedPerson` in the `Model`.
-1. Returns the `CommandResult` of the execution.
+`TagCommand` plays the role of executing the main logic of the tag feature, it will:
+* Use information encapsulated in it to create the updated `Person` object accordingly.
+* Update the `Model` accordingly to reflect the changes.
+
+Note that a `TagCommand` is **non-executable** if there are **conflicting tags** (i.e. there are common tags to add and delete).
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
 taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
@@ -261,14 +252,11 @@ as the operations performed are trivial.
 
 ###### **Wrapping up the tag feature**
 
-As reaching this point, we have completed the implementation of the tag feature, where users are allowed to add and delete
-tags of a person in the same command. The following section will discuss certain design considerations when implementing 
-this feature.
+As reaching this point, we have completed the implementation of the tag feature.
+The following section will discuss certain design considerations when implementing this feature.
 
 <br/>
 <br/>
-
-<div style="page-break-after: always;"></div>
 
 ### Design considerations:
 
@@ -298,8 +286,6 @@ storing tags.
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
-
-<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.
@@ -354,7 +340,7 @@ It tests each customer in the list with given `keywords`(search prompt given by 
 ###### **Implementing `PersonContainsKeywordsPredicate`**
 
 This class serves as the primary predicate for testing multiple conditions. It houses various predicates such as
-'NameContainsKeywordsPredicate' to check if specific criteria are met.
+`NameContainsKeywordsPredicate` to check if specific criteria are met.
 
 <div style="page-break-after: always;"></div>
 
@@ -426,21 +412,6 @@ In addition, Alternative 3 requires a more complicated algorithm.
 
 Alternative 1 is chosen over Alternative 2, because we want a slightly simpler design that does not need as much flexibility.
 
-###### **Aspect: Searching for Multiple Insurances or Tags:**
-
-* **Alternative 1 (Current choice)** : Use a single prefix for multiple keywords, like `find i/Health Auto`.
-  * Pros: Simplifies user input for convenience.
-  * Cons: Unable to differentiate whether the keywords match with `Health Auto` or `Health Insurance` and `Auto Coverage`, causing potential ambiguity.
-* **Alternative 2** : Implement multiple identical prefixes for individual keywords, such as `find i/Health i/Auto`.
-  * Pros: Provides improved differentiation and flexibility for users.
-  * Cons: Requires users to repeatedly input the prefix, increasing the effort.
-
-**Reasoning :**
-
-In many practical scenarios, users might be more interested in quickly finding results based on multiple keywords, 
-and the use of a single prefix with multiple keywords serves this purpose effectively. 
-By minimizing the number of prefixes, users can perform searches more efficiently and intuitively.
-Alternative 1 outweigh the potential drawbacks of limited differentiation, because it prioritizes user-friendliness and ease of use.
 
 <div style="page-break-after: always;"></div>
 
@@ -666,39 +637,94 @@ appointment by checking if the current `Appointment` is the same as the `empty` 
 
 ## Priority feature
 
-### Implementation
+This feature allows users to assign priority to a `Person`. 
+The default priority of each `Person` is `NONE`, unless a priority is explicitly assigned to the `Person`.
 
-The action of assigning a priority is mainly facilitated by three classes: `Priority`, `PriorityCommandParser` and `PriorityCommand`.
+The activity diagram below shows the sequence of actions when users assign a priority to a `Person`.
+
+<puml src="diagrams/priority-feature/UpdatePriorityActivityDiagram.puml"/>
+
+### Implementation
 
 **The `Priority` class**
 
-The class is used to represent different priority levels for each `Person`.
-By default, each `Person` has a priority `Level` of `-` unless the user explicitly assign the `Priority` of another `Level`.
+The class is used to store the priority level of a `Person`.
+The priority level can only be one of the values in the `Level` enumeration.
+
+Each `Person` now has an additional attribute called priority.
+The `Person` class now has a reference to the `Priority` class.
 
 <puml src="diagrams/priority-feature/PriorityClassDiagram.puml"/>
 
-<div style="page-break-after: always;"></div>
+<br>
+
+**Adding a new command word `priority`**
+
+To allow users to assign priorities, we added a new command word `priority`.
+The sequence diagram shows a series of actions in EzContact when a user inputs the command `priority 1 high`.
+
+<puml src="diagrams/priority-feature/PriorityFeatureSequenceDiagram.puml"/>
+
+<br>
 
 **The `PriorityCommandParser` class**
 
-The class is used to parse the arguments into two information: `index` and `priority`.
-It will then return a `PriorityCommand` should the arguments are valid.
+The class is used to parse the string provided.
+It will return a `PriorityCommand` if the index and priority are valid.
 
 The sequence diagram below illustrates the interaction between `PriorityCommandParser` and `PriorityCommand` when `PriorityCommandParser#parse(String)` is invoked.
 
-Taking `parse(1 high)`as an example.
+Taking `parse("1 high")`as an example.
 
 <puml src="diagrams/priority-feature/PriorityCommandParserSequenceDiagram.puml"/>
 
+The sequence diagram below illustrates how the index and priority are parsed.
+
+<puml src="diagrams/priority-feature/ParseIndexAndArgumentsSequenceDiagram.puml"/>
+
+<br>
+
 **The `PriorityCommand` class**
 
-The class is responsible in executing the task parsed by the `PriorityCommandParser`.
-It will update the `Priority` of a `Person`.
+The class diagram below shows the main attributes and methods involved when assigning a priority to a `Person`. 
+
+<puml src="diagrams/priority-feature/PriorityCommandClassDiagram.puml"/>
+
+<br>
+
+The sequence diagram illustrates the execution of the `PriorityCommand` and how the `Person` is updated.
+
+<puml src="diagrams/priority-feature/PriorityCommandSequenceDiagram.puml"/>
+
+<br>
 
 ### Design Consideration:
 
-The `Level` enum class is chosen because our system only allows four priority level: `HIGH`, `MEDIUM`, `LOW` and `-`.
-The reason of choosing `-` as the default priority level is to ease the process of distinguishing having priority and not having priority.
+###### **Aspect: `Person` without an explicitly assigned `Priority`.**
+* **Alternative 1 (Current Choice):** Give each `Person` a default priority `NONE`.
+  * Pros: 
+    * Enhances code readability.
+    * Do not need to handle null cases which happens when `Person` has `null` priority.
+  * Cons:
+    * More complexity during testing, have to make sure that the default value does not affect the outcome of test cases.
+* **Alternative 2:** Keep the priority as `null`.
+  * Pros:
+    * Do not need to worry about the effect of default values on test cases.
+  * Cons:
+    * More `null` cases to handle.
+
+###### **Aspect: Choices of priority levels.**
+* **Alternative 1 (Current Choice):** Fix the choices of priority level, namely `HIGH`, `MEDIUM`, `LOW` and `NONE`. (`NONE` is chosen when user removes or does not assign a priority).
+  * Pros:
+    * Simplicity, users do not have to create an extensive list of options for priority levels.
+    * Ease of implementation.
+  * Cons:
+    * Reduced flexibility, users are now confined to limited choices of priority levels.
+* **Alternative 2:** Allow users to define their own priority levels.
+  * Pros:
+    * Flexibility, users can customise the product according to their needs.
+  * Cons:
+    * Hard to implement, need to handle dynamic or custom priority levels.
 
 <div style="page-break-after: always;"></div>
 
@@ -730,6 +756,9 @@ Taking `parse("2 he likes pizza")`as an example.
 
 The class is responsible in executing the task parsed by the `RemarkCommandParser`.
 It will update the `Remark` of a `Person` and generate a `CommandResult` for the output.
+Below is the class diagram of the `RemarkCommand` class.
+
+<puml src="diagrams/remark-feature/RemarkClass.puml"/>
 
 ### Design Consideration:
 
@@ -828,9 +857,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC01 - add a customer**
 
 **MSS:**<br/>
-&emsp;1. User enters the details of a customer to be added.</br>
-&emsp;2. System adds the customer.</br>
-&emsp;3. System displays the details of customer added by user.</br>
+&emsp;1. User provides the details of a customer to be added.</br>
+&emsp;2. System displays the details of the customer added by user.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
@@ -869,15 +897,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC03 - delete a customer**
 
 **MSS:**</br>
-&emsp;1. User lists out the customers.</br>
-&emsp;2. System shows the list of customers to user.</br>
-&emsp;3. User deletes the customer with the index number shown in the displayed list.</br>
-&emsp;4. System displays the details of the removed customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides the index of customer to be deleted.</br>
+&emsp;3. System displays the details of the removed customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;4a. Invalid delete command or invalid index.</br>
-&emsp;&emsp;4a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 #### Editing a customer
@@ -885,15 +912,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC04 - edit a customer's details**
 
 **MSS:**</br>
-&emsp;1. User requests to list out the customers.</br>
-&emsp;2. System shows the list of customers.</br>
-&emsp;3. User edits the details of customer with its respective index.</br>
-&emsp;4. System displays the details of the edited customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides information to the customer with its respective index.</br>
+&emsp;3. System displays the details of the edited customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or information.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -924,15 +950,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers.</br>
-&emsp;2.  System lists out the customers.</br>
-&emsp;3.  User assigns priority to the customer with its respective index.</br>
-&emsp;4.  System displays the new priority of customer.</br>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2.  User provides priority to the customer with its respective index.</br>
+&emsp;3.  System displays the new priority of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or priority.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -978,18 +1003,22 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC09 - update tags of a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests to list out the customers.<br/>
-&emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index of targeted customer and information of tags to add or delete.<br/>
-&emsp;4. System updates the tags of the specified customer accordingly.<br/>
-&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User provides index of the targeted customer in the displayed list.<br/>
+&emsp;3. User provides information of tags to add to and/or delete from the targeted customer.<br/>
+&emsp;4. System displays the details of the updated customer to the User.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
-&emsp;3a. User provided invalid index or information.<br/>
-&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;1a. Requested list is empty.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3b. User provided information that will not update the specified customer.<br/>
+&emsp;2a. User provided invalid index.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3a. User provided invalid information of tags.<br/>
+&emsp;&emsp;3a1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.<br/>
+&emsp;3b. User provided information of tags that will not update the targeted customer.<br/>
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
@@ -999,19 +1028,18 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC10 - update remark of a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests to list out the customers.<br/>
-&emsp;2. System displays the requested list of customers to the user.<br/>
-&emsp;3. User enters index and remark of the target customer.<br/>
-&emsp;4. System updates the remark of specified customer accordingly.<br/>
-&emsp;5. System displays the details of the updated customer.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
+&emsp;2. User enters index and remark of the target customer.<br/>
+&emsp;3. System updates the remark of specified customer accordingly.<br/>
+&emsp;4. System displays the details of the updated customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
-&emsp;3a. User provided invalid index or information.<br/>
-&emsp;&emsp;3a1. System displays an error message to alert the User.<br/>
+&emsp;2a. User provided invalid index or information.<br/>
+&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
-&emsp;3b. User provided remark that will not update the specified customer.<br/>
-&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;2b. User provided remark that will not update the specified customer.<br/>
+&emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
 <div style="page-break-after: always;"></div>
@@ -1025,7 +1053,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 5.  The application should gracefully handle errors to prevent system crashes and data corruption.
 6. The application should be offered as a free service to the public.
 7. The application should be able to respond within one second.
-8. The application should be able to handle and support manual edits to the data file.
+8. The application should be able to handle and support manual edits to the data file, erroneous data files should not crash the application.
 
 ## Glossary
 
@@ -1041,7 +1069,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 This section covers the enhancements we plan to implement in the future.
 
-#### Enhancement 1 : Deletion of all tags(and insurances) in a single command
+#### Enhancement 1 : Deletion of all tags in a single command
 
 **Feature flaw:** <br/>
 As a customer might have many tags, and they could potentially want to remove all the 
@@ -1073,12 +1101,6 @@ Expected: Error, an error message showing the usage of tag command is shown to t
 * `tag 1 dat/delete`<br/>
 Expected: Error, an error message informing the user that they should input `deleteall` to confirm the deletion of all tags
 is shown to the user.
-
-**Additional notes:**<br/>
-As the behaviour of the `insurance` command is nearly identical to `tag` command, this planned enhancement applies to
-the `insurance` command too, the proposed enhancements and behaviours will be identical. The following is the updated
-command format for `insurance` command:<br/>
-`insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]... [dai/deleteall]`
 
 #### Enhancement 2: Edit appointment details
 
@@ -1118,6 +1140,36 @@ Updated behaviours (original behaviours of appointment still hold):
 * `unmarkappt 1`<br/>
 Expected: Decrements the customer's appointment completed counter by 1, and restores the customer's appointment details to the previous marked appointment details.
 
+#### Enhancement 4: Inserting `clear` pops out a confirmation window
+
+**Feature flaw:** <br/>
+After the user inputs the `clear` command, the customer list is cleared immediately. In some situations where the user just type `clear` in accident, the consequence is undesirable.
+
+**Proposed enhancement:**<br/>
+Pop a confirmation window for users to confirm once again if the user indeed wants to clear the customer list.
+
+#### Enhancement 5: find multiple tags and insurances
+**Feature flaw:** <br/>
+The current implementation employs a single prefix for multiple keywords in the find feature, such as `find i/Health Auto.` 
+This approach, however, lacks the ability to distinguish between distinct sets of keywords, leading to potential ambiguity. 
+For instance, it becomes challenging to differentiate whether the keywords correspond to a combination like `Health Auto` or separate entities like `Health Insurance` and `Auto Coverage`.
+
+**Proposed enhancement:**<br/>
+To address this limitation, it is recommended to enable the use of multiple identical prefixes for individual keywords. For instance, the enhanced syntax could be `find i/Health i/Auto`. 
+This modification allows the find feature to accommodate duplicate prefixes for both find and tag operations, thereby providing a more precise and unambiguous search capability.
+
+**Justifications:**<br/>
+* The problem we've spotted isn't just about insurance searches; it also affects tag searches.
+* This problem only arises with tags and insurances since these are only two attribute allowed multiple instances.
+
+**Examples:**<br/>
+* `find i/abc i/apple`<br/>
+  Expected: Identifies customers with two insurance entities whose names match the keywords `abc` and `apple` respectively. 
+  For instance, if there are customer with insurances named `abc insurance` and `apple insurance`, they would be included in the results.
+* `find i/abc apple` <br/>
+  Expected: Locates customers with an insurance entity whose name corresponds to the combined keyword `abc apple`, such as `abc apple insurance`. 
+  
+The enhanced feature ensures accurate and targeted search results.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -1240,6 +1292,68 @@ Prerequisite : -
    Expected : No customer is updated. Error details shown in the status message(format error since no insurances to update is provided).
 
 <br/>
+
+## Find customers
+
+**Find customers**
+
+Prerequisite : -
+
+1. Test case : `find n/` <br/>
+   Expected : Show all customers in the list, because every customer must has a name.
+
+1. Test case : `find n/a`  <br/>
+   Expected : Show all customers has a as a prefix in their name.
+
+1. Test case : `find i/ABC t/male` <br/>
+   Expected : Show all customers has ABC matches with their insurances and has male matches with their tags.
+
+1. Test case : `find 123` <br/>
+   Expected : Customer list not updated. Error details shown in the status message (format error, one prefix must be provided).
+
+<br/>
+
+
+## Update remark of a customer
+
+**Updating the remark of a customer**
+
+Prerequisite : -
+
+1. Test case : `remark 2 he don't like pizza` <br/>
+   Expected : Customer is updated. Customer's remark update to `he don't like pizza`.
+
+1. Test case : `remark 2` `` <br/>
+   Expected : Customer is updated. Customer's remark is deleted.
+
+1. Test case : `remark` <br/>
+   Expected : Customer is not updated. Error details shown in the status message (No index provided).
+<br/>
+
+## Updating priority of a customer
+
+**Updating the priority of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `priority 1 low` <br/>
+   Expected : Priority of customer at index 1 is updated to `low`.
+
+1. Test case : `priority 1 low`, old priority of customer at index 1 is also `low` <br/>
+   Expected : Error, details shown in the status message(person is not changed).
+
+1. Test case : `priority 0`<br/>
+   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
+
+1. Test case : `priority 1`<br/>
+   Expected : Error, details shown in the status message(format error since no priority is provided).
+
+1. Test case: `priority 1 -` <br/>
+   Expected : Priority of customer at index 1 is removed (and set to `NONE`), no priority label is shown in the Ui.
+
+<br/>
+
+<div style="page-break-after: always;"></div>
 
 ## Feature to show
 
