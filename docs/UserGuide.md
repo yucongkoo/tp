@@ -232,7 +232,7 @@ These keywords can be spread across different `tag` / `insurance` entries.
 <box type="warning" seamless>
 
 **Caution:**
-* **At least one** prefix should be provided.
+* **At least one** of the optional fields must be provided.
 * Keyword is **NOT** mandatory.
 
 </box>
@@ -372,7 +372,6 @@ Before:
 
 ![priorityBefore](images/priority-command-example/priority-before.png)
 
-<div style="page-break-after: always;"></div>
 
 After:
 
@@ -566,7 +565,7 @@ After:
 
 </box>
 
-*Examples:*
+**Examples:**
 * `unmarkappt 1` decrements the appointment counter of the first customer in the displayed list by 1.
 
 <div style="page-break-after: always;"></div>
@@ -699,7 +698,7 @@ command box.
 | **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**     | `remark <index> <remark>` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
-| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`                                                                                                                                                                                         |
+| **Priority**   | `priority <index> <priority>`  <hr>  `priority 1 medium`       <div style="page-break-after: always;"></div>                                                                                                                                                                                 |
 | **Addappt**    | `addappt <index> d/<date> [t/<time>] [v/<venue>]` <hr> `addappt 3 d/2025-12-12 t/23:59 v/Starbucks`                                                                                                                                              |
 | **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                         |
 | **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                             |
