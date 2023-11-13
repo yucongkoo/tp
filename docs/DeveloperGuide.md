@@ -630,7 +630,7 @@ Using a similar logic flow as `addappt`, it prevents the user from unmarking an 
 appointment by checking if the current `Appointment` is the same as the `empty` appointment and if `true`,
 `UnmarkAppointmentCommand::execute()` will use `AppointmentCount::DecrementAppointmentCount()` to decrease the count by 1.
 
-<div style="page-break-after: always;"></div>
+<br/> <br/>
 
 ### Design Considerations:
 
@@ -889,7 +889,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**</br>
 &emsp;1a.  Details provided by user is incomplete or invalid.</br>
 &emsp;&emsp;1a1. System displays an error message to alert User.</br>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;1b.  Customer to be added is already in the System.<br/>
 &emsp;&emsp;1b1. System displays an error message to alert User.<br/>
 &emsp;&emsp;Use case ends.
@@ -906,12 +907,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;1a.  User doesn't select any categories to filter for.</br>
-&emsp;&emsp;1a1. System displays the entire list of customers.</br>
+&emsp;2a.  User doesn't select any categories to filter for.</br>
+&emsp;&emsp;2a1. System displays the entire list of customers.</br>
 &emsp;&emsp;Use case ends.
 
-&emsp;2a.  None of the contacts meet the filter criteria.</br>
-&emsp;&emsp;2a1. System shows an empty list with a warning message.</br>
+&emsp;3a.  None of the contacts meet the filter criteria.</br>
+&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -992,15 +993,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers by <u>filtering customers(UCO2)</u>.</br>
-&emsp;2.  System lists out the customers.</br>
-&emsp;3.  User assigns insurance to the customer with its respective index.</br>
-&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;1.  User requests the list of customers by <u>filtering customers(UCO2)</u>.</br>
+&emsp;2.  User assigns insurance to the customer with its respective index.</br>
+&emsp;3.  System displays the new insurance of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or information.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 #### Removing insurance from customer
@@ -1009,15 +1009,14 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**</br>
 
-&emsp;1.  User requests to list out the customers by <u>filtering customers(UCO2)</u>.</br>
-&emsp;2.  System lists out the customers.</br>
-&emsp;3.  User removes insurance from the customer with its respective index.</br>
-&emsp;4.  System displays the new insurance of customer.</br>
+&emsp;1.  User requests the list of customers by <u>filtering customers(UCO2)</u>.</br>
+&emsp;2.  User removes insurance from the customer with its respective index.</br>
+&emsp;3.  System displays the new insurance of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;3a. User provides invalid index or information.</br>
-&emsp;&emsp;3a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;2a. User provides invalid index or information.</br>
+&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -1035,16 +1034,19 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **Extensions:**<br/>
 &emsp;1a. Requested list is empty.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2a. User provided invalid index.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;3a. User provided invalid information of tags.<br/>
 &emsp;&emsp;3a1. Systems displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;3b. User provided information of tags that will not update the targeted customer.<br/>
 &emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
 
 
 #### Updating remark of a customer
@@ -1061,7 +1063,8 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index or information.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2b. User provided remark that will not update the specified customer.<br/>
 &emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
@@ -1077,18 +1080,20 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;2. User enters index and appointment details(date, time, venue) of the target customer.<br/>
 &emsp;3. System adds the appointment to the specified customer accordingly.<br/>
 &emsp;4. System displays the updated appointment details of the customer.<br/>
-&emsp;Use case ends.<br/>
+&emsp;Use case ends.
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2b. User provided invalid appointment input parameters.<br/>
 &emsp;&emsp;2b1. System shows an error message of the input constraints.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2c. An appointment has already been scheduled.<br/>
 &emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
 
 #### Updating appointment of a customer
 
@@ -1104,10 +1109,11 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2b. There is no existing appointment to delete.<br/>
-&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;2b1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
 
@@ -1123,10 +1129,11 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2b. There is no existing appointment to mark.<br/>
 &emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.=
 
 **Use Case: UC14 - unmark a customer's appointment**
 
@@ -1140,10 +1147,11 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
 &emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;Use case ends.
+
 &emsp;2b. There is an existing appointment.<br/>
-&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.<br/>
+&emsp;&emsp;2b1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;Use case ends.
 
 
 <div style="page-break-after: always;"></div>
@@ -1413,7 +1421,7 @@ in the new `UI` to ensure that users will always have a clear view of what's goi
 **Effort:**
 
 We first redesign the structure of our `UI` to fit the new features in a sensible and user-friendly way. We tried out different layouts
-and ways to present our data, and finalize on the current design, where the customer's information are displayed in cards. After ensuring
+and ways to present our data, and finalize on the current design, where the customer's information are displayed as `Customer Card`. After ensuring
 the functionality is covered by `UI`, we move on to changing the colour scheme of our product. After many trial and error, and requesting feedbacks
 from our friends, we have decided to use the current pastel green colour scheme.
 
@@ -1431,7 +1439,7 @@ the save file.
 
 Given that our saving system is implemented using `Jackson (JSON package)`, we first have to understand how the package works and how
 it is integrated into our system. For each new `attribute`, we have created the corresponding `JSON-friendly data class` to handle these
-data during saving. These classes handle the conversion between application-used and Json-compatible data during loading and saving.
+data during saving. These classes handle the conversion between application-used and JSON-compatible data during loading and saving.
 These classes are integrated to the existing `storage` component carefully to ensure that we do not break the existing system. The original
 `storage` component is also refined and fixed of all discovered bugs.
 
@@ -1513,12 +1521,6 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-
-## Saving data
-
-**Dealing with missing/corrupted data files**
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 ## Updating tags of a customer
 
@@ -1659,7 +1661,4 @@ completed counter is incremented by 1.
 1. Test case : `umarkappt 1`, customer at index 1 has an existing appointment <br/>
    Expected : Error, details shown in the status message(cannot be undone if no completed appointment).
 
-<br/>
-
-<div style="page-break-after: always;"></div>
 
