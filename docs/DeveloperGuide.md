@@ -303,7 +303,6 @@ ignore such additions due to the same reason stated above.
 <br/>
 <br/>
 
-<div style="page-break-after: always;"></div>
 
 ## Find feature
 This find feature is designed to do partial search or prefix search on the customer list.
