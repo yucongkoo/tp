@@ -876,16 +876,16 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**<br/>
 &emsp;1. User provides the details of a customer to be added.</br>
-&emsp;2. System displays the details of the customer added by User.</br>
+&emsp;2. EzContact displays the details of the customer added by User.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;1a.  Details provided by User is incomplete or invalid.</br>
-&emsp;&emsp;1a1. System displays an error message to alert User.</br>
+&emsp;&emsp;1a1. EzContact displays an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
-&emsp;1b.  Customer to be added is already in the System.<br/>
-&emsp;&emsp;1b1. System displays an error message to alert User.<br/>
+&emsp;1b.  Customer to be added is already in the EzContact.<br/>
+&emsp;&emsp;1b1. EzContact displays an error message to alert User.<br/>
 &emsp;&emsp;Use case ends.
 
 
@@ -896,16 +896,16 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **MSS:**</br>
 &emsp;1. User chooses to filter customers.</br>
 &emsp;2. User selectively adds one/multiple category parameters to filter the customers for.</br>
-&emsp;3. System displays the list of customers that meet the criteria.</br>
+&emsp;3. EzContact displays the list of customers that meet the criteria.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a.  User doesn't select any categories to filter for.</br>
-&emsp;&emsp;2a1. System displays the entire list of customers.</br>
+&emsp;&emsp;2a1. EzContact displays the entire list of customers.</br>
 &emsp;&emsp;Use case ends.
 
 &emsp;3a.  None of the contacts meet the filter criteria.</br>
-&emsp;&emsp;3a1. System shows an empty list with a warning message.</br>
+&emsp;&emsp;3a1. EzContact shows an empty list with a warning message.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -917,12 +917,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **MSS:**</br>
 &emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User provides the index of customer to be deleted.</br>
-&emsp;3. System displays the details of the removed customer.</br>
+&emsp;3. EzContact displays the details of the removed customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a. User provides invalid index.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;&emsp;2a1. EzContact shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 #### Editing a customer
@@ -932,12 +932,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **MSS:**</br>
 &emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User provides information to the customer with its respective index.</br>
-&emsp;3. System displays the details of the edited customer.</br>
+&emsp;3. EzContact displays the details of the edited customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a. User provides invalid index or information.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User.</br>
+&emsp;&emsp;2a1. EzContact shows an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -949,17 +949,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **MSS:**</br>
 
 &emsp;1.  User searches with a prompt.</br>
-&emsp;2.  System shows a list of customers matching the prompt.</br>
+&emsp;2.  EzContact shows a list of customers matching the prompt.</br>
 &emsp;3.  User views the customers' information.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;1a. User searches with an invalid prompt format</br>
-&emsp;&emsp;1a1. System shows an error message to User.</br>
+&emsp;&emsp;1a1. EzContact shows an error message to User.</br>
 &emsp;&emsp;Use case ends.
 
 &emsp;2a. There is no customer that match the prompt.</br>
-&emsp;&emsp;2a1. System shows an empty list.</br>
+&emsp;&emsp;2a1. EzContact shows an empty list.</br>
 &emsp;&emsp;Use case ends.
 
 #### Assigning priority to customer
@@ -970,12 +970,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 &emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2.  User provides priority to the customer with its respective index.</br>
-&emsp;3.  System displays the new priority of customer.</br>
+&emsp;3.  EzContact displays the new priority of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a. User provides invalid index or priority.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;2a1. EzContact shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -988,12 +988,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 &emsp;1.  User requests the list of customers by <u>filtering customers(UCO2)</u>.</br>
 &emsp;2.  User assigns insurance to the customer with its respective index.</br>
-&emsp;3.  System displays the new insurance of customer.</br>
+&emsp;3.  EzContact displays the new insurance of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a. User provides invalid index or information.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;2a1. EzContact shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 #### Removing insurance from customer
@@ -1004,12 +1004,12 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 &emsp;1.  User requests the list of customers by <u>filtering customers(UCO2)</u>.</br>
 &emsp;2.  User removes insurance from the customer with its respective index.</br>
-&emsp;3.  System displays the new insurance of customer.</br>
+&emsp;3.  EzContact displays the new insurance of customer.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
 &emsp;2a. User provides invalid index or information.</br>
-&emsp;&emsp;2a1. System shows an error message to alert User about the invalid command.</br>
+&emsp;&emsp;2a1. EzContact shows an error message to alert User about the invalid command.</br>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -1022,7 +1022,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User provides index of the targeted customer in the displayed list.<br/>
 &emsp;3. User provides information of tags to add to and/or delete from the targeted customer.<br/>
-&emsp;4. System displays the details of the updated customer to the User.<br/>
+&emsp;4. EzContact displays the details of the updated customer to the User.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
@@ -1030,15 +1030,15 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 &emsp;&emsp;Use case ends.
 
 &emsp;2a. User provided invalid index.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;3a. User provided invalid information of tags.<br/>
-&emsp;&emsp;3a1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;3a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;3b. User provided information of tags that will not update the targeted customer.<br/>
-&emsp;&emsp;3b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;3b1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 
@@ -1049,17 +1049,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User enters index and remark of the target customer.<br/>
-&emsp;3. System updates the remark of specified customer accordingly.<br/>
-&emsp;4. System displays the details of the updated customer.<br/>
+&emsp;3. EzContact updates the remark of specified customer accordingly.<br/>
+&emsp;4. EzContact displays the details of the updated customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index or information.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2b. User provided remark that will not update the specified customer.<br/>
-&emsp;&emsp;2b1. Systems displays an error message to alert the User.<br/>
+&emsp;&emsp;2b1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.<br/>
 
 <div style="page-break-after: always;"></div>
@@ -1071,21 +1071,21 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests a list of customers (UC02)</u>.<br/>
 &emsp;2. User enters index and appointment details(date, time, venue) of the target customer.<br/>
-&emsp;3. System adds the appointment to the specified customer accordingly.<br/>
-&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;3. EzContact adds the appointment to the specified customer accordingly.<br/>
+&emsp;4. EzContact displays the updated appointment details of the customer.<br/>
 &emsp;Use case ends.
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2b. User provided invalid appointment input parameters.<br/>
-&emsp;&emsp;2b1. System shows an error message of the input constraints.<br/>
+&emsp;&emsp;2b1. EzContact shows an error message of the input constraints.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2c. An appointment has already been scheduled.<br/>
-&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;2c1. EzContact shows an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 #### Updating appointment of a customer
@@ -1095,17 +1095,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests a list of customers (UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
-&emsp;3. System deletes the appointment of the specified customer accordingly.<br/>
-&emsp;4. System displays the updated empty appointment details of the customer.<br/>
+&emsp;3. EzContact deletes the appointment of the specified customer accordingly.<br/>
+&emsp;4. EzContact displays the updated empty appointment details of the customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2b. There is no existing appointment to delete.<br/>
-&emsp;&emsp;2b1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;2b1. EzContact shows an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 <div style="page-break-after: always;"></div>
@@ -1115,17 +1115,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests a list of customers (UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
-&emsp;3. System marks the appointment of the specified customer accordingly.<br/>
-&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;3. EzContact marks the appointment of the specified customer accordingly.<br/>
+&emsp;4. EzContact displays the updated appointment details of the customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2b. There is no existing appointment to mark.<br/>
-&emsp;&emsp;2c1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;2c1. EzContact shows an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.=
 
 **Use Case: UC14 - unmark a customer's appointment**
@@ -1133,17 +1133,17 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Mss:**<br/>
 &emsp;1. User requests a list of customers (UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
-&emsp;3. System unmarks the appointment of the specified customer accordingly.<br/>
-&emsp;4. System displays the updated appointment details of the customer.<br/>
+&emsp;3. EzContact unmarks the appointment of the specified customer accordingly.<br/>
+&emsp;4. EzContact displays the updated appointment details of the customer.<br/>
 &emsp;Use case ends.<br/>
 
 **Extensions:**<br/>
 &emsp;2a. User provided invalid index.<br/>
-&emsp;&emsp;2a1. System displays an error message to alert the User.<br/>
+&emsp;&emsp;2a1. EzContact displays an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 &emsp;2b. There is an existing appointment.<br/>
-&emsp;&emsp;2b1. System shows an error message to alert the User.<br/>
+&emsp;&emsp;2b1. EzContact shows an error message to alert the User.<br/>
 &emsp;&emsp;Use case ends.
 
 
