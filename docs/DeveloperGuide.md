@@ -678,6 +678,11 @@ The sequence diagram shows a series of actions in EzContact when a user inputs t
 
 <br>
 
+<box type="info" seamless>
+
+**Note:**<br/>The lifeline for `PriorityCommandParser` and `PriorityCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</box>
+
 **The `PriorityCommandParser` class**
 
 The class is used to parse the string provided.
