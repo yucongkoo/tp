@@ -92,7 +92,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Check if {@code prefixes} are present in the {@code argMultimap}.
+     * Checks if {@code prefixes} are present in the {@code argMultimap}.
      *
      * @param argMultimap that we are performing search on.
      * @param prefixes to search for.
