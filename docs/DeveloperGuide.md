@@ -241,7 +241,7 @@ Note that a `TagCommand` is **non-executable** if there are **conflicting tags**
 
 The sequence diagram below illustrates the interations of `TagCommand#execute(Model model)`,
 taking `execute(m)` call to the `TagCommand` as an example. Note that the **reference frames have been omitted**
-as the operations performed are trivial.
+as the operations performed are trivial and low-level details.
 
 <puml src="diagrams/tag-feature/ExecuteSequenceDiagram.puml" />
 
