@@ -1499,6 +1499,7 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 
+
 ## Adding a customer
 
 **Adding a customer to the contact book**
@@ -1524,16 +1525,22 @@ Prerequisites: -
 
 **Deleting a customer while all customers are being shown**
 
+
+## Deleting a customer
+
+**Deleting a customer while all customers are being shown**
+
+
 Prerequisites: List all customers using the `list` command. Multiple customers in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First customer is deleted from the list. Details of the deleted customer shown in the status message.
 
    1. Test case: `delete 0`<br>
       Expected: No customer is deleted. Error details shown in the status message. Status bar remains the same.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+      Expected: No customer is deleted. Error details shown in the status message. Customer list remains the same.
 
 
 ## Updating tags of a customer
