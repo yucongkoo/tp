@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -61,7 +60,7 @@ public class RemarkCommand extends Command {
                 personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getInsurances(),
                 personToEdit.getAppointment(), personToEdit.getAppointmentCount(), personToEdit.getPriority());
 
-        CommandUtil.verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
+        CommandUtil.verifyPersonChanged(personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
 

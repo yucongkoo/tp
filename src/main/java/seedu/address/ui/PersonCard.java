@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.priority.Level.NONE;
-import static seedu.address.ui.FlowPaneLabel.Type;
 import static seedu.address.ui.FlowPaneLabel.createFlowPaneLabel;
 
 import java.util.Comparator;
@@ -97,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
     private void loadPriority() {
         if (person.getPriorityLevel() != NONE) {
             flowPaneLabels.getChildren().add(0,
-                    createFlowPaneLabel(Type.PRIORITY, person.getPriority().toString()).getRoot());
+                    createFlowPaneLabel(person.getPriority()).getRoot());
         }
     }
 
@@ -110,14 +109,14 @@ public class PersonCard extends UiPart<Region> {
         person.getInsurances().stream()
                 .sorted(Comparator.comparing(Insurance::getInsuranceName))
                 .forEach(insurance -> flowPaneLabels.getChildren()
-                        .add(createFlowPaneLabel(Type.INSURANCE, insurance.getInsuranceName()).getRoot()));
+                        .add(createFlowPaneLabel(insurance).getRoot()));
     }
 
     private void loadTags() {
         person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
                 .forEach(tag -> flowPaneLabels.getChildren()
-                        .add(createFlowPaneLabel(Type.TAG, tag.getTagName()).getRoot()));
+                        .add(createFlowPaneLabel(tag).getRoot()));
     }
 
     private void loadPhoneCard() {
