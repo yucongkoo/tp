@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_TAG;
 import static seedu.address.model.person.Person.createPersonWithUpdatedTags;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -73,7 +72,7 @@ public class TagCommand extends Command {
                 updatePersonTagsDescriptor.getTagsToDelete());
         requireAllNonNull(personToUpdate, updatedPerson);
 
-        verifyPersonChanged(personToUpdate, updatedPerson, Optional.of(MESSAGE_TAG_UNCHANGED_REASONS));
+        verifyPersonChanged(personToUpdate, updatedPerson, MESSAGE_TAG_UNCHANGED_REASONS);
         verifyPersonTagCountIsValid(updatedPerson);
 
         model.setPerson(personToUpdate, updatedPerson);

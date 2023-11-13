@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_INSURANCE;
 import static seedu.address.model.person.Person.createPersonWithUpdatedInsurances;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -100,7 +99,7 @@ public class InsuranceCommand extends Command {
                 updatePersonInsuranceDescriptor.insurancesToDelete);
 
         verifyPersonInsuranceCountIsValid(updatedPerson);
-        verifyPersonChanged(personToUpdate, updatedPerson, Optional.of(MESSAGE_INSURANCE_UNCHANGED_REASONS));
+        verifyPersonChanged(personToUpdate, updatedPerson, MESSAGE_INSURANCE_UNCHANGED_REASONS);
 
         m.setPerson(personToUpdate, updatedPerson);
 
