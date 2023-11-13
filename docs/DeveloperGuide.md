@@ -646,7 +646,6 @@ appointment by checking if the current `Appointment` is the same as the `empty` 
   * Cons: There will be less abstraction, more coupling and more bug-prone: The same command
     class and parser class will handle all the four different features
 
-
 <div style="page-break-after: always;"></div>
 
 ## Priority feature
@@ -687,6 +686,8 @@ The sequence diagram shows a series of actions in EzContact when a user inputs t
 
 **Note:**<br/>The lifeline for `PriorityCommandParser` and `PriorityCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
+
+<div style="page-break-after: always;"></div>
 
 **The `PriorityCommandParser` class**
 
@@ -1081,7 +1082,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC11 - add an appointment to a customer**
 
 **Mss:**<br/>
-&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User enters index and appointment details(date, time, venue) of the target customer.<br/>
 &emsp;3. EzContact adds the appointment to the specified customer accordingly.<br/>
 &emsp;4. EzContact displays the updated appointment details of the customer.<br/>
@@ -1105,7 +1106,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC12 - delete a customer's appointment**
 
 **Mss:**<br/>
-&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
 &emsp;3. EzContact deletes the appointment of the specified customer accordingly.<br/>
 &emsp;4. EzContact displays the updated empty appointment details of the customer.<br/>
@@ -1125,7 +1126,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC13 - mark a customer's appointment**
 
 **Mss:**<br/>
-&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
 &emsp;3. EzContact marks the appointment of the specified customer accordingly.<br/>
 &emsp;4. EzContact displays the updated appointment details of the customer.<br/>
@@ -1143,7 +1144,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 **Use Case: UC14 - unmark a customer's appointment**
 
 **Mss:**<br/>
-&emsp;1. User requests a list of customers (UC02)</u>.<br/>
+&emsp;1. User requests a list of customers by <u>filtering customers(UC02)</u>.<br/>
 &emsp;2. User enters index of the target customer.<br/>
 &emsp;3. EzContact unmarks the appointment of the specified customer accordingly.<br/>
 &emsp;4. EzContact displays the updated appointment details of the customer.<br/>
@@ -1294,6 +1295,8 @@ This modification allows the find feature to accommodate duplicate prefixes for 
   
 The enhanced feature ensures accurate and targeted search results.
 
+<div style="page-break-after: always;"></div>
+
 #### Enhancement 6: Increase flexibility of value input for phone number
 
 **Feature flaw:** <br/>
@@ -1417,6 +1420,7 @@ the rigorous testing as we found some feature flaws that can be further improved
 Our new `logic` component now accommodates multiple new features that drastically improve users experience and previous features are also
 refined to provide users more flexibility and functionality.
 
+<div style="page-break-after: always;"></div>
 
 ####  Enhanced UI `* *`
 
@@ -1452,6 +1456,7 @@ These classes are integrated to the existing `storage` component carefully to en
 
 A refined `storage` component that is able to handle all new `attributes` safely and correctly.
 
+<div style="page-break-after: always;"></div>
 
 ####  Enhanced Model `* *`
 
@@ -1494,23 +1499,6 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-## Launch and shutdown
-
-**Initial launch**
-
-   1. Download the jar file and copy into an empty folder
-
-   1. Double-click the jar file  <br/>
-      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
-
-**Saving window preferences**
-
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
-
-
 ## Adding a customer
 
 **Adding a customer to the contact book**
@@ -1531,6 +1519,8 @@ Prerequisites: -
 
 1. Test case: `add `<br>
    Expected: No customer is added. Error message is thrown indicating format for `add` command is wrong
+
+<div style="page-break-after: always;"></div>
 
 ## Deleting a customer
 
@@ -1656,6 +1646,8 @@ Prerequisite : -
 
 <br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Updating appointment of a customer
 
 **Updating the appointment of a specific customer**
@@ -1687,6 +1679,7 @@ completed counter is incremented by 1.
 1. Test case : `umarkappt 1`, customer at index 1 has an existing appointment <br/>
    Expected : Error, details shown in the status message(cannot be undone if no completed appointment).
 
+<div style="page-break-after: always;"></div>
 
 ## Editing a customer
 
