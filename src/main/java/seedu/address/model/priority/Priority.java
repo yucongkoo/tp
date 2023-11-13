@@ -46,7 +46,7 @@ public class Priority {
             + HIGH_PRIORITY_KEYWORD + ", " + MEDIUM_PRIORITY_KEYWORD + ", " + LOW_PRIORITY_KEYWORD + ", "
             + NONE_PRIORITY_KEYWORD + " }";
 
-    private Level level;
+    private final Level level;
 
     /**
      * Constructs a {@code Priority}.
@@ -79,7 +79,7 @@ public class Priority {
     }
 
     /**
-     * Checks if the priority given is valid.
+     * Returns true if the {@code priority} given is valid.
      *
      * @param priority to check.
      */
@@ -87,9 +87,6 @@ public class Priority {
         return VALID_PRIORITY_KEYWORDS.contains(priority);
     }
 
-    /**
-     * Returns priority level.
-     */
     public Level getPriorityLevel() {
         return this.level;
     }
