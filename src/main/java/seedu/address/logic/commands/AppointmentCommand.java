@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -63,7 +62,7 @@ public class AppointmentCommand extends Command {
             throw new CommandException(MESSAGE_ADD_APPOINTMENT_FAILURE_APPT_EXIST);
         }
         Person editedPerson = Person.createPersonWithEditedAppointment(personToEdit, appointment);
-        verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
+        verifyPersonChanged(personToEdit, editedPerson);
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Add Appointment Command: Appointment added successfully-----");

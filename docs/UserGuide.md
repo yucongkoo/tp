@@ -98,7 +98,7 @@ click [here](#prefix-to-full-name-prefix-translation-table) to see a full table 
 
 * Duplicate customer is defined as 2 person who have identical `<phone number>` or `<email>`.
 
-* `Index` must be value of between (1 -> 2147483647), any value out of this range will be considered as incorrect format;
+* `<index>` must be value of between (1 -> 2147483647), any value out of this range will be considered as incorrect format;
 whereas value in range but not in customer list is considered out of bound.
 
 * Unless otherwise stated, when specifying restrictions on number of characters, spaces in between words
@@ -215,7 +215,7 @@ After:
 
 **Format:**
 
-`find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`
+`find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/<keywords>] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`
 
 **Description:**
 
@@ -233,15 +233,6 @@ These keywords can be spread across different `tag` / `insurance` entries.
 
 **Caution:**
 * **At least one** prefix should be provided.
-* Available prefix:
-  - `address`: `a/`
-  - `email`: `e/`
-  - `insurance`: `i/`
-  - `name`: `n/`
-  - `phone`: `p/`
-  - `priority`: `pr/`
-  - `remark`: `r/`
-  - `tag`: `t/`
 * Keyword is **NOT** mandatory.
 
 </box>
@@ -314,8 +305,8 @@ After:
 **Description:**
 
 * Updated the insurance of the customer at `<index>` in the customer list
-* Duplicate insurances to add/delete is ignored
-* Adding existing insurance and deleting non-existing insurance from customer has no effect
+* **Duplicate insurances** to add/delete is ignored
+* Adding **existing insurance** and **deleting non-existing** insurance from customer has no effect
 
 <box type="warning" seamless>
 
@@ -403,7 +394,7 @@ After:
 
 ### Adding a remark to a customer: `remark`
 
-Format: `remark <index> [remark]`
+Format: `remark <index> <remark>`
 
 **Description:**
 
@@ -414,7 +405,7 @@ Format: `remark <index> [remark]`
 
 **Caution:**
 * `<index>`should **only be one of** the indices shown in the displayed list.
-* `Remark` cannot be longer than 150 characters.
+* `<remark>` cannot be longer than 150 characters.
 
 </box>
 
@@ -690,7 +681,7 @@ and rename the file to `addressbook.json`.
 
 **Q:** Can I transfer my data to another computer? <br>
 **A:** Yes, you can. Install EzContact in the computer and replace the `addressbook.json` file in the `<JAR file directory>/data` directory
-with the `addressbook.js` file from your previous computer. <br> <br>
+with the `addressbook.json` file from your previous computer. <br> <br>
 **Q:** Why are there sample customers when I first launch EzContact and how do I get rid of them? <br>
 **A:** The sample customers are for new users to try out various commands in EzContact. To get rid of them, simply type `clear` in the
 command box.
@@ -704,8 +695,7 @@ command box.
 | **Add**        | `add n/<name> p/<phone number> e/<email> [a/<address>] [pr/<priority>] [t/<tag>]... [i/<insurance>]... [r/<remark>]`          <hr>           `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/tall r/some remarks` |
 | **Delete**     | `delete <index>`                                            <hr>       `delete 3`                                                                                                                                                                |
 | **Edit**       | `edit <index> [n/<name>] [p/<phone number>] [e/<email>] [a/<address>] ` <hr> `edit 2 n/James Lee e/jameslee@example.com`                                                                                                                         |
-| **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
-| **Find**       | `find [n/[keywords]] [p/[keywords]] [e/[keywords]] [a/[keywords]] [t/[keywords]] [i/[keywords]] [pr/[keywords]] [r/[keywords]]`                      <hr>      `find n/song i/abc`                                                               |
+| **Find**       | `find [n/<keywords>] [p/<keywords>] [e/<keywords>] [a/<keywords>] [t/<keywords>] [i/<keywords>] [pr/<keywords>] [r/<keywords>]`                      <hr>      `find n/song i/abc`                                                               |
 | **Tag**        | `tag <index> [at/<tag to add>]... [dt/<tag to delete>]...`     <hr>         `tag 1 at/tall dt/short at/male`                                                                                                                                     |
 | **Insurance**  | `insurance <index> [ai/<insurance to add>]... [di/<insurance to delete>]...`     <hr>         `insurance 2 ai/AIA insurance di/Great Eastern Insurance`                                                                                          |
 | **Remark**     | `remark <index> [remark]` <hr>   `remark 2 some remarks`                                                                                                                                                                                         |
@@ -714,6 +704,7 @@ command box.
 | **Deleteappt** | `deleteappt <index>` <hr> `deleteappt 1`                                                                                                                                                                                                         |
 | **Markappt**   | `markappt <index>` <hr> `markappt 1`                                                                                                                                                                                                             |
 | **Unmarkappt** | `unmarkappt <index>` <hr> `unmarkappt 1`                                                                                                                                                                                                         |
+| **List**       | `list`                                                                      <hr>                                                                                                                                                                 |
 | **Clear**      | `clear`                                                                                                                                                                                                                                          |
 | **Help**       | `help`                                                                                                                                                                                                                                           |
 | **Exit**       | `exit`                                                                                                                                                                                                                                           |

@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandUtil.getPersonAtIndex;
 import static seedu.address.logic.commands.CommandUtil.verifyPersonChanged;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -57,7 +56,7 @@ public class MarkAppointmentCommand extends Command {
 
         Person editedPerson = Person.createPersonWithIncreasedCount(personToEdit,
                 appointment, personToEdit.getAppointmentCount());
-        verifyPersonChanged(personToEdit, editedPerson, Optional.empty());
+        verifyPersonChanged(personToEdit, editedPerson);
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         logger.info("-----Mark Appointment Command: Appointment marked successfully-----");
