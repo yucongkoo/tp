@@ -1610,13 +1610,13 @@ Prerequisite : -
    Expected : Priority of customer at index 1 is updated to `low`.
 
 1. Test case : `priority 1 low`, old priority of customer at index 1 is also `low` <br/>
-   Expected : Error, details shown in the status message(person is not changed).
+   Expected : Error, details shown in the status message (person is not changed).
 
 1. Test case : `priority 0`<br/>
-   Expected : Error, details shown in the status message(format error since the index is not a positive integer).
+   Expected : Error, details shown in the status message (format error since the index is not a positive integer).
 
 1. Test case : `priority 1`<br/>
-   Expected : Error, details shown in the status message(format error since no priority is provided).
+   Expected : Error, details shown in the status message (format error since no priority is provided).
 
 1. Test case: `priority 1 -` <br/>
    Expected : Priority of customer at index 1 is removed (and set to `NONE`), no priority label is shown in the Ui.
@@ -1655,3 +1655,22 @@ completed counter is incremented by 1.
    Expected : Error, details shown in the status message(cannot be undone if no completed appointment).
 
 
+## Editing a customer
+
+**Editing the information of a specific customer**
+
+Prerequisite : -
+
+1. Test case : `edit 1 n/John` <br/>
+   Expected : Name of customer at index 1 is updated to `John`.
+
+1. Test case : `edit 0`<br/>
+   Expected : Error, details shown in the status message (format error since the index is not a positive integer).
+
+1. Test case : `edit 1`<br/>
+   Expected : Error, details shown in the status message (format error since no information is provided).
+
+1. Test case: `edit 1 pr/high`<br/>
+   Expected : Error, details shown in status message (priority is not allowed to be edited using the edit command).
+
+<br/>
