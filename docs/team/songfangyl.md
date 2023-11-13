@@ -29,8 +29,14 @@ Given below are my contributions to the project.
 
 ###### **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=songfangyl&breakdown=false&sort=groupTitle%20dsc&sortWithin=title&since=2023-09-22&timeframe=commit&mergegroup=&groupSelect=groupByRepos)
 
+###### **Enhancements to existing features**:
+* Standardize output format for delete feature [#73](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/73)
+
 ###### **Project management**:
 * Set up weekly meeting.
+* Have some commits and merged some pull requests in every milestone.
+* Have some reviews and comments on teammates' pull requests. [#110](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/110) [#169](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/169)
+* Responses to teammates' comments. [#120](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120) 
 
 ###### **Documentation**:
 * User Guide:
