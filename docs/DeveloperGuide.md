@@ -1126,7 +1126,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 &emsp;2b. There is no existing appointment to mark.<br/>
 &emsp;&emsp;2c1. EzContact shows an error message to alert the User.<br/>
-&emsp;&emsp;Use case ends.=
+&emsp;&emsp;Use case ends.
 
 **Use Case: UC14 - unmark a customer's appointment**
 
