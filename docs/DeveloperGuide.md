@@ -868,7 +868,7 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 ## Use cases
 
-(For all use cases below, the **System** is the `EzContact` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EzContact` and the **Actor** is the `User`, unless specified otherwise)
 
 #### Adding a customer
 
@@ -876,11 +876,11 @@ Priorities: High - `* * *`, Medium - `* *`, Low - `*`
 
 **MSS:**<br/>
 &emsp;1. User provides the details of a customer to be added.</br>
-&emsp;2. System displays the details of the customer added by user.</br>
+&emsp;2. System displays the details of the customer added by User.</br>
 &emsp;Use case ends.
 
 **Extensions:**</br>
-&emsp;1a.  Details provided by user is incomplete or invalid.</br>
+&emsp;1a.  Details provided by User is incomplete or invalid.</br>
 &emsp;&emsp;1a1. System displays an error message to alert User.</br>
 &emsp;&emsp;Use case ends.
 
@@ -1499,17 +1499,38 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 
-## Deleting a person
+## Adding a customer
 
-**Deleting a person while all persons are being shown**
+**Adding a customer to the contact book**
 
-Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Prerequisites: -
+
+1. Test case: `add n/Joshua p/1234-5678 e/opqr@gmail.com`<br>
+   Expected: Customer of name `Joshua` with the above details is added
+
+1. Test case: `add n/Joshua p/1234-5678 e/opqr@gmail.com a/1A Kent Ridge Rd t/morning person`<br>
+   Expected: Customer of name `Joshua` with the above details is added
+
+1. Test case: `add n/Joshua`<br>
+   Expected: No customer is added. Error message is thrown indicating that compulsory field `p/` and `e/` are missing 
+
+1. Test case: `add n/Joshua p/acaf e/abcdeg@gmail.com`<br>
+   Expected: No customer is added. Error message is thrown indicating that `<phone number>` format is incorrect
+
+1. Test case: `add `<br>
+   Expected: No customer is added. Error message is thrown indicating format for `add` command is wrong
+
+## Deleting a customer
+
+**Deleting a customer while all customers are being shown**
+
+Prerequisites: List all customers using the `list` command. Multiple customers in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No customer is deleted. Error details shown in the status message. Status bar remains the same.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
