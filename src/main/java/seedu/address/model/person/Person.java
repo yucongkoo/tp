@@ -37,7 +37,6 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-
     public Person(Name name, Phone phone, Email email,
                   Address address, Remark remark, Set<Tag> tags,
                   Set<Insurance> insurances, Appointment appointment, AppointmentCount count) {
@@ -59,7 +58,6 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-
     public Person(Name name, Phone phone, Email email, Address address, Remark remark,
                   Set<Tag> tags, Set<Insurance> insurances,
                   Appointment appointment, AppointmentCount count, Priority priority) {
@@ -195,7 +193,7 @@ public class Person {
     }
 
     /**
-     * Creates and returns a {@code Person} with details of {@code source}, assigning priority of
+     * Creates and returns a {@code Person} with details of {@code personToUpdate}, assigning priority of
      * {@code newPriority}.
      */
     public static Person createPersonWithUpdatedPriority(Person personToUpdate, Priority newPriority) {
