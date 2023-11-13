@@ -154,17 +154,20 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
 
+        /**
+         * Constructs an empty EditPersonDescriptor instance.
+         */
         public EditPersonDescriptor() {}
 
         /**
-         * Copy constructor.
+         * Constructs an EditPersonDescriptor instance with the given {@code descriptionToCopy}.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            requireNonNull(toCopy);
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
+        public EditPersonDescriptor(EditPersonDescriptor descriptionToCopy) {
+            requireNonNull(descriptionToCopy);
+            setName(descriptionToCopy.name);
+            setPhone(descriptionToCopy.phone);
+            setEmail(descriptionToCopy.email);
+            setAddress(descriptionToCopy.address);
         }
 
         /**
