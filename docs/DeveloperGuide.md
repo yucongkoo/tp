@@ -211,8 +211,6 @@ taking `execute("tag 1 at/tall dt/short at/handsome")` API call to `LogicManager
 **Note:**<br/>The lifeline for `TagCommandParser` and `TagCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
-<div style="page-break-after: always;"></div>
-
 ###### **Implementing `TagCommandParser`**
 
 `TagCommandParser` plays the role of parsing _command arguments_ into two information:<br/>
@@ -234,8 +232,6 @@ taking `parse(1 at/tall dt/short at/handsome)` call to the `TagCommandParser` as
 The following class diagram illustrates how a `TagCommand` holds information required for its execution.
 
 <puml src= "diagrams/tag-feature/TagCommandClassDiagram.puml" />
-
-<div style="page-break-after: always;"></div>
 
 `TagCommand` plays the role of executing the main logic of the tag feature, it will:
 * Use information encapsulated in it to create the updated `Person` object accordingly.
@@ -285,8 +281,6 @@ storing tags.
 Alternative 1 was chosen over alternative 2 based on the following reasons:
 * Repeated action signals the users' strong intention of performing that action(e.g. wanting to add the same tag twice shows the importance of that tag).
 * The target audience is forgetful and careless, it is common for the users to enter duplicate tags without realising it, blocking such actions brings no value to the product.
-
-<div style="page-break-after: always;"></div>
 
 ###### **Aspect: Deletion of non-existing tags:**
 * **Alternative 1(current choice):** Simply ignore such deletions.

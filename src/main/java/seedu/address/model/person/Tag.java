@@ -30,7 +30,7 @@ public class Tag {
         requireNonNull(tagName);
         String trimmedTagName = StringUtil.trimContiguousSpaces(tagName);
         checkArgument(isValidTagName(trimmedTagName), MESSAGE_CONSTRAINTS);
-        this.tagName = trimmedTagName;
+        this.tagName = trimmedTagName.toLowerCase();
     }
 
     public String getTagName() {
