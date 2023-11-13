@@ -12,11 +12,11 @@ If you can type fast, EzContact can get your contact management tasks done faste
 Given below are my contributions to the project.
 <br/>
 
-###### **New Feature**: 
+###### **New Feature**:
 * Implemented `Insurance` feature that includes a new `insurance` command and a new attribute to the customers in our EzContact.
   * What it does: User can assign or remove insurances associated with a customer on EzContact, by providing the name of the insurance.
-  * Justification: Given that our users are insurance agents, our users have to constantly keep track of what insurances each customer 
-currently holds, has interest in or plans to cancel. With this feature, our users can efficiently keep track of these information and make the 
+  * Justification: Given that our users are insurance agents, our users have to constantly keep track of what insurances each customer
+currently holds, has interest in or plans to cancel. With this feature, our users can efficiently keep track of these information and make the
 correct decisions and moves when interacting with their customers, subsequently increasing their efficiency and chances of securing deals.
   * Highlights: Implementation of this feature requires in-depth analysis of the model component, different data structures to handle the information
 and handling of user behaviours (e.g. duplicate, conflicting insurances). These analysis determine our design choices from all the possible alternatives.
@@ -30,7 +30,7 @@ and handling of user behaviours (e.g. duplicate, conflicting insurances). These 
   * Make command words and prefixes case-insensitive, giving users more flexibility in using the product
 
 ###### **Documentation**:
-* User Guide: 
+* User Guide:
   * Added documentation for `insurance` feature
   * Standardise formatting and layout of the entire User Guide
   * Added introduction to the User Guide
@@ -38,7 +38,7 @@ and handling of user behaviours (e.g. duplicate, conflicting insurances). These 
   * Improve description for `find` feature's documentation
   * Update the glossary
   * Ensure that all parts of the documentation are consistent and correct
-* Developer Guide: 
+* Developer Guide:
   * Added documentation for `Insurance` feature (i.e. Implementation, design choices, UML diagrams...)
   * Standardise the formatting and layout for Developer Guide
   * Standardise the format for Appendix: Effort, Appendix: Planned Enhancement,Appendix: Instruction for Manual Testing and Acknowledgement
