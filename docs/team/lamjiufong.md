@@ -50,7 +50,7 @@ Given below are my contributions to the project.
   * Developer Guide:
     * Added the implementation details of the `priority` feature (including all the UML diagrams used in the explanation).
     * Added use case for deleting a customer(UC03), editing a customer(UC04) and updating priority of a customer(UC06).
-    * Added the manual testing instructions for the `priority` feature.
+    * Added the manual testing instructions for the `priority` and `edit` features.
     * Added the Planned Enhancement 4.
       <br/>
       <br/>
