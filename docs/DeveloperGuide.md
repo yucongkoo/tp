@@ -543,15 +543,19 @@ with a customer by editing the details of the `Appointment` and `AppointmentCoun
 This class is used to represent the appointment that each `Person` has, containing data:
 * `date` of the appointment in `dd-MMM-yyyy` format as a `String`
 * `time` of the appointment in `HHmm` format as a `String`
-* `venue` of the appointment as a `String` lesser than or equals to 30 characters
-By default, each `Person` has an empty default appointment with an empty `Date`.
+* `venue` of the appointment as a `String` lesser than or equals to 30 characters.
+
+By default, each `Person` has an empty default appointment.
 
 <puml src="diagrams/appointment-feature/AppointmentClassDiagram.puml"/>
 
 <div style="page-break-after: always;"></div>
 
 **Implementing `AppointmentCommand`**
+
 `AppointmentCommand` executes its command on the Model, updating the Model accordingly to reflect the changes made by the command on the Model. Note that an `AppointmentCommand` is **non-executable** if the index is not in range or the person has an existing appointment.
+Note that an `AppointmentCommand` is **non-executable** if there is an **existing appointment**.
+
 
 The sequence diagram below illustrates the interactions of `AppointmentCommand#execute(Model model)`, taking `execute(m)` call to the `AppointmentCommand` as an example. Note that the **reference frames have been omitted** as the operations performed are trivial.
 
@@ -582,6 +586,7 @@ The sequence diagram below illustrates the interactions of `AppointmentCommandPa
 
 `AppointmentCommandParser` will extract out the relevant information and create the corresponding `AppointmentCommand`
 which will be executed by other `Logic` components.
+
 
 The sequence diagram below shows the interactions between `Logic` components when the user inputs the command
 `addappt 1 d/2025-12-12 t/12:55 v/Clementi Mall`.

@@ -4,7 +4,7 @@ title: "User Guide"
 pageNav: 3
 ---
 
-# EzContact
+# EzContact User Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -555,6 +555,7 @@ After:
 
 * Decrements the customer's completed appointments count at `<index>` by 1.
 * Use to reduce the appointment count of customers as needed.
+* Does not recover the marked appointment details.
 
 <box type="warning" seamless>
 
