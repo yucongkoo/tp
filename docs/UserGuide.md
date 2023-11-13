@@ -4,7 +4,7 @@ title: "User Guide"
 pageNav: 3
 ---
 
-# EzContact
+# EzContact User Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
