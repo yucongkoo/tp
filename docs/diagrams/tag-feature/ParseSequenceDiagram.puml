@@ -16,7 +16,7 @@ note right : Parses the arguments into **index**,\n**tagsToAdd** and **tagsToDel
 
 create UpdatePersonTagsDescriptor
 TagCommandParser -> UpdatePersonTagsDescriptor
-note right : **descriptor** is constructed using\n**tagsToAdd** and **tagsToDelete**.
+note right : **descriptor** is constructed\n using **tagsToAdd**\n and **tagsToDelete**.
 activate UpdatePersonTagsDescriptor
 return
 
@@ -26,7 +26,7 @@ TagCommandParser -> TagCommandParser: verifyHasTagToUpdate(descriptor)
 
 |||
 create TagCommand
-TagCommandParser -> TagCommand
+TagCommandParser -> TagCommand : TagCommand(index, descriptor)
 
 activate TagCommand
 return

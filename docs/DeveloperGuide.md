@@ -183,6 +183,8 @@ valid indexes/tags/tag set will be defined later in following sections.
 
 <div style="page-break-after: always;"></div>
 
+### Implementation
+
 ###### **Implementing `Tag`**
 
 Before implementing the actual command execution of tag,
