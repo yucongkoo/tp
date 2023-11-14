@@ -30,13 +30,12 @@ Given below are my contributions to the project.
 <br/>
 
 * **Project management**:
-    * Managed releases `v1.2` - `v1.3b` (4 releases) on GitHub
-    * Managed the issue tracker and ensured team members' timely delivery of deliverables and team tasks
+    * Managed releases `v1.2` - `v1.4` (5 releases) on GitHub
+    * Managed the issue tracker and milestones, ensured team members' timely delivery of deliverables and team tasks
     * Distributed team tasks on a weekly basis. Hosted the features brainstorming session (Issues [#101](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/101), [141](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/141))
     * Managed bugs reported in PE-D, identified and filtered out duplicate bugs, while assigning each bug to the responsible developer and provided a summary (Issue [#289](https://github.com/AY2324S1-CS2103T-W16-2/tp/issues/289)).
 
 <div style="page-break-after: always;"></div>
-<br/>
 
 * **Enhancements to existing features**:
   * Made the address field of a customer optional (PRs [#68](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/68), [#83](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/83),[#102](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/102), [#197](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/197))
@@ -48,12 +47,11 @@ Given below are my contributions to the project.
   while also making the prefixes not case-sensitive (PR [#238](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/238))
   <br/>
   <br/>
-
 * **Documentation**:
   * User Guide:
     * Updated the `Quick Start` section and created the `UI Layout Description` section.
-    * Added documentation for the features `add`, `tag` and also the `Advanced Features` section.
     * Drafted the overall structure and formatting for features section to be used across team members.
+    * Added documentation for the features `add`, `tag` and also the `Advanced Features` section.
     * Added the `Prefix to full-name prefix translation table` section.
     * Checked the degree of standardization between different sections of the UG.
     * Tweaked the UG to make it pdf-version friendly.
@@ -71,5 +69,5 @@ Given below are my contributions to the project.
   [#120-1](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d), [#120-2](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/120/files/14f6a08e3141168016ea041cf8a1c440f69b3d2d),
   [#119](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/119/files/737161d463230bae517c56e3e339fc9594c1565e),
   [#148](https://github.com/AY2324S1-CS2103T-W16-2/tp/pull/148/files/140747789d7932a9f5f9382bd39d56577f6c1bd7)
-  * Contributed to forum discussions (examples: [1](https://github.com/nus-cs2103-AY2324S1/forum/issues/368#issuecomment-1801798119))
+  * Contributed to forum discussions (examples: [1](https://github.com/nus-cs2103-AY2324S1/forum/issues/368#issuecomment-1801798119), [2](https://github.com/nus-cs2103-AY2324S1/forum/issues/317), [3](https://github.com/nus-cs2103-AY2324S1/forum/issues/393))
   * Reported bugs and suggestions for other teams in the class (examples can be found [here](https://github.com/yucongkoo/ped/issues))
